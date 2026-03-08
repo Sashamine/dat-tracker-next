@@ -282,6 +282,12 @@ export default function CompanyPage() {
         sharesOutstanding: number;
         holdingsPerShare: number;
       } | null;
+      history: Array<{
+        date: string;
+        holdings: number;
+        sharesOutstanding: number;
+        holdingsPerShare: number;
+      }>;
     }>;
   }>("/api/d1/hps-growth", fetcher, { revalidateOnFocus: false });
 
@@ -391,11 +397,8 @@ export default function CompanyPage() {
   const ahpsRow = ahpsLeaderboardData?.results.find(
     (row) => row.ticker.toUpperCase() === displayCompany.ticker.toUpperCase()
   );
-  const ahpsHistory: AhpsHistoryEntry[] | undefined = ahpsRow
-    ? [ahpsRow.snapshot30d, ahpsRow.snapshot90d, ahpsRow.snapshot1y, ahpsRow.currentSnapshot]
-        .filter((snapshot): snapshot is NonNullable<typeof ahpsRow.currentSnapshot> => Boolean(snapshot))
-        .sort((a, b) => a.date.localeCompare(b.date))
-        .map((snapshot) => ({
+  const ahpsHistory: AhpsHistoryEntry[] | undefined = ahpsRow?.history?.length
+    ? ahpsRow.history.map((snapshot) => ({
           date: snapshot.date,
           holdings: snapshot.holdings,
           sharesOutstanding: snapshot.sharesOutstanding,

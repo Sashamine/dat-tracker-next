@@ -69,6 +69,7 @@ interface HpsGrowthApiRow {
   snapshot30d: HpsGrowthApiSnapshot | null;
   snapshot90d: HpsGrowthApiSnapshot | null;
   snapshot1y: HpsGrowthApiSnapshot | null;
+  history: HpsGrowthApiSnapshot[];
 }
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
@@ -383,11 +384,8 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
     const otherAssets = cashReserves + otherInvestments;
     const totalDebt = company.totalDebt ?? 0;
     const ahpsRow = ahpsByTicker.get(company.ticker.toUpperCase());
-    const ahpsHistory: AhpsHistoryEntry[] | undefined = ahpsRow
-      ? [ahpsRow.snapshot30d, ahpsRow.snapshot90d, ahpsRow.snapshot1y, ahpsRow.currentSnapshot]
-          .filter((snapshot): snapshot is HpsGrowthApiSnapshot => Boolean(snapshot))
-          .sort((a, b) => a.date.localeCompare(b.date))
-          .map((snapshot) => ({
+    const ahpsHistory: AhpsHistoryEntry[] | undefined = ahpsRow?.history?.length
+      ? ahpsRow.history.map((snapshot) => ({
             date: snapshot.date,
             holdings: snapshot.holdings,
             sharesOutstanding: snapshot.sharesOutstanding,
