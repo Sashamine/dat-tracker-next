@@ -930,11 +930,6 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
               <p className={cn("font-semibold", getGrowthColor(company.ahpsGrowth90d))}>
                 {formatGrowthPct(company.ahpsGrowth90d)}
               </p>
-              {company.usesAdjustedShares && (
-                <Badge variant="outline" className="text-[10px] px-1 py-0 bg-green-500/10 text-green-600 border-green-500/30">
-                  Adj
-                </Badge>
-              )}
             </div>
           )}
         </div>
@@ -1000,11 +995,6 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
           ) : isEfficiencyView ? (
             <div className="flex items-center gap-1">
               <p className={cn("font-semibold", getGrowthColor(company.ahpsGrowth90d))}>{formatGrowthPct(company.ahpsGrowth90d)}</p>
-              {company.usesAdjustedShares && (
-                <Badge variant="outline" className="text-[10px] px-1 py-0 bg-green-500/10 text-green-600 border-green-500/30">
-                  Adj
-                </Badge>
-              )}
             </div>
           ) : (
             <p className={cn("font-semibold", getGrowthColor(company.leverageAdjGrowth))}>{formatGrowthPct(company.leverageAdjGrowth)}</p>
@@ -1408,11 +1398,6 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                             <span className={cn("font-semibold", getGrowthColor(company.ahpsGrowth90d))}>
                               {formatGrowthPct(company.ahpsGrowth90d)}
                             </span>
-                            {company.usesAdjustedShares && (
-                              <Badge variant="outline" className="ml-1 text-[10px] px-1 py-0 bg-green-500/10 text-green-600 border-green-500/30">
-                                Adj
-                              </Badge>
-                            )}
                           </TableCell>
                           <TableCell className="text-right font-mono">
                             <span className={cn("font-semibold", getGrowthColor(company.leverageAdjGrowth))}>
@@ -1489,11 +1474,6 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                             <span className={cn("font-semibold", getGrowthColor(company.ahpsGrowth90d))}>
                               {formatGrowthPct(company.ahpsGrowth90d)}
                             </span>
-                            {company.usesAdjustedShares && (
-                              <Badge variant="outline" className="ml-1 text-[10px] px-1 py-0 bg-green-500/10 text-green-600 border-green-500/30">
-                                Adj
-                              </Badge>
-                            )}
                           </TableCell>
                           <TableCell className="text-right font-mono">
                             {company.pendingMerger ? (
