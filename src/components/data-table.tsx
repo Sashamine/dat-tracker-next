@@ -490,6 +490,34 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
         const age = Date.now() - new Date(sourceDate).getTime();
         return age > 90 * 24 * 60 * 60 * 1000;
       })(),
+      // Estimated leverage when cash is stale: infer cash spent on crypto since cashAsOf
+      estimatedLeverage: (() => {
+        const sourceDate = company._staticCashAsOf || company.cashAsOf;
+        if (!sourceDate || !company.totalDebt || cryptoNav <= 0) return null;
+        const age = Date.now() - new Date(sourceDate).getTime();
+        if (age <= 90 * 24 * 60 * 60 * 1000) return null; // not stale
+
+        // Find holdings at the cash source date from AHPS history
+        let holdingsAtCashDate = company.holdings;
+        if (ahpsHistory?.length) {
+          const sorted = [...ahpsHistory].sort((a, b) => a.date.localeCompare(b.date));
+          // Find closest entry at or before sourceDate
+          const prior = sorted.filter(s => s.date <= sourceDate);
+          if (prior.length > 0) holdingsAtCashDate = prior[prior.length - 1].holdings;
+        }
+
+        const holdingsIncrease = Math.max(0, company.holdings - holdingsAtCashDate);
+        if (holdingsIncrease <= 0) return null; // can't estimate
+
+        // Use cost basis if available, otherwise current crypto price
+        const costPerUnit = company.costBasisAvg || cryptoPrice;
+        if (!costPerUnit) return null;
+
+        const estimatedCashSpent = holdingsIncrease * costPerUnit;
+        const estimatedCash = Math.max(0, cashReserves - estimatedCashSpent);
+        const estimatedNetDebt = Math.max(0, adjustedDebt - estimatedCash);
+        return estimatedNetDebt / cryptoNav;
+      })(),
       currentHps: company.holdings > 0 && company.sharesForMnav ? company.holdings / company.sharesForMnav : null,
       currentAhps: ahpsMetrics.currentAhps,
       ahpsGrowth90d: ahpsMetrics.ahpsGrowth90d,
@@ -976,7 +1004,15 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
             "font-semibold",
             company.leverageRatio >= 1 ? "text-amber-600" : "text-gray-900 dark:text-gray-100"
           )}>
-            {company.leverageRatio > 0 ? (
+            {company.cashStale && company.estimatedLeverage !== null ? (
+              <span className="inline-flex items-center gap-1 border-b border-dashed border-amber-400/60"
+                title={`Estimated: cash (${company._staticCashAsOf || company.cashAsOf}) adjusted for crypto purchases since`}>
+                <span className="text-amber-400/70">~</span>
+                <span className={cn(company.estimatedLeverage >= 1 ? "text-amber-600" : "text-gray-500")}>
+                  {company.estimatedLeverage.toFixed(2)}x
+                </span>
+              </span>
+            ) : company.leverageRatio > 0 ? (
               <span className={cn(
                 "inline-flex items-center gap-1",
                 company.cashStale && "border-b border-dashed border-amber-400/60"
@@ -984,11 +1020,6 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                 {company.cashStale && <span className="text-amber-400/70">~</span>}
                 {company.leverageRatio >= 1 && <span>⚠️</span>}
                 {company.leverageRatio.toFixed(2)}x
-              </span>
-            ) : company.cashStale ? (
-              <span className="inline-flex items-center gap-1 border-b border-dashed border-amber-400/60" title={`Cash data from ${company.cashAsOf} — may be stale`}>
-                <span className="text-amber-400/70">~</span>
-                <span className="text-gray-500">0.00x</span>
               </span>
             ) : "—"}
           </p>
@@ -1338,19 +1369,21 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                             )}
                           </TableCell>
                           <TableCell className="text-right font-mono text-sm">
-                            {company.leverageRatio > 0 ? (
+                            {company.cashStale && company.estimatedLeverage !== null ? (
+                              <span className={cn(
+                                "border-b border-dashed border-amber-400/60",
+                                company.estimatedLeverage >= 1 ? "text-amber-600 font-medium" : "text-gray-500",
+                              )} title={`Estimated: cash (${company._staticCashAsOf || company.cashAsOf}) adjusted for crypto purchases since`}>
+                                <span className="text-amber-400/70">~</span>
+                                {company.estimatedLeverage >= 1 ? "⚠️ " : ""}
+                                {company.estimatedLeverage.toFixed(2)}x
+                              </span>
+                            ) : company.leverageRatio > 0 ? (
                               <span className={cn(
                                 company.leverageRatio >= 1 ? "text-amber-600 font-medium" : "text-gray-500",
-                                company.cashStale && "border-b border-dashed border-amber-400/60"
-                              )} title={company.cashStale ? `Cash data from ${company._staticCashAsOf || company.cashAsOf} — may be stale` : undefined}>
-                                {company.cashStale && <span className="text-amber-400/70">~</span>}
+                              )}>
                                 {company.leverageRatio >= 1 ? "⚠️ " : ""}
                                 {company.leverageRatio.toFixed(2)}x
-                              </span>
-                            ) : company.cashStale ? (
-                              <span className="border-b border-dashed border-amber-400/60" title={`Cash data from ${company.cashAsOf} — may be stale`}>
-                                <span className="text-amber-400/70">~</span>
-                                <span className="text-gray-500">0.00x</span>
                               </span>
                             ) : (
                               <span className="text-gray-400">—</span>
@@ -1370,19 +1403,21 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                             )}
                           </TableCell>
                           <TableCell className="text-right font-mono text-sm">
-                            {company.leverageRatio > 0 ? (
+                            {company.cashStale && company.estimatedLeverage !== null ? (
+                              <span className={cn(
+                                "border-b border-dashed border-amber-400/60",
+                                company.estimatedLeverage >= 1 ? "text-amber-600 font-medium" : "text-gray-500",
+                              )} title={`Estimated: cash (${company._staticCashAsOf || company.cashAsOf}) adjusted for crypto purchases since`}>
+                                <span className="text-amber-400/70">~</span>
+                                {company.estimatedLeverage >= 1 ? "⚠️ " : ""}
+                                {company.estimatedLeverage.toFixed(2)}x
+                              </span>
+                            ) : company.leverageRatio > 0 ? (
                               <span className={cn(
                                 company.leverageRatio >= 1 ? "text-amber-600 font-medium" : "text-gray-500",
-                                company.cashStale && "border-b border-dashed border-amber-400/60"
-                              )} title={company.cashStale ? `Cash data from ${company._staticCashAsOf || company.cashAsOf} — may be stale` : undefined}>
-                                {company.cashStale && <span className="text-amber-400/70">~</span>}
+                              )}>
                                 {company.leverageRatio >= 1 ? "⚠️ " : ""}
                                 {company.leverageRatio.toFixed(2)}x
-                              </span>
-                            ) : company.cashStale ? (
-                              <span className="border-b border-dashed border-amber-400/60" title={`Cash data from ${company.cashAsOf} — may be stale`}>
-                                <span className="text-amber-400/70">~</span>
-                                <span className="text-gray-500">0.00x</span>
                               </span>
                             ) : (
                               <span className="text-gray-400">—</span>
