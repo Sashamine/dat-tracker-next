@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -19,7 +20,7 @@ import { getCompanyMNAV, getCompanyMNAVDetailed, calculateTotalCryptoNAV } from 
 import { dilutiveInstruments, getEffectiveShares } from "@/lib/data/dilutive-instruments";
 import { useFilters } from "@/lib/hooks/use-filters";
 import { StalenessCompact } from "@/components/staleness-indicator";
-import { FlashingPrice, FlashingLargeNumber, FlashingPercent } from "@/components/flashing-price";
+import { FlashingLargeNumber } from "@/components/flashing-price";
 import { MNAVTooltip } from "@/components/mnav-tooltip";
 import { COMPANY_SOURCES } from "@/lib/data/company-sources";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -49,6 +50,10 @@ interface DataTableProps {
   companies: Company[];
   prices?: PriceData;
   yesterdayMnav?: YesterdayMnavData;
+  onVisibleSummaryChange?: (summary: {
+    visibleCount: number;
+    visibleTreasuryValue: number;
+  }) => void;
 }
 
 interface HpsGrowthApiSnapshot {
@@ -83,11 +88,195 @@ function formatGrowthPct(value: number | null): string {
   return `${sign}${value.toFixed(1)}%`;
 }
 
+function formatCompactUsd(value: number | null | undefined): string {
+  if (value === null || value === undefined || !Number.isFinite(value)) return "—";
+  if (value >= 1_000_000_000) return `$${(value / 1_000_000_000).toFixed(1)}B`;
+  if (value >= 1_000_000) return `$${(value / 1_000_000).toFixed(1)}M`;
+  if (value >= 1_000) return `$${(value / 1_000).toFixed(1)}K`;
+  return `$${value.toFixed(0)}`;
+}
+
+function formatRatio(value: number | null | undefined): string {
+  if (value === null || value === undefined || !Number.isFinite(value)) return "—";
+  return value.toFixed(1);
+}
+
+function formatHps(value: number | null | undefined): string {
+  if (value === null || value === undefined || !Number.isFinite(value) || value <= 0) return "—";
+  if (value >= 100) {
+    return value.toLocaleString(undefined, { maximumFractionDigits: 2 });
+  }
+  if (value >= 1) {
+    return value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 3 });
+  }
+  if (value >= 0.01) {
+    return value.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 4 });
+  }
+  return value.toLocaleString(undefined, { minimumFractionDigits: 4, maximumFractionDigits: 6 });
+}
+
+function median(values: number[]): number | null {
+  if (values.length === 0) return null;
+  const sorted = [...values].sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  return sorted.length % 2 === 0
+    ? (sorted[mid - 1] + sorted[mid]) / 2
+    : sorted[mid];
+}
+
 function getGrowthColor(value: number | null): string {
   if (value === null || !Number.isFinite(value)) return "text-gray-400";
   if (value > 0) return "text-green-600";
   if (value < 0) return "text-red-600";
   return "text-gray-500";
+}
+
+interface ScatterPoint {
+  id: string;
+  ticker: string;
+  name: string;
+  asset: string;
+  mNAV: number;
+  ahpsGrowth90d: number;
+  holdingsValue: number;
+}
+
+function MoneyballScatterPlot({
+  companies,
+  medianGrowth,
+  onSelect,
+}: {
+  companies: ScatterPoint[];
+  medianGrowth: number | null;
+  onSelect: (ticker: string) => void;
+}) {
+  const [hoveredTicker, setHoveredTicker] = useState<string | null>(null);
+
+  if (companies.length === 0) {
+    return null;
+  }
+
+  const maxX = Math.max(2, ...companies.map((company) => company.mNAV), 1);
+  const minY = Math.min(0, ...companies.map((company) => company.ahpsGrowth90d));
+  const maxY = Math.max(0, ...companies.map((company) => company.ahpsGrowth90d));
+  const yPadding = Math.max(10, (maxY - minY) * 0.12 || 10);
+  const chartMinY = minY - yPadding;
+  const chartMaxY = maxY + yPadding;
+  const yRange = Math.max(1, chartMaxY - chartMinY);
+  const largestTreasury = Math.max(...companies.map((company) => company.holdingsValue), 1);
+  const labeledTickers = new Set(
+    [...companies]
+      .sort((a, b) => b.holdingsValue - a.holdingsValue)
+      .slice(0, 10)
+      .map((company) => company.ticker)
+  );
+  const hoveredCompany = companies.find((company) => company.ticker === hoveredTicker) ?? null;
+  const medianLineY = medianGrowth === null
+    ? null
+    : 100 - ((medianGrowth - chartMinY) / yRange) * 100;
+  const navLineX = (1 / maxX) * 100;
+
+  return (
+    <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-950">
+      <div className="mb-4">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          HPS Growth vs. mNAV
+        </h3>
+        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          Moneyball view: per-share treasury growth on the y-axis, wrapper valuation on the x-axis, treasury scale in dot size.
+        </p>
+      </div>
+
+      <div className="relative h-[340px] overflow-hidden rounded-xl border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900 sm:h-[420px]">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute inset-x-0 top-1/4 border-t border-dashed border-gray-200 dark:border-gray-700" />
+          <div className="absolute inset-x-0 top-1/2 border-t border-dashed border-gray-200 dark:border-gray-700" />
+          <div className="absolute inset-x-0 top-3/4 border-t border-dashed border-gray-200 dark:border-gray-700" />
+          <div className="absolute inset-y-0 left-1/4 border-l border-dashed border-gray-200 dark:border-gray-700" />
+          <div className="absolute inset-y-0 left-1/2 border-l border-dashed border-gray-200 dark:border-gray-700" />
+          <div className="absolute inset-y-0 left-3/4 border-l border-dashed border-gray-200 dark:border-gray-700" />
+          <div
+            className="absolute inset-y-0 border-l border-indigo-300 dark:border-indigo-600"
+            style={{ left: `${Math.min(100, navLineX)}%` }}
+          />
+          {medianLineY !== null && (
+            <div
+              className="absolute inset-x-0 border-t border-emerald-300 dark:border-emerald-600"
+              style={{ top: `${Math.min(100, Math.max(0, medianLineY))}%` }}
+            />
+          )}
+        </div>
+
+        <div className="pointer-events-none absolute inset-x-3 top-3 hidden text-xs font-medium text-gray-500 dark:text-gray-400 sm:block">
+          <div className="flex justify-between">
+            <span>Undervalued Performers</span>
+            <span>Elite Wrappers</span>
+          </div>
+        </div>
+        <div className="pointer-events-none absolute inset-x-3 bottom-3 hidden text-xs font-medium text-gray-500 dark:text-gray-400 sm:block">
+          <div className="flex justify-between">
+            <span>Turnaround Candidates</span>
+            <span>Overpriced Wrappers</span>
+          </div>
+        </div>
+
+        <div className="absolute inset-0 px-4 pb-10 pt-6 sm:px-8 sm:pb-12 sm:pt-8">
+          {companies.map((company) => {
+            const x = Math.min(100, (company.mNAV / maxX) * 100);
+            const y = 100 - ((company.ahpsGrowth90d - chartMinY) / yRange) * 100;
+            const radius = 8 + Math.log10(Math.max(1, company.holdingsValue)) / Math.log10(Math.max(10, largestTreasury)) * 16;
+            const isHovered = hoveredTicker === company.ticker;
+
+            return (
+              <button
+                key={company.id}
+                type="button"
+                className="group absolute -translate-x-1/2 -translate-y-1/2 focus:outline-none"
+                style={{ left: `${x}%`, top: `${y}%` }}
+                onClick={() => onSelect(company.ticker)}
+                onMouseEnter={() => setHoveredTicker(company.ticker)}
+                onMouseLeave={() => setHoveredTicker((current) => (current === company.ticker ? null : current))}
+                aria-label={`${company.name}: ${formatGrowthPct(company.ahpsGrowth90d)} HPS growth at ${company.mNAV.toFixed(2)}x mNAV`}
+              >
+                <span
+                  className={cn(
+                    "block rounded-full border-2 shadow-sm transition-transform duration-150 group-hover:scale-110",
+                    scatterDotColors[company.asset] || scatterDotColors.ETH,
+                    isHovered ? "ring-2 ring-offset-2 ring-indigo-400 dark:ring-indigo-500 dark:ring-offset-gray-900" : ""
+                  )}
+                  style={{ width: `${radius}px`, height: `${radius}px` }}
+                />
+                {labeledTickers.has(company.ticker) && (
+                  <span className="pointer-events-none absolute left-1/2 top-full mt-1 hidden -translate-x-1/2 whitespace-nowrap text-[10px] font-semibold text-gray-700 dark:text-gray-200 sm:block">
+                    {company.ticker}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        {hoveredCompany && (
+          <div className="pointer-events-none absolute left-4 top-4 z-10 max-w-[220px] rounded-lg border border-gray-200 bg-white/95 p-3 shadow-lg backdrop-blur dark:border-gray-700 dark:bg-gray-950/95">
+            <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">{hoveredCompany.name}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">{hoveredCompany.ticker}</p>
+            <div className="mt-2 space-y-1 text-sm">
+              <p className="flex justify-between gap-4"><span className="text-gray-500">Treasury</span><span className="font-medium text-gray-900 dark:text-gray-100">{formatCompactUsd(hoveredCompany.holdingsValue)}</span></p>
+              <p className="flex justify-between gap-4"><span className="text-gray-500">HPS Growth</span><span className={cn("font-medium", getGrowthColor(hoveredCompany.ahpsGrowth90d))}>{formatGrowthPct(hoveredCompany.ahpsGrowth90d)}</span></p>
+              <p className="flex justify-between gap-4"><span className="text-gray-500">mNAV</span><span className="font-medium text-gray-900 dark:text-gray-100">{hoveredCompany.mNAV.toFixed(2)}x</span></p>
+            </div>
+          </div>
+        )}
+
+        <div className="pointer-events-none absolute bottom-2 left-3 text-[11px] text-gray-500 dark:text-gray-400">
+          HPS Growth (90D)
+        </div>
+        <div className="pointer-events-none absolute bottom-2 right-3 text-[11px] text-gray-500 dark:text-gray-400">
+          mNAV
+        </div>
+      </div>
+    </div>
+  );
 }
 
 
@@ -117,7 +306,27 @@ const assetColors: Record<string, string> = {
   HBAR: "bg-gray-500/10 text-gray-600 border-gray-500/20",
 };
 
-export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) {
+const scatterDotColors: Record<string, string> = {
+  ETH: "bg-indigo-500 border-indigo-600",
+  BTC: "bg-orange-500 border-orange-600",
+  SOL: "bg-purple-500 border-purple-600",
+  HYPE: "bg-green-500 border-green-600",
+  BNB: "bg-yellow-500 border-yellow-600",
+  TAO: "bg-cyan-500 border-cyan-600",
+  LINK: "bg-blue-500 border-blue-600",
+  TRX: "bg-red-500 border-red-600",
+  XRP: "bg-gray-500 border-gray-600",
+  ZEC: "bg-amber-500 border-amber-600",
+  MULTI: "bg-pink-500 border-pink-600",
+  LTC: "bg-slate-500 border-slate-600",
+  SUI: "bg-sky-500 border-sky-600",
+  DOGE: "bg-amber-500 border-amber-600",
+  AVAX: "bg-rose-500 border-rose-600",
+  ADA: "bg-blue-500 border-blue-600",
+  HBAR: "bg-gray-500 border-gray-600",
+};
+
+export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryChange }: DataTableProps) {
   const router = useRouter();
   const { data: ahpsData } = useSWR<{
     success: boolean;
@@ -273,8 +482,13 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
       isAfterHours,
       otherAssets,
       leverageRatio,
+      currentHps: company.holdings > 0 && company.sharesForMnav ? company.holdings / company.sharesForMnav : null,
       currentAhps: ahpsMetrics.currentAhps,
       ahpsGrowth90d: ahpsMetrics.ahpsGrowth90d,
+      wrapperEfficiency:
+        ahpsMetrics.ahpsGrowth90d !== null && mNAV && mNAV > 0
+          ? ahpsMetrics.ahpsGrowth90d / mNAV
+          : null,
       ahpsMethod: ahpsMetrics.method,
       usesAdjustedShares: ahpsMetrics.usesAdjustedShares,
     };
@@ -325,6 +539,37 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
 
   // Check if crypto prices have loaded (at least one company has non-zero holdingsValue)
   const pricesLoaded = filteredCompanies.some(c => c.holdingsValue > 0);
+  const visibleTreasuryValue = filteredCompanies.reduce((sum, company) => sum + company.holdingsValue, 0);
+  const growthMetrics = filteredCompanies
+    .map((company) => company.ahpsGrowth90d)
+    .filter((value): value is number => value !== null && Number.isFinite(value));
+  const efficiencyMetrics = filteredCompanies
+    .map((company) => company.wrapperEfficiency)
+    .filter((value): value is number => value !== null && Number.isFinite(value));
+  const positiveGrowthCount = growthMetrics.filter((value) => value > 0).length;
+  const medianGrowth = median(growthMetrics);
+  const medianEfficiency = median(efficiencyMetrics);
+  const bestEfficiencyCompany = filteredCompanies
+    .filter((company) => company.wrapperEfficiency !== null && Number.isFinite(company.wrapperEfficiency))
+    .sort((a, b) => (b.wrapperEfficiency ?? Number.NEGATIVE_INFINITY) - (a.wrapperEfficiency ?? Number.NEGATIVE_INFINITY))[0];
+  const scatterCompanies: ScatterPoint[] = filteredCompanies
+    .filter((company) => company.ahpsGrowth90d !== null && Number.isFinite(company.ahpsGrowth90d) && company.mNAV > 0)
+    .map((company) => ({
+      id: company.id,
+      ticker: company.ticker,
+      name: company.name,
+      asset: company.asset,
+      mNAV: company.mNAV,
+      ahpsGrowth90d: company.ahpsGrowth90d as number,
+      holdingsValue: company.holdingsValue,
+    }));
+
+  useEffect(() => {
+    onVisibleSummaryChange?.({
+      visibleCount: filteredCompanies.length,
+      visibleTreasuryValue,
+    });
+  }, [filteredCompanies.length, onVisibleSummaryChange, visibleTreasuryValue]);
 
   // Sort companies
   const sortedCompanies = [...filteredCompanies].sort((a, b) => {
@@ -334,6 +579,10 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
       case "hpsGrowth90d":
         aVal = a.ahpsGrowth90d ?? Number.NEGATIVE_INFINITY;
         bVal = b.ahpsGrowth90d ?? Number.NEGATIVE_INFINITY;
+        break;
+      case "wrapperEfficiency":
+        aVal = a.wrapperEfficiency ?? Number.NEGATIVE_INFINITY;
+        bVal = b.wrapperEfficiency ?? Number.NEGATIVE_INFINITY;
         break;
       case "holdingsValue":
         // When prices haven't loaded, sort by ticker alphabetically for stability
@@ -398,6 +647,9 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
       setSortDir("desc");
     }
   };
+
+  const sortIndicator = (field: string) =>
+    sortField === field ? (sortDir === "desc" ? "↓" : "↑") : "";
 
   // Fallback logo component - shows ticker initials
   const FallbackLogo = ({ ticker }: { ticker: string }) => (
@@ -609,75 +861,105 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
       </div>
       <div className="grid grid-cols-4 gap-3 pt-3 border-t border-gray-100 dark:border-gray-800">
         <div>
-          <p className="text-xs text-gray-500 uppercase">AHPS 90D</p>
-          <div className="flex items-center gap-1">
-            <p className={cn("font-semibold", getGrowthColor(company.ahpsGrowth90d))}>
-              {formatGrowthPct(company.ahpsGrowth90d)}
+          <p className="text-xs text-gray-500 uppercase">
+            {isSizeView ? "Treasury" : isEfficiencyView ? "Efficiency" : "HPS 90D"}
+          </p>
+          {isSizeView ? (
+            <p className="font-semibold text-gray-900 dark:text-gray-100">{formatCompactUsd(company.holdingsValue)}</p>
+          ) : isEfficiencyView ? (
+            <p className={cn("font-semibold", getGrowthColor(company.wrapperEfficiency))}>
+              {formatRatio(company.wrapperEfficiency)}
             </p>
-            {company.usesAdjustedShares && (
-              <Badge variant="outline" className="text-[10px] px-1 py-0 bg-green-500/10 text-green-600 border-green-500/30">
-                Adj
-              </Badge>
-            )}
-          </div>
+          ) : (
+            <div className="flex items-center gap-1">
+              <p className={cn("font-semibold", getGrowthColor(company.ahpsGrowth90d))}>
+                {formatGrowthPct(company.ahpsGrowth90d)}
+              </p>
+              {company.usesAdjustedShares && (
+                <Badge variant="outline" className="text-[10px] px-1 py-0 bg-green-500/10 text-green-600 border-green-500/30">
+                  Adj
+                </Badge>
+              )}
+            </div>
+          )}
         </div>
         <div>
-          <p className="text-xs text-gray-500 uppercase">mNAV</p>
-          <div className="flex items-center gap-1 font-semibold text-gray-900 dark:text-gray-100">
-            {company.pendingMerger ? "—" : (
-              <>
-                {company.mnavWarnings && company.mnavWarnings.length > 0 && (
-                  <span className="text-amber-500 text-xs">⚠️</span>
-                )}
-                <MNAVTooltip
-                  mNAV={company.mNAV}
-                  marketCap={company.marketCap}
-                  holdingsValue={company.holdingsValue}
-                  totalDebt={company.totalDebt}
-                  preferredEquity={company.preferredEquity}
-                  cashReserves={company.cashReserves}
-                  restrictedCash={company.restrictedCash}
-                  otherInvestments={company.otherInvestments}
-                  ticker={company.ticker}
-                  asset={company.asset}
-                  holdings={company.holdings}
-                  sharesForMnav={company.sharesForMnav}
-                  stockPrice={company.stockPrice}
-                  cryptoPrice={company.cryptoPrice}
-                  hasLiveData={company.hasLiveBalanceSheet}
-                  hasDilutiveInstruments={hasDilutiveInstruments}
-                  basicShares={dilutionInfo.basicShares}
-                  dilutedShares={dilutionInfo.dilutedShares}
-                  itmDilutionShares={dilutionInfo.itmDilutionShares}
-                  itmDebtAdjustment={dilutionInfo.itmDebtAdjustment}
-                  holdingsSourceUrl={company.holdingsSourceUrl}
-                  officialDashboard={COMPANY_SOURCES[company.ticker]?.officialDashboard}
-                  secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
-                  officialDashboardName={COMPANY_SOURCES[company.ticker]?.officialDashboardName}
-                  officialMnavNote={COMPANY_SOURCES[company.ticker]?.officialMnavNote}
-                  sharesSource={company.sharesSource}
-                  sharesAsOf={company.sharesAsOf}
-                  sharesSourceUrl={company.sharesSourceUrl}
-                  debtSource={company.debtSource}
-                  debtAsOf={company.debtAsOf}
-                  debtSourceUrl={company.debtSourceUrl}
-                  cashSource={company.cashSource}
-                  cashAsOf={company.cashAsOf}
-                  cashSourceUrl={company.cashSourceUrl}
-                  preferredSource={company.preferredSource}
-                  preferredAsOf={company.preferredAsOf}
-                  preferredSourceUrl={company.preferredSourceUrl}
-                />
-              </>
-            )}
-          </div>
+          <p className="text-xs text-gray-500 uppercase">{isSizeView ? "HPS" : "mNAV"}</p>
+          {isSizeView ? (
+            <p className="font-semibold text-gray-900 dark:text-gray-100">{formatHps(company.currentHps)}</p>
+          ) : (
+            <div className="flex items-center gap-1 font-semibold text-gray-900 dark:text-gray-100">
+              {company.pendingMerger ? "—" : (
+                <>
+                  {company.mnavWarnings && company.mnavWarnings.length > 0 && (
+                    <span className="text-amber-500 text-xs">⚠️</span>
+                  )}
+                  <MNAVTooltip
+                    mNAV={company.mNAV}
+                    marketCap={company.marketCap}
+                    holdingsValue={company.holdingsValue}
+                    totalDebt={company.totalDebt}
+                    preferredEquity={company.preferredEquity}
+                    cashReserves={company.cashReserves}
+                    restrictedCash={company.restrictedCash}
+                    otherInvestments={company.otherInvestments}
+                    ticker={company.ticker}
+                    asset={company.asset}
+                    holdings={company.holdings}
+                    sharesForMnav={company.sharesForMnav}
+                    stockPrice={company.stockPrice}
+                    cryptoPrice={company.cryptoPrice}
+                    hasLiveData={company.hasLiveBalanceSheet}
+                    hasDilutiveInstruments={hasDilutiveInstruments}
+                    basicShares={dilutionInfo.basicShares}
+                    dilutedShares={dilutionInfo.dilutedShares}
+                    itmDilutionShares={dilutionInfo.itmDilutionShares}
+                    itmDebtAdjustment={dilutionInfo.itmDebtAdjustment}
+                    holdingsSourceUrl={company.holdingsSourceUrl}
+                    officialDashboard={COMPANY_SOURCES[company.ticker]?.officialDashboard}
+                    secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
+                    officialDashboardName={COMPANY_SOURCES[company.ticker]?.officialDashboardName}
+                    officialMnavNote={COMPANY_SOURCES[company.ticker]?.officialMnavNote}
+                    sharesSource={company.sharesSource}
+                    sharesAsOf={company.sharesAsOf}
+                    sharesSourceUrl={company.sharesSourceUrl}
+                    debtSource={company.debtSource}
+                    debtAsOf={company.debtAsOf}
+                    debtSourceUrl={company.debtSourceUrl}
+                    cashSource={company.cashSource}
+                    cashAsOf={company.cashAsOf}
+                    cashSourceUrl={company.cashSourceUrl}
+                    preferredSource={company.preferredSource}
+                    preferredAsOf={company.preferredAsOf}
+                    preferredSourceUrl={company.preferredSourceUrl}
+                  />
+                </>
+              )}
+            </div>
+          )}
         </div>
         <div>
-          <p className="text-xs text-gray-500 uppercase">Treasury</p>
-          <p className="font-semibold text-gray-900 dark:text-gray-100">{formatNumber(company.holdingsValue)}</p>
+          <p className="text-xs text-gray-500 uppercase">{isSizeView ? "mNAV" : isEfficiencyView ? "HPS 90D" : "Treasury"}</p>
+          {isSizeView ? (
+            <p className="font-semibold text-gray-900 dark:text-gray-100">{company.pendingMerger ? "—" : `${company.mNAV.toFixed(2)}x`}</p>
+          ) : isEfficiencyView ? (
+            <div className="flex items-center gap-1">
+              <p className={cn("font-semibold", getGrowthColor(company.ahpsGrowth90d))}>{formatGrowthPct(company.ahpsGrowth90d)}</p>
+              {company.usesAdjustedShares && (
+                <Badge variant="outline" className="text-[10px] px-1 py-0 bg-green-500/10 text-green-600 border-green-500/30">
+                  Adj
+                </Badge>
+              )}
+            </div>
+          ) : (
+            <p className="font-semibold text-gray-900 dark:text-gray-100">{formatCompactUsd(company.holdingsValue)}</p>
+          )}
         </div>
         <div>
-          <p className="text-xs text-gray-500 uppercase">Leverage</p>
+          <p className="text-xs text-gray-500 uppercase">{isGrowthView ? "Treasury" : "Leverage"}</p>
+          {isGrowthView ? (
+            <p className="font-semibold text-gray-900 dark:text-gray-100">{formatCompactUsd(company.holdingsValue)}</p>
+          ) : (
           <p className={cn(
             "font-semibold",
             company.leverageRatio >= 1 ? "text-amber-600" : "text-gray-900 dark:text-gray-100"
@@ -689,14 +971,16 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
               </span>
             ) : "—"}
           </p>
+          )}
         </div>
       </div>
     </div>
     );
   };
 
+  const isEfficiencyView = sortField === "wrapperEfficiency";
   const isGrowthView = sortField === "hpsGrowth90d";
-  const isSizeView = sortField === "holdingsValue" || sortField === "marketCap";
+  const isSizeView = !isGrowthView && !isEfficiencyView;
 
   const switchToGrowth = () => {
     setSortField("hpsGrowth90d");
@@ -708,47 +992,75 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
     setSortDir("desc");
   };
 
+  const switchToEfficiency = () => {
+    setSortField("wrapperEfficiency");
+    setSortDir("desc");
+  };
+
+  const viewSubtitle = isGrowthView
+    ? `Median: ${formatGrowthPct(medianGrowth)} • ${positiveGrowthCount}/${filteredCompanies.length} growing HPS`
+    : isEfficiencyView
+      ? `Median efficiency: ${formatRatio(medianEfficiency)} • Best: ${bestEfficiencyCompany?.ticker ?? "—"}`
+      : `${filteredCompanies.length} companies • ${formatCompactUsd(visibleTreasuryValue)} total treasury`;
+
   return (
     <div className="rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden lg:border-0">
+      <div className="mb-4">
+        <MoneyballScatterPlot
+          companies={scatterCompanies}
+          medianGrowth={medianGrowth}
+          onSelect={(ticker) => router.push(`/company/${ticker}`)}
+        />
+      </div>
+
       {/* View Toggle */}
-      <div className="flex items-center gap-1 p-2 bg-gray-50 dark:bg-gray-900/50 border-b border-gray-200 dark:border-gray-800">
-        <button
-          onClick={switchToGrowth}
-          className={cn(
-            "px-3 py-1.5 text-sm font-medium rounded-md transition-colors",
-            isGrowthView
-              ? "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm border border-gray-200 dark:border-gray-700"
-              : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
-          )}
-        >
-          Performance
-        </button>
-        <button
-          onClick={switchToSize}
-          className={cn(
-            "px-3 py-1.5 text-sm font-medium rounded-md transition-colors",
-            isSizeView
-              ? "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm border border-gray-200 dark:border-gray-700"
-              : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
-          )}
-        >
-          Size
-        </button>
-        <span className="ml-2 text-xs text-gray-400 dark:text-gray-500 hidden sm:inline">
-          {isGrowthView
-            ? "90-day AHPS growth — who's accumulating fastest"
-            : isSizeView
-              ? "Total treasury value — largest crypto holdings"
-              : `Sorted by ${sortField}`}
-        </span>
+      <div className="border-b border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900/50">
+        <div className="flex items-center gap-1 p-2">
+          <button
+            onClick={switchToSize}
+            className={cn(
+              "px-3 py-1.5 text-sm font-medium rounded-md transition-colors",
+              isSizeView
+                ? "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm border border-gray-200 dark:border-gray-700"
+                : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+            )}
+          >
+            Size
+          </button>
+          <button
+            onClick={switchToGrowth}
+            className={cn(
+              "px-3 py-1.5 text-sm font-medium rounded-md transition-colors",
+              isGrowthView
+                ? "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm border border-gray-200 dark:border-gray-700"
+                : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+            )}
+          >
+            Growth
+          </button>
+          <button
+            onClick={switchToEfficiency}
+            className={cn(
+              "px-3 py-1.5 text-sm font-medium rounded-md transition-colors",
+              isEfficiencyView
+                ? "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm border border-gray-200 dark:border-gray-700"
+                : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+            )}
+          >
+            Efficiency
+          </button>
+        </div>
+        <div className="px-3 pb-3 text-sm text-gray-500 dark:text-gray-400">
+          {viewSubtitle}
+        </div>
       </div>
       {filteredCompanies.length === 0 ? (
         <div className="p-8 text-center">
           <p className="text-gray-700 dark:text-gray-200 font-medium">
-            No companies match the current AHPS leaderboard filters.
+            No companies match the current leaderboard filters.
           </p>
           <p className="mt-1 text-sm text-gray-500">
-            Clear one or more filters to repopulate the 90-day adjusted holdings-per-share rankings.
+            Clear one or more filters to repopulate the DAT company leaderboard.
           </p>
         </div>
       ) : (
@@ -762,397 +1074,386 @@ export function DataTable({ companies, prices, yesterdayMnav }: DataTableProps) 
 
           {/* Desktop Table View */}
           <div className="hidden lg:block overflow-x-auto border border-gray-200 dark:border-gray-800 rounded-lg">
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-gray-50 dark:bg-gray-900/50">
-                <TableHead className="w-[40px]">#</TableHead>
-                <TableHead className="w-[40px]"></TableHead>
-                <TableHead
-                  className="cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                  onClick={() => handleSort("ticker")}
-                >
-                  Company {sortField === "ticker" && (sortDir === "desc" ? "↓" : "↑")}
-                </TableHead>
-                <TableHead>Asset</TableHead>
-                <TableHead
-                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                  onClick={() => handleSort("hpsGrowth90d")}
-                >
-                  AHPS Growth (90D) {sortField === "hpsGrowth90d" && (sortDir === "desc" ? "↓" : "↑")}
-                </TableHead>
-                <TableHead
-                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                  onClick={() => handleSort("mNAV")}
-                >
-                  mNAV {sortField === "mNAV" && (sortDir === "desc" ? "↓" : "↑")}
-                </TableHead>
-                <TableHead
-                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                  onClick={() => handleSort("mNAVChange")}
-                >
-                  mNAV 24h {sortField === "mNAVChange" && (sortDir === "desc" ? "↓" : "↑")}
-                </TableHead>
-                <TableHead
-                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                  onClick={() => handleSort("leverageRatio")}
-                >
-                  Leverage {sortField === "leverageRatio" && (sortDir === "desc" ? "↓" : "↑")}
-                </TableHead>
-                <TableHead
-                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                  onClick={() => handleSort("stockPrice")}
-                >
-                  Price {sortField === "stockPrice" && (sortDir === "desc" ? "↓" : "↑")}
-                </TableHead>
-                <TableHead className="text-right">Change</TableHead>
-                <TableHead
-                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                  onClick={() => handleSort("stockVolume")}
-                >
-                  Volume {sortField === "stockVolume" && (sortDir === "desc" ? "↓" : "↑")}
-                </TableHead>
-                <TableHead
-                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                  onClick={() => handleSort("marketCap")}
-                >
-                  Market Cap {sortField === "marketCap" && (sortDir === "desc" ? "↓" : "↑")}
-                </TableHead>
-                <TableHead
-                  className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
-                  onClick={() => handleSort("holdingsValue")}
-                >
-                  Treasury {sortField === "holdingsValue" && (sortDir === "desc" ? "↓" : "↑")}
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {sortedCompanies.map((company, index) => {
-                // Compute dilution info for companies with convertibles/warrants
-                const hasDilutiveInstruments = !!dilutiveInstruments[company.ticker];
-                let dilutionInfo: { basicShares?: number; dilutedShares?: number; itmDilutionShares?: number; itmDebtAdjustment?: number } = {};
-                if (hasDilutiveInstruments && company.sharesForMnav && company.stockPrice) {
-                  const result = getEffectiveShares(company.ticker, company.sharesForMnav, company.stockPrice);
-                  dilutionInfo = {
-                    basicShares: result.basic,
-                    dilutedShares: result.diluted,
-                    itmDilutionShares: result.diluted - result.basic,
-                    itmDebtAdjustment: result.inTheMoneyDebtValue,
-                  };
-                }
-
-                return (
-                <TableRow
-                  key={company.id}
-                  className="hover:bg-gray-50 dark:hover:bg-gray-900/30 cursor-pointer transition-colors"
-                  onClick={() => router.push(`/company/${company.ticker}`)}
-                >
-                  <TableCell className="text-gray-500 font-medium text-sm">
-                    {index + 1}
-                  </TableCell>
-                  <TableCell className="p-2">
-                    <CompanyLogo ticker={company.ticker} />
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex flex-col">
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-semibold text-gray-900 dark:text-gray-100">
-                          {company.ticker}
-                        </span>
-                        <CitationPopover
-                          sourceUrl={company.holdingsSourceUrl}
-                          sourceLabel={company.holdingsSource}
-                          ticker={company.ticker}
-                          metric="holdings_native"
-                          confidenceScore={company.confidenceScores?.['holdings_native']}
-                          jurisdiction={company.jurisdiction}
-                          legacy={company.holdingsBasis === 'static_fallback'}
-                          sourceQuote={company.sourceQuote}
-                        >
-                          <VerificationBadge
-                            status={getVerificationStatus(
-                              company.holdingsSourceUrl?.includes("sec.gov") ? "sec-filing" : company.holdingsSource,
-                              company.holdingsSourceUrl,
-                              company.holdingsLastUpdated
-                            )}
-                            compact
-                          />
-                        </CitationPopover>
-                        {company.notes && company.notes.toLowerCase().includes("no sec") && (
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <span className="text-amber-500 cursor-help">⚠️</span>
-                              </TooltipTrigger>
-                              <TooltipContent className="max-w-xs">
-                                <p className="text-sm">{company.notes}</p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        )}
-                        {company.dataWarnings && company.dataWarnings.length > 0 && (
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <span className="text-amber-500 cursor-help text-sm">📋</span>
-                              </TooltipTrigger>
-                              <TooltipContent className="max-w-xs">
-                                {company.dataWarnings.map((w, i) => (
-                                  <p key={i} className="text-sm">
-                                    {w.filingUrl ? (
-                                      <a
-                                        href={w.filingUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="underline"
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          trackCitationSourceClick({ href: w.filingUrl || "", ticker: company.ticker, metric: "filings" });
-                                        }}
-                                      >
-                                        {w.message}
-                                      </a>
-                                    ) : w.message}
-                                  </p>
-                                ))}
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        )}
-                        {company.pendingMerger && (
-                          <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-amber-500/10 text-amber-600 border-amber-500/30">
-                            Pending Merger
-                          </Badge>
-                        )}
-                        {company.lowLiquidity && (
-                          <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-gray-500/10 text-gray-500 border-gray-500/30">
-                            Low Liquidity
-                          </Badge>
-                        )}
-                        {/* SEC Referenced badge - only when explicitly flagged */}
-                        {company.secReferenced && (
-                          <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-blue-500/10 text-blue-500 border-blue-500/30">
-                            SEC Referenced
-                          </Badge>
-                        )}
-                        {/* Shares verification badge - only when explicitly flagged */}
-                        {company.dataWarnings?.some(w => w.type === 'unverified-shares') && (
-                          <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-amber-500/10 text-amber-500 border-amber-500/30">
-                            Shares: Company Reported
-                          </Badge>
-                        )}
-                        {/* Miner badge */}
-                        {company.isMiner && (
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/30 cursor-help">
-                                  ⛏️ Miner
-                                </Badge>
-                              </TooltipTrigger>
-                              <TooltipContent className="max-w-xs">
-                                <p className="text-sm">Bitcoin miner - produces BTC through mining operations. mNAV includes value of mining capacity.</p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        )}
-                      </div>
-                      <span className="text-sm text-gray-500 truncate max-w-[180px]">
-                        {company.name}
-                      </span>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <Badge
-                      variant="outline"
-                      className={cn("font-medium", assetColors[company.asset] || assetColors.ETH)}
-                    >
-                      {company.asset}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right font-mono">
-                    <span className={cn("font-semibold", getGrowthColor(company.ahpsGrowth90d))}>
-                      {formatGrowthPct(company.ahpsGrowth90d)}
-                    </span>
-                    {company.usesAdjustedShares && (
-                      <Badge variant="outline" className="ml-1 text-[10px] px-1 py-0 bg-green-500/10 text-green-600 border-green-500/30">
-                        Adj
-                      </Badge>
-                    )}
-                  </TableCell>
-                  <TableCell className="text-right font-mono">
-                    {company.pendingMerger ? (
-                      <span className="text-gray-400" title="mNAV not available for pre-merger SPACs">—</span>
-                    ) : (
-                      <div className="flex items-center justify-end gap-1">
-                        {company.mnavWarnings && company.mnavWarnings.length > 0 && (
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <span className="text-amber-500 cursor-help text-xs">⚠️</span>
-                              </TooltipTrigger>
-                              <TooltipContent className="max-w-xs">
-                                <div className="space-y-1">
-                                  <p className="font-semibold text-amber-500">Calculation Warning</p>
-                                  {company.mnavWarnings.map((w: string, i: number) => (
-                                    <p key={i} className="text-[10px]">{w}</p>
-                                  ))}
-                                </div>
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        )}
-                        <MNAVTooltip
-                          mNAV={company.mNAV}
-                          marketCap={company.marketCap}
-                          holdingsValue={company.holdingsValue}
-                          totalDebt={company.totalDebt}
-                          preferredEquity={company.preferredEquity}
-                          cashReserves={company.cashReserves}
-                          restrictedCash={company.restrictedCash}
-                          otherInvestments={company.otherInvestments}
-                          ticker={company.ticker}
-                          asset={company.asset}
-                          holdings={company.holdings}
-                          sharesForMnav={company.sharesForMnav}
-                          stockPrice={company.stockPrice}
-                          cryptoPrice={company.cryptoPrice}
-                          hasLiveData={company.hasLiveBalanceSheet}
-                          hasDilutiveInstruments={hasDilutiveInstruments}
-                          basicShares={dilutionInfo.basicShares}
-                          dilutedShares={dilutionInfo.dilutedShares}
-                          itmDilutionShares={dilutionInfo.itmDilutionShares}
-                          itmDebtAdjustment={dilutionInfo.itmDebtAdjustment}
-                          holdingsSourceUrl={company.holdingsSourceUrl}
-                          officialDashboard={COMPANY_SOURCES[company.ticker]?.officialDashboard}
-                          secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
-                          officialDashboardName={COMPANY_SOURCES[company.ticker]?.officialDashboardName}
-                          officialMnavNote={COMPANY_SOURCES[company.ticker]?.officialMnavNote}
-                          sharesSource={company.sharesSource}
-                          sharesAsOf={company.sharesAsOf}
-                          sharesSourceUrl={company.sharesSourceUrl}
-                          debtSource={company.debtSource}
-                          debtAsOf={company.debtAsOf}
-                          debtSourceUrl={company.debtSourceUrl}
-                          cashSource={company.cashSource}
-                          cashAsOf={company.cashAsOf}
-                          cashSourceUrl={company.cashSourceUrl}
-                          preferredSource={company.preferredSource}
-                          preferredAsOf={company.preferredAsOf}
-                          preferredSourceUrl={company.preferredSourceUrl}
-                        />
-                      </div>
-                    )}
-                  </TableCell>
-                  <TableCell className="text-right font-mono text-sm">
-                    {company.pendingMerger ? (
-                      <span className="text-gray-400">—</span>
-                    ) : (
-                      <FlashingPercent value={company.mNAVChange} />
-                    )}
-                  </TableCell>
-                  <TableCell className="text-right font-mono text-sm">
-                    {company.leverageRatio > 0 ? (
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <span className={cn(
-                              "inline-flex items-center gap-1",
-                              company.leverageRatio >= 1 ? "text-amber-600 font-medium" : "text-gray-500"
-                            )}>
-                              {company.leverageRatio >= 1 && <span>⚠️</span>}
-                              {company.leverageRatio.toFixed(2)}x
-                            </span>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p className="text-sm">Debt / Crypto NAV</p>
-                            {company.leverageRatio >= 1 && (
-                              <p className="text-xs text-amber-500">High leverage - mNAV elevated by debt structure</p>
-                            )}
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    ) : (
-                      <span className="text-gray-400">—</span>
-                    )}
-                  </TableCell>
-                  <TableCell className="text-right font-mono font-medium text-gray-900 dark:text-gray-100">
-                    <span className="inline-flex items-center gap-1">
-                      <FlashingPrice
-                        value={company.stockPrice}
-                        format={(v) => `$${v.toFixed(2)}`}
-                      />
-                      {company.isAfterHours && (
-                        <span className="text-[10px] px-1 py-0.5 bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded font-medium">
-                          AH
-                        </span>
-                      )}
-                    </span>
-                  </TableCell>
-                  <TableCell className="text-right font-mono text-sm">
-                    <FlashingPercent value={company.stockChange} />
-                  </TableCell>
-                  <TableCell className="text-right font-mono text-sm text-gray-600 dark:text-gray-400">
-                    {company.stockVolume > 0 ? formatNumber(company.stockVolume) : "—"}
-                  </TableCell>
-                  <TableCell className="text-right font-mono text-sm text-gray-600 dark:text-gray-400">
-                    <CitationPopover
-                      sourceUrl={company.sharesSourceUrl}
-                      sourceLabel={company.sharesSource}
-                      sourceQuote={company.sharesSourceQuote}
-                      ticker={company.ticker}
-                      metric="basic_shares"
-                      confidenceScore={company.confidenceScores?.['basic_shares']}
-                      jurisdiction={company.jurisdiction}
-                      legacy={!company.sharesSourceUrl}
-                    >
-                      <FlashingLargeNumber value={company.marketCap} />
-                    </CitationPopover>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    {company.pendingMerger ? (
-                      <div className="flex flex-col items-end">
-                        <span className="text-gray-400 text-sm">TBD</span>
-                        <span className="text-xs text-amber-600 font-mono">
-                          ~{formatNumber(company.expectedHoldings || 0)} {company.asset} expected
-                        </span>
-                      </div>
-                    ) : (
-                      <div className="flex flex-col items-end">
-                        <div className="flex items-center gap-1.5">
-                          <CitationPopover
-                            sourceUrl={company.holdingsSourceUrl}
-                            sourceLabel={company.holdingsSource}
-                            ticker={company.ticker}
-                            metric="holdings_native"
-                            confidenceScore={company.confidenceScores?.['holdings_native']}
-                            jurisdiction={company.jurisdiction}
-                            legacy={company.holdingsBasis === 'static_fallback'}
-                            sourceQuote={company.sourceQuote}
-                          >
-                            <FlashingLargeNumber
-                              value={company.holdingsValue}
-                              className="font-mono font-medium text-gray-900 dark:text-gray-100"
-                            />
-                          </CitationPopover>
-                          <StalenessCompact
-                            lastUpdated={company.holdingsLastUpdated}
-                            sourceUrl={company.holdingsSourceUrl}
-                            ticker={company.ticker}
-                            metric="holdings_native"
-                          />
-                        </div>
-                        <span className="text-xs text-gray-500 font-mono inline-flex items-center gap-1">
-                          {formatNumber(company.holdings)} {company.asset}
-                          <HoldingsBasisBadge basis={company.holdingsBasis} />
-                        </span>
-                      </div>
-                    )}
-                  </TableCell>
+            <Table>
+              <TableHeader className="sticky top-0 z-10 bg-gray-50 dark:bg-gray-900/95">
+                <TableRow className="bg-gray-50 dark:bg-gray-900/50">
+                  <TableHead className="w-[40px]">#</TableHead>
+                  <TableHead
+                    className="cursor-pointer hover:text-gray-900 dark:hover:text-gray-100"
+                    onClick={() => handleSort("ticker")}
+                  >
+                    Company {sortIndicator("ticker")}
+                  </TableHead>
+                  <TableHead>Asset</TableHead>
+                  {isSizeView ? (
+                    <>
+                      <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("holdingsValue")}>
+                        Treasury Value {sortIndicator("holdingsValue")}
+                      </TableHead>
+                      <TableHead className="text-right">HPS</TableHead>
+                      <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("mNAV")}>
+                        mNAV {sortIndicator("mNAV")}
+                      </TableHead>
+                      <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("leverageRatio")}>
+                        Leverage {sortIndicator("leverageRatio")}
+                      </TableHead>
+                    </>
+                  ) : isGrowthView ? (
+                    <>
+                      <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("hpsGrowth90d")}>
+                        HPS Growth (90D) {sortIndicator("hpsGrowth90d")}
+                      </TableHead>
+                      <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("mNAV")}>
+                        mNAV {sortIndicator("mNAV")}
+                      </TableHead>
+                      <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("holdingsValue")}>
+                        Treasury Value {sortIndicator("holdingsValue")}
+                      </TableHead>
+                    </>
+                  ) : (
+                    <>
+                      <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("wrapperEfficiency")}>
+                        Efficiency {sortIndicator("wrapperEfficiency")}
+                      </TableHead>
+                      <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("hpsGrowth90d")}>
+                        HPS Growth {sortIndicator("hpsGrowth90d")}
+                      </TableHead>
+                      <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("mNAV")}>
+                        mNAV {sortIndicator("mNAV")}
+                      </TableHead>
+                      <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("holdingsValue")}>
+                        Treasury Value {sortIndicator("holdingsValue")}
+                      </TableHead>
+                    </>
+                  )}
                 </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {sortedCompanies.map((company, index) => {
+                  const hasDilutiveInstruments = !!dilutiveInstruments[company.ticker];
+                  let dilutionInfo: { basicShares?: number; dilutedShares?: number; itmDilutionShares?: number; itmDebtAdjustment?: number } = {};
+                  if (hasDilutiveInstruments && company.sharesForMnav && company.stockPrice) {
+                    const result = getEffectiveShares(company.ticker, company.sharesForMnav, company.stockPrice);
+                    dilutionInfo = {
+                      basicShares: result.basic,
+                      dilutedShares: result.diluted,
+                      itmDilutionShares: result.diluted - result.basic,
+                      itmDebtAdjustment: result.inTheMoneyDebtValue,
+                    };
+                  }
+
+                  return (
+                    <TableRow
+                      key={company.id}
+                      className="hover:bg-gray-50 dark:hover:bg-gray-900/30 cursor-pointer transition-colors"
+                      onClick={() => router.push(`/company/${company.ticker}`)}
+                    >
+                      <TableCell className="text-gray-500 font-medium text-sm">
+                        {index + 1}
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-3">
+                          <CompanyLogo ticker={company.ticker} />
+                          <div className="min-w-0">
+                            <div className="flex items-center gap-1.5">
+                              <span className="font-semibold text-gray-900 dark:text-gray-100">{company.ticker}</span>
+                              <CitationPopover
+                                sourceUrl={company.holdingsSourceUrl}
+                                sourceLabel={company.holdingsSource}
+                                ticker={company.ticker}
+                                metric="holdings_native"
+                                confidenceScore={company.confidenceScores?.["holdings_native"]}
+                                jurisdiction={company.jurisdiction}
+                                legacy={company.holdingsBasis === "static_fallback"}
+                                sourceQuote={company.sourceQuote}
+                              >
+                                <VerificationBadge
+                                  status={getVerificationStatus(
+                                    company.holdingsSourceUrl?.includes("sec.gov") ? "sec-filing" : company.holdingsSource,
+                                    company.holdingsSourceUrl,
+                                    company.holdingsLastUpdated
+                                  )}
+                                  compact
+                                />
+                              </CitationPopover>
+                              {company.pendingMerger && (
+                                <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-amber-500/10 text-amber-600 border-amber-500/30">
+                                  Pending
+                                </Badge>
+                              )}
+                              {company.lowLiquidity && (
+                                <Badge variant="outline" className="text-[10px] px-1.5 py-0 bg-gray-500/10 text-gray-500 border-gray-500/30">
+                                  Low Liq
+                                </Badge>
+                              )}
+                            </div>
+                            <div className="flex items-center gap-1.5">
+                              <span className="truncate text-sm text-gray-500">{company.name}</span>
+                              <StalenessCompact
+                                lastUpdated={company.holdingsLastUpdated}
+                                sourceUrl={company.holdingsSourceUrl}
+                                ticker={company.ticker}
+                                metric="holdings_native"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant="outline" className={cn("font-medium", assetColors[company.asset] || assetColors.ETH)}>
+                          {company.asset}
+                        </Badge>
+                      </TableCell>
+
+                      {isSizeView ? (
+                        <>
+                          <TableCell className="text-right">
+                            {company.pendingMerger ? (
+                              <div className="flex flex-col items-end">
+                                <span className="text-gray-400 text-sm">TBD</span>
+                                <span className="text-xs text-amber-600 font-mono">
+                                  ~{formatNumber(company.expectedHoldings || 0)} {company.asset} expected
+                                </span>
+                              </div>
+                            ) : (
+                              <div className="flex flex-col items-end">
+                                <CitationPopover
+                                  sourceUrl={company.holdingsSourceUrl}
+                                  sourceLabel={company.holdingsSource}
+                                  ticker={company.ticker}
+                                  metric="holdings_native"
+                                  confidenceScore={company.confidenceScores?.["holdings_native"]}
+                                  jurisdiction={company.jurisdiction}
+                                  legacy={company.holdingsBasis === "static_fallback"}
+                                  sourceQuote={company.sourceQuote}
+                                >
+                                  <FlashingLargeNumber
+                                    value={company.holdingsValue}
+                                    className="font-mono font-medium text-gray-900 dark:text-gray-100"
+                                  />
+                                </CitationPopover>
+                                <span className="text-xs text-gray-500 font-mono inline-flex items-center gap-1">
+                                  {formatNumber(company.holdings)} {company.asset}
+                                  <HoldingsBasisBadge basis={company.holdingsBasis} />
+                                </span>
+                              </div>
+                            )}
+                          </TableCell>
+                          <TableCell className="text-right font-mono text-gray-900 dark:text-gray-100">
+                            {formatHps(company.currentHps)}
+                          </TableCell>
+                          <TableCell className="text-right font-mono">
+                            {company.pendingMerger ? (
+                              <span className="text-gray-400">—</span>
+                            ) : (
+                              <div className="flex items-center justify-end gap-1">
+                                {company.mnavWarnings && company.mnavWarnings.length > 0 && <span className="text-amber-500 text-xs">⚠️</span>}
+                                <MNAVTooltip
+                                  mNAV={company.mNAV}
+                                  marketCap={company.marketCap}
+                                  holdingsValue={company.holdingsValue}
+                                  totalDebt={company.totalDebt}
+                                  preferredEquity={company.preferredEquity}
+                                  cashReserves={company.cashReserves}
+                                  restrictedCash={company.restrictedCash}
+                                  otherInvestments={company.otherInvestments}
+                                  ticker={company.ticker}
+                                  asset={company.asset}
+                                  holdings={company.holdings}
+                                  sharesForMnav={company.sharesForMnav}
+                                  stockPrice={company.stockPrice}
+                                  cryptoPrice={company.cryptoPrice}
+                                  hasLiveData={company.hasLiveBalanceSheet}
+                                  hasDilutiveInstruments={hasDilutiveInstruments}
+                                  basicShares={dilutionInfo.basicShares}
+                                  dilutedShares={dilutionInfo.dilutedShares}
+                                  itmDilutionShares={dilutionInfo.itmDilutionShares}
+                                  itmDebtAdjustment={dilutionInfo.itmDebtAdjustment}
+                                  holdingsSourceUrl={company.holdingsSourceUrl}
+                                  officialDashboard={COMPANY_SOURCES[company.ticker]?.officialDashboard}
+                                  secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
+                                  officialDashboardName={COMPANY_SOURCES[company.ticker]?.officialDashboardName}
+                                  officialMnavNote={COMPANY_SOURCES[company.ticker]?.officialMnavNote}
+                                  sharesSource={company.sharesSource}
+                                  sharesAsOf={company.sharesAsOf}
+                                  sharesSourceUrl={company.sharesSourceUrl}
+                                  debtSource={company.debtSource}
+                                  debtAsOf={company.debtAsOf}
+                                  debtSourceUrl={company.debtSourceUrl}
+                                  cashSource={company.cashSource}
+                                  cashAsOf={company.cashAsOf}
+                                  cashSourceUrl={company.cashSourceUrl}
+                                  preferredSource={company.preferredSource}
+                                  preferredAsOf={company.preferredAsOf}
+                                  preferredSourceUrl={company.preferredSourceUrl}
+                                />
+                              </div>
+                            )}
+                          </TableCell>
+                          <TableCell className="text-right font-mono text-sm">
+                            {company.leverageRatio > 0 ? (
+                              <span className={cn(company.leverageRatio >= 1 ? "text-amber-600 font-medium" : "text-gray-500")}>
+                                {company.leverageRatio >= 1 ? "⚠️ " : ""}
+                                {company.leverageRatio.toFixed(2)}x
+                              </span>
+                            ) : (
+                              <span className="text-gray-400">—</span>
+                            )}
+                          </TableCell>
+                        </>
+                      ) : isGrowthView ? (
+                        <>
+                          <TableCell className="text-right font-mono">
+                            <span className={cn("font-semibold", getGrowthColor(company.ahpsGrowth90d))}>
+                              {formatGrowthPct(company.ahpsGrowth90d)}
+                            </span>
+                            {company.usesAdjustedShares && (
+                              <Badge variant="outline" className="ml-1 text-[10px] px-1 py-0 bg-green-500/10 text-green-600 border-green-500/30">
+                                Adj
+                              </Badge>
+                            )}
+                          </TableCell>
+                          <TableCell className="text-right font-mono">
+                            {company.pendingMerger ? (
+                              <span className="text-gray-400">—</span>
+                            ) : (
+                              <div className="flex items-center justify-end gap-1">
+                                {company.mnavWarnings && company.mnavWarnings.length > 0 && <span className="text-amber-500 text-xs">⚠️</span>}
+                                <MNAVTooltip
+                                  mNAV={company.mNAV}
+                                  marketCap={company.marketCap}
+                                  holdingsValue={company.holdingsValue}
+                                  totalDebt={company.totalDebt}
+                                  preferredEquity={company.preferredEquity}
+                                  cashReserves={company.cashReserves}
+                                  restrictedCash={company.restrictedCash}
+                                  otherInvestments={company.otherInvestments}
+                                  ticker={company.ticker}
+                                  asset={company.asset}
+                                  holdings={company.holdings}
+                                  sharesForMnav={company.sharesForMnav}
+                                  stockPrice={company.stockPrice}
+                                  cryptoPrice={company.cryptoPrice}
+                                  hasLiveData={company.hasLiveBalanceSheet}
+                                  hasDilutiveInstruments={hasDilutiveInstruments}
+                                  basicShares={dilutionInfo.basicShares}
+                                  dilutedShares={dilutionInfo.dilutedShares}
+                                  itmDilutionShares={dilutionInfo.itmDilutionShares}
+                                  itmDebtAdjustment={dilutionInfo.itmDebtAdjustment}
+                                  holdingsSourceUrl={company.holdingsSourceUrl}
+                                  officialDashboard={COMPANY_SOURCES[company.ticker]?.officialDashboard}
+                                  secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
+                                  officialDashboardName={COMPANY_SOURCES[company.ticker]?.officialDashboardName}
+                                  officialMnavNote={COMPANY_SOURCES[company.ticker]?.officialMnavNote}
+                                  sharesSource={company.sharesSource}
+                                  sharesAsOf={company.sharesAsOf}
+                                  sharesSourceUrl={company.sharesSourceUrl}
+                                  debtSource={company.debtSource}
+                                  debtAsOf={company.debtAsOf}
+                                  debtSourceUrl={company.debtSourceUrl}
+                                  cashSource={company.cashSource}
+                                  cashAsOf={company.cashAsOf}
+                                  cashSourceUrl={company.cashSourceUrl}
+                                  preferredSource={company.preferredSource}
+                                  preferredAsOf={company.preferredAsOf}
+                                  preferredSourceUrl={company.preferredSourceUrl}
+                                />
+                              </div>
+                            )}
+                          </TableCell>
+                          <TableCell className="text-right">
+                            {company.pendingMerger ? (
+                              <span className="text-gray-400">TBD</span>
+                            ) : (
+                              <FlashingLargeNumber
+                                value={company.holdingsValue}
+                                className="font-mono font-medium text-gray-900 dark:text-gray-100"
+                              />
+                            )}
+                          </TableCell>
+                        </>
+                      ) : (
+                        <>
+                          <TableCell className="text-right font-mono">
+                            <span className={cn("font-semibold", getGrowthColor(company.wrapperEfficiency))}>
+                              {formatRatio(company.wrapperEfficiency)}
+                            </span>
+                          </TableCell>
+                          <TableCell className="text-right font-mono">
+                            <span className={cn("font-semibold", getGrowthColor(company.ahpsGrowth90d))}>
+                              {formatGrowthPct(company.ahpsGrowth90d)}
+                            </span>
+                            {company.usesAdjustedShares && (
+                              <Badge variant="outline" className="ml-1 text-[10px] px-1 py-0 bg-green-500/10 text-green-600 border-green-500/30">
+                                Adj
+                              </Badge>
+                            )}
+                          </TableCell>
+                          <TableCell className="text-right font-mono">
+                            {company.pendingMerger ? (
+                              <span className="text-gray-400">—</span>
+                            ) : (
+                              <div className="flex items-center justify-end gap-1">
+                                {company.mnavWarnings && company.mnavWarnings.length > 0 && <span className="text-amber-500 text-xs">⚠️</span>}
+                                <MNAVTooltip
+                                  mNAV={company.mNAV}
+                                  marketCap={company.marketCap}
+                                  holdingsValue={company.holdingsValue}
+                                  totalDebt={company.totalDebt}
+                                  preferredEquity={company.preferredEquity}
+                                  cashReserves={company.cashReserves}
+                                  restrictedCash={company.restrictedCash}
+                                  otherInvestments={company.otherInvestments}
+                                  ticker={company.ticker}
+                                  asset={company.asset}
+                                  holdings={company.holdings}
+                                  sharesForMnav={company.sharesForMnav}
+                                  stockPrice={company.stockPrice}
+                                  cryptoPrice={company.cryptoPrice}
+                                  hasLiveData={company.hasLiveBalanceSheet}
+                                  hasDilutiveInstruments={hasDilutiveInstruments}
+                                  basicShares={dilutionInfo.basicShares}
+                                  dilutedShares={dilutionInfo.dilutedShares}
+                                  itmDilutionShares={dilutionInfo.itmDilutionShares}
+                                  itmDebtAdjustment={dilutionInfo.itmDebtAdjustment}
+                                  holdingsSourceUrl={company.holdingsSourceUrl}
+                                  officialDashboard={COMPANY_SOURCES[company.ticker]?.officialDashboard}
+                                  secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
+                                  officialDashboardName={COMPANY_SOURCES[company.ticker]?.officialDashboardName}
+                                  officialMnavNote={COMPANY_SOURCES[company.ticker]?.officialMnavNote}
+                                  sharesSource={company.sharesSource}
+                                  sharesAsOf={company.sharesAsOf}
+                                  sharesSourceUrl={company.sharesSourceUrl}
+                                  debtSource={company.debtSource}
+                                  debtAsOf={company.debtAsOf}
+                                  debtSourceUrl={company.debtSourceUrl}
+                                  cashSource={company.cashSource}
+                                  cashAsOf={company.cashAsOf}
+                                  cashSourceUrl={company.cashSourceUrl}
+                                  preferredSource={company.preferredSource}
+                                  preferredAsOf={company.preferredAsOf}
+                                  preferredSourceUrl={company.preferredSourceUrl}
+                                />
+                              </div>
+                            )}
+                          </TableCell>
+                          <TableCell className="text-right">
+                            {company.pendingMerger ? (
+                              <span className="text-gray-400">TBD</span>
+                            ) : (
+                              <FlashingLargeNumber
+                                value={company.holdingsValue}
+                                className="font-mono font-medium text-gray-900 dark:text-gray-100"
+                              />
+                            )}
+                          </TableCell>
+                        </>
+                      )}
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
           </div>
         </>
       )}
