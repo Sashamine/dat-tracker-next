@@ -7,6 +7,7 @@ import { useCompany } from "@/lib/hooks/use-companies";
 import { AppSidebar } from "@/components/app-sidebar";
 import { MobileHeader } from "@/components/mobile-header";
 import { Badge } from "@/components/ui/badge";
+import { CompanyPageTabs } from "@/components/company-page-tabs";
 import { cn } from "@/lib/utils";
 import { getCompanyEarnings, getNextEarnings } from "@/lib/data/earnings-data";
 import { formatTokenAmountPrecise } from "@/lib/calculations";
@@ -236,6 +237,7 @@ export default function CompanyEarningsPage() {
             <p className="text-sm text-gray-500 dark:text-gray-400">
               Earnings History
             </p>
+            <CompanyPageTabs ticker={ticker} className="mt-4" />
           </div>
 
           {/* Next Earnings Card */}
