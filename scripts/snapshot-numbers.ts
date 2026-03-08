@@ -168,8 +168,7 @@ function main() {
               cryptoNav: mnavExtended.cryptoNav,
               totalNav: mnavExtended.totalNav,
               enterpriseValue: mnavExtended.enterpriseValue,
-              otherInvestmentsMaterial: mnavExtended.otherInvestmentsMaterial,
-              otherInvestmentsRatio: mnavExtended.otherInvestmentsRatio,
+              otherInvestmentsIncluded: mnavExtended.otherInvestmentsIncluded,
             }
           : null,
 

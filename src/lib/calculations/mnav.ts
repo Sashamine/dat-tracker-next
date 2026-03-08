@@ -1,6 +1,3 @@
-/** Threshold for including otherInvestments in NAV (5% of crypto NAV) */
-export const OTHER_INVESTMENTS_MATERIALITY_THRESHOLD = 0.05;
-
 // Calculate Net Asset Value (treasury value)
 // Includes crypto holdings + cash reserves + other investments
 export function calculateNAV(
@@ -43,10 +40,7 @@ export function calculateMNAV(
   const baseCryptoNav = holdings * assetPrice + secondaryCryptoValue;
   if (!baseCryptoNav || baseCryptoNav <= 0) return null;
 
-  const otherInvestmentsMaterial =
-    otherInvestments / baseCryptoNav > OTHER_INVESTMENTS_MATERIALITY_THRESHOLD;
-
-  const totalNav = baseCryptoNav + restrictedCash + (otherInvestmentsMaterial ? otherInvestments : 0);
+  const totalNav = baseCryptoNav + restrictedCash + otherInvestments;
 
   const freeCash = cashReserves - restrictedCash;
   const enterpriseValue = marketCap + totalDebt + preferredEquity - freeCash;
@@ -54,14 +48,13 @@ export function calculateMNAV(
   return enterpriseValue / totalNav;
 }
 
-/** Extended mNAV result with materiality info */
+/** Extended mNAV result */
 export interface MNAVResult {
   mNAV: number;
   cryptoNav: number;
   totalNav: number;
   enterpriseValue: number;
-  otherInvestmentsMaterial: boolean;
-  otherInvestmentsRatio: number;
+  otherInvestmentsIncluded: number;
 }
 
 export function calculateMNAVExtended(
@@ -78,10 +71,7 @@ export function calculateMNAVExtended(
   const baseCryptoNav = holdings * assetPrice + secondaryCryptoValue;
   if (!baseCryptoNav || baseCryptoNav <= 0) return null;
 
-  const otherInvestmentsRatio = otherInvestments / baseCryptoNav;
-  const otherInvestmentsMaterial = otherInvestmentsRatio > OTHER_INVESTMENTS_MATERIALITY_THRESHOLD;
-
-  const totalNav = baseCryptoNav + restrictedCash + (otherInvestmentsMaterial ? otherInvestments : 0);
+  const totalNav = baseCryptoNav + restrictedCash + otherInvestments;
 
   const freeCash = cashReserves - restrictedCash;
   const enterpriseValue = marketCap + totalDebt + preferredEquity - freeCash;
@@ -91,8 +81,7 @@ export function calculateMNAVExtended(
     cryptoNav: baseCryptoNav,
     totalNav,
     enterpriseValue,
-    otherInvestmentsMaterial,
-    otherInvestmentsRatio,
+    otherInvestmentsIncluded: otherInvestments,
   };
 }
 
