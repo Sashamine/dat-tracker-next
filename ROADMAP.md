@@ -1,6 +1,6 @@
 # DAT Tracker Roadmap
 
-> **Last Updated**: 2026-03-06
+> **Last Updated**: 2026-03-07
 
 ---
 
@@ -9,25 +9,39 @@
 - **Correctness before features** — every number must be verifiable
 - **Permanence before convenience** — source documents cached forever
 - **Measurement before expansion** — understand usage before scaling
-- **HPS is the core metric** — the site answers "who grows crypto per share best?"
+- **Three dimensions, not one** — Size, Growth, and Efficiency are independent lenses (see `docs/product-model.md`)
 
 ---
 
-## Phase 0.5 — Product Framing (parallel track, can be done by separate agent)
+## Phase 0.5 — Product Framing (parallel track — GPT handles UI, Claude handles data)
 
-> "A first-time visitor understands the DAT thesis in 3 seconds."
+> "A first-time visitor understands the DAT sector in 3 seconds."
+>
+> **Product model:** `docs/product-model.md`
+> **NAV policy:** `docs/nav-treatment-policy.md`
 
-**Goal:** Reframe the homepage from "who holds the most crypto" to "who is best at growing crypto per share."
+**Goal:** Structure the homepage around three independent dimensions: Size (default), Growth, and Efficiency.
 
-### 0.5.1 Homepage Leaderboard Pivot
+### 0.5.1 Three-View Homepage
+
+The homepage supports three views via a tab toggle. Each shows the same companies with different sort + column emphasis.
+
+**Current state (2026-03-07):**
+- Two-tab toggle exists: `[ Performance ]  [ Size ]`
+- Default sort is `hpsGrowth90d` (Growth) — **should be `holdingsValue` (Size)**
+- Efficiency view does not exist yet
+- All underlying data (HPS growth, mNAV) is already computed
 
 **Deliverables:**
-- [ ] Default sort: HPS Growth (90D) instead of treasury size
-- [ ] Core columns: Company, Asset, HPS Growth (90D), mNAV, Treasury Value, Leverage
-- [ ] Sector summary banner: Median HPS Growth, Median mNAV, Companies Growing HPS
+- [ ] Rename tabs: `[ Size ]  [ Growth ]  [ Efficiency ]`
+- [ ] Default sort: `holdingsValue` (Size view), not `hpsGrowth90d`
+- [ ] Size view: sorted by treasury value. Columns: Company, Asset, Treasury Value, mNAV, Market Cap
+- [ ] Growth view: sorted by HPS Growth (90D). Columns: Company, Asset, AHPS Growth (90D), mNAV, Treasury Value
+- [ ] Efficiency view: sorted by Wrapper Efficiency (HPS Growth / mNAV). Columns: Company, Asset, Efficiency, HPS Growth, mNAV
+- [ ] Per-view summary banner with view-appropriate stats
 - [ ] mNAV color context relative to sector median (<0.9x green, 0.9-1.3 neutral, >1.3x red)
 
-**Data availability:** 55 companies have holdings + sharesForMnav. 54 have 90+ days of DAT history. HPS growth computable for nearly the entire universe.
+**Data availability:** 55 companies have holdings + sharesForMnav. 54 have 90+ days of DAT history. HPS growth computable for nearly the entire universe. Efficiency is trivially derived (HPS Growth / mNAV).
 
 ### 0.5.2 Dilution vs Accretion Chart (Company Page)
 
@@ -36,18 +50,29 @@
 - [ ] Instantly shows: good managers (HPS up, shares stable) vs bad (shares exploding, HPS flat)
 - [ ] This is the "Moneyball chart" — the signature visualization
 
-### 0.5.3 mNAV vs HPS Growth Scatter Plot
+### 0.5.3 Sector Scatter Plot
 
 **Deliverables:**
-- [ ] X: mNAV (premium/discount), Y: HPS Growth
+- [ ] X: mNAV (premium/discount), Y: HPS Growth (90D)
 - [ ] Quadrants: upper-left = efficient wrappers, lower-right = overpriced + weak
 - [ ] Every DAT as a labeled dot, sized by treasury value
+- [ ] This is the visual encoding of the Efficiency dimension
 
-### 0.5.4 AHPS Growth (future metric)
+### 0.5.4 AHPS Growth (deferred)
 
 **Concept:** Accretive Holdings Per Share Growth — isolates management skill from crypto price movement. Measures how efficiently management converts capital access into more crypto per share. Could become the "EPS of the DAT sector."
 
 **Status:** Deferred. Requires granular capital events data (currently available for ~5 companies: MSTR, BMNR, MARA, SBET, DDC). As the pipeline matures, more companies get full AHPS decomposition. For now, plain HPS Growth % is the leaderboard metric.
+
+### 0.5.5 NAV Composition Transparency
+
+**Goal:** Make the NAV treatment policy visible to users.
+
+**Deliverables:**
+- [ ] Document treatment rules in code (see `docs/nav-treatment-policy.md`)
+- [ ] Ensure all companies are consistently modeled (STKE equity investments gap)
+- [ ] Add explicit notes where non-direct crypto treatment applies
+- [ ] Future: Strict NAV vs Expanded NAV toggle
 
 ---
 
@@ -305,23 +330,22 @@
 Update this section when starting/stopping work so other agents see what's in-flight.
 
 ### Now (in progress)
+- **Phase 0.5 Product Framing** — GPT handles UI (three-view homepage, scatter plot, cosmetics)
+- **QA bug fixes** — Claude fixing data/architecture bugs from Mar 7 QA report
 - **Ingestion + transform loop** — runs green (scheduled inventory + invariants)
-- **R2 coverage audit (Phase 1.1)** — SEC 99.1%, external 39%, overall 75.3%
-- **Phase 0.5 Product Framing** — GPT 5.4 working on UI (separate agent)
 
 ### Next (queued)
+- Phase 0.5.5 NAV composition transparency (STKE equity gap)
 - Remaining external source caching (SEDAR+, dashboards via Playwright)
 - Phase 3.1 mobile citation UX (bottom sheet)
 - Phase 3.2 Filing viewer quote highlighting
 
 ### Done (recent)
+- QA bug fixes: B-1/2 (ABTC sync), B-3/7 (earnings/HPS data), B-6 (admin page), B-10/11 (asset aggregates), B-13/22 (mNAV formula) — 2026-03-07
+- Product model + NAV policy documented (`docs/product-model.md`, `docs/nav-treatment-policy.md`) — 2026-03-07
+- Audit report debt classification + STKE convertibles (PR #329) — 2026-03-07
+- mNAV formula unification via mnav-engine.ts (PR #330) — 2026-03-07
 - Citation UX wiring (Phase 3.1) — sourceQuote passed to all CitationPopover usages (2026-03-06)
 - Source quote coverage complete — debt 98%, cash/shares/preferred 100% (2026-03-06)
-- Build fixes — djt.ts, naka.ts, AuditTrail type consolidation (2026-03-06)
 - Cross-check CI wiring — GitHub Actions workflow + warning ratchet (2026-03-06)
 - R2 coverage audit + SEC filing cache — 165 filings, 23 external docs in R2 (2026-03-06)
-- SEC URL conversion — 670+ URLs converted to /filings/ format (2026-03-06)
-- Cross-check data integrity sweep — 0 FAIL, all companies have source quotes (2026-03-06)
-- Staleness sweep — verified all 15 stale warnings have no newer data available (2026-03-06)
-- Proposal-key upsert rollout (writers idempotent)
-- Confidence scoring + DLQ routing + resolution
