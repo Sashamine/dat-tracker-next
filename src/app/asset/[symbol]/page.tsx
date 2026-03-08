@@ -19,14 +19,14 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import {
-  calculateNAV,
   formatLargeNumber,
   formatTokenAmount,
   formatMNAV,
   NETWORK_STAKING_APY,
 } from "@/lib/calculations";
-import { getMarketCap } from "@/lib/utils/market-cap";
+import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
 import { getCompanyMNAV } from "@/lib/hooks/use-mnav-stats";
+import { calculateTotalCryptoNAV } from "@/lib/math/mnav-engine";
 import { MobileHeader } from "@/components/mobile-header";
 import { MinersComparison } from "@/components/miners-comparison";
 import { AssetFundamentalsAggregateCard } from "@/components/AssetFundamentalsAggregateCard";
@@ -118,11 +118,12 @@ export default function AssetPage() {
   // Calculate metrics for each company
   const companiesWithMetrics = companies.map((company) => {
     const stockData = prices?.stocks[company.ticker];
-    const { marketCap } = getMarketCap(company, stockData);
+    const { marketCap } = getMarketCapForMnavSync(company, stockData, prices?.forex);
     const stockPrice = stockData?.price || 0;
     const stockChange = stockData?.change24h;
 
-    const holdingsValue = calculateNAV(company.holdings, cryptoPrice, company.cashReserves ?? 0, company.otherInvestments ?? 0);
+    const cryptoNavResult = calculateTotalCryptoNAV(company, prices ?? null);
+    const holdingsValue = cryptoNavResult.totalUsd;
     const mNAV = getCompanyMNAV(company, prices);
 
     return {
@@ -163,7 +164,7 @@ export default function AssetPage() {
 
   // Calculate totals
   const totalHoldings = companies.reduce((sum, c) => sum + c.holdings, 0);
-  const totalValue = totalHoldings * cryptoPrice;
+  const totalValue = companiesWithMetrics.reduce((sum, c) => sum + (c.holdingsValue || 0), 0);
   const totalMarketCap = companiesWithMetrics.reduce((sum, c) => sum + (c.marketCap || 0), 0);
   const avgMNAV = companiesWithMetrics.filter(c => c.mNAV).reduce((sum, c) => sum + (c.mNAV || 0), 0) / companiesWithMetrics.filter(c => c.mNAV).length || 0;
 

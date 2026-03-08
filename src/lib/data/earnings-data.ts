@@ -19,7 +19,7 @@
 
 import { EarningsRecord, EarningsCalendarEntry, TreasuryYieldMetrics, Asset, CalendarQuarter, YieldPeriod } from "../types";
 import { allCompanies } from "./companies";
-const HOLDINGS_HISTORY: Record<string, any> = {};
+import { HOLDINGS_HISTORY } from "./holdings-history";
 import { getQuarterEndSnapshot } from "./mstr-capital-structure";
 import { MSTR_VERIFIED_FINANCIALS } from "./mstr-verified-financials";
 import { getBMNRQuarterEndData } from "./bmnr-holdings-history";
