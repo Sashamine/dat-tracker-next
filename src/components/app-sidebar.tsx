@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import { useFilters } from "@/lib/hooks/use-filters";
+import { useIsAdmin } from "@/lib/hooks/use-admin";
 
 // All supported assets (sorted by typical market cap / relevance)
 const ALL_ASSETS = ["BTC", "ETH", "SOL", "XRP", "BNB", "DOGE", "ADA", "AVAX", "LINK", "SUI", "LTC", "HBAR", "TAO", "TRX", "ZEC", "HYPE"];
@@ -56,6 +57,7 @@ export function AppSidebar({ className }: AppSidebarProps) {
   const pathname = usePathname();
   const { data: prices } = usePricesStream();
   const { assets: filteredAssets } = useFilters();
+  const isAdmin = useIsAdmin();
 
   // Determine current asset from path
   const currentAsset = pathname.startsWith("/asset/")
@@ -124,71 +126,73 @@ export function AppSidebar({ className }: AppSidebarProps) {
           >
             Earnings
           </Link>
-          <Link
-            href="/anchors"
-            className={cn(
-              "block w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors",
-              pathname === "/anchors"
-                ? "bg-indigo-600 text-white"
-                : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-            )}
-          >
-            SEC Anchors
-          </Link>
-          <Link
-            href="/verify"
-            className={cn(
-              "block w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors",
-              pathname === "/verify"
-                ? "bg-indigo-600 text-white"
-                : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-            )}
-          >
-            Verify Holdings
-          </Link>
         </div>
 
-        {/* Admin */}
-        <div>
-          <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 mt-4">
-            Admin
-          </h3>
-          <div className="space-y-1">
-            <Link
-              href="/admin/data-health"
-              className={cn(
-                "block w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors",
-                pathname === "/admin/data-health"
-                  ? "bg-indigo-600 text-white"
-                  : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-              )}
-            >
-              Data Health
-            </Link>
-            <Link
-              href="/admin/corporate-actions"
-              className={cn(
-                "block w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors",
-                pathname === "/admin/corporate-actions"
-                  ? "bg-indigo-600 text-white"
-                  : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-              )}
-            >
-              Corporate Actions
-            </Link>
-            <Link
-              href="/admin/sedar-filings"
-              className={cn(
-                "block w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors",
-                pathname === "/admin/sedar-filings"
-                  ? "bg-indigo-600 text-white"
-                  : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-              )}
-            >
-              SEDAR Filings
-            </Link>
+        {/* Admin (visible only when authenticated) */}
+        {isAdmin && (
+          <div>
+            <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 mt-4">
+              Admin
+            </h3>
+            <div className="space-y-1">
+              <Link
+                href="/anchors"
+                className={cn(
+                  "block w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+                  pathname === "/anchors"
+                    ? "bg-indigo-600 text-white"
+                    : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                )}
+              >
+                SEC Anchors
+              </Link>
+              <Link
+                href="/verify"
+                className={cn(
+                  "block w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+                  pathname === "/verify"
+                    ? "bg-indigo-600 text-white"
+                    : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                )}
+              >
+                Verify Holdings
+              </Link>
+              <Link
+                href="/admin/data-health"
+                className={cn(
+                  "block w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+                  pathname === "/admin/data-health"
+                    ? "bg-indigo-600 text-white"
+                    : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                )}
+              >
+                Data Health
+              </Link>
+              <Link
+                href="/admin/corporate-actions"
+                className={cn(
+                  "block w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+                  pathname === "/admin/corporate-actions"
+                    ? "bg-indigo-600 text-white"
+                    : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                )}
+              >
+                Corporate Actions
+              </Link>
+              <Link
+                href="/admin/sedar-filings"
+                className={cn(
+                  "block w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+                  pathname === "/admin/sedar-filings"
+                    ? "bg-indigo-600 text-white"
+                    : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                )}
+              >
+                SEDAR Filings
+              </Link>
+            </div>
           </div>
-        </div>
+        )}
 
         <hr className="border-gray-200 dark:border-gray-700" />
 
