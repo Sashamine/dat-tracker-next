@@ -91,9 +91,8 @@ export function BTBTCompanyView({ company, className = "" }: Props) {
 
       const baseCryptoNav = holdings * ethPrice;
       const otherInvestments = company.otherInvestments ?? 0;
-      const otherInvestmentsMaterial = baseCryptoNav > 0 && otherInvestments / baseCryptoNav > 0.05;
 
-      const cryptoNav = baseCryptoNav + adjustedRestrictedCash + (otherInvestmentsMaterial ? otherInvestments : 0);
+      const cryptoNav = baseCryptoNav + adjustedRestrictedCash + otherInvestments;
 
       const netDebt = Math.max(0, rawDebt - cashReserves);
       const ev = marketCap + adjustedDebt + preferredEquity - freeCash;
@@ -140,7 +139,7 @@ export function BTBTCompanyView({ company, className = "" }: Props) {
           formula: "cryptoNav + cash - adjustedDebt - preferred",
           inputs: { holdings: BTBT_PROVENANCE.holdings, cash: BTBT_PROVENANCE.cashReserves, debt: BTBT_PROVENANCE.totalDebt },
         }),
-        `Other investments ${otherInvestmentsMaterial ? "included" : "excluded"}`
+        otherInvestments > 0 ? `Includes $${(otherInvestments / 1e6).toFixed(0)}M other investments` : undefined
       );
 
       const equityNavPerSharePv = pv(

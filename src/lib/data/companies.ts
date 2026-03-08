@@ -105,7 +105,7 @@ export const ethCompanies: Company[] = [
         note: "SEC 8-K Mar 2, 2026 (accn 008462): '195 Bitcoin (BTC)'",
       },
     ],
-    notes: "Largest ETH treasury. 3.71% of ETH supply. Core financials from provenance/bmnr.ts (SEC-verified). $200M Beast Industries + $14M Eightco (ORBS) equity investments in otherInvestments; included in mNAV only when material (>5% of crypto NAV).",
+    notes: "Largest ETH treasury. 3.71% of ETH supply. Core financials from provenance/bmnr.ts (SEC-verified). $200M Beast Industries + $14M Eightco (ORBS) equity investments included in mNAV via otherInvestments.",
   },
   {
     id: "sbet",

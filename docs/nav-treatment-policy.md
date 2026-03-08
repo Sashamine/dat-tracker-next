@@ -37,11 +37,9 @@
 
 ### 5. Other Investments
 
-**Treatment:** Included at full value only when material.
+**Treatment:** Always included at full reported value.
 **Source field:** `company.otherInvestments`
-**Materiality threshold:** `otherInvestments / baseCryptoNav > 5%`
-**If below threshold:** Excluded from NAV.
-**If above threshold:** Included at full reported value.
+**Note:** Previously used a 5% materiality threshold (removed 2026-03-08). All `otherInvestments` now flow into NAV unconditionally to avoid confusing threshold flip-flop behavior.
 
 ---
 
@@ -50,9 +48,9 @@
 | Company | Asset Type | Treatment | Notes |
 |---------|-----------|-----------|-------|
 | GAME | Dialectic ETH fund | cryptoInvestments (fund) | Included at par ($32.5M). Source: Mar 2026 Investor Update |
-| BMNR | Beast Industries + Eightco | otherInvestments | $214M. Dynamic: ~1.9% of crypto NAV at ~$2,500 ETH (excluded); would cross 5% threshold at ~$960 ETH |
+| BMNR | Beast Industries + Eightco | otherInvestments | $214M. Always included (threshold removed) |
 | BTBT | WhiteFiber (WYFI) stake | otherInvestments | $528M. ~46% of crypto NAV at ~$2,500 ETH — very material, included |
-| SBET | USDC stablecoins | otherInvestments | $26.7M (Q3 2025). ~1.2% of crypto NAV — immaterial, excluded |
+| SBET | USDC stablecoins | otherInvestments | $26.7M (Q3 2025). Always included (threshold removed) |
 | STKE | Equity investments | Excluded (immaterial) | CAD $686K total (Chia $489K, Ngrave $197K). 0.96% of crypto NAV — below 5% threshold. Source: 40-F FY2025 Exhibit 99.2 Note 9 |
 | HYPD | Kinetiq iHYPE | cryptoInvestments (lst) | Included at par via exchange rate (kHYPE rate as proxy) |
 | SUIG | Legacy portfolio | Not modeled | ~$20.7M (short-term loans, commercial loans, common stock). Commented out in companies.ts |
