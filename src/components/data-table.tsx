@@ -521,12 +521,15 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
       currentHps: company.holdings > 0 && company.sharesForMnav ? company.holdings / company.sharesForMnav : null,
       currentAhps: ahpsMetrics.currentAhps,
       ahpsGrowth90d: ahpsMetrics.ahpsGrowth90d,
+      wrapperEfficiency:
+        ahpsMetrics.ahpsGrowth90d !== null && mNAV && mNAV > 0
+          ? ahpsMetrics.ahpsGrowth90d / mNAV
+          : null,
       // Leverage-adjusted AHPS growth: strips the mechanical boost from debt-funded purchases.
       // Uses total debt (including ITM converts that were already moved to equity) because
       // those converts funded crypto purchases when they were issued as debt.
-      wrapperEfficiency: (() => {
+      leverageAdjGrowth: (() => {
         if (ahpsMetrics.ahpsGrowth90d === null) return null;
-        // Effective leverage = total debt as-issued / crypto NAV (not net of cash or ITM adjustment)
         const effectiveLeverage = cryptoNav > 0 ? totalDebt / cryptoNav : 0;
         return ahpsMetrics.ahpsGrowth90d / (1 + effectiveLeverage);
       })(),
@@ -631,6 +634,10 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
       case "wrapperEfficiency":
         aVal = a.wrapperEfficiency ?? Number.NEGATIVE_INFINITY;
         bVal = b.wrapperEfficiency ?? Number.NEGATIVE_INFINITY;
+        break;
+      case "leverageAdjGrowth":
+        aVal = a.leverageAdjGrowth ?? Number.NEGATIVE_INFINITY;
+        bVal = b.leverageAdjGrowth ?? Number.NEGATIVE_INFINITY;
         break;
       case "holdingsValue":
         // When prices haven't loaded, sort by ticker alphabetically for stability
@@ -910,7 +917,7 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
       <div className="grid grid-cols-4 gap-3 pt-3 border-t border-gray-100 dark:border-gray-800">
         <div>
           <p className="text-xs text-gray-500 uppercase">
-            {isSizeView ? "Treasury" : isEfficiencyView ? "Adj. Growth" : "AHPS 90D"}
+            {isSizeView ? "Treasury" : isEfficiencyView ? "Efficiency" : "AHPS 90D"}
           </p>
           {isSizeView ? (
             <p className="font-semibold text-gray-900 dark:text-gray-100">{formatCompactUsd(company.holdingsValue)}</p>
@@ -987,7 +994,7 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
           )}
         </div>
         <div>
-          <p className="text-xs text-gray-500 uppercase">{isSizeView ? "mNAV" : isEfficiencyView ? "AHPS 90D" : "Treasury"}</p>
+          <p className="text-xs text-gray-500 uppercase">{isSizeView ? "mNAV" : isEfficiencyView ? "AHPS 90D" : "Adj. AHPS"}</p>
           {isSizeView ? (
             <p className="font-semibold text-gray-900 dark:text-gray-100">{company.pendingMerger ? "—" : `${company.mNAV.toFixed(2)}x`}</p>
           ) : isEfficiencyView ? (
@@ -1000,7 +1007,7 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
               )}
             </div>
           ) : (
-            <p className="font-semibold text-gray-900 dark:text-gray-100">{formatCompactUsd(company.holdingsValue)}</p>
+            <p className={cn("font-semibold", getGrowthColor(company.leverageAdjGrowth))}>{formatGrowthPct(company.leverageAdjGrowth)}</p>
           )}
         </div>
         <div>
@@ -1056,7 +1063,7 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
   const viewSubtitle = isGrowthView
     ? `Median: ${formatGrowthPct(medianGrowth)} • ${positiveGrowthCount}/${filteredCompanies.length} growing AHPS`
     : isEfficiencyView
-      ? `Median adj. growth: ${formatRatio(medianEfficiency)} • Best: ${bestEfficiencyCompany?.ticker ?? "—"}`
+      ? `Median efficiency: ${formatRatio(medianEfficiency)} • Best: ${bestEfficiencyCompany?.ticker ?? "—"}`
       : `${filteredCompanies.length} companies • ${formatCompactUsd(visibleTreasuryValue)} total treasury`;
 
   return (
@@ -1103,7 +1110,7 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                 : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
             )}
           >
-            Adj. Growth
+            Efficiency
           </button>
         </div>
         {isGrowthView && (
@@ -1183,8 +1190,8 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                       <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("hpsGrowth90d")}>
                         AHPS Growth (90D) {sortIndicator("hpsGrowth90d")}
                       </TableHead>
-                      <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("leverageRatio")}>
-                        Leverage {sortIndicator("leverageRatio")}
+                      <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("leverageAdjGrowth")}>
+                        Adj. AHPS {sortIndicator("leverageAdjGrowth")}
                       </TableHead>
                       <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("mNAV")}>
                         mNAV {sortIndicator("mNAV")}
@@ -1196,7 +1203,7 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                   ) : (
                     <>
                       <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("wrapperEfficiency")}>
-                        Adj. Growth {sortIndicator("wrapperEfficiency")}
+                        Efficiency {sortIndicator("wrapperEfficiency")}
                       </TableHead>
                       <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("hpsGrowth90d")}>
                         AHPS Growth {sortIndicator("hpsGrowth90d")}
@@ -1407,26 +1414,10 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                               </Badge>
                             )}
                           </TableCell>
-                          <TableCell className="text-right font-mono text-sm">
-                            {company.cashStale && company.estimatedLeverage !== null ? (
-                              <span className={cn(
-                                "border-b border-dashed border-amber-400/60",
-                                company.estimatedLeverage >= 1 ? "text-amber-600 font-medium" : "text-gray-500",
-                              )} title={`Estimated: cash (${company._staticCashAsOf || company.cashAsOf}) adjusted for crypto purchases since`}>
-                                <span className="text-amber-400/70">~</span>
-                                {company.estimatedLeverage >= 1 ? "⚠️ " : ""}
-                                {company.estimatedLeverage.toFixed(2)}x
-                              </span>
-                            ) : company.leverageRatio > 0 ? (
-                              <span className={cn(
-                                company.leverageRatio >= 1 ? "text-amber-600 font-medium" : "text-gray-500",
-                              )}>
-                                {company.leverageRatio >= 1 ? "⚠️ " : ""}
-                                {company.leverageRatio.toFixed(2)}x
-                              </span>
-                            ) : (
-                              <span className="text-gray-400">—</span>
-                            )}
+                          <TableCell className="text-right font-mono">
+                            <span className={cn("font-semibold", getGrowthColor(company.leverageAdjGrowth))}>
+                              {formatGrowthPct(company.leverageAdjGrowth)}
+                            </span>
                           </TableCell>
                           <TableCell className="text-right font-mono">
                             {company.pendingMerger ? (
