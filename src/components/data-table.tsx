@@ -482,6 +482,11 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
       isAfterHours,
       otherAssets,
       leverageRatio,
+      cashStale: (() => {
+        if (!company.cashAsOf || !company.totalDebt) return false;
+        const age = Date.now() - new Date(company.cashAsOf).getTime();
+        return age > 90 * 24 * 60 * 60 * 1000;
+      })(),
       currentHps: company.holdings > 0 && company.sharesForMnav ? company.holdings / company.sharesForMnav : null,
       currentAhps: ahpsMetrics.currentAhps,
       ahpsGrowth90d: ahpsMetrics.ahpsGrowth90d,
@@ -969,7 +974,11 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
             company.leverageRatio >= 1 ? "text-amber-600" : "text-gray-900 dark:text-gray-100"
           )}>
             {company.leverageRatio > 0 ? (
-              <span className="inline-flex items-center gap-1">
+              <span className={cn(
+                "inline-flex items-center gap-1",
+                company.cashStale && "border-b border-dashed border-amber-400/60"
+              )}>
+                {company.cashStale && <span className="text-amber-400/70">~</span>}
                 {company.leverageRatio >= 1 && <span>⚠️</span>}
                 {company.leverageRatio.toFixed(2)}x
               </span>
@@ -1322,7 +1331,11 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                           </TableCell>
                           <TableCell className="text-right font-mono text-sm">
                             {company.leverageRatio > 0 ? (
-                              <span className={cn(company.leverageRatio >= 1 ? "text-amber-600 font-medium" : "text-gray-500")}>
+                              <span className={cn(
+                                company.leverageRatio >= 1 ? "text-amber-600 font-medium" : "text-gray-500",
+                                company.cashStale && "border-b border-dashed border-amber-400/60"
+                              )} title={company.cashStale ? `Cash data from ${company.cashAsOf} — may be stale` : undefined}>
+                                {company.cashStale && <span className="text-amber-400/70">~</span>}
                                 {company.leverageRatio >= 1 ? "⚠️ " : ""}
                                 {company.leverageRatio.toFixed(2)}x
                               </span>
@@ -1345,7 +1358,11 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                           </TableCell>
                           <TableCell className="text-right font-mono text-sm">
                             {company.leverageRatio > 0 ? (
-                              <span className={cn(company.leverageRatio >= 1 ? "text-amber-600 font-medium" : "text-gray-500")}>
+                              <span className={cn(
+                                company.leverageRatio >= 1 ? "text-amber-600 font-medium" : "text-gray-500",
+                                company.cashStale && "border-b border-dashed border-amber-400/60"
+                              )} title={company.cashStale ? `Cash data from ${company.cashAsOf} — may be stale` : undefined}>
+                                {company.cashStale && <span className="text-amber-400/70">~</span>}
                                 {company.leverageRatio >= 1 ? "⚠️ " : ""}
                                 {company.leverageRatio.toFixed(2)}x
                               </span>
