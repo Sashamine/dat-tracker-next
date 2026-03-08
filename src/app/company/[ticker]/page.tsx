@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense, useState, useMemo, useEffect } from "react";
+import useSWR from "swr";
 import { useParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useCompany, useCompanies } from "@/lib/hooks/use-companies";
@@ -24,6 +25,7 @@ import { CompanyMNAVChart } from "@/components/company-mnav-chart";
 import { HoldingsPerShareChart } from "@/components/holdings-per-share-chart";
 import { HoldingsHistoryTable } from "@/components/holdings-history-table";
 import { useCompanyMetricHistory } from "@/lib/hooks/use-company-metric-history";
+import { getCompanyAhpsMetrics, getAhpsTimeSeries, type AhpsHistoryEntry } from "@/lib/utils/ahps";
 import { CompanyMetricHistorySection } from "@/components/company-metric-history";
 import { ScheduledEvents } from "@/components/scheduled-events";
 import { Badge } from "@/components/ui/badge";
@@ -98,6 +100,22 @@ const assetColors: Record<string, string> = {
   TAO: "bg-cyan-500/10 text-cyan-600 border-cyan-500/20",
   LINK: "bg-blue-500/10 text-blue-600 border-blue-500/20",
 };
+
+const fetcher = (url: string) => fetch(url).then((r) => r.json());
+
+function formatHpsValue(value: number | null | undefined): string {
+  if (value === null || value === undefined || !Number.isFinite(value) || value <= 0) return "—";
+  if (value >= 100) return value.toLocaleString(undefined, { maximumFractionDigits: 2 });
+  if (value >= 1) return value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 3 });
+  if (value >= 0.01) return value.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 4 });
+  return value.toLocaleString(undefined, { minimumFractionDigits: 4, maximumFractionDigits: 6 });
+}
+
+function formatSignedPercent(value: number | null | undefined): string {
+  if (value === null || value === undefined || !Number.isFinite(value)) return "—";
+  const sign = value >= 0 ? "+" : "";
+  return `${sign}${value.toFixed(1)}%`;
+}
 
 // Source link component for provenance
 function SourceLink({
@@ -235,6 +253,36 @@ export default function CompanyPage() {
 
   // D1 metric history (batch)
   const { data: metricHistory } = useCompanyMetricHistory(ticker, [...HISTORY_D1_METRICS], 12, 'desc');
+  const { data: ahpsLeaderboardData } = useSWR<{
+    success: boolean;
+    results: Array<{
+      ticker: string;
+      currentSnapshot: {
+        date: string;
+        holdings: number;
+        sharesOutstanding: number;
+        holdingsPerShare: number;
+      };
+      snapshot30d: {
+        date: string;
+        holdings: number;
+        sharesOutstanding: number;
+        holdingsPerShare: number;
+      } | null;
+      snapshot90d: {
+        date: string;
+        holdings: number;
+        sharesOutstanding: number;
+        holdingsPerShare: number;
+      } | null;
+      snapshot1y: {
+        date: string;
+        holdings: number;
+        sharesOutstanding: number;
+        holdingsPerShare: number;
+      } | null;
+    }>;
+  }>("/api/d1/hps-growth", fetcher, { revalidateOnFocus: false });
 
   // Prefer company from allCompanies (same source as main page) for consistency
   // Fall back to separately fetched company if not found
@@ -318,6 +366,43 @@ export default function CompanyPage() {
   const preferredSourceUrlResolved =
     d1Explain.preferred_equity_usd?.receipt?.source_url || displayCompany.preferredSourceUrl;
 
+  const ahpsRow = ahpsLeaderboardData?.results.find(
+    (row) => row.ticker.toUpperCase() === displayCompany.ticker.toUpperCase()
+  );
+  const ahpsHistory: AhpsHistoryEntry[] | undefined = ahpsRow
+    ? [ahpsRow.snapshot30d, ahpsRow.snapshot90d, ahpsRow.snapshot1y, ahpsRow.currentSnapshot]
+        .filter((snapshot): snapshot is NonNullable<typeof ahpsRow.currentSnapshot> => Boolean(snapshot))
+        .sort((a, b) => a.date.localeCompare(b.date))
+        .map((snapshot) => ({
+          date: snapshot.date,
+          holdings: snapshot.holdings,
+          sharesOutstanding: snapshot.sharesOutstanding,
+          holdingsPerShare: snapshot.holdingsPerShare,
+        }))
+    : undefined;
+  const ahpsMetrics = getCompanyAhpsMetrics({
+    ticker: displayCompany.ticker,
+    company: ahpsRow
+      ? {
+          ...displayCompany,
+          holdings: ahpsRow.currentSnapshot.holdings,
+          sharesForMnav: ahpsRow.currentSnapshot.sharesOutstanding,
+          holdingsLastUpdated: ahpsRow.currentSnapshot.date,
+        }
+      : displayCompany,
+    history: ahpsHistory,
+    currentStockPrice: stockPrice,
+  });
+  const ahpsSeries = ahpsHistory ? getAhpsTimeSeries(displayCompany.ticker, ahpsHistory) : [];
+  const currentAhpsPoint = ahpsSeries[ahpsSeries.length - 1];
+  const oneYearAhpsPoint = ahpsRow?.snapshot1y
+    ? ahpsSeries.find((point) => point.date === ahpsRow.snapshot1y?.date)
+    : undefined;
+  const ahpsGrowth1y =
+    currentAhpsPoint && oneYearAhpsPoint && oneYearAhpsPoint.ahps > 0
+      ? ((currentAhpsPoint.ahps - oneYearAhpsPoint.ahps) / oneYearAhpsPoint.ahps) * 100
+      : null;
+
   // Calculate staking yield and revenue offset
   const stakingYield = calculateStakingYield(displayCompany, prices);
   const { annualRevenueUsd, isSelfSustaining, yieldToBurnRatio } = stakingYield;
@@ -352,6 +437,10 @@ export default function CompanyPage() {
   const navPerShare = calculateNAVPerShare(holdingsNative, cryptoPrice, sharesOutstanding, cashReserves, otherInvestments + secondaryCryptoValue, totalDebt, preferredEquity);
   const navDiscount = calculateNAVDiscount(stockPrice, navPerShare);
   const holdingsPerShare = calculateHoldingsPerShare(holdingsNative, sharesOutstanding);
+  const currentHps =
+    displayCompany.holdings > 0 && displayCompany.sharesForMnav
+      ? displayCompany.holdings / displayCompany.sharesForMnav
+      : holdingsPerShare;
 
   // Network staking APY
   const networkStakingApy = NETWORK_STAKING_APY[displayCompany.asset] || 0;
@@ -633,372 +722,22 @@ export default function CompanyPage() {
           <DDCCompanyView company={displayCompany} />
         ) : (
           <>
-        {/* Key Valuation Metrics */}
         {process.env.NODE_ENV === 'development' && displayCompany._d1Fields && (
           <div className="mb-2 text-[10px] font-mono text-gray-400 dark:text-gray-600">
             D1: {displayCompany._d1Fields.join(', ')}
           </div>
         )}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
-          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-            <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
-              mNAV
-              <span 
-                className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-200 dark:bg-gray-700 text-[10px] text-gray-500 dark:text-gray-400 cursor-help"
-                title="EV ÷ Crypto NAV"
-              >?</span>
-            </p>
-            <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-              <CitationPopover
-                sourceUrl={displayCompany.holdingsSourceUrl}
-                sourceLabel={displayCompany.holdingsSource}
-                ticker={displayCompany.ticker}
-                metric="mnav"
-                confidenceScore={displayCompany.confidenceScores?.['mnav']}
-                jurisdiction={displayCompany.jurisdiction}
-                legacy={displayCompany.holdingsBasis === 'static_fallback'}
-              >
-                {displayCompany.pendingMerger ? "—" : formatMNAV(mNAV)}
-              </CitationPopover>
-            </p>
-            <p className="text-xs text-gray-400">
-              {displayCompany.pendingMerger ? "N/A for pre-merger" : "EV / Crypto NAV"}
-            </p>
-          </div>
-          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-            <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
-              Leverage
-              <span 
-                className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-200 dark:bg-gray-700 text-[10px] text-gray-500 dark:text-gray-400 cursor-help"
-                title="Net Debt ÷ Crypto NAV. Shows how much debt the company has relative to its crypto holdings. Higher leverage = more risk, can inflate mNAV."
-              >?</span>
-            </p>
-            <p className={cn(
-              "text-2xl font-bold",
-              debtToCryptoRatio >= 1 ? "text-amber-600" : "text-gray-900 dark:text-gray-100"
-            )}>
-              <CitationPopover
-                sourceUrl={displayCompany.debtSourceUrl}
-                sourceLabel={displayCompany.debtSource}
-                ticker={displayCompany.ticker}
-                metric="debt_usd"
-                confidenceScore={displayCompany.confidenceScores?.['debt_usd']}
-                jurisdiction={displayCompany.jurisdiction}
-                legacy={!displayCompany.debtSourceUrl}
-              >
-                {debtToCryptoRatio > 0 ? `${debtToCryptoRatio.toFixed(2)}x` : "—"}
-              </CitationPopover>
-            </p>
-            <p className="text-xs text-gray-400 font-mono">
-              {debtToCryptoRatio >= 1 ? (
-                <span className="text-amber-600">High - mNAV elevated by debt</span>
-              ) : debtToCryptoRatio > 0 ? (
-                <span title="(Debt - Cash) / Crypto NAV">
-                  ({formatLargeNumber(totalDebt)} - {formatLargeNumber(cashReserves)}) / {formatLargeNumber(cryptoHoldingsValue)}
-                </span>
-              ) : (
-                "No debt"
-              )}
-            </p>
-          </div>
-          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-            <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
-              Equity NAV/Share
-              <span 
-                className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-gray-200 dark:bg-gray-700 text-[10px] text-gray-500 dark:text-gray-400 cursor-help"
-                title="Net asset value per share. (Crypto NAV + Cash − Debt − Preferred) ÷ Shares"
-              >?</span>
-            </p>
-            <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-              <CitationPopover
-                sourceUrl={displayCompany.sharesSourceUrl}
-                sourceLabel={displayCompany.sharesSource}
-                ticker={displayCompany.ticker}
-                metric="basic_shares"
-                confidenceScore={displayCompany.confidenceScores?.['basic_shares']}
-                jurisdiction={displayCompany.jurisdiction}
-                legacy={!displayCompany.sharesSourceUrl}
-              >
-                {navPerShare ? `$${navPerShare.toFixed(2)}` : "—"}
-              </CitationPopover>
-            </p>
-            <p className="text-xs text-gray-400">
-              {navPerShare && displayCompany.sharesForMnav ? (
-                <span className="font-mono" title="Equity NAV / Shares Outstanding">
-                  {formatLargeNumber(nav + cryptoInvestmentsValue - totalDebt - preferredEquity)} / {(displayCompany.sharesForMnav / 1e6).toFixed(0)}M
-                </span>
-              ) : navDiscount !== null ? (
-                <span className={navDiscount >= 0 ? "text-green-600" : "text-red-600"}>
-                  {formatPercent(navDiscount, true)} {navDiscount < 0 ? "discount" : "premium"}
-                </span>
-              ) : null}
-            </p>
-          </div>
-          {displayCompany.stakingPct != null && displayCompany.stakingPct > 0 && (
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <p className="text-sm text-gray-500 dark:text-gray-400">Staking Yield</p>
-              <p className="text-2xl font-bold text-green-600">
-                +{Math.round(displayCompany.holdings * displayCompany.stakingPct * companyStakingApy).toLocaleString()}
-              </p>
-              <p className="text-xs text-gray-400">
-                {displayCompany.asset}/yr ({(displayCompany.stakingPct * 100).toFixed(0)}% @ {(companyStakingApy * 100).toFixed(1)}%)
-              </p>
-              {displayCompany.ticker === "BMNR" ? (
-                <FilingCite 
-                  ticker="BMNR" 
-                  date="2026-02-01" 
-                  anchor="staking"
-                  filingType="8-K"
-                />
-              ) : displayCompany.stakingSourceUrl && (
-                <a
-                  href={displayCompany.stakingSourceUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() =>
-                    trackCitationSourceClick({
-                      href: displayCompany.stakingSourceUrl || "",
-                      ticker: displayCompany.ticker,
-                    })
-                  }
-                  className="inline-flex items-center gap-1 mt-2 text-xs text-blue-600 dark:text-blue-400 hover:underline"
-                >
-                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                  SEC Filing{displayCompany.stakingAsOf ? ` (${new Date(displayCompany.stakingAsOf).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })})` : ""}
-                </a>
-              )}
-            </div>
-          )}
-          {displayCompany.quarterlyBurnUsd != null && displayCompany.quarterlyBurnUsd > 0 && (
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Operating Burn
-                {displayCompany.burnEstimated && <span className="ml-1 text-amber-500" title="Estimated">*</span>}
-              </p>
-              <p className="text-2xl font-bold text-red-600">
-                -${(displayCompany.quarterlyBurnUsd / 1e6).toFixed(0)}M
-                {displayCompany.ticker === "BMNR" ? (
-                  <FilingCite 
-                    ticker="BMNR" 
-                    date="2026-01-13" 
-                    anchor="operating-burn-mda"
-                    filingType="10-Q"
-                  />
-                ) : displayCompany.burnAsOf && (
-                  <FilingCite 
-                    ticker={displayCompany.ticker} 
-                    date={displayCompany.burnAsOf} 
-                    anchor="operating-burn"
-                    filingType="10-Q"
-                  />
-                )}
-              </p>
-              <p className="text-xs text-gray-400">
-                USD/qtr
-              </p>
-              {displayCompany.burnMethodology && (
-                <details className="mt-2">
-                  <summary className="text-xs text-blue-600 dark:text-blue-400 cursor-pointer hover:underline">
-                    How we calculated this
-                  </summary>
-                  <p className="mt-1 text-xs text-gray-600 dark:text-gray-400 leading-relaxed"
-                     dangerouslySetInnerHTML={{
-                       __html: displayCompany.burnMethodology
-                         .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 dark:text-blue-400 hover:underline">$1</a>')
-                         .replace(/\n/g, '<br/>')
-                     }}
-                  />
-                </details>
-              )}
-            </div>
-          )}
-          {/* Total Cash Obligations - Only show when there's more than just burn (debt interest or preferred divs) */}
-          {(displayCompany.preferredDividendAnnual || displayCompany.debtInterestAnnual) && (
-            (() => {
-              const annualBurn = (displayCompany.quarterlyBurnUsd || 0) * 4;
-              const prefDividends = displayCompany.preferredDividendAnnual || 0;
-              const debtInterest = displayCompany.debtInterestAnnual || 0;
-              const totalObligations = annualBurn + prefDividends + debtInterest;
-              if (totalObligations <= 0) return null;
-              return (
-                <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Cash Obligations
-                    {displayCompany.burnEstimated && <span className="text-amber-500 ml-1">(est.)</span>}
-                  </p>
-                  <p className="text-2xl font-bold text-amber-600">
-                    ${(totalObligations / 1e6).toFixed(0)}M
-                    {displayCompany.ticker === "MSTR" ? (
-                      <FilingCite 
-                        ticker="MSTR" 
-                        date="2025-12-01" 
-                        anchor="cash-obligations"
-                        filingType="8-K"
-                      />
-                    ) : (
-                      <SourceLink
-                        url={displayCompany.cashObligationsSourceUrl}
-                        label={displayCompany.cashObligationsSource}
-                        ticker={displayCompany.ticker}
-                      />
-                    )}
-                  </p>
-                  <p className="text-xs text-gray-400">
-                    {annualBurn > 0 && (prefDividends > 0 || debtInterest > 0) ? (
-                      <>Burn ${(annualBurn / 1e6).toFixed(0)}M + Debt/Div ${((prefDividends + debtInterest) / 1e6).toFixed(0)}M</>
-                    ) : (
-                      <>Debt interest + preferred dividends/yr</>
-                    )}
-                  </p>
-                </div>
-              );
-            })()
-          )}
-          {(displayCompany.btcMinedAnnual != null && displayCompany.btcMinedAnnual > 0) && (
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <p className="text-sm text-gray-500 dark:text-gray-400">Annual Mining</p>
-              <p className="text-2xl font-bold text-orange-600">
-                <CitationPopover
-                  sourceUrl={displayCompany.btcMinedSourceUrl}
-                  sourceLabel={displayCompany.btcMinedSource}
-                  ticker={displayCompany.ticker}
-                  metric="holdings_native"
-                  confidenceScore={displayCompany.confidenceScores?.['holdings_native']}
-                  jurisdiction={displayCompany.jurisdiction}
-                  legacy={!displayCompany.btcMinedSourceUrl}
-                >
-                  +{displayCompany.btcMinedAnnual.toLocaleString()}
-                </CitationPopover>
-              </p>
-              <p className="text-xs text-gray-400">BTC/yr</p>
-            </div>
-          )}
-        </div>
 
-        {/* Definitions */}
-        <details className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg">
-          <summary className="px-4 py-3 cursor-pointer text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200">
-            📖 Key Definitions
-          </summary>
-          <div className="px-4 pb-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-            <div>
-              <p className="font-medium text-gray-700 dark:text-gray-300">Crypto NAV</p>
-              <p className="text-gray-500 dark:text-gray-400">
-                Value of crypto holdings at current market price.
-                <br />
-                <span className="font-mono text-xs">{displayCompany.asset} Holdings × {displayCompany.asset} Price</span>
-              </p>
-            </div>
-            <div>
-              <p className="font-medium text-gray-700 dark:text-gray-300">EV (Enterprise Value)</p>
-              <p className="text-gray-500 dark:text-gray-400">
-                Total value of the company including debt obligations.
-                <br />
-                <span className="font-mono text-xs">Market Cap + Debt + Preferred − Cash</span>
-              </p>
-            </div>
-            <div>
-              <p className="font-medium text-gray-700 dark:text-gray-300">mNAV (Market NAV Multiple)</p>
-              <p className="text-gray-500 dark:text-gray-400">
-                How much you&apos;re paying per dollar of crypto.
-                <br />
-                <span className="font-mono text-xs">EV ÷ Crypto NAV</span>
-                <br />
-                <span className="text-xs">1.0x = fair value, &gt;1.0x = premium, &lt;1.0x = discount</span>
-              </p>
-            </div>
-            <div>
-              <p className="font-medium text-gray-700 dark:text-gray-300">Equity NAV</p>
-              <p className="text-gray-500 dark:text-gray-400">
-                Net assets belonging to common shareholders.
-                <br />
-                <span className="font-mono text-xs">Crypto NAV + Cash − Debt − Preferred</span>
-              </p>
-            </div>
-            <div>
-              <p className="font-medium text-gray-700 dark:text-gray-300">Equity NAV/Share</p>
-              <p className="text-gray-500 dark:text-gray-400">
-                Net asset value per share — what each share is &quot;worth&quot; based on assets.
-                <br />
-                <span className="font-mono text-xs">Equity NAV ÷ Shares Outstanding</span>
-                <br />
-                <span className="text-xs">Compare to stock price to see premium/discount</span>
-              </p>
-            </div>
-            <div>
-              <p className="font-medium text-gray-700 dark:text-gray-300">Leverage</p>
-              <p className="text-gray-500 dark:text-gray-400">
-                Debt relative to crypto holdings. Higher leverage = more risk.
-                <br />
-                <span className="font-mono text-xs">(Total Debt − Cash) ÷ Crypto NAV</span>
-                <br />
-                <span className="text-xs">0x = no debt, &gt;1x = net debt exceeds crypto value</span>
-              </p>
-            </div>
-          </div>
-        </details>
-
-        {/* mNAV Calculation Card - Show formula breakdown */}
-        {!displayCompany.pendingMerger && (
-          <div className="mb-8">
-            <MnavCalculationCard
-              ticker={displayCompany.ticker}
-              asset={displayCompany.asset}
-              marketCap={marketCap}
-              totalDebt={totalDebt}
-              preferredEquity={preferredEquity}
-              cashReserves={cashReserves}
-              restrictedCash={displayCompany.restrictedCash}
-              holdings={holdingsNative}
-              cryptoPrice={cryptoPrice}
-              holdingsValue={cryptoHoldingsValue}
-              mNAV={mNAV}
-              sharesForMnav={displayCompany.sharesForMnav}
-              stockPrice={stockPrice}
-              hasDilutiveInstruments={!!effectiveSharesResult?.breakdown?.length}
-              basicShares={effectiveSharesResult?.basic}
-              itmDilutionShares={effectiveSharesResult ? effectiveSharesResult.diluted - effectiveSharesResult.basic : undefined}
-              itmDebtAdjustment={effectiveSharesResult?.inTheMoneyDebtValue}
-              sharesSourceUrl={sharesSourceUrlResolved}
-              sharesSource={displayCompany.sharesSource}
-              sharesAsOf={displayCompany.sharesAsOf}
-              debtSourceUrl={debtSourceUrlResolved}
-              debtSource={displayCompany.debtSource}
-              debtAsOf={displayCompany.debtAsOf}
-              cashSourceUrl={cashSourceUrlResolved}
-              cashSource={displayCompany.cashSource}
-              cashAsOf={displayCompany.cashAsOf}
-              preferredSourceUrl={preferredSourceUrlResolved}
-              preferredSource={displayCompany.preferredSource}
-              preferredAsOf={displayCompany.preferredAsOf}
-              holdingsSourceUrl={holdingsSourceUrlResolved}
-              holdingsSource={displayCompany.holdingsSource}
-              holdingsAsOf={displayCompany.holdingsLastUpdated}
-              holdingsBasis={holdingsBasis}
-            />
-          </div>
-        )}
-
-        {/* Equity Value - Balance Sheet Summary */}
+        {/* Balance Sheet */}
         {(otherAssets > 0 || cryptoHoldingsValue > 0) && (
-          <details className="mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg group">
-            <summary className="p-4 cursor-pointer flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                Equity Value (What Shareholders Own)
-              </h2>
-              <div className="flex items-center gap-3">
-                <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">
-                  {formatLargeNumber(nav + cryptoInvestmentsValue - totalDebt - preferredEquity)}
-                </span>
-                <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-            </summary>
-            <div className="px-4 pb-4">
-
-            {/* Lead with Equity NAV */}
-            <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-lg p-4 border border-indigo-200 dark:border-indigo-700 mb-4">
+          <section className="mb-8">
+            <div className="mb-4 flex items-center gap-2">
+              <span className="text-lg">🏦</span>
+              <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Balance Sheet</h2>
+              <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
+            </div>
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 sm:p-6">
+              <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-lg p-4 border border-indigo-200 dark:border-indigo-700 mb-4">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-indigo-600 dark:text-indigo-400 font-medium flex items-center gap-1">
@@ -1040,10 +779,9 @@ export default function CompanyPage() {
                   </p>
                 </div>
               </div>
-            </div>
+              </div>
 
-            {/* Equation breakdown */}
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 mb-4">
+              <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700 mb-4">
               <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">How it&apos;s calculated</p>
               <p className="text-sm font-mono text-gray-700 dark:text-gray-300">
                 <CitationPopover
@@ -1133,21 +871,19 @@ export default function CompanyPage() {
                 )}
                 <span className="text-indigo-600 font-semibold"> = {formatLargeNumber(nav + cryptoInvestmentsValue - totalDebt - preferredEquity)}</span>
               </p>
-            </div>
+              </div>
 
-            {/* Staleness warning */}
-            <StalenessNote
-              dates={[
-                displayCompany.holdingsLastUpdated,
-                displayCompany.debtAsOf,
-                displayCompany.cashAsOf,
-                displayCompany.sharesAsOf,
-              ]}
-              secCik={displayCompany.secCik}
-            />
+              <StalenessNote
+                dates={[
+                  displayCompany.holdingsLastUpdated,
+                  displayCompany.debtAsOf,
+                  displayCompany.cashAsOf,
+                  displayCompany.sharesAsOf,
+                ]}
+                secCik={displayCompany.secCik}
+              />
 
-            {/* Detailed grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               <div className="bg-white dark:bg-gray-800 rounded-lg p-3 border border-gray-200 dark:border-gray-700">
                 <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">
                   {displayCompany.asset} Holdings {cryptoInvestmentsValue > 0 && "(Direct)"}
@@ -1327,9 +1063,9 @@ export default function CompanyPage() {
                    >
                      +{formatLargeNumber(cashReserves)}
                    </CitationPopover>
-                   {!cashSourceUrlResolved && displayCompany.ticker === "MSTR" && displayCompany.cashAsOf ? (
-                     <FilingCite 
-                       ticker="MSTR" 
+                    {!cashSourceUrlResolved && displayCompany.ticker === "MSTR" && displayCompany.cashAsOf ? (
+                      <FilingCite 
+                        ticker="MSTR" 
                        date="2026-01-05" 
                        anchor="cash-reserves"
                        filingType="8-K"
@@ -1342,7 +1078,8 @@ export default function CompanyPage() {
                        filingType="8-K"
                      />
                    ) : null}
-                  </p>                  <p className="text-xs text-gray-400">USD</p>
+                  </p>
+                  <p className="text-xs text-gray-400">USD</p>
                 </div>
               )}
               {totalDebt > 0 && (() => {
@@ -1419,10 +1156,122 @@ export default function CompanyPage() {
                   <p className="text-xs text-gray-400">Senior to common</p>
                 </div>
               )}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Key Metrics */}
+        <section className="mb-8">
+          <div className="mb-4 flex items-center gap-2">
+            <span className="text-lg">📊</span>
+            <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Key Metrics</h2>
+            <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+              <p className="text-sm text-gray-500 dark:text-gray-400">HPS</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{formatHpsValue(currentHps)}</p>
+              <p className="text-xs text-gray-400 font-mono">
+                {displayCompany.holdings.toLocaleString(undefined, { maximumFractionDigits: 3 })} / {(displayCompany.sharesForMnav ?? sharesOutstanding).toLocaleString(undefined, { maximumFractionDigits: 0 })}
+              </p>
+            </div>
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+              <p className="text-sm text-gray-500 dark:text-gray-400">HPS Growth</p>
+              <div className="mt-2 space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-gray-500 dark:text-gray-400">90D</span>
+                  <span className={cn("font-semibold", ahpsMetrics.ahpsGrowth90d && ahpsMetrics.ahpsGrowth90d > 0 ? "text-green-600" : ahpsMetrics.ahpsGrowth90d && ahpsMetrics.ahpsGrowth90d < 0 ? "text-red-600" : "text-gray-900 dark:text-gray-100")}>
+                    {formatSignedPercent(ahpsMetrics.ahpsGrowth90d)}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-gray-500 dark:text-gray-400">1Y</span>
+                  <span className={cn("font-semibold", ahpsGrowth1y && ahpsGrowth1y > 0 ? "text-green-600" : ahpsGrowth1y && ahpsGrowth1y < 0 ? "text-red-600" : "text-gray-900 dark:text-gray-100")}>
+                    {formatSignedPercent(ahpsGrowth1y)}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+              <p className="text-sm text-gray-500 dark:text-gray-400">mNAV</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                <CitationPopover
+                  sourceUrl={displayCompany.holdingsSourceUrl}
+                  sourceLabel={displayCompany.holdingsSource}
+                  ticker={displayCompany.ticker}
+                  metric="mnav"
+                  confidenceScore={displayCompany.confidenceScores?.['mnav']}
+                  jurisdiction={displayCompany.jurisdiction}
+                  legacy={displayCompany.holdingsBasis === 'static_fallback'}
+                >
+                  {displayCompany.pendingMerger ? "—" : formatMNAV(mNAV)}
+                </CitationPopover>
+              </p>
+              <p className="text-xs text-gray-400">{displayCompany.pendingMerger ? "N/A for pre-merger" : "EV / Crypto NAV"}</p>
+            </div>
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+              <p className="text-sm text-gray-500 dark:text-gray-400">Leverage</p>
+              <p className={cn("text-2xl font-bold", debtToCryptoRatio >= 1 ? "text-amber-600" : "text-gray-900 dark:text-gray-100")}>
+                <CitationPopover
+                  sourceUrl={displayCompany.debtSourceUrl}
+                  sourceLabel={displayCompany.debtSource}
+                  ticker={displayCompany.ticker}
+                  metric="debt_usd"
+                  confidenceScore={displayCompany.confidenceScores?.['debt_usd']}
+                  jurisdiction={displayCompany.jurisdiction}
+                  legacy={!displayCompany.debtSourceUrl}
+                >
+                  {debtToCryptoRatio > 0 ? `${debtToCryptoRatio.toFixed(2)}x` : "—"}
+                </CitationPopover>
+              </p>
+              <p className="text-xs text-gray-400">{debtToCryptoRatio >= 1 ? "High leverage" : debtToCryptoRatio > 0 ? "Net debt / crypto NAV" : "No debt"}</p>
             </div>
           </div>
-          </details>
-        )}
+          {(displayCompany.stakingPct != null && displayCompany.stakingPct > 0) || (displayCompany.quarterlyBurnUsd != null && displayCompany.quarterlyBurnUsd > 0) || displayCompany.preferredDividendAnnual || displayCompany.debtInterestAnnual || (displayCompany.btcMinedAnnual != null && displayCompany.btcMinedAnnual > 0) ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mt-4">
+              {displayCompany.stakingPct != null && displayCompany.stakingPct > 0 && (
+                <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Staking Yield</p>
+                  <p className="text-2xl font-bold text-green-600">
+                    +{Math.round(displayCompany.holdings * displayCompany.stakingPct * companyStakingApy).toLocaleString()}
+                  </p>
+                  <p className="text-xs text-gray-400">
+                    {displayCompany.asset}/yr ({(displayCompany.stakingPct * 100).toFixed(0)}% @ {(companyStakingApy * 100).toFixed(1)}%)
+                  </p>
+                </div>
+              )}
+              {displayCompany.quarterlyBurnUsd != null && displayCompany.quarterlyBurnUsd > 0 && (
+                <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Operating Burn</p>
+                  <p className="text-2xl font-bold text-red-600">-${(displayCompany.quarterlyBurnUsd / 1e6).toFixed(0)}M</p>
+                  <p className="text-xs text-gray-400">USD/qtr</p>
+                </div>
+              )}
+              {(displayCompany.preferredDividendAnnual || displayCompany.debtInterestAnnual) && (() => {
+                const annualBurn = (displayCompany.quarterlyBurnUsd || 0) * 4;
+                const prefDividends = displayCompany.preferredDividendAnnual || 0;
+                const debtInterest = displayCompany.debtInterestAnnual || 0;
+                const totalObligations = annualBurn + prefDividends + debtInterest;
+                if (totalObligations <= 0) return null;
+                return (
+                  <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Cash Obligations</p>
+                    <p className="text-2xl font-bold text-amber-600">${(totalObligations / 1e6).toFixed(0)}M</p>
+                    <p className="text-xs text-gray-400">Annual burn + debt/dividend obligations</p>
+                  </div>
+                );
+              })()}
+              {(displayCompany.btcMinedAnnual != null && displayCompany.btcMinedAnnual > 0) && (
+                <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Annual Mining</p>
+                  <p className="text-2xl font-bold text-orange-600">+{displayCompany.btcMinedAnnual.toLocaleString()}</p>
+                  <p className="text-xs text-gray-400">BTC/yr</p>
+                </div>
+              )}
+            </div>
+          ) : null}
+        </section>
 
         {/* ═══════════════════════════════════════════════════════════════════════ */}
         {/* CHARTS SECTION */}
@@ -1518,7 +1367,7 @@ export default function CompanyPage() {
             />
           )}
           
-          {chartMode === "hps" && (
+        {chartMode === "hps" && (
             <HoldingsPerShareChart
               ticker={displayCompany.ticker}
               asset={displayCompany.asset}
@@ -1527,6 +1376,195 @@ export default function CompanyPage() {
             />
           )}
         </div>
+
+        {/* Strategy / Overview */}
+        <div className="mb-4 mt-8 flex items-center gap-2">
+          <span className="text-lg">🧠</span>
+          <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Strategy / Overview</h2>
+          <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
+        </div>
+        <div className="bg-gray-50 dark:bg-gray-900 rounded-lg mb-8 p-6">
+          <div className="flex items-center gap-3 mb-6">
+            {displayCompany.website && (
+              <a
+                href={displayCompany.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() =>
+                  trackCitationSourceClick({
+                    href: displayCompany.website || "",
+                    ticker: displayCompany.ticker,
+                  })
+                }
+                className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                </svg>
+                Website
+              </a>
+            )}
+            {displayCompany.twitter && (
+              <a
+                href={`https://twitter.com/${displayCompany.twitter.replace('@', '')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() =>
+                  trackCitationSourceClick({
+                    href: displayCompany.twitter ? `https://twitter.com/${displayCompany.twitter.replace('@', '')}` : "",
+                    ticker: displayCompany.ticker,
+                  })
+                }
+                className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+              >
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+                {displayCompany.twitter}
+              </a>
+            )}
+          </div>
+
+          {displayCompany.description && (
+            <div className="mb-6">
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{displayCompany.description}</p>
+            </div>
+          )}
+
+          {(displayCompany.founded || displayCompany.headquarters || displayCompany.ceo) && (
+            <div className="flex flex-wrap gap-3 mb-6">
+              {displayCompany.founded && (
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                  <span className="text-gray-500 dark:text-gray-400 mr-1">Founded:</span> {displayCompany.founded}
+                </span>
+              )}
+              {displayCompany.headquarters && (
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                  <span className="text-gray-500 dark:text-gray-400 mr-1">HQ:</span> {displayCompany.headquarters}
+                </span>
+              )}
+              {displayCompany.ceo && (
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                  <span className="text-gray-500 dark:text-gray-400 mr-1">CEO:</span> {displayCompany.ceo}
+                </span>
+              )}
+            </div>
+          )}
+
+          {(intel?.strategySummary || displayCompany.strategy || displayCompany.notes) && (
+            <div className="mb-6">
+              {intel?.strategySummary ? (
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{intel.strategySummary}</p>
+              ) : (
+                <>
+                  {displayCompany.strategy && (
+                    <p className="text-gray-700 dark:text-gray-300 mb-2"><span className="font-medium">Strategy:</span> {displayCompany.strategy}</p>
+                  )}
+                  {displayCompany.notes && (
+                    <p className="text-gray-600 dark:text-gray-400 text-sm">{displayCompany.notes}</p>
+                  )}
+                </>
+              )}
+            </div>
+          )}
+
+          {intel?.keyBackers && intel.keyBackers.length > 0 && (
+            <div className="mb-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+              <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-3">
+                Key Backers & Investors
+              </h4>
+              <div className="flex flex-wrap gap-2">
+                {intel.keyBackers.map((backer, idx) => (
+                  <span
+                    key={idx}
+                    className="px-3 py-1.5 text-sm bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded-full font-medium"
+                  >
+                    {backer}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {intel?.recentDevelopments && intel.recentDevelopments.length > 0 && (
+            <div className="mb-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+              <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-3">
+                Recent Developments
+              </h4>
+              <ul className="space-y-2">
+                {intel.recentDevelopments.map((dev, idx) => (
+                  <li key={idx} className="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+                    <span className="flex-shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-indigo-500" />
+                    <span>{dev}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {intel?.outlook2026 && (() => {
+            const outlookItems = intel.outlook2026
+              .split(/(?:^|\n)\s*[-•]\s*|(?<=[.!])\s+/)
+              .map(s => s.trim())
+              .filter(s => s.length > 0 && !s.startsWith('**'));
+
+            return (
+              <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+                <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-3">
+                  Outlook & Catalysts
+                </h4>
+                <ul className="space-y-2">
+                  {outlookItems.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+                      <span className="flex-shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-purple-500" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })()}
+        </div>
+
+        {!displayCompany.pendingMerger && (
+          <div className="mb-8">
+            <MnavCalculationCard
+              ticker={displayCompany.ticker}
+              asset={displayCompany.asset}
+              marketCap={marketCap}
+              totalDebt={totalDebt}
+              preferredEquity={preferredEquity}
+              cashReserves={cashReserves}
+              restrictedCash={displayCompany.restrictedCash}
+              holdings={holdingsNative}
+              cryptoPrice={cryptoPrice}
+              holdingsValue={cryptoHoldingsValue}
+              mNAV={mNAV}
+              sharesForMnav={displayCompany.sharesForMnav}
+              stockPrice={stockPrice}
+              hasDilutiveInstruments={!!effectiveSharesResult?.breakdown?.length}
+              basicShares={effectiveSharesResult?.basic}
+              itmDilutionShares={effectiveSharesResult ? effectiveSharesResult.diluted - effectiveSharesResult.basic : undefined}
+              itmDebtAdjustment={effectiveSharesResult?.inTheMoneyDebtValue}
+              sharesSourceUrl={sharesSourceUrlResolved}
+              sharesSource={displayCompany.sharesSource}
+              sharesAsOf={displayCompany.sharesAsOf}
+              debtSourceUrl={debtSourceUrlResolved}
+              debtSource={displayCompany.debtSource}
+              debtAsOf={displayCompany.debtAsOf}
+              cashSourceUrl={cashSourceUrlResolved}
+              cashSource={displayCompany.cashSource}
+              cashAsOf={displayCompany.cashAsOf}
+              preferredSourceUrl={preferredSourceUrlResolved}
+              preferredSource={displayCompany.preferredSource}
+              preferredAsOf={displayCompany.preferredAsOf}
+              holdingsSourceUrl={holdingsSourceUrlResolved}
+              holdingsSource={displayCompany.holdingsSource}
+              holdingsAsOf={displayCompany.holdingsLastUpdated}
+              holdingsBasis={holdingsBasis}
+            />
+          </div>
+        )}
 
         {/* ═══════════════════════════════════════════════════════════════════════ */}
         {/* DATA SECTION */}
@@ -1621,23 +1659,6 @@ export default function CompanyPage() {
           </div>
         </div>
 
-        {/* Holdings History Table - shows each acquisition with SEC links */}
-        <details className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg group">
-          <summary className="p-4 cursor-pointer flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Holdings History</h3>
-            <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </summary>
-          <div className="px-4 pb-4">
-            <HoldingsHistoryTable
-              ticker={displayCompany.ticker}
-              asset={displayCompany.asset}
-              className=""
-            />
-          </div>
-        </details>
-
         {/* Scheduled Events (debt maturities, pending verifications) */}
         <details className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg group">
           <summary className="p-4 cursor-pointer flex items-center justify-between">
@@ -1677,172 +1698,20 @@ export default function CompanyPage() {
           </div>
         )}
 
-        {/* ═══════════════════════════════════════════════════════════════════════ */}
-        {/* RESEARCH SECTION */}
-        <div className="mb-4 mt-8 flex items-center gap-2">
-          <span className="text-lg">📰</span>
-          <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Research & Filings</h2>
-          <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
-        </div>
-
-        {/* Comprehensive Strategy & Overview Section */}
-        <details className="bg-gray-50 dark:bg-gray-900 rounded-lg mb-4 group">
-          <summary className="p-6 cursor-pointer flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-              Strategy & Overview
-            </h3>
+        {/* Holdings History */}
+        <details className="mb-4 bg-gray-50 dark:bg-gray-900 rounded-lg group">
+          <summary className="p-4 cursor-pointer flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Holdings History</h3>
             <svg className="w-5 h-5 text-gray-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
           </summary>
-          <div className="px-6 pb-6">
-            <div className="flex items-center gap-3 mb-6">
-              {displayCompany.website && (
-                <a
-                  href={displayCompany.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() =>
-                    trackCitationSourceClick({
-                      href: displayCompany.website || "",
-                      ticker: displayCompany.ticker,
-                    })
-                  }
-                  className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                  </svg>
-                  Website
-                </a>
-              )}
-              {displayCompany.twitter && (
-                <a
-                  href={`https://twitter.com/${displayCompany.twitter.replace('@', '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() =>
-                    trackCitationSourceClick({
-                      href: displayCompany.twitter ? `https://twitter.com/${displayCompany.twitter.replace('@', '')}` : "",
-                      ticker: displayCompany.ticker,
-                    })
-                  }
-                  className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
-                >
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                  </svg>
-                  {displayCompany.twitter}
-                </a>
-              )}
-            </div>
-
-          {/* Company Overview */}
-          {displayCompany.description && (
-            <div className="mb-6">
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{displayCompany.description}</p>
-            </div>
-          )}
-
-          {/* Company Info Pills */}
-          {(displayCompany.founded || displayCompany.headquarters || displayCompany.ceo) && (
-            <div className="flex flex-wrap gap-3 mb-6">
-              {displayCompany.founded && (
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
-                  <span className="text-gray-500 dark:text-gray-400 mr-1">Founded:</span> {displayCompany.founded}
-                </span>
-              )}
-              {displayCompany.headquarters && (
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
-                  <span className="text-gray-500 dark:text-gray-400 mr-1">HQ:</span> {displayCompany.headquarters}
-                </span>
-              )}
-              {displayCompany.ceo && (
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
-                  <span className="text-gray-500 dark:text-gray-400 mr-1">CEO:</span> {displayCompany.ceo}
-                </span>
-              )}
-            </div>
-          )}
-
-          {/* Strategy Summary */}
-          {(intel?.strategySummary || displayCompany.strategy || displayCompany.notes) && (
-            <div className="mb-6">
-              {intel?.strategySummary ? (
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{intel.strategySummary}</p>
-              ) : (
-                <>
-                  {displayCompany.strategy && (
-                    <p className="text-gray-700 dark:text-gray-300 mb-2"><span className="font-medium">Strategy:</span> {displayCompany.strategy}</p>
-                  )}
-                  {displayCompany.notes && (
-                    <p className="text-gray-600 dark:text-gray-400 text-sm">{displayCompany.notes}</p>
-                  )}
-                </>
-              )}
-            </div>
-          )}
-
-          {/* Key Backers */}
-          {intel?.keyBackers && intel.keyBackers.length > 0 && (
-            <div className="mb-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-              <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-3">
-                Key Backers & Investors
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {intel.keyBackers.map((backer, idx) => (
-                  <span
-                    key={idx}
-                    className="px-3 py-1.5 text-sm bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded-full font-medium"
-                  >
-                    {backer}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Recent Developments */}
-          {intel?.recentDevelopments && intel.recentDevelopments.length > 0 && (
-            <div className="mb-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-              <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-3">
-                Recent Developments
-              </h4>
-              <ul className="space-y-2">
-                {intel.recentDevelopments.map((dev, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-gray-700 dark:text-gray-300">
-                    <span className="flex-shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-indigo-500" />
-                    <span>{dev}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Outlook & Catalysts */}
-          {intel?.outlook2026 && (() => {
-            // Parse outlook into bullet points (split by "- " or ". " or newlines)
-            const outlookItems = intel.outlook2026
-              .split(/(?:^|\n)\s*[-•]\s*|(?<=[.!])\s+/)
-              .map(s => s.trim())
-              .filter(s => s.length > 0 && !s.startsWith('**'));
-            
-            return (
-              <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-3">
-                  Outlook & Catalysts
-                </h4>
-                <ul className="space-y-2">
-                  {outlookItems.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-3 text-gray-700 dark:text-gray-300">
-                      <span className="flex-shrink-0 w-1.5 h-1.5 mt-2 rounded-full bg-purple-500" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            );
-          })()}
+          <div className="px-4 pb-4">
+            <HoldingsHistoryTable
+              ticker={displayCompany.ticker}
+              asset={displayCompany.asset}
+              className=""
+            />
           </div>
         </details>
 
