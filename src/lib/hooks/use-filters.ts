@@ -58,6 +58,12 @@ export function useFilters() {
     parseAsArrayOf(parseAsString).withDefault([])
   );
 
+  // Max leverage filter
+  const [maxLeverage, setMaxLeverage] = useQueryState(
+    "maxLev",
+    parseAsFloat.withDefault(Infinity)
+  );
+
   // Sort state
   const [sortField, setSortField] = useQueryState(
     "sort",
@@ -80,6 +86,7 @@ export function useFilters() {
     setMaxMarketCap(Infinity);
     setMinMNAV(0);
     setMaxMNAV(Infinity);
+    setMaxLeverage(Infinity);
     setAssets([]);
     setCompanyTypes([]);
     setSearch("");
@@ -91,6 +98,7 @@ export function useFilters() {
     maxMarketCap < Infinity ||
     minMNAV > 0 ||
     maxMNAV < Infinity ||
+    maxLeverage < Infinity ||
     assets.length > 0 ||
     companyTypes.length > 0 ||
     search.length > 0;
@@ -101,6 +109,7 @@ export function useFilters() {
     maxMarketCap,
     minMNAV,
     maxMNAV,
+    maxLeverage,
     assets,
     companyTypes,
     search,
@@ -112,6 +121,7 @@ export function useFilters() {
     setMaxMarketCap,
     setMinMNAV,
     setMaxMNAV,
+    setMaxLeverage,
     setAssets,
     setCompanyTypes,
     setSearch,
