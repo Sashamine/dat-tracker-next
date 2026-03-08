@@ -24,6 +24,12 @@ export const TICKER_CURRENCY: Record<string, string> = {
   "NDA.V": "CAD", // Neptune Digital Assets (TSX Venture)
   "DMGI.V": "CAD", // DMG Blockchain (TSX Venture)
   "OBTC3": "BRL", // OranjeBTC (B3 Brazil)
+  "CASH3.SA": "BRL", // Méliuz (B3 Brazil)
+  "SATS.L": "GBP", // Satsuma Technology (London Stock Exchange)
+  "377030.KQ": "KRW", // bitmax (KOSDAQ Korea)
+  "PHX.AD": "AED", // Phoenix Group (ADX Abu Dhabi)
+  "BTCT.V": "CAD", // Bitcoin Treasury Corp (TSX Venture)
+  "AKER": "NOK", // Aker ASA (Oslo Børs)
 };
 
 // Fetch forex rates from exchangerate-api.com (free, no API key needed)
