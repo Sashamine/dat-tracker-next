@@ -994,7 +994,7 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
           )}
         </div>
         <div>
-          <p className="text-xs text-gray-500 uppercase">{isSizeView ? "mNAV" : isEfficiencyView ? "AHPS 90D" : "Adj. AHPS"}</p>
+          <p className="text-xs text-gray-500 uppercase">{isSizeView ? "mNAV" : isEfficiencyView ? "AHPS 90D" : "Organic"}</p>
           {isSizeView ? (
             <p className="font-semibold text-gray-900 dark:text-gray-100">{company.pendingMerger ? "—" : `${company.mNAV.toFixed(2)}x`}</p>
           ) : isEfficiencyView ? (
@@ -1191,7 +1191,7 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                         AHPS Growth (90D) {sortIndicator("hpsGrowth90d")}
                       </TableHead>
                       <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("leverageAdjGrowth")}>
-                        Adj. AHPS {sortIndicator("leverageAdjGrowth")}
+                        Organic {sortIndicator("leverageAdjGrowth")}
                       </TableHead>
                       <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("mNAV")}>
                         mNAV {sortIndicator("mNAV")}
