@@ -123,7 +123,7 @@ describe("getCompanyAhpsMetrics", () => {
     expect(result.ahpsGrowth90dAnnualized).not.toBeNull();
   });
 
-  it("returns null 90d growth when the nearest prior snapshot is too stale", () => {
+  it("carries forward an old baseline for 90d growth (no maxLagDays)", () => {
     const now = new Date();
     const stale = new Date(now.getTime() - 250 * 24 * 60 * 60 * 1000);
     const recent = new Date(now.getTime() - 5 * 24 * 60 * 60 * 1000);
@@ -146,8 +146,9 @@ describe("getCompanyAhpsMetrics", () => {
       history,
     });
 
-    expect(result.ahpsGrowth90d).toBeNull();
-    expect(result.ahpsGrowth90dAnnualized).toBeNull();
+    // 250-day-old snapshot is a valid carry-forward baseline
+    expect(result.ahpsGrowth90d).toBeCloseTo(20, 0);
+    expect(result.ahpsGrowth90dAnnualized).not.toBeNull();
   });
 
   it("detects dilution-driven AHPS decline", () => {

@@ -4,7 +4,7 @@ import {
   getEffectiveShares,
   getEffectiveSharesAt,
 } from "@/lib/data/dilutive-instruments";
-import { findSnapshotOnOrBefore, GROWTH_LOOKBACK_GRACE_DAYS } from "@/lib/utils/growth-snapshots";
+import { findSnapshotOnOrBefore } from "@/lib/utils/growth-snapshots";
 
 export type AhpsMethod = "dilution-adjusted" | "basic-shares-only";
 
@@ -93,7 +93,8 @@ export function getCompanyAhpsMetrics({
     const ninetyDaysAgo = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
     const snapshot90d = findSnapshotOnOrBefore(history, ninetyDaysAgo, {
       getDate: (snapshot) => snapshot.date,
-      maxLagDays: GROWTH_LOOKBACK_GRACE_DAYS[90],
+      // No maxLagDays: carry-forward is correct. A baseline from 6 months ago
+      // means nothing changed — company should show 0% growth, not "no data".
     });
 
     if (snapshot90d && snapshot90d.sharesOutstanding > 0) {
