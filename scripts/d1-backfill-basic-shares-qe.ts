@@ -36,13 +36,16 @@ function parseDate(s: string, name: string): string {
 
 function quarterEndsBetween(from: string, to: string): string[] {
   const ends = ['03-31', '06-30', '09-30', '12-31'];
+  const today = new Date().toISOString().split('T')[0];
+  // Never generate quarter-ends in the future
+  const effectiveTo = to > today ? today : to;
   const out: string[] = [];
   const fromY = Number(from.slice(0, 4));
-  const toY = Number(to.slice(0, 4));
+  const toY = Number(effectiveTo.slice(0, 4));
   for (let y = fromY; y <= toY; y++) {
     for (const mmdd of ends) {
       const d = `${y}-${mmdd}`;
-      if (d >= from && d <= to) out.push(d);
+      if (d >= from && d <= effectiveTo) out.push(d);
     }
   }
   return out;
