@@ -1200,7 +1200,7 @@ export default function CompanyPage() {
               </p>
             </div>
             <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <p className="text-sm text-gray-500 dark:text-gray-400">HPS Growth</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">AHPS Growth</p>
               <div className="mt-2 space-y-2">
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-gray-500 dark:text-gray-400">90D</span>

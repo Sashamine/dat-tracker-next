@@ -4,6 +4,7 @@ import {
   getEffectiveShares,
   getEffectiveSharesAt,
 } from "@/lib/data/dilutive-instruments";
+import { findSnapshotOnOrBefore, GROWTH_LOOKBACK_GRACE_DAYS } from "@/lib/utils/growth-snapshots";
 
 export type AhpsMethod = "dilution-adjusted" | "basic-shares-only";
 
@@ -72,22 +73,6 @@ function computeAhpsAt(
   };
 }
 
-function snapshotAtDate(
-  history: AhpsHistoryEntry[],
-  targetDate: Date
-): AhpsHistoryEntry | null {
-  const target = targetDate.toISOString().split("T")[0];
-  let best: AhpsHistoryEntry | null = null;
-
-  for (const snapshot of history) {
-    if (snapshot.date <= target) {
-      if (!best || snapshot.date > best.date) best = snapshot;
-    }
-  }
-
-  return best;
-}
-
 export function getCompanyAhpsMetrics({
   ticker,
   company,
@@ -106,7 +91,10 @@ export function getCompanyAhpsMetrics({
   if (history && history.length >= 2) {
     const now = new Date();
     const ninetyDaysAgo = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
-    const snapshot90d = snapshotAtDate(history, ninetyDaysAgo);
+    const snapshot90d = findSnapshotOnOrBefore(history, ninetyDaysAgo, {
+      getDate: (snapshot) => snapshot.date,
+      maxLagDays: GROWTH_LOOKBACK_GRACE_DAYS[90],
+    });
 
     if (snapshot90d && snapshot90d.sharesOutstanding > 0) {
       const historicalPrice = snapshot90d.stockPrice ?? currentStockPrice;

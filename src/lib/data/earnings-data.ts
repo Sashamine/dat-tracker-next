@@ -25,6 +25,7 @@ import { MSTR_VERIFIED_FINANCIALS } from "./mstr-verified-financials";
 import { getBMNRQuarterEndData } from "./bmnr-holdings-history";
 import { getMARAQuarterEndDataForEarnings } from "./mara-holdings-history";
 import { normalizeShares } from "@/lib/corporate-actions";
+import { findSnapshotOnOrBefore, GROWTH_LOOKBACK_GRACE_DAYS } from "@/lib/utils/growth-snapshots";
 
 /**
  * Derives calendar year/quarter directly from an XBRL period end date.
@@ -4367,18 +4368,19 @@ export function getHoldingsGrowthByPeriod(options?: {
     let startSnapshot: typeof history[0] | null = null;
     
     if (cutoffDate) {
-      // Find snapshot closest to cutoff date
-      for (let i = history.length - 2; i >= 0; i--) {
-        const snapshotDate = new Date(history[i].date);
-        if (snapshotDate <= cutoffDate) {
-          startSnapshot = history[i];
-          break;
-        }
-      }
-      // If no snapshot before cutoff, use earliest available
-      if (!startSnapshot && history.length >= 2) {
-        startSnapshot = history[0];
-      }
+      const maxLagDays =
+        days === 30
+          ? GROWTH_LOOKBACK_GRACE_DAYS[30]
+          : days === 90
+            ? GROWTH_LOOKBACK_GRACE_DAYS[90]
+            : days === 365
+              ? GROWTH_LOOKBACK_GRACE_DAYS[365]
+              : undefined;
+
+      startSnapshot = findSnapshotOnOrBefore(history.slice(0, -1), cutoffDate, {
+        getDate: (snapshot) => snapshot.date,
+        maxLagDays,
+      });
     } else {
       // "All time" - use first snapshot
       startSnapshot = history[0];

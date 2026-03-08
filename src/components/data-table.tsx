@@ -180,7 +180,7 @@ function MoneyballScatterPlot({
     <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-950">
       <div className="mb-4">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-          HPS Growth vs. mNAV
+          AHPS Growth vs. mNAV
         </h3>
         <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
           Moneyball view: per-share treasury growth on the y-axis, wrapper valuation on the x-axis, treasury scale in dot size.
@@ -236,7 +236,7 @@ function MoneyballScatterPlot({
                 onClick={() => onSelect(company.ticker)}
                 onMouseEnter={() => setHoveredTicker(company.ticker)}
                 onMouseLeave={() => setHoveredTicker((current) => (current === company.ticker ? null : current))}
-                aria-label={`${company.name}: ${formatGrowthPct(company.ahpsGrowth90d)} HPS growth at ${company.mNAV.toFixed(2)}x mNAV`}
+                aria-label={`${company.name}: ${formatGrowthPct(company.ahpsGrowth90d)} AHPS growth at ${company.mNAV.toFixed(2)}x mNAV`}
               >
                 <span
                   className={cn(
@@ -262,14 +262,14 @@ function MoneyballScatterPlot({
             <p className="text-xs text-gray-500 dark:text-gray-400">{hoveredCompany.ticker}</p>
             <div className="mt-2 space-y-1 text-sm">
               <p className="flex justify-between gap-4"><span className="text-gray-500">Treasury</span><span className="font-medium text-gray-900 dark:text-gray-100">{formatCompactUsd(hoveredCompany.holdingsValue)}</span></p>
-              <p className="flex justify-between gap-4"><span className="text-gray-500">HPS Growth</span><span className={cn("font-medium", getGrowthColor(hoveredCompany.ahpsGrowth90d))}>{formatGrowthPct(hoveredCompany.ahpsGrowth90d)}</span></p>
+              <p className="flex justify-between gap-4"><span className="text-gray-500">AHPS Growth</span><span className={cn("font-medium", getGrowthColor(hoveredCompany.ahpsGrowth90d))}>{formatGrowthPct(hoveredCompany.ahpsGrowth90d)}</span></p>
               <p className="flex justify-between gap-4"><span className="text-gray-500">mNAV</span><span className="font-medium text-gray-900 dark:text-gray-100">{hoveredCompany.mNAV.toFixed(2)}x</span></p>
             </div>
           </div>
         )}
 
         <div className="pointer-events-none absolute bottom-2 left-3 text-[11px] text-gray-500 dark:text-gray-400">
-          HPS Growth (90D)
+          AHPS Growth (90D)
         </div>
         <div className="pointer-events-none absolute bottom-2 right-3 text-[11px] text-gray-500 dark:text-gray-400">
           mNAV
@@ -862,7 +862,7 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
       <div className="grid grid-cols-4 gap-3 pt-3 border-t border-gray-100 dark:border-gray-800">
         <div>
           <p className="text-xs text-gray-500 uppercase">
-            {isSizeView ? "Treasury" : isEfficiencyView ? "Efficiency" : "HPS 90D"}
+            {isSizeView ? "Treasury" : isEfficiencyView ? "Efficiency" : "AHPS 90D"}
           </p>
           {isSizeView ? (
             <p className="font-semibold text-gray-900 dark:text-gray-100">{formatCompactUsd(company.holdingsValue)}</p>
@@ -939,7 +939,7 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
           )}
         </div>
         <div>
-          <p className="text-xs text-gray-500 uppercase">{isSizeView ? "mNAV" : isEfficiencyView ? "HPS 90D" : "Treasury"}</p>
+          <p className="text-xs text-gray-500 uppercase">{isSizeView ? "mNAV" : isEfficiencyView ? "AHPS 90D" : "Treasury"}</p>
           {isSizeView ? (
             <p className="font-semibold text-gray-900 dark:text-gray-100">{company.pendingMerger ? "—" : `${company.mNAV.toFixed(2)}x`}</p>
           ) : isEfficiencyView ? (
@@ -998,7 +998,7 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
   };
 
   const viewSubtitle = isGrowthView
-    ? `Median: ${formatGrowthPct(medianGrowth)} • ${positiveGrowthCount}/${filteredCompanies.length} growing HPS`
+    ? `Median: ${formatGrowthPct(medianGrowth)} • ${positiveGrowthCount}/${filteredCompanies.length} growing AHPS`
     : isEfficiencyView
       ? `Median efficiency: ${formatRatio(medianEfficiency)} • Best: ${bestEfficiencyCompany?.ticker ?? "—"}`
       : `${filteredCompanies.length} companies • ${formatCompactUsd(visibleTreasuryValue)} total treasury`;
@@ -1101,7 +1101,7 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                   ) : isGrowthView ? (
                     <>
                       <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("hpsGrowth90d")}>
-                        HPS Growth (90D) {sortIndicator("hpsGrowth90d")}
+                        AHPS Growth (90D) {sortIndicator("hpsGrowth90d")}
                       </TableHead>
                       <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("mNAV")}>
                         mNAV {sortIndicator("mNAV")}
@@ -1116,7 +1116,7 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                         Efficiency {sortIndicator("wrapperEfficiency")}
                       </TableHead>
                       <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("hpsGrowth90d")}>
-                        HPS Growth {sortIndicator("hpsGrowth90d")}
+                        AHPS Growth {sortIndicator("hpsGrowth90d")}
                       </TableHead>
                       <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("mNAV")}>
                         mNAV {sortIndicator("mNAV")}

@@ -192,7 +192,7 @@ function ScatterCard({
                   <span className="mt-1 block text-xs text-gray-500 dark:text-gray-400">{point.ticker}</span>
                   <span className="mt-2 block text-xs text-gray-500 dark:text-gray-400">Treasury {formatCompactUsd(point.treasuryValue)}</span>
                   <span className="block text-xs text-gray-500 dark:text-gray-400">HPS {formatHps(point.currentHps)}</span>
-                  <span className="block text-xs text-gray-500 dark:text-gray-400">HPS Growth {formatSignedPercent(point.ahpsGrowth90d)}</span>
+                  <span className="block text-xs text-gray-500 dark:text-gray-400">AHPS Growth {formatSignedPercent(point.ahpsGrowth90d)}</span>
                   <span className="block text-xs text-gray-500 dark:text-gray-400">mNAV {point.mNAV ? `${point.mNAV.toFixed(2)}x` : "—"}</span>
                 </span>
               </button>
@@ -262,14 +262,14 @@ function FlywheelPlaceholder() {
       <div className="mb-4">
         <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Flywheel Dynamics</h2>
         <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-          Waiting on a canonical 90-day mNAV change series. The current data model supports current mNAV and HPS growth, but not a trustworthy sector-wide historical mNAV delta for this chart yet.
+          Waiting on a canonical 90-day mNAV change series. The current data model supports current mNAV and AHPS growth, but not a trustworthy sector-wide historical mNAV delta for this chart yet.
         </p>
       </div>
       <div className="flex h-[320px] items-center justify-center rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950 sm:h-[380px]">
         <div className="max-w-sm text-center">
           <p className="text-base font-semibold text-gray-900 dark:text-gray-100">Coming soon</p>
           <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-            This view will map HPS growth against mNAV change once the historical sector mNAV series is exposed as a canonical metric.
+            This view will map AHPS growth against mNAV change once the historical sector mNAV series is exposed as a canonical metric.
           </p>
         </div>
       </div>
