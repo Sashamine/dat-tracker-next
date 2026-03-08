@@ -338,6 +338,8 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
     maxMarketCap,
     minMNAV,
     maxMNAV,
+    maxLeverage,
+    setMaxLeverage,
     assets,
     companyTypes,
     search,
@@ -532,6 +534,13 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
   if (companyTypes.length > 0) {
     filteredCompanies = filteredCompanies.filter((c) =>
       companyTypes.includes(c.companyType)
+    );
+  }
+
+  // Leverage filter
+  if (maxLeverage < Infinity) {
+    filteredCompanies = filteredCompanies.filter((c) =>
+      c.leverageRatio <= maxLeverage
     );
   }
 
@@ -954,10 +963,7 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
           )}
         </div>
         <div>
-          <p className="text-xs text-gray-500 uppercase">{isGrowthView ? "Treasury" : "Leverage"}</p>
-          {isGrowthView ? (
-            <p className="font-semibold text-gray-900 dark:text-gray-100">{formatCompactUsd(company.holdingsValue)}</p>
-          ) : (
+          <p className="text-xs text-gray-500 uppercase">Leverage</p>
           <p className={cn(
             "font-semibold",
             company.leverageRatio >= 1 ? "text-amber-600" : "text-gray-900 dark:text-gray-100"
@@ -969,7 +975,6 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
               </span>
             ) : "—"}
           </p>
-          )}
         </div>
       </div>
     </div>
@@ -1048,6 +1053,30 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
             Efficiency
           </button>
         </div>
+        {isGrowthView && (
+          <div className="flex items-center gap-1.5 px-3 pb-2">
+            <span className="text-xs text-gray-500 dark:text-gray-400 mr-1">Leverage:</span>
+            {([
+              { label: "All", value: Infinity },
+              { label: "< 0.5x", value: 0.5 },
+              { label: "< 0.25x", value: 0.25 },
+              { label: "Debt-free", value: 0 },
+            ] as const).map(({ label, value }) => (
+              <button
+                key={label}
+                onClick={() => setMaxLeverage(value)}
+                className={cn(
+                  "px-2 py-0.5 text-xs rounded-full transition-colors",
+                  maxLeverage === value
+                    ? "bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 font-medium"
+                    : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
+                )}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        )}
         <div className="px-3 pb-3 text-sm text-gray-500 dark:text-gray-400">
           {viewSubtitle}
         </div>
@@ -1100,6 +1129,9 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                     <>
                       <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("hpsGrowth90d")}>
                         AHPS Growth (90D) {sortIndicator("hpsGrowth90d")}
+                      </TableHead>
+                      <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("leverageRatio")}>
+                        Leverage {sortIndicator("leverageRatio")}
                       </TableHead>
                       <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("mNAV")}>
                         mNAV {sortIndicator("mNAV")}
@@ -1309,6 +1341,16 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                               <Badge variant="outline" className="ml-1 text-[10px] px-1 py-0 bg-green-500/10 text-green-600 border-green-500/30">
                                 Adj
                               </Badge>
+                            )}
+                          </TableCell>
+                          <TableCell className="text-right font-mono text-sm">
+                            {company.leverageRatio > 0 ? (
+                              <span className={cn(company.leverageRatio >= 1 ? "text-amber-600 font-medium" : "text-gray-500")}>
+                                {company.leverageRatio >= 1 ? "⚠️ " : ""}
+                                {company.leverageRatio.toFixed(2)}x
+                              </span>
+                            ) : (
+                              <span className="text-gray-400">—</span>
                             )}
                           </TableCell>
                           <TableCell className="text-right font-mono">
