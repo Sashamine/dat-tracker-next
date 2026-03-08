@@ -5,6 +5,7 @@ import { useQueryState, parseAsFloat, parseAsString, parseAsArrayOf, parseAsStri
 // Available sort fields
 export const SORT_FIELDS = [
   "hpsGrowth90d",
+  "wrapperEfficiency",
   "holdingsValue",
   "mNAV",
   "marketCap",
@@ -60,7 +61,7 @@ export function useFilters() {
   // Sort state
   const [sortField, setSortField] = useQueryState(
     "sort",
-    parseAsString.withDefault("hpsGrowth90d")
+    parseAsString.withDefault("holdingsValue")
   );
   const [sortDir, setSortDir] = useQueryState(
     "dir",

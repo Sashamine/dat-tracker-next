@@ -149,7 +149,7 @@ function HomeContent() {
                 </p>
               )}
               <p className="mt-1 max-w-2xl text-sm text-gray-600 dark:text-gray-300">
-                Ranked by 90-day adjusted holdings-per-share growth so dilution-adjusted treasury execution shows up first.
+                Compare DATs by treasury scale, per-share growth, and wrapper efficiency from one homepage view.
               </p>
             </div>
             <div className="flex items-center gap-4">
@@ -215,7 +215,7 @@ function HomeContent() {
                   </p>
                 )}
                 <p className="mt-1 text-xs text-gray-600 dark:text-gray-300">
-                  Default ranking: 90D AHPS growth.
+                  Default view: Size. Switch to Growth or Efficiency for per-share execution.
                 </p>
               </div>
               <div className="flex items-center gap-3">
