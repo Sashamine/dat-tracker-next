@@ -25,13 +25,16 @@ export function calculateNAVPerShare(
   return equityNav / sharesOutstanding;
 }
 
-// Calculate mNAV (Enterprise Value / NAV)
+// Calculate mNAV (Enterprise Value / Crypto NAV)
+// otherInvestments (equity stakes, etc.) are excluded entirely — not in NAV,
+// not in EV. mNAV answers "what premium for the crypto wrapper?" and non-crypto
+// assets like BTBT's $528M WhiteFiber stake shouldn't distort that signal.
 export function calculateMNAV(
   marketCap: number,
   holdings: number,
   assetPrice: number,
   cashReserves: number = 0,
-  otherInvestments: number = 0,
+  _otherInvestments: number = 0,
   totalDebt: number = 0,
   preferredEquity: number = 0,
   restrictedCash: number = 0,
@@ -40,7 +43,7 @@ export function calculateMNAV(
   const baseCryptoNav = holdings * assetPrice + secondaryCryptoValue;
   if (!baseCryptoNav || baseCryptoNav <= 0) return null;
 
-  const totalNav = baseCryptoNav + restrictedCash + otherInvestments;
+  const totalNav = baseCryptoNav + restrictedCash;
 
   const freeCash = cashReserves - restrictedCash;
   const enterpriseValue = marketCap + totalDebt + preferredEquity - freeCash;
@@ -71,7 +74,7 @@ export function calculateMNAVExtended(
   const baseCryptoNav = holdings * assetPrice + secondaryCryptoValue;
   if (!baseCryptoNav || baseCryptoNav <= 0) return null;
 
-  const totalNav = baseCryptoNav + restrictedCash + otherInvestments;
+  const totalNav = baseCryptoNav + restrictedCash;
 
   const freeCash = cashReserves - restrictedCash;
   const enterpriseValue = marketCap + totalDebt + preferredEquity - freeCash;
