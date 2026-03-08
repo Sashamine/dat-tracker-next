@@ -179,7 +179,7 @@ export function getCompanyMNAVDetailed(
   return {
     mnav: finalMnav,
     cryptoNavUsd: totalCV,
-    evUsd: marketCap + adjustedDebt + (company.preferredEquity || 0) - (company.cashReserves || 0),
+    evUsd: marketCap + adjustedDebt + (company.preferredEquity || 0) - (company.cashReserves || 0) - (company.otherInvestments ?? 0),
     assets,
     warnings
   };

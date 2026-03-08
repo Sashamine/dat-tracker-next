@@ -155,7 +155,7 @@ export function MNAVTooltip({
   // EV = Market Cap + Debt + Preferred - freeCash
   // NAV = Crypto value only (NOT including cash)
   const freeCash = cashReserves - restrictedCash;
-  const ev = marketCap + totalDebt + preferredEquity - freeCash;
+  const ev = marketCap + totalDebt + preferredEquity - freeCash - otherInvestments;
   const nav = holdingsValue;  // Crypto-only NAV
   const hasRestrictedCash = restrictedCash > 0;
 
@@ -325,6 +325,12 @@ export function MNAVTooltip({
                 {hasRestrictedCash && (
                   <div className="flex justify-between items-start text-[10px] text-gray-500">
                     <span className="italic">({formatCompact(restrictedCash)} restricted)</span>
+                  </div>
+                )}
+                {otherInvestments > 0 && (
+                  <div className="flex justify-between items-start">
+                    <span>− Other Investments</span>
+                    <span className="font-mono text-green-400">({formatCompact(otherInvestments)})</span>
                   </div>
                 )}
                 <div className="flex justify-between font-medium border-t border-gray-700 pt-0.5">
