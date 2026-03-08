@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { D1Client } from '@/lib/d1';
+import { allCompanies } from '@/lib/data/companies';
 import { findSnapshotOnOrBefore, GROWTH_LOOKBACK_GRACE_DAYS } from '@/lib/utils/growth-snapshots';
 
 /**
@@ -21,6 +22,7 @@ interface HpsGrowthRow {
   as_of: string;
   holdings: number;
   shares: number;
+  unit: string;
   method: string | null;
   reported_at: string | null;
   confidence: number | null;
@@ -57,46 +59,34 @@ export async function GET() {
   try {
     const d1 = D1Client.fromEnv();
 
+    // Build ticker→asset map so we only use holdings matching the primary asset.
+    // This prevents e.g. BTBT's 917 BTC from contaminating their 122K ETH history.
+    const tickerAsset = new Map<string, string>();
+    for (const c of allCompanies) {
+      tickerAsset.set(c.ticker.toUpperCase(), c.asset.toUpperCase());
+    }
+
     // Get all holdings_native and basic_shares datapoints in one query.
-    // We pivot holdings + shares by (entity_id, as_of) date.
+    // Returns all rows — dedup and unit filtering happen in JS.
     const sql = `
-      WITH holdings AS (
-        SELECT entity_id, as_of, value AS holdings, method, reported_at, confidence
-        FROM datapoints
-        WHERE metric = 'holdings_native' AND as_of IS NOT NULL AND value > 0
-        GROUP BY entity_id, as_of
-      ),
-      shares AS (
-        SELECT entity_id, as_of, value AS shares, method, reported_at, confidence
+      SELECT
+        h.entity_id,
+        h.as_of,
+        h.value AS holdings,
+        h.unit,
+        h.method,
+        h.reported_at,
+        h.confidence,
+        s.shares
+      FROM datapoints h
+      INNER JOIN (
+        SELECT entity_id, as_of, MAX(value) AS shares
         FROM datapoints
         WHERE metric = 'basic_shares' AND as_of IS NOT NULL AND value > 0
         GROUP BY entity_id, as_of
-      ),
-      joined AS (
-        SELECT
-          h.entity_id,
-          h.as_of,
-          h.holdings,
-          s.shares,
-          h.method AS holdings_method,
-          s.method AS shares_method,
-          h.reported_at AS holdings_reported_at,
-          s.reported_at AS shares_reported_at,
-          h.confidence AS holdings_confidence,
-          s.confidence AS shares_confidence
-        FROM holdings h
-        INNER JOIN shares s ON h.entity_id = s.entity_id AND h.as_of = s.as_of
-      )
-      SELECT
-        entity_id,
-        as_of,
-        holdings,
-        shares,
-        holdings_method AS method,
-        holdings_reported_at AS reported_at,
-        holdings_confidence AS confidence
-      FROM joined
-      ORDER BY entity_id ASC, as_of ASC
+      ) s ON h.entity_id = s.entity_id AND h.as_of = s.as_of
+      WHERE h.metric = 'holdings_native' AND h.as_of IS NOT NULL AND h.value > 0
+      ORDER BY h.entity_id ASC, h.as_of ASC
     `;
 
     const raw = await d1.query<HpsGrowthRow>(sql, []);
@@ -136,9 +126,14 @@ export async function GET() {
       return candidate;
     };
 
-    // Group by ticker/date and resolve duplicate datapoints deterministically.
+    // Group by ticker/date, filtering to only the company's primary asset unit.
+    // Resolve duplicate datapoints for the same (ticker, date, unit) deterministically.
     const byTicker = new Map<string, Map<string, HpsGrowthRow>>();
     for (const row of rows) {
+      const expectedAsset = tickerAsset.get(row.entity_id.toUpperCase());
+      // Skip holdings that don't match the company's primary asset
+      if (expectedAsset && row.unit.toUpperCase() !== expectedAsset) continue;
+
       const tickerRows = byTicker.get(row.entity_id) || new Map<string, HpsGrowthRow>();
       const existing = tickerRows.get(row.as_of);
       tickerRows.set(row.as_of, existing ? preferRow(existing, row) : row);
