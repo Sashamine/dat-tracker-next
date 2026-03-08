@@ -26,6 +26,13 @@ interface HpsGrowthRow {
   confidence: number | null;
 }
 
+interface HpsSnapshot {
+  date: string;
+  holdings: number;
+  sharesOutstanding: number;
+  holdingsPerShare: number;
+}
+
 interface HpsGrowthResult {
   ticker: string;
   currentHps: number;
@@ -38,30 +45,12 @@ interface HpsGrowthResult {
   currentHoldings: number;
   currentShares: number;
   latestDate: string;
-  currentSnapshot: {
-    date: string;
-    holdings: number;
-    sharesOutstanding: number;
-    holdingsPerShare: number;
-  };
-  snapshot30d: {
-    date: string;
-    holdings: number;
-    sharesOutstanding: number;
-    holdingsPerShare: number;
-  } | null;
-  snapshot90d: {
-    date: string;
-    holdings: number;
-    sharesOutstanding: number;
-    holdingsPerShare: number;
-  } | null;
-  snapshot1y: {
-    date: string;
-    holdings: number;
-    sharesOutstanding: number;
-    holdingsPerShare: number;
-  } | null;
+  currentSnapshot: HpsSnapshot;
+  snapshot30d: HpsSnapshot | null;
+  snapshot90d: HpsSnapshot | null;
+  snapshot1y: HpsSnapshot | null;
+  /** Full history of (date, holdings, shares) pairs for AHPS calculation */
+  history: HpsSnapshot[];
 }
 
 export async function GET() {
@@ -190,6 +179,13 @@ export async function GET() {
       const growth = (current: number, past: number | null): number | null =>
         past && past > 0 ? ((current - past) / past) * 100 : null;
 
+      const toSnapshot = (row: HpsGrowthRow): HpsSnapshot => ({
+        date: row.as_of,
+        holdings: row.holdings,
+        sharesOutstanding: row.shares,
+        holdingsPerShare: row.holdings / row.shares,
+      });
+
       results.push({
         ticker,
         currentHps,
@@ -202,36 +198,11 @@ export async function GET() {
         currentHoldings: latest.holdings,
         currentShares: latest.shares,
         latestDate: latest.as_of,
-        currentSnapshot: {
-          date: latest.as_of,
-          holdings: latest.holdings,
-          sharesOutstanding: latest.shares,
-          holdingsPerShare: currentHps,
-        },
-        snapshot30d: snapshot30d
-          ? {
-              date: snapshot30d.as_of,
-              holdings: snapshot30d.holdings,
-              sharesOutstanding: snapshot30d.shares,
-              holdingsPerShare: hps30dAgo!,
-            }
-          : null,
-        snapshot90d: snapshot90d
-          ? {
-              date: snapshot90d.as_of,
-              holdings: snapshot90d.holdings,
-              sharesOutstanding: snapshot90d.shares,
-              holdingsPerShare: hps90dAgo!,
-            }
-          : null,
-        snapshot1y: snapshot1y
-          ? {
-              date: snapshot1y.as_of,
-              holdings: snapshot1y.holdings,
-              sharesOutstanding: snapshot1y.shares,
-              holdingsPerShare: hps1yAgo!,
-            }
-          : null,
+        currentSnapshot: toSnapshot(latest),
+        snapshot30d: snapshot30d ? toSnapshot(snapshot30d) : null,
+        snapshot90d: snapshot90d ? toSnapshot(snapshot90d) : null,
+        snapshot1y: snapshot1y ? toSnapshot(snapshot1y) : null,
+        history: snapshots.map(toSnapshot),
       });
     }
 

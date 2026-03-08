@@ -32,6 +32,7 @@ type HpsGrowthApiRow = {
   snapshot30d: HpsGrowthApiSnapshot | null;
   snapshot90d: HpsGrowthApiSnapshot | null;
   snapshot1y: HpsGrowthApiSnapshot | null;
+  history: HpsGrowthApiSnapshot[];
 };
 
 type ChartPoint = {
@@ -581,11 +582,8 @@ function AnalyticsContent() {
       const marketCap = getMarketCapForMnavSync(company, prices?.stocks?.[company.ticker], prices?.forex).marketCap;
       const mNAV = getCompanyMNAV(company, prices ?? null);
       const row = ahpsByTicker.get(company.ticker.toUpperCase());
-      const history: AhpsHistoryEntry[] | undefined = row
-        ? [row.snapshot30d, row.snapshot90d, row.snapshot1y, row.currentSnapshot]
-            .filter((snapshot): snapshot is HpsGrowthApiSnapshot => Boolean(snapshot))
-            .sort((a, b) => a.date.localeCompare(b.date))
-            .map((snapshot) => ({
+      const history: AhpsHistoryEntry[] | undefined = row?.history?.length
+        ? row.history.map((snapshot) => ({
               date: snapshot.date,
               holdings: snapshot.holdings,
               sharesOutstanding: snapshot.sharesOutstanding,
