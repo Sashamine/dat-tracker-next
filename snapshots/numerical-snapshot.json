@@ -10,8 +10,7 @@
       "deterministicMnavBreakdown": {
         "cryptoNav": 409100000,
         "enterpriseValue": 772144133000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 409100000
       },
       "holdings": 4091,
@@ -49,38 +48,37 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
       "cashReserves": 7500000,
-      "deterministicMnav": 363.45776332818747,
+      "deterministicMnav": 413.2433298199329,
       "deterministicMnavBreakdown": {
-        "cryptoNav": 141700000,
-        "enterpriseValue": 71078200000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
-        "totalNav": 195561100
+        "cryptoNav": 118147000,
+        "enterpriseValue": 71081200000,
+        "otherInvestmentsIncluded": 0,
+        "totalNav": 172008100
       },
-      "holdings": 1417,
-      "holdingsPerShareBasic": 0.00003489339906524105,
+      "holdings": 1181.47,
+      "holdingsPerShareBasic": 0.00002909136125912283,
       "id": "3189t",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 100000,
         "dilutionApplied": true,
         "effectiveShares": {
-          "basic": 40609400,
-          "diluted": 71039400,
+          "basic": 40612400,
+          "diluted": 71042400,
           "inTheMoneyDebtValue": 0,
           "inTheMoneyWarrantProceeds": 53861100
         },
         "inTheMoneyDebtValue": 0,
         "inTheMoneyWarrantProceeds": 53861100,
-        "marketCapForMnav": 71039400000,
+        "marketCapForMnav": 71042400000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 2.533896093022798,
+      "navPerShareBasic": 1.9537628901517763,
       "otherInvestments": null,
       "preferredEquity": null,
-      "quarterlyBurnUsd": 1000000,
+      "quarterlyBurnUsd": 3800000,
       "restrictedCash": null,
-      "sharesForMnav": 40609400,
+      "sharesForMnav": 40612400,
       "stakingApy": null,
       "stakingPct": null,
       "tier": 2,
@@ -92,13 +90,12 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
       "cashReserves": 97000000,
-      "deterministicMnav": 338.36431299062207,
+      "deterministicMnav": 312.509151804172,
       "deterministicMnavBreakdown": {
         "cryptoNav": 3510200000,
-        "enterpriseValue": 1206770340000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
-        "totalNav": 3566482320
+        "enterpriseValue": 1416770340000,
+        "otherInvestmentsIncluded": 0,
+        "totalNav": 4533532320
       },
       "holdings": 35102,
       "holdingsPerShareBasic": 0.000030083904285018587,
@@ -108,13 +105,13 @@
         "dilutionApplied": true,
         "effectiveShares": {
           "basic": 1166803340,
-          "diluted": 1206357340,
+          "diluted": 1416357340,
           "inTheMoneyDebtValue": 0,
-          "inTheMoneyWarrantProceeds": 56282320
+          "inTheMoneyWarrantProceeds": 1023332320
         },
         "inTheMoneyDebtValue": 0,
-        "inTheMoneyWarrantProceeds": 56282320,
-        "marketCapForMnav": 1206357340000,
+        "inTheMoneyWarrantProceeds": 1023332320,
+        "marketCapForMnav": 1416357340000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
@@ -130,18 +127,23 @@
       "totalDebt": 355000000
     },
     "3825.T": {
-      "asset": "MULTI",
+      "asset": "BTC",
       "capitalRaisedAtm": null,
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
       "cashReserves": null,
-      "deterministicMnav": null,
-      "deterministicMnavBreakdown": null,
-      "holdings": 1411,
-      "holdingsPerShareBasic": 0.000009467269816518809,
+      "deterministicMnav": 1056.0461985403529,
+      "deterministicMnavBreakdown": {
+        "cryptoNav": 141130000,
+        "enterpriseValue": 149039800000,
+        "otherInvestmentsIncluded": 0,
+        "totalNav": 141130000
+      },
+      "holdings": 1411.3,
+      "holdingsPerShareBasic": 0.000009469282701667608,
       "id": "3825t",
       "inputsForDeterministicMnav": {
-        "cryptoPrice": 0,
+        "cryptoPrice": 100000,
         "dilutionApplied": false,
         "effectiveShares": {
           "basic": 149039800,
@@ -155,7 +157,7 @@
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 0,
+      "navPerShareBasic": 0.9469282701667608,
       "otherInvestments": null,
       "preferredEquity": null,
       "quarterlyBurnUsd": 2000000,
@@ -172,16 +174,15 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
       "cashReserves": 7976000,
-      "deterministicMnav": 1816.7601992212556,
+      "deterministicMnav": 1425.5054096405356,
       "deterministicMnavBreakdown": {
-        "cryptoNav": 509800000,
+        "cryptoNav": 650000000,
         "enterpriseValue": 928014631000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
-        "totalNav": 510807442.5
+        "otherInvestmentsIncluded": 0,
+        "totalNav": 651007442.5
       },
-      "holdings": 5098,
-      "holdingsPerShareBasic": 0.000005495873818031644,
+      "holdings": 6500,
+      "holdingsPerShareBasic": 0.000007007293020244347,
       "id": "abtc",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 100000,
@@ -198,7 +199,7 @@
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 0.2496493674547854,
+      "navPerShareBasic": 0.40079128767605576,
       "otherInvestments": null,
       "preferredEquity": null,
       "quarterlyBurnUsd": 8052000,
@@ -219,8 +220,7 @@
       "deterministicMnavBreakdown": {
         "cryptoNav": 283400000,
         "enterpriseValue": 440246223000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 291004162.52
       },
       "holdings": 2834,
@@ -262,8 +262,7 @@
       "deterministicMnavBreakdown": {
         "cryptoNav": 1313182000,
         "enterpriseValue": 90260813800,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 2158431852.228
       },
       "holdings": 13131.82,
@@ -301,83 +300,81 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": 219042206,
       "cashReserves": 894701,
-      "deterministicMnav": 203.23690331512742,
+      "deterministicMnav": 199.15745541326757,
       "deterministicMnavBreakdown": {
         "cryptoNav": 486115000,
-        "enterpriseValue": 98796631714,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "enterpriseValue": 96813548399,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 486115612.3837
       },
       "holdings": 13889000,
-      "holdingsPerShareBasic": 0.14987266919889503,
+      "holdingsPerShareBasic": 0.1531501724607232,
       "id": "avx",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 35,
         "dilutionApplied": true,
         "effectiveShares": {
-          "basic": 92672000,
-          "diluted": 98795837,
+          "basic": 90688765,
+          "diluted": 96812602,
           "inTheMoneyDebtValue": 0,
           "inTheMoneyWarrantProceeds": 612.3837
         },
         "inTheMoneyDebtValue": 0,
         "inTheMoneyWarrantProceeds": 612.3837,
-        "marketCapForMnav": 98795837000,
+        "marketCapForMnav": 96812602000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 5.23696786515884,
+      "navPerShareBasic": 5.34982035536596,
       "otherInvestments": null,
       "preferredEquity": null,
       "quarterlyBurnUsd": 186167,
       "restrictedCash": null,
-      "sharesForMnav": 92672000,
+      "sharesForMnav": 90688765,
       "stakingApy": 0.08,
       "stakingPct": 0.9,
       "tier": 1,
-      "totalDebt": 1689415
+      "totalDebt": 1841100
     },
     "BMNR": {
       "asset": "ETH",
       "capitalRaisedAtm": 10000000000,
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": 615000000,
-      "cashReserves": 670000000,
-      "deterministicMnav": 32.95145686130596,
+      "cashReserves": 868000000,
+      "deterministicMnav": 32.493500986130286,
       "deterministicMnavBreakdown": {
-        "cryptoNav": 13114491000,
-        "enterpriseValue": 484849043000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0.016546581945117045,
-        "totalNav": 14714039656.6
+        "cryptoNav": 13420761000,
+        "enterpriseValue": 501449769045,
+        "otherInvestmentsIncluded": 214000000,
+        "totalNav": 15432309656.6
       },
-      "holdings": 4371497,
-      "holdingsPerShareBasic": 0.009274580984740955,
+      "holdings": 4473587,
+      "holdingsPerShareBasic": 0.00916826767343512,
       "id": "bmnr",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 3000,
         "dilutionApplied": true,
         "effectiveShares": {
-          "basic": 471341725,
-          "diluted": 484849043,
+          "basic": 487942451,
+          "diluted": 501449769,
           "inTheMoneyDebtValue": 0,
           "inTheMoneyWarrantProceeds": 929548656.6
         },
         "inTheMoneyDebtValue": 0,
         "inTheMoneyWarrantProceeds": 929548656.6,
-        "marketCapForMnav": 484849043000,
+        "marketCapForMnav": 501449769000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 29.70560478175362,
-      "otherInvestments": 217000000,
-      "preferredEquity": null,
+      "navPerShareBasic": 29.72227754580017,
+      "otherInvestments": 214000000,
+      "preferredEquity": 45,
       "quarterlyBurnUsd": 1000000,
-      "restrictedCash": 670000000,
-      "sharesForMnav": 471341725,
+      "restrictedCash": 868000000,
+      "sharesForMnav": 487942451,
       "stakingApy": 0.0284,
-      "stakingPct": 0.696,
+      "stakingPct": 0.679,
       "tier": 1,
       "totalDebt": 0
     },
@@ -391,8 +388,7 @@
       "deterministicMnavBreakdown": {
         "cryptoNav": 309326400,
         "enterpriseValue": 93567926000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 1136826968.2
       },
       "holdings": 515544,
@@ -430,13 +426,12 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
       "cashReserves": 179118182,
-      "deterministicMnav": 308.13541468768375,
+      "deterministicMnav": 363.5190808352218,
       "deterministicMnavBreakdown": {
         "cryptoNav": 465717000,
-        "enterpriseValue": 361268801000,
-        "otherInvestmentsMaterial": true,
-        "otherInvestmentsRatio": 1.1328768329264338,
-        "totalNav": 1172435182
+        "enterpriseValue": 361089682818,
+        "otherInvestmentsIncluded": 527600000,
+        "totalNav": 993317000
       },
       "holdings": 155239,
       "holdingsPerShareBasic": 0.0004788340964854884,
@@ -460,7 +455,7 @@
       "otherInvestments": 527600000,
       "preferredEquity": 9050000,
       "quarterlyBurnUsd": 0,
-      "restrictedCash": 179118182,
+      "restrictedCash": 0,
       "sharesForMnav": 324202059,
       "stakingApy": 0.029,
       "stakingPct": 0.89,
@@ -473,13 +468,12 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
       "cashReserves": 4486051,
-      "deterministicMnav": 275.70662702808045,
+      "deterministicMnav": 283.947138457047,
       "deterministicMnavBreakdown": {
         "cryptoNav": 181500000,
-        "enterpriseValue": 54003422949,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
-        "totalNav": 195872778
+        "enterpriseValue": 53290922949,
+        "otherInvestmentsIncluded": 0,
+        "totalNav": 187679028
       },
       "holdings": 60500,
       "holdingsPerShareBasic": 0.001283162377220979,
@@ -489,13 +483,13 @@
         "dilutionApplied": true,
         "effectiveShares": {
           "basic": 47149138,
-          "diluted": 53964109,
+          "diluted": 53251609,
           "inTheMoneyDebtValue": 17860526,
-          "inTheMoneyWarrantProceeds": 14372778
+          "inTheMoneyWarrantProceeds": 6179028
         },
         "inTheMoneyDebtValue": 17860526,
-        "inTheMoneyWarrantProceeds": 14372778,
-        "marketCapForMnav": 53964109000,
+        "inTheMoneyWarrantProceeds": 6179028,
+        "marketCapForMnav": 53251609000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
@@ -516,33 +510,32 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
       "cashReserves": null,
-      "deterministicMnav": 130.72665799739923,
+      "deterministicMnav": 189.09589989910123,
       "deterministicMnavBreakdown": {
-        "cryptoNav": 76900000,
-        "enterpriseValue": 10052880000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
-        "totalNav": 76900000
+        "cryptoNav": 76905000,
+        "enterpriseValue": 14542880000,
+        "otherInvestmentsIncluded": 0,
+        "totalNav": 76907431.667
       },
-      "holdings": 769,
-      "holdingsPerShareBasic": 0.00007668619887752945,
+      "holdings": 769.05,
+      "holdingsPerShareBasic": 0.00007669118497628611,
       "id": "btct",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 100000,
-        "dilutionApplied": false,
+        "dilutionApplied": true,
         "effectiveShares": {
           "basic": 10027880,
-          "diluted": 10027880,
-          "inTheMoneyDebtValue": 0,
-          "inTheMoneyWarrantProceeds": 0
+          "diluted": 14542880,
+          "inTheMoneyDebtValue": 18120000,
+          "inTheMoneyWarrantProceeds": 2431.667
         },
-        "inTheMoneyDebtValue": 0,
-        "inTheMoneyWarrantProceeds": 0,
-        "marketCapForMnav": 10027880000,
+        "inTheMoneyDebtValue": 18120000,
+        "inTheMoneyWarrantProceeds": 2431.667,
+        "marketCapForMnav": 14542880000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 5.175570509419738,
+      "navPerShareBasic": 5.862156308212703,
       "otherInvestments": null,
       "preferredEquity": null,
       "quarterlyBurnUsd": 500000,
@@ -551,7 +544,7 @@
       "stakingApy": null,
       "stakingPct": null,
       "tier": 2,
-      "totalDebt": 25000000
+      "totalDebt": 18120000
     },
     "BTOG": {
       "asset": "DOGE",
@@ -563,8 +556,7 @@
       "deterministicMnavBreakdown": {
         "cryptoNav": 10581561.75,
         "enterpriseValue": 10524938000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 56541454.80929999
       },
       "holdings": 70543745,
@@ -601,51 +593,54 @@
       "capitalRaisedAtm": null,
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
-      "cashReserves": null,
-      "deterministicMnav": 0,
+      "cashReserves": 207000000,
+      "deterministicMnav": 30.942673461909997,
       "deterministicMnavBreakdown": {
         "cryptoNav": 3002100000,
-        "enterpriseValue": 0,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "enterpriseValue": 92893000000,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 3002100000
       },
       "holdings": 30021,
-      "holdingsPerShareBasic": null,
+      "holdingsPerShareBasic": 0.001177294117647059,
       "id": "cepo",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 100000,
-        "dilutionApplied": false,
-        "effectiveShares": null,
-        "inTheMoneyDebtValue": 0,
+        "dilutionApplied": true,
+        "effectiveShares": {
+          "basic": 25500000,
+          "diluted": 93100000,
+          "inTheMoneyDebtValue": 530500000,
+          "inTheMoneyWarrantProceeds": 0
+        },
+        "inTheMoneyDebtValue": 530500000,
         "inTheMoneyWarrantProceeds": 0,
-        "marketCapForMnav": 0,
-        "marketCapSource": "none",
+        "marketCapForMnav": 93100000000,
+        "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": null,
+      "navPerShareBasic": 105.04313725490196,
       "otherInvestments": null,
       "preferredEquity": null,
       "quarterlyBurnUsd": 5000000,
       "restrictedCash": null,
-      "sharesForMnav": null,
+      "sharesForMnav": 25500000,
       "stakingApy": null,
       "stakingPct": null,
       "tier": 1,
-      "totalDebt": null
+      "totalDebt": 530500000
     },
     "CWD": {
       "asset": "LINK",
       "capitalRaisedAtm": null,
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
-      "cashReserves": null,
-      "deterministicMnav": 525.7692122781198,
+      "cashReserves": 10927000,
+      "deterministicMnav": 524.952458295691,
       "deterministicMnavBreakdown": {
         "cryptoNav": 11250700,
-        "enterpriseValue": 7034040000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "enterpriseValue": 7023113000,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 13378569.6
       },
       "holdings": 562535,
@@ -666,9 +661,9 @@
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 1.6293555394641563,
+      "navPerShareBasic": 3.2118320057929037,
       "otherInvestments": null,
-      "preferredEquity": null,
+      "preferredEquity": 0,
       "quarterlyBurnUsd": 2000000,
       "restrictedCash": null,
       "sharesForMnav": 6905000,
@@ -682,13 +677,12 @@
       "capitalRaisedAtm": null,
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": 58880000,
-      "cashReserves": null,
-      "deterministicMnav": 4465.505928463023,
+      "cashReserves": 9686000,
+      "deterministicMnav": 4465.303249528224,
       "deterministicMnavBreakdown": {
         "cryptoNav": 7251550,
-        "enterpriseValue": 213405949000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "enterpriseValue": 213396263000,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 47789870.2675
       },
       "holdings": 290062,
@@ -709,7 +703,7 @@
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 0.05276911546662989,
+      "navPerShareBasic": 0.12325358463663866,
       "otherInvestments": null,
       "preferredEquity": null,
       "quarterlyBurnUsd": null,
@@ -726,16 +720,15 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
       "cashReserves": 1782000,
-      "deterministicMnav": 29533.91015873016,
+      "deterministicMnav": 29551.500337502483,
       "deterministicMnavBreakdown": {
-        "cryptoNav": 50400000,
+        "cryptoNav": 50370000,
         "enterpriseValue": 1488509072000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
-        "totalNav": 50400000
+        "otherInvestmentsIncluded": 0,
+        "totalNav": 50370000
       },
-      "holdings": 504,
-      "holdingsPerShareBasic": 3.385934329236675e-7,
+      "holdings": 503.7,
+      "holdingsPerShareBasic": 3.383918892135939e-7,
       "id": "dcc",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 100000,
@@ -752,7 +745,7 @@
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 0.035056512930204,
+      "navPerShareBasic": 0.03503635855919664,
       "otherInvestments": null,
       "preferredEquity": null,
       "quarterlyBurnUsd": 440000,
@@ -768,17 +761,16 @@
       "capitalRaisedAtm": null,
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
-      "cashReserves": null,
-      "deterministicMnav": 281.1381287726358,
+      "cashReserves": 6752917,
+      "deterministicMnav": 255.99407733852496,
       "deterministicMnavBreakdown": {
-        "cryptoNav": 198800000,
-        "enterpriseValue": 55890260000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
-        "totalNav": 198800000
+        "cryptoNav": 218300000,
+        "enterpriseValue": 55883507083,
+        "otherInvestmentsIncluded": 0,
+        "totalNav": 218300000
       },
-      "holdings": 1988,
-      "holdingsPerShareBasic": 0.00006523806890721804,
+      "holdings": 2183,
+      "holdingsPerShareBasic": 0.00007163717526381136,
       "id": "ddc",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 100000,
@@ -795,7 +787,7 @@
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 5.637776779808883,
+      "navPerShareBasic": 6.499290667264354,
       "otherInvestments": null,
       "preferredEquity": null,
       "quarterlyBurnUsd": 2600000,
@@ -816,8 +808,7 @@
       "deterministicMnavBreakdown": {
         "cryptoNav": 444265800,
         "enterpriseValue": 51215466000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 624986468.0895
       },
       "holdings": 2221329,
@@ -840,7 +831,7 @@
       },
       "navPerShareBasic": 8.404157522881764,
       "otherInvestments": null,
-      "preferredEquity": null,
+      "preferredEquity": 0,
       "quarterlyBurnUsd": 3572000,
       "restrictedCash": 9000000,
       "sharesForMnav": 29892800,
@@ -855,12 +846,11 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": 2500000000,
       "cashReserves": 166072700,
-      "deterministicMnav": 249.54681429155164,
+      "deterministicMnav": 251.63321371579877,
       "deterministicMnavBreakdown": {
         "cryptoNav": 1154200000,
-        "enterpriseValue": 319651329300,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "enterpriseValue": 322323855300,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 1280927309
       },
       "holdings": 11542,
@@ -871,19 +861,19 @@
         "dilutionApplied": true,
         "effectiveShares": {
           "basic": 279997636,
-          "diluted": 319817402,
+          "diluted": 322489928,
           "inTheMoneyDebtValue": 1000000000,
           "inTheMoneyWarrantProceeds": 126727309
         },
         "inTheMoneyDebtValue": 1000000000,
         "inTheMoneyWarrantProceeds": 126727309,
-        "marketCapForMnav": 319817402000,
+        "marketCapForMnav": 322489928000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
       "navPerShareBasic": 1.319666856044456,
       "otherInvestments": null,
-      "preferredEquity": null,
+      "preferredEquity": 0,
       "quarterlyBurnUsd": 0,
       "restrictedCash": null,
       "sharesForMnav": 279997636,
@@ -898,33 +888,32 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
       "cashReserves": null,
-      "deterministicMnav": 33.898305084745765,
+      "deterministicMnav": 73.23937308501564,
       "deterministicMnavBreakdown": {
         "cryptoNav": 1770000000,
-        "enterpriseValue": 60000000000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
-        "totalNav": 1770000000
+        "enterpriseValue": 131922547000,
+        "otherInvestmentsIncluded": 0,
+        "totalNav": 1801251723.5349
       },
       "holdings": 590000,
       "holdingsPerShareBasic": 0.009833333333333333,
       "id": "ethm",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 3000,
-        "dilutionApplied": false,
+        "dilutionApplied": true,
         "effectiveShares": {
           "basic": 60000000,
-          "diluted": 60000000,
-          "inTheMoneyDebtValue": 0,
-          "inTheMoneyWarrantProceeds": 0
+          "diluted": 131922547,
+          "inTheMoneyDebtValue": 156250000,
+          "inTheMoneyWarrantProceeds": 31251723.5349
         },
-        "inTheMoneyDebtValue": 0,
-        "inTheMoneyWarrantProceeds": 0,
-        "marketCapForMnav": 60000000000,
+        "inTheMoneyDebtValue": 156250000,
+        "inTheMoneyWarrantProceeds": 31251723.5349,
+        "marketCapForMnav": 131922547000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 29.5,
+      "navPerShareBasic": 26.895833333333332,
       "otherInvestments": null,
       "preferredEquity": null,
       "quarterlyBurnUsd": 800000,
@@ -933,7 +922,7 @@
       "stakingApy": null,
       "stakingPct": null,
       "tier": 1,
-      "totalDebt": null
+      "totalDebt": 156250000
     },
     "FGNX": {
       "asset": "ETH",
@@ -941,38 +930,37 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": 200000000,
       "cashReserves": 25200000,
-      "deterministicMnav": 55.78901102126473,
+      "deterministicMnav": 65.50124964798648,
       "deterministicMnavBreakdown": {
-        "cryptoNav": 112782000,
-        "enterpriseValue": 7603038000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
-        "totalNav": 136282000
+        "cryptoNav": 90132000,
+        "enterpriseValue": 7443038000,
+        "otherInvestmentsIncluded": 0,
+        "totalNav": 113632000
       },
-      "holdings": 37594,
-      "holdingsPerShareBasic": 0.005594345238095238,
+      "holdings": 30044,
+      "holdingsPerShareBasic": 0.004579878048780488,
       "id": "fgnx",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 3000,
         "dilutionApplied": true,
         "effectiveShares": {
-          "basic": 6720000,
-          "diluted": 7605298,
+          "basic": 6560000,
+          "diluted": 7445298,
           "inTheMoneyDebtValue": 0,
           "inTheMoneyWarrantProceeds": 23500000
         },
         "inTheMoneyDebtValue": 0,
         "inTheMoneyWarrantProceeds": 23500000,
-        "marketCapForMnav": 7605298000,
+        "marketCapForMnav": 7445298000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 17.11934523809524,
+      "navPerShareBasic": 14.084146341463414,
       "otherInvestments": null,
       "preferredEquity": 21040000,
       "quarterlyBurnUsd": 2400000,
       "restrictedCash": null,
-      "sharesForMnav": 6720000,
+      "sharesForMnav": 6560000,
       "stakingApy": null,
       "stakingPct": null,
       "tier": 1,
@@ -984,12 +972,11 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
       "cashReserves": 6663000,
-      "deterministicMnav": 211.24184246019283,
+      "deterministicMnav": 193.1888930376698,
       "deterministicMnavBreakdown": {
         "cryptoNav": 152600000,
-        "enterpriseValue": 69324939000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "enterpriseValue": 63400357000,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 328178064.5
       },
       "holdings": 1526,
@@ -1000,65 +987,64 @@
         "dilutionApplied": true,
         "effectiveShares": {
           "basic": 48307642,
-          "diluted": 69331602,
-          "inTheMoneyDebtValue": 66300000,
+          "diluted": 63407020,
+          "inTheMoneyDebtValue": 0,
           "inTheMoneyWarrantProceeds": 175578064.5
         },
-        "inTheMoneyDebtValue": 66300000,
+        "inTheMoneyDebtValue": 0,
         "inTheMoneyWarrantProceeds": 175578064.5,
-        "marketCapForMnav": 69331602000,
+        "marketCapForMnav": 63407020000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 1.9243953161696445,
+      "navPerShareBasic": 3.296848974743996,
       "otherInvestments": null,
-      "preferredEquity": null,
+      "preferredEquity": 0,
       "quarterlyBurnUsd": 5000000,
       "restrictedCash": null,
       "sharesForMnav": 48307642,
       "stakingApy": null,
       "stakingPct": null,
       "tier": 2,
-      "totalDebt": 66300000
+      "totalDebt": 0
     },
     "FUFU": {
       "asset": "BTC",
       "capitalRaisedAtm": null,
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
-      "cashReserves": 40086000,
-      "deterministicMnav": 697.5647398245552,
+      "cashReserves": 40000000,
+      "deterministicMnav": 689.527028040772,
       "deterministicMnavBreakdown": {
-        "cryptoNav": 179600000,
-        "enterpriseValue": 170119897000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
-        "totalNav": 243876858
+        "cryptoNav": 183000000,
+        "enterpriseValue": 170504077000,
+        "otherInvestmentsIncluded": 0,
+        "totalNav": 247276858
       },
-      "holdings": 1796,
-      "holdingsPerShareBasic": 0.000010942415804903697,
+      "holdings": 1830,
+      "holdingsPerShareBasic": 0.000011123535431560351,
       "id": "fufu",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 100000,
         "dilutionApplied": true,
         "effectiveShares": {
-          "basic": 164131946,
-          "diluted": 170018682,
+          "basic": 164516040,
+          "diluted": 170402776,
           "inTheMoneyDebtValue": 0,
           "inTheMoneyWarrantProceeds": 64276858
         },
         "inTheMoneyDebtValue": 0,
         "inTheMoneyWarrantProceeds": 64276858,
-        "marketCapForMnav": 170018682000,
+        "marketCapForMnav": 170402776000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 0.47757308622905137,
+      "navPerShareBasic": 0.4966020334552181,
       "otherInvestments": null,
       "preferredEquity": null,
       "quarterlyBurnUsd": 0,
       "restrictedCash": null,
-      "sharesForMnav": 164131946,
+      "sharesForMnav": 164516040,
       "stakingApy": null,
       "stakingPct": null,
       "tier": 2,
@@ -1074,8 +1060,7 @@
       "deterministicMnavBreakdown": {
         "cryptoNav": 1395993400,
         "enterpriseValue": 109370016000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 1890993376.75
       },
       "holdings": 6979967,
@@ -1098,7 +1083,7 @@
       },
       "navPerShareBasic": 14.666041982012786,
       "otherInvestments": null,
-      "preferredEquity": null,
+      "preferredEquity": 0,
       "quarterlyBurnUsd": 3252629,
       "restrictedCash": 0,
       "sharesForMnav": 96003639,
@@ -1113,55 +1098,53 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
       "cashReserves": 6012219,
-      "deterministicMnav": 17596.66865431416,
+      "deterministicMnav": 1978.3234529585177,
       "deterministicMnavBreakdown": {
-        "cryptoNav": 4824000,
-        "enterpriseValue": 95444330781,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
-        "totalNav": 5424000
+        "cryptoNav": 46890000,
+        "enterpriseValue": 93950580781,
+        "otherInvestmentsIncluded": 0,
+        "totalNav": 47490000
       },
-      "holdings": 1608,
-      "holdingsPerShareBasic": 0.000016953943042743347,
+      "holdings": 15630,
+      "holdingsPerShareBasic": 0.0001674430090899271,
       "id": "game",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 3000,
         "dilutionApplied": true,
         "effectiveShares": {
-          "basic": 94845193,
-          "diluted": 95445193,
+          "basic": 93345193,
+          "diluted": 93945193,
           "inTheMoneyDebtValue": 0,
           "inTheMoneyWarrantProceeds": 600000
         },
         "inTheMoneyDebtValue": 0,
         "inTheMoneyWarrantProceeds": 600000,
-        "marketCapForMnav": 95445193000,
+        "marketCapForMnav": 93945193000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 0.05995263249662004,
+      "navPerShareBasic": 0.4446101364855499,
       "otherInvestments": null,
-      "preferredEquity": 5150000,
+      "preferredEquity": 10150000,
       "quarterlyBurnUsd": 6171000,
       "restrictedCash": null,
-      "sharesForMnav": 94845193,
+      "sharesForMnav": 93345193,
       "stakingApy": null,
       "stakingPct": 0,
       "tier": 1,
-      "totalDebt": null
+      "totalDebt": 1250000
     },
     "H100.ST": {
       "asset": "BTC",
       "capitalRaisedAtm": null,
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
-      "cashReserves": 0,
-      "deterministicMnav": 3466.3796764985727,
+      "cashReserves": 2900000,
+      "deterministicMnav": 3466.352083729781,
       "deterministicMnavBreakdown": {
         "cryptoNav": 105100000,
-        "enterpriseValue": 364316504000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "enterpriseValue": 364313604000,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 105100000
       },
       "holdings": 1051,
@@ -1182,7 +1165,7 @@
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 0.2493050367959713,
+      "navPerShareBasic": 0.25787486049693753,
       "otherInvestments": null,
       "preferredEquity": null,
       "quarterlyBurnUsd": 1000000,
@@ -1199,38 +1182,37 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": 500000000,
       "cashReserves": 15000000,
-      "deterministicMnav": 129.15810197556164,
+      "deterministicMnav": 129.8200561643636,
       "deterministicMnavBreakdown": {
         "cryptoNav": 468151400,
-        "enterpriseValue": 157247799000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "enterpriseValue": 158053717000,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 1217483042.835
       },
       "holdings": 2340757,
-      "holdingsPerShareBasic": 0.030829100323604818,
+      "holdingsPerShareBasic": 0.03050530487066252,
       "id": "hsdt",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 200,
         "dilutionApplied": true,
         "effectiveShares": {
-          "basic": 75926867,
-          "diluted": 157262799,
+          "basic": 76732785,
+          "diluted": 158068717,
           "inTheMoneyDebtValue": 0,
           "inTheMoneyWarrantProceeds": 749331642.835
         },
         "inTheMoneyDebtValue": 0,
         "inTheMoneyWarrantProceeds": 749331642.835,
-        "marketCapForMnav": 157262799000,
+        "marketCapForMnav": 158068717000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 6.363378591665056,
+      "navPerShareBasic": 6.29654456045092,
       "otherInvestments": null,
       "preferredEquity": null,
       "quarterlyBurnUsd": 5504000,
       "restrictedCash": null,
-      "sharesForMnav": 75926867,
+      "sharesForMnav": 76732785,
       "stakingApy": 0.0703,
       "stakingPct": 0.9996,
       "tier": 1,
@@ -1242,16 +1224,15 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": 50000000,
       "cashReserves": 8223180,
-      "deterministicMnav": 419.9710966858912,
+      "deterministicMnav": 396.59341632184584,
       "deterministicMnavBreakdown": {
-        "cryptoNav": 29192300,
-        "enterpriseValue": 57364815825,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
-        "totalNav": 136592294.75
+        "cryptoNav": 37243900,
+        "enterpriseValue": 57364816369,
+        "otherInvestmentsIncluded": 0,
+        "totalNav": 144643894.75
       },
-      "holdings": 1459615,
-      "holdingsPerShareBasic": 0.059820286885245905,
+      "holdings": 1862195,
+      "holdingsPerShareBasic": 0.07631946721311475,
       "id": "hypd",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 20,
@@ -1268,9 +1249,9 @@
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 1.2196506147540984,
+      "navPerShareBasic": 1.5496119262295083,
       "otherInvestments": null,
-      "preferredEquity": null,
+      "preferredEquity": 544,
       "quarterlyBurnUsd": 3570000,
       "restrictedCash": null,
       "sharesForMnav": 24400000,
@@ -1285,12 +1266,11 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": 5000000,
       "cashReserves": null,
-      "deterministicMnav": 13541.666666666666,
+      "deterministicMnav": 14640.854166666666,
       "deterministicMnavBreakdown": {
         "cryptoNav": 4800000,
-        "enterpriseValue": 65000000000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "enterpriseValue": 70276100000,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 4800000
       },
       "holdings": 48000000,
@@ -1298,16 +1278,16 @@
       "id": "imtl",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 0.1,
-        "dilutionApplied": false,
+        "dilutionApplied": true,
         "effectiveShares": {
           "basic": 65000000,
-          "diluted": 65000000,
+          "diluted": 70276100,
           "inTheMoneyDebtValue": 0,
           "inTheMoneyWarrantProceeds": 0
         },
         "inTheMoneyDebtValue": 0,
         "inTheMoneyWarrantProceeds": 0,
-        "marketCapForMnav": 65000000000,
+        "marketCapForMnav": 70276100000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
@@ -1319,7 +1299,7 @@
       "sharesForMnav": 65000000,
       "stakingApy": 0.065,
       "stakingPct": null,
-      "tier": 1,
+      "tier": 2,
       "totalDebt": null
     },
     "KULR": {
@@ -1328,16 +1308,15 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
       "cashReserves": 20600000,
-      "deterministicMnav": 358.69515756510117,
+      "deterministicMnav": 369.08001419215344,
       "deterministicMnavBreakdown": {
-        "cryptoNav": 105700000,
+        "cryptoNav": 102100000,
         "enterpriseValue": 45893168000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
-        "totalNav": 127944766
+        "otherInvestmentsIncluded": 0,
+        "totalNav": 124344766
       },
-      "holdings": 1057,
-      "holdingsPerShareBasic": 0.000023142056319489114,
+      "holdings": 1021,
+      "holdingsPerShareBasic": 0.0000223538689708594,
       "id": "kulr",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 100000,
@@ -1354,7 +1333,7 @@
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 2.765223948109248,
+      "navPerShareBasic": 2.686405213246277,
       "otherInvestments": null,
       "preferredEquity": null,
       "quarterlyBurnUsd": 10300000,
@@ -1375,8 +1354,7 @@
       "deterministicMnavBreakdown": {
         "cryptoNav": 74363840,
         "enterpriseValue": 37815230000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 80363843.54
       },
       "holdings": 929548,
@@ -1399,7 +1377,7 @@
       },
       "navPerShareBasic": 2.285953530772607,
       "otherInvestments": null,
-      "preferredEquity": null,
+      "preferredEquity": 0,
       "quarterlyBurnUsd": 3305000,
       "restrictedCash": null,
       "sharesForMnav": 36361999,
@@ -1414,16 +1392,15 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": 3286080,
       "cashReserves": null,
-      "deterministicMnav": 9320.824372219206,
+      "deterministicMnav": 8721.250788081847,
       "deterministicMnavBreakdown": {
-        "cryptoNav": 1618080,
+        "cryptoNav": 1955120,
         "enterpriseValue": 45695355000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
-        "totalNav": 4902501.45
+        "otherInvestmentsIncluded": 0,
+        "totalNav": 5239541.45
       },
-      "holdings": 20226,
-      "holdingsPerShareBasic": 0.0006409930556233402,
+      "holdings": 24439,
+      "holdingsPerShareBasic": 0.0007745095068910715,
       "id": "luxff",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 80,
@@ -1440,7 +1417,7 @@
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 0.05127944444986722,
+      "navPerShareBasic": 0.06196076055128572,
       "otherInvestments": null,
       "preferredEquity": null,
       "quarterlyBurnUsd": 200000,
@@ -1457,16 +1434,15 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
       "cashReserves": 826392000,
-      "deterministicMnav": 96.30313309420427,
+      "deterministicMnav": 94.78975242772219,
       "deterministicMnavBreakdown": {
-        "cryptoNav": 5285000000,
-        "enterpriseValue": 510117696000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
-        "totalNav": 5297000000
+        "cryptoNav": 5382200000,
+        "enterpriseValue": 513438173000,
+        "otherInvestmentsIncluded": 0,
+        "totalNav": 5416600000
       },
-      "holdings": 52850,
-      "holdingsPerShareBasic": 0.00013974665948170522,
+      "holdings": 53822,
+      "holdingsPerShareBasic": 0.00014231683456242833,
       "id": "mara",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 100000,
@@ -1474,20 +1450,20 @@
         "effectiveShares": {
           "basic": 378184353,
           "diluted": 510632604,
-          "inTheMoneyDebtValue": 3298077000,
+          "inTheMoneyDebtValue": 0,
           "inTheMoneyWarrantProceeds": 0
         },
-        "inTheMoneyDebtValue": 3298077000,
+        "inTheMoneyDebtValue": 0,
         "inTheMoneyWarrantProceeds": 0,
         "marketCapForMnav": 510632604000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 6.647104725668013,
+      "navPerShareBasic": 6.904122233740326,
       "otherInvestments": null,
-      "preferredEquity": null,
+      "preferredEquity": 0,
       "quarterlyBurnUsd": 85296000,
-      "restrictedCash": 12000000,
+      "restrictedCash": 34400000,
       "sharesForMnav": 378184353,
       "stakingApy": null,
       "stakingPct": null,
@@ -1499,43 +1475,42 @@
       "capitalRaisedAtm": 21000000000,
       "capitalRaisedConverts": 7274000000,
       "capitalRaisedPipe": null,
-      "cashReserves": 2250000000,
-      "deterministicMnav": 5.098889393987989,
+      "cashReserves": 2301470000,
+      "deterministicMnav": 5.175290903616714,
       "deterministicMnavBreakdown": {
-        "cryptoNav": 71713100000,
-        "enterpriseValue": 365657165000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
-        "totalNav": 71713100000
+        "cryptoNav": 72073700000,
+        "enterpriseValue": 373002364000,
+        "otherInvestmentsIncluded": 0,
+        "totalNav": 72073700000
       },
-      "holdings": 717131,
-      "holdingsPerShareBasic": 0.002153016374346257,
+      "holdings": 720737,
+      "holdingsPerShareBasic": 0.0021594970520797986,
       "id": "mstr",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 100000,
         "dilutionApplied": true,
         "effectiveShares": {
-          "basic": 333082000,
-          "diluted": 359523915,
-          "inTheMoneyDebtValue": 8213750000,
+          "basic": 333752250,
+          "diluted": 360194165,
+          "inTheMoneyDebtValue": 0,
           "inTheMoneyWarrantProceeds": 0
         },
-        "inTheMoneyDebtValue": 8213750000,
+        "inTheMoneyDebtValue": 0,
         "inTheMoneyWarrantProceeds": 0,
-        "marketCapForMnav": 359523915000,
+        "marketCapForMnav": 360194165000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 172.22816003266462,
+      "navPerShareBasic": 177.5733377078357,
       "otherInvestments": null,
-      "preferredEquity": 8383000000,
-      "quarterlyBurnUsd": 15200000,
+      "preferredEquity": 6919514000,
+      "quarterlyBurnUsd": 16810000,
       "restrictedCash": null,
-      "sharesForMnav": 333082000,
+      "sharesForMnav": 333752250,
       "stakingApy": null,
       "stakingPct": null,
       "tier": 1,
-      "totalDebt": 8214000000
+      "totalDebt": 8190155000
     },
     "NA": {
       "asset": "BNB",
@@ -1543,12 +1518,11 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
       "cashReserves": 50800000,
-      "deterministicMnav": 387.82094405691333,
+      "deterministicMnav": 391.5191637054402,
       "deterministicMnavBreakdown": {
         "cryptoNav": 78000000,
-        "enterpriseValue": 55180979000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "enterpriseValue": 55707179000,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 142284680.2
       },
       "holdings": 130000,
@@ -1560,16 +1534,16 @@
         "effectiveShares": {
           "basic": 23627224,
           "diluted": 55231779,
-          "inTheMoneyDebtValue": 500000000,
+          "inTheMoneyDebtValue": 0,
           "inTheMoneyWarrantProceeds": 64284680.2
         },
-        "inTheMoneyDebtValue": 500000000,
+        "inTheMoneyDebtValue": 0,
         "inTheMoneyWarrantProceeds": 64284680.2,
         "marketCapForMnav": 55231779000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 4.342448355337893,
+      "navPerShareBasic": -16.819580666776595,
       "otherInvestments": null,
       "preferredEquity": null,
       "quarterlyBurnUsd": 3550000,
@@ -1578,7 +1552,7 @@
       "stakingApy": 0.03,
       "stakingPct": null,
       "tier": 2,
-      "totalDebt": 26200000
+      "totalDebt": 526200000
     },
     "NAKA": {
       "asset": "BTC",
@@ -1586,38 +1560,37 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": 710000000,
       "cashReserves": 24185083,
-      "deterministicMnav": 943.5372812205941,
+      "deterministicMnav": 1270.288046964063,
       "deterministicMnavBreakdown": {
         "cryptoNav": 539800000,
-        "enterpriseValue": 512228397917,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "enterpriseValue": 689615157917,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 542880931.27
       },
       "holdings": 5398,
-      "holdingsPerShareBasic": 0.000010552122221396332,
+      "holdingsPerShareBasic": 0.000007835195286160724,
       "id": "naka",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 100000,
         "dilutionApplied": true,
         "effectiveShares": {
-          "basic": 511555864,
-          "diluted": 512042583,
+          "basic": 688942624,
+          "diluted": 689429343,
           "inTheMoneyDebtValue": 0,
           "inTheMoneyWarrantProceeds": 3080931.27
         },
         "inTheMoneyDebtValue": 0,
         "inTheMoneyWarrantProceeds": 3080931.27,
-        "marketCapForMnav": 512042583000,
+        "marketCapForMnav": 689429343000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 0.6919773731691599,
+      "navPerShareBasic": 0.5138092355859231,
       "otherInvestments": null,
       "preferredEquity": null,
       "quarterlyBurnUsd": 8000000,
       "restrictedCash": null,
-      "sharesForMnav": 511555864,
+      "sharesForMnav": 688942624,
       "stakingApy": null,
       "stakingPct": null,
       "tier": 1,
@@ -1629,75 +1602,79 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
       "cashReserves": null,
-      "deterministicMnav": null,
-      "deterministicMnavBreakdown": null,
-      "holdings": 0,
-      "holdingsPerShareBasic": 0,
+      "deterministicMnav": 435.8508192318023,
+      "deterministicMnavBreakdown": {
+        "cryptoNav": 372300000,
+        "enterpriseValue": 162267260000,
+        "otherInvestmentsIncluded": 0,
+        "totalNav": 372300000
+      },
+      "holdings": 3723,
+      "holdingsPerShareBasic": 0.00002397287838738446,
       "id": "obtc3",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 100000,
-        "dilutionApplied": false,
+        "dilutionApplied": true,
         "effectiveShares": {
-          "basic": 318000000,
-          "diluted": 318000000,
-          "inTheMoneyDebtValue": 0,
+          "basic": 155300500,
+          "diluted": 162267260,
+          "inTheMoneyDebtValue": 24886408,
           "inTheMoneyWarrantProceeds": 0
         },
-        "inTheMoneyDebtValue": 0,
+        "inTheMoneyDebtValue": 24886408,
         "inTheMoneyWarrantProceeds": 0,
-        "marketCapForMnav": 318000000000,
+        "marketCapForMnav": 162267260000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 0,
+      "navPerShareBasic": 2.2370410397905993,
       "otherInvestments": null,
       "preferredEquity": null,
       "quarterlyBurnUsd": 500000,
       "restrictedCash": null,
-      "sharesForMnav": 318000000,
+      "sharesForMnav": 155300500,
       "stakingApy": null,
       "stakingPct": null,
       "tier": 2,
-      "totalDebt": 0
+      "totalDebt": 24886408
     },
     "PURR": {
       "asset": "HYPE",
       "capitalRaisedAtm": null,
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": 583000000,
-      "cashReserves": 300000000,
-      "deterministicMnav": 235.23252407407406,
+      "cashReserves": 281900000,
+      "deterministicMnav": 159.7223729500335,
       "deterministicMnavBreakdown": {
-        "cryptoNav": 240000000,
-        "enterpriseValue": 127025563000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
-        "totalNav": 540000000
+        "cryptoNav": 352000000,
+        "enterpriseValue": 151292769000,
+        "otherInvestmentsIncluded": 0,
+        "totalNav": 947223398.987
       },
-      "holdings": 12000000,
-      "holdingsPerShareBasic": 0.09446917389376185,
+      "holdings": 17600000,
+      "holdingsPerShareBasic": 0.1419726852942789,
       "id": "purr",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 20,
-        "dilutionApplied": false,
+        "dilutionApplied": true,
         "effectiveShares": {
-          "basic": 127025563,
-          "diluted": 127025563,
+          "basic": 123967508,
+          "diluted": 151292769,
           "inTheMoneyDebtValue": 0,
-          "inTheMoneyWarrantProceeds": 0
+          "inTheMoneyWarrantProceeds": 313323398.987
         },
         "inTheMoneyDebtValue": 0,
-        "inTheMoneyWarrantProceeds": 0,
-        "marketCapForMnav": 127025563000,
+        "inTheMoneyWarrantProceeds": 313323398.987,
+        "marketCapForMnav": 151292769000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 4.251112825219283,
+      "navPerShareBasic": 5.1134366595479195,
       "otherInvestments": null,
       "preferredEquity": null,
-      "quarterlyBurnUsd": 2000000,
-      "restrictedCash": 300000000,
-      "sharesForMnav": 127025563,
+      "quarterlyBurnUsd": 1750000,
+      "restrictedCash": 281900000,
+      "sharesForMnav": 123967508,
       "stakingApy": 0.024,
       "stakingPct": 1,
       "tier": 1,
@@ -1709,13 +1686,12 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
       "cashReserves": 11100000,
-      "deterministicMnav": 81.29863668349972,
+      "deterministicMnav": 80.49056107145279,
       "deterministicMnavBreakdown": {
         "cryptoNav": 2603394000,
-        "enterpriseValue": 216215430000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0.010255842949626526,
-        "totalNav": 2659520981.1665
+        "enterpriseValue": 216215433936,
+        "otherInvestmentsIncluded": 26700000,
+        "totalNav": 2686220981.1665
       },
       "holdings": 867798,
       "holdingsPerShareBasic": 0.0044119371676673855,
@@ -1735,9 +1711,9 @@
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 13.427988973954873,
+      "navPerShareBasic": 13.427968963094406,
       "otherInvestments": 26700000,
-      "preferredEquity": null,
+      "preferredEquity": 3936,
       "quarterlyBurnUsd": 2728000,
       "restrictedCash": 11100000,
       "sharesForMnav": 196693191,
@@ -1752,12 +1728,11 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
       "cashReserves": null,
-      "deterministicMnav": 72.48625058438523,
+      "deterministicMnav": 72.92804581580178,
       "deterministicMnavBreakdown": {
         "cryptoNav": 213900000,
-        "enterpriseValue": 15504809000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "enterpriseValue": 15599309000,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 213900000
       },
       "holdings": 2139,
@@ -1769,10 +1744,10 @@
         "effectiveShares": {
           "basic": 15504809,
           "diluted": 15504809,
-          "inTheMoneyDebtValue": 94500000,
+          "inTheMoneyDebtValue": 0,
           "inTheMoneyWarrantProceeds": 0
         },
-        "inTheMoneyDebtValue": 94500000,
+        "inTheMoneyDebtValue": 0,
         "inTheMoneyWarrantProceeds": 0,
         "marketCapForMnav": 15504809000,
         "marketCapSource": "calculated",
@@ -1795,38 +1770,37 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
       "cashReserves": null,
-      "deterministicMnav": 447.2260409556314,
+      "deterministicMnav": 1749.0255238095237,
       "deterministicMnavBreakdown": {
-        "cryptoNav": 205100000,
-        "enterpriseValue": 91726061000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
-        "totalNav": 205100000
+        "cryptoNav": 52500000,
+        "enterpriseValue": 91823840000,
+        "otherInvestmentsIncluded": 0,
+        "totalNav": 52500000
       },
-      "holdings": 2051,
-      "holdingsPerShareBasic": 0.000022369592989345563,
+      "holdings": 525,
+      "holdingsPerShareBasic": 0.000005719905073544905,
       "id": "srag",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 100000,
         "dilutionApplied": false,
         "effectiveShares": {
-          "basic": 91686961,
-          "diluted": 91686961,
+          "basic": 91784740,
+          "diluted": 91784740,
           "inTheMoneyDebtValue": 0,
           "inTheMoneyWarrantProceeds": 0
         },
         "inTheMoneyDebtValue": 0,
         "inTheMoneyWarrantProceeds": 0,
-        "marketCapForMnav": 91686961000,
+        "marketCapForMnav": 91784740000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 1.8105082575482025,
+      "navPerShareBasic": 0.14599376759143187,
       "otherInvestments": null,
       "preferredEquity": null,
       "quarterlyBurnUsd": 2700000,
       "restrictedCash": null,
-      "sharesForMnav": 91686961,
+      "sharesForMnav": 91784740,
       "stakingApy": null,
       "stakingPct": null,
       "tier": 2,
@@ -1837,60 +1811,58 @@
       "capitalRaisedAtm": 50000000,
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
-      "cashReserves": 1300000,
-      "deterministicMnav": 196.11209982661788,
+      "cashReserves": 160000,
+      "deterministicMnav": 342.7672295270366,
       "deterministicMnavBreakdown": {
         "cryptoNav": 106050200,
-        "enterpriseValue": 27535441000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "enterpriseValue": 48126795000,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 140406640
       },
       "holdings": 530251,
-      "holdingsPerShareBasic": 0.020958067856740127,
+      "holdingsPerShareBasic": 0.016708365290023904,
       "id": "stke",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 200,
         "dilutionApplied": true,
         "effectiveShares": {
-          "basic": 25300567,
-          "diluted": 27511341,
-          "inTheMoneyDebtValue": 0,
+          "basic": 31735660,
+          "diluted": 48126955,
+          "inTheMoneyDebtValue": 41300000,
           "inTheMoneyWarrantProceeds": 34356440
         },
-        "inTheMoneyDebtValue": 0,
+        "inTheMoneyDebtValue": 41300000,
         "inTheMoneyWarrantProceeds": 34356440,
-        "marketCapForMnav": 27511341000,
+        "marketCapForMnav": 48126955000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 3.2390657490008032,
+      "navPerShareBasic": 2.2470054191404873,
       "otherInvestments": null,
       "preferredEquity": null,
       "quarterlyBurnUsd": 1200000,
       "restrictedCash": 0,
-      "sharesForMnav": 25300567,
+      "sharesForMnav": 31735660,
       "stakingApy": 0.065,
-      "stakingPct": null,
+      "stakingPct": 1,
       "tier": 2,
-      "totalDebt": 25400000
+      "totalDebt": 34900000
     },
     "SUIG": {
       "asset": "SUI",
       "capitalRaisedAtm": 500000000,
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": 450000000,
-      "cashReserves": null,
-      "deterministicMnav": 346.399065668315,
+      "cashReserves": 1497009,
+      "deterministicMnav": 345.73007592440814,
       "deterministicMnavBreakdown": {
-        "cryptoNav": 216196872,
-        "enterpriseValue": 97500923000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
-        "totalNav": 281469936.45
+        "cryptoNav": 216737188,
+        "enterpriseValue": 97499425991,
+        "otherInvestmentsIncluded": 0,
+        "totalNav": 282010252.45
       },
-      "holdings": 108098436,
-      "holdingsPerShareBasic": 1.3361982200247218,
+      "holdings": 108368594,
+      "holdingsPerShareBasic": 1.3395376266996293,
       "id": "suig",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 2,
@@ -1907,13 +1879,13 @@
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 2.6723964400494435,
+      "navPerShareBasic": 2.6975796909765144,
       "otherInvestments": null,
       "preferredEquity": null,
       "quarterlyBurnUsd": 1000000,
       "restrictedCash": null,
       "sharesForMnav": 80900000,
-      "stakingApy": 0.022,
+      "stakingApy": 0.017,
       "stakingPct": 0.98,
       "tier": 1,
       "totalDebt": null
@@ -1924,38 +1896,37 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
       "cashReserves": null,
-      "deterministicMnav": 1474.9071253253999,
+      "deterministicMnav": 1307.2775854383358,
       "deterministicMnavBreakdown": {
-        "cryptoNav": 268900000,
-        "enterpriseValue": 396602526000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
-        "totalNav": 268900000
+        "cryptoNav": 269200000,
+        "enterpriseValue": 351919126000,
+        "otherInvestmentsIncluded": 0,
+        "totalNav": 269200000
       },
-      "holdings": 2689,
-      "holdingsPerShareBasic": 0.000006780087931159571,
+      "holdings": 2692,
+      "holdingsPerShareBasic": 0.000007649484785319682,
       "id": "swc",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 100000,
         "dilutionApplied": false,
         "effectiveShares": {
-          "basic": 396602526,
-          "diluted": 396602526,
+          "basic": 351919126,
+          "diluted": 351919126,
           "inTheMoneyDebtValue": 0,
           "inTheMoneyWarrantProceeds": 0
         },
         "inTheMoneyDebtValue": 0,
         "inTheMoneyWarrantProceeds": 0,
-        "marketCapForMnav": 396602526000,
+        "marketCapForMnav": 351919126000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 0.6780087931159571,
+      "navPerShareBasic": 0.7649484785319681,
       "otherInvestments": null,
       "preferredEquity": null,
       "quarterlyBurnUsd": 500000,
       "restrictedCash": null,
-      "sharesForMnav": 396602526,
+      "sharesForMnav": 351919126,
       "stakingApy": null,
       "stakingPct": null,
       "tier": 1,
@@ -1966,39 +1937,38 @@
       "capitalRaisedAtm": null,
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": 11000000,
-      "cashReserves": null,
-      "deterministicMnav": 258.9810943801103,
+      "cashReserves": 1445427,
+      "deterministicMnav": 233.4965224356792,
       "deterministicMnavBreakdown": {
-        "cryptoNav": 27029000,
-        "enterpriseValue": 7000000000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
-        "totalNav": 27029000
+        "cryptoNav": 33500000,
+        "enterpriseValue": 15397929573,
+        "otherInvestmentsIncluded": 0,
+        "totalNav": 65945006
       },
-      "holdings": 54058,
-      "holdingsPerShareBasic": 0.0077225714285714285,
+      "holdings": 67000,
+      "holdingsPerShareBasic": 0.009398348583907335,
       "id": "taox",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 500,
-        "dilutionApplied": false,
+        "dilutionApplied": true,
         "effectiveShares": {
-          "basic": 7000000,
-          "diluted": 7000000,
+          "basic": 7128912,
+          "diluted": 15399375,
           "inTheMoneyDebtValue": 0,
-          "inTheMoneyWarrantProceeds": 0
+          "inTheMoneyWarrantProceeds": 32445006
         },
         "inTheMoneyDebtValue": 0,
-        "inTheMoneyWarrantProceeds": 0,
-        "marketCapForMnav": 7000000000,
+        "inTheMoneyWarrantProceeds": 32445006,
+        "marketCapForMnav": 15399375000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 3.861285714285714,
+      "navPerShareBasic": 4.90192991581324,
       "otherInvestments": null,
       "preferredEquity": null,
       "quarterlyBurnUsd": 1949000,
       "restrictedCash": null,
-      "sharesForMnav": 7000000,
+      "sharesForMnav": 7128912,
       "stakingApy": 0.1,
       "stakingPct": 0.95,
       "tier": 1,
@@ -2047,35 +2017,34 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": 310000000,
       "cashReserves": null,
-      "deterministicMnav": 4052.9108419497784,
+      "deterministicMnav": 4702.386540615604,
       "deterministicMnavBreakdown": {
-        "cryptoNav": 67700000,
-        "enterpriseValue": 274382064000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
-        "totalNav": 67700000
+        "cryptoNav": 68120000,
+        "enterpriseValue": 347617206010,
+        "otherInvestmentsIncluded": 0,
+        "totalNav": 73923571.15
       },
-      "holdings": 677000000,
-      "holdingsPerShareBasic": 2.467362443924177,
+      "holdings": 681200000,
+      "holdingsPerShareBasic": 2.4826695669145487,
       "id": "tron",
       "inputsForDeterministicMnav": {
         "cryptoPrice": 0.1,
-        "dilutionApplied": false,
+        "dilutionApplied": true,
         "effectiveShares": {
           "basic": 274382064,
-          "diluted": 274382064,
+          "diluted": 347617206,
           "inTheMoneyDebtValue": 0,
-          "inTheMoneyWarrantProceeds": 0
+          "inTheMoneyWarrantProceeds": 5803571.15
         },
         "inTheMoneyDebtValue": 0,
-        "inTheMoneyWarrantProceeds": 0,
-        "marketCapForMnav": 274382064000,
+        "inTheMoneyWarrantProceeds": 5803571.15,
+        "marketCapForMnav": 347617206000,
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 0.24673624439241773,
+      "navPerShareBasic": 0.24826692024592395,
       "otherInvestments": null,
-      "preferredEquity": null,
+      "preferredEquity": 10,
       "quarterlyBurnUsd": 955000,
       "restrictedCash": null,
       "sharesForMnav": 274382064,
@@ -2094,8 +2063,7 @@
       "deterministicMnavBreakdown": {
         "cryptoNav": 12191000,
         "enterpriseValue": 5469413000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 19818989.16
       },
       "holdings": 24382,
@@ -2118,7 +2086,7 @@
       },
       "navPerShareBasic": 4.966310282145541,
       "otherInvestments": null,
-      "preferredEquity": null,
+      "preferredEquity": 0,
       "quarterlyBurnUsd": 1043000,
       "restrictedCash": 3737000,
       "sharesForMnav": 3207210,
@@ -2133,12 +2101,11 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": 217400000,
       "cashReserves": 1616765,
-      "deterministicMnav": 297.97210604596734,
+      "deterministicMnav": 297.97210605036224,
       "deterministicMnavBreakdown": {
         "cryptoNav": 434640800,
-        "enterpriseValue": 135598844608,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "enterpriseValue": 135598844610,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 455072276.42
       },
       "holdings": 2173204,
@@ -2159,9 +2126,9 @@
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 2.6040900376102085,
+      "navPerShareBasic": 2.6040900089407226,
       "otherInvestments": null,
-      "preferredEquity": null,
+      "preferredEquity": 2,
       "quarterlyBurnUsd": 6230944,
       "restrictedCash": 1616765,
       "sharesForMnav": 69760581,
@@ -2180,8 +2147,7 @@
       "deterministicMnavBreakdown": {
         "cryptoNav": 283965858,
         "enterpriseValue": 0,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 283965858
       },
       "holdings": 473276430,
@@ -2199,7 +2165,7 @@
       },
       "navPerShareBasic": null,
       "otherInvestments": null,
-      "preferredEquity": null,
+      "preferredEquity": 0,
       "quarterlyBurnUsd": 0,
       "restrictedCash": null,
       "sharesForMnav": null,
@@ -2218,8 +2184,7 @@
       "deterministicMnavBreakdown": {
         "cryptoNav": 29981000,
         "enterpriseValue": 39897152782,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 29981000
       },
       "holdings": 59962,
@@ -2257,12 +2222,11 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": null,
       "cashReserves": 119300000,
-      "deterministicMnav": 89.14217326145794,
+      "deterministicMnav": 89.25099290938779,
       "deterministicMnavBreakdown": {
         "cryptoNav": 4351400000,
-        "enterpriseValue": 398527914000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "enterpriseValue": 399014414000,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 4470700000
       },
       "holdings": 43514,
@@ -2274,10 +2238,10 @@
         "effectiveShares": {
           "basic": 346548153,
           "diluted": 398527914,
-          "inTheMoneyDebtValue": 486500000,
+          "inTheMoneyDebtValue": 0,
           "inTheMoneyWarrantProceeds": 0
         },
-        "inTheMoneyDebtValue": 486500000,
+        "inTheMoneyDebtValue": 0,
         "inTheMoneyWarrantProceeds": 0,
         "marketCapForMnav": 398527914000,
         "marketCapSource": "calculated",
@@ -2300,12 +2264,11 @@
       "capitalRaisedConverts": null,
       "capitalRaisedPipe": 175000000,
       "cashReserves": 5443655,
-      "deterministicMnav": 1786.5274233620935,
+      "deterministicMnav": 1786.5274241576913,
       "deterministicMnavBreakdown": {
         "cryptoNav": 109959133.95,
-        "enterpriseValue": 224551619345,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "enterpriseValue": 224551619445,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 125691672.24000001
       },
       "holdings": 733060893,
@@ -2326,9 +2289,9 @@
         "marketCapSource": "calculated",
         "stockPrice": 1000
       },
-      "navPerShareBasic": 0.5442859111520277,
+      "navPerShareBasic": 0.5442854362195099,
       "otherInvestments": null,
-      "preferredEquity": null,
+      "preferredEquity": 100,
       "quarterlyBurnUsd": 3600000,
       "restrictedCash": null,
       "sharesForMnav": 210556229,
@@ -2347,8 +2310,7 @@
       "deterministicMnavBreakdown": {
         "cryptoNav": 104600000,
         "enterpriseValue": 269332679000,
-        "otherInvestmentsMaterial": false,
-        "otherInvestmentsRatio": 0,
+        "otherInvestmentsIncluded": 0,
         "totalNav": 277846418.076
       },
       "holdings": 1046,
@@ -2412,11 +2374,27 @@
         "type": "convertible"
       },
       {
-        "expiration": "2027-02-13",
+        "expiration": "2027-02-15",
         "faceValue": null,
         "issuedDate": "2026-02-13",
         "potentialShares": 15944000,
         "strikePrice": 3.53,
+        "type": "warrant"
+      },
+      {
+        "expiration": null,
+        "faceValue": null,
+        "issuedDate": "2025-12-08",
+        "potentialShares": 105000000,
+        "strikePrice": 4.15,
+        "type": "warrant"
+      },
+      {
+        "expiration": null,
+        "faceValue": null,
+        "issuedDate": "2025-12-08",
+        "potentialShares": 105000000,
+        "strikePrice": 5.06,
         "type": "warrant"
       }
     ],
@@ -2678,9 +2656,27 @@
     ],
     "BTCT": [
       {
+        "expiration": "2030-06-23",
+        "faceValue": 18120000,
+        "issuedDate": "2025-06-23",
+        "potentialShares": 2083333,
+        "strikePrice": 12,
+        "type": "convertible"
+      },
+      {
         "expiration": null,
         "faceValue": null,
         "issuedDate": null,
+        "potentialShares": 2431667,
+        "strikePrice": 0.001,
+        "type": "warrant"
+      }
+    ],
+    "BTCT.V": [
+      {
+        "expiration": "2030-06-23",
+        "faceValue": 18120000,
+        "issuedDate": "2025-06-23",
         "potentialShares": 2083333,
         "strikePrice": 12,
         "type": "convertible"
@@ -2774,6 +2770,40 @@
         "potentialShares": 1070719,
         "strikePrice": 5.4383,
         "type": "warrant"
+      }
+    ],
+    "CEPO": [
+      {
+        "expiration": null,
+        "faceValue": 500000000,
+        "issuedDate": "2025-07-17",
+        "potentialShares": 38461538,
+        "strikePrice": 13,
+        "type": "convertible"
+      },
+      {
+        "expiration": null,
+        "faceValue": 30500000,
+        "issuedDate": "2025-08-07",
+        "potentialShares": 2346154,
+        "strikePrice": 13,
+        "type": "convertible"
+      },
+      {
+        "expiration": null,
+        "faceValue": null,
+        "issuedDate": "2025-08-25",
+        "potentialShares": 23076923,
+        "strikePrice": 13,
+        "type": "preferred"
+      },
+      {
+        "expiration": null,
+        "faceValue": null,
+        "issuedDate": "2025-08-25",
+        "potentialShares": 3715385,
+        "strikePrice": 13,
+        "type": "preferred"
       }
     ],
     "CWD": [
@@ -2928,6 +2958,40 @@
         "potentialShares": 11019766,
         "strikePrice": 11.5,
         "type": "warrant"
+      },
+      {
+        "expiration": null,
+        "faceValue": null,
+        "issuedDate": null,
+        "potentialShares": 2672526,
+        "strikePrice": 0,
+        "type": "rsu"
+      }
+    ],
+    "ETHM": [
+      {
+        "expiration": "2028-08-08",
+        "faceValue": 156250000,
+        "issuedDate": "2025-08-08",
+        "potentialShares": 45355588,
+        "strikePrice": 3.445,
+        "type": "convertible"
+      },
+      {
+        "expiration": null,
+        "faceValue": null,
+        "issuedDate": "2025-07-29",
+        "potentialShares": 17495849,
+        "strikePrice": 0.0001,
+        "type": "warrant"
+      },
+      {
+        "expiration": null,
+        "faceValue": null,
+        "issuedDate": "2025-08-08",
+        "potentialShares": 9071110,
+        "strikePrice": 3.445,
+        "type": "warrant"
       }
     ],
     "FGNX": [
@@ -2974,7 +3038,7 @@
         "type": "warrant"
       },
       {
-        "expiration": "2028-02-14",
+        "expiration": "2026-02-27",
         "faceValue": 20000000,
         "issuedDate": null,
         "potentialShares": 2222222,
@@ -2982,7 +3046,7 @@
         "type": "convertible"
       },
       {
-        "expiration": null,
+        "expiration": "2026-02-27",
         "faceValue": 46300000,
         "issuedDate": null,
         "potentialShares": 3702360,
@@ -3184,6 +3248,48 @@
         "potentialShares": 350000,
         "strikePrice": 4,
         "type": "warrant"
+      }
+    ],
+    "IHLDF": [
+      {
+        "expiration": "2026-09-27",
+        "faceValue": null,
+        "issuedDate": null,
+        "potentialShares": 1110000,
+        "strikePrice": 0.52,
+        "type": "option"
+      },
+      {
+        "expiration": "2026-12-13",
+        "faceValue": null,
+        "issuedDate": null,
+        "potentialShares": 370000,
+        "strikePrice": 1.71,
+        "type": "option"
+      },
+      {
+        "expiration": "2026-12-28",
+        "faceValue": null,
+        "issuedDate": null,
+        "potentialShares": 2325000,
+        "strikePrice": 1.82,
+        "type": "option"
+      },
+      {
+        "expiration": "2027-06-16",
+        "faceValue": null,
+        "issuedDate": null,
+        "potentialShares": 1101100,
+        "strikePrice": 0.52,
+        "type": "option"
+      },
+      {
+        "expiration": "2028-04-12",
+        "faceValue": null,
+        "issuedDate": null,
+        "potentialShares": 370000,
+        "strikePrice": 0.21,
+        "type": "option"
       }
     ],
     "KULR": [
@@ -3464,6 +3570,58 @@
         "type": "warrant"
       }
     ],
+    "OBTC3": [
+      {
+        "expiration": "2030-10-01",
+        "faceValue": 24886408,
+        "issuedDate": "2025-10-01",
+        "potentialShares": 6966760,
+        "strikePrice": 3.57,
+        "type": "convertible"
+      }
+    ],
+    "PURR": [
+      {
+        "expiration": "2030-12-02",
+        "faceValue": null,
+        "issuedDate": "2025-12-02",
+        "potentialShares": 7666667,
+        "strikePrice": 9.375,
+        "type": "warrant"
+      },
+      {
+        "expiration": "2030-12-02",
+        "faceValue": null,
+        "issuedDate": "2025-12-02",
+        "potentialShares": 7666667,
+        "strikePrice": 12.5,
+        "type": "warrant"
+      },
+      {
+        "expiration": "2030-12-02",
+        "faceValue": null,
+        "issuedDate": "2025-12-02",
+        "potentialShares": 7666667,
+        "strikePrice": 18.75,
+        "type": "warrant"
+      },
+      {
+        "expiration": "2030-06-01",
+        "faceValue": null,
+        "issuedDate": "2025-06-01",
+        "potentialShares": 865052,
+        "strikePrice": 1.156,
+        "type": "warrant"
+      },
+      {
+        "expiration": "2030-10-01",
+        "faceValue": null,
+        "issuedDate": "2025-10-01",
+        "potentialShares": 3460208,
+        "strikePrice": 0.25,
+        "type": "warrant"
+      }
+    ],
     "SBET": [
       {
         "expiration": null,
@@ -3565,6 +3723,30 @@
       }
     ],
     "STKE": [
+      {
+        "expiration": "2028-01-16",
+        "faceValue": 19525000,
+        "issuedDate": "2025-01-16",
+        "potentialShares": 1375000,
+        "strikePrice": 14.2,
+        "type": "convertible"
+      },
+      {
+        "expiration": "2028-01-21",
+        "faceValue": 1775000,
+        "issuedDate": "2025-01-21",
+        "potentialShares": 66667,
+        "strikePrice": 26.63,
+        "type": "convertible"
+      },
+      {
+        "expiration": null,
+        "faceValue": 20000000,
+        "issuedDate": "2025-05-01",
+        "potentialShares": 12738854,
+        "strikePrice": 0.01,
+        "type": "convertible"
+      },
       {
         "expiration": "2027-11-21",
         "faceValue": null,
@@ -3769,6 +3951,146 @@
       }
     ],
     "SWC": [],
+    "TAOX": [
+      {
+        "expiration": null,
+        "faceValue": 11000000,
+        "issuedDate": "2025-10-13",
+        "potentialShares": 1375000,
+        "strikePrice": 8,
+        "type": "preferred"
+      },
+      {
+        "expiration": "2030-10-15",
+        "faceValue": null,
+        "issuedDate": "2025-10-13",
+        "potentialShares": 1375000,
+        "strikePrice": 8,
+        "type": "warrant"
+      },
+      {
+        "expiration": "2030-10-15",
+        "faceValue": null,
+        "issuedDate": "2025-10-13",
+        "potentialShares": 55000,
+        "strikePrice": 8,
+        "type": "warrant"
+      },
+      {
+        "expiration": null,
+        "faceValue": 1203562,
+        "issuedDate": "2025-06-09",
+        "potentialShares": 401187,
+        "strikePrice": 3,
+        "type": "preferred"
+      },
+      {
+        "expiration": "2030-06-09",
+        "faceValue": null,
+        "issuedDate": "2025-06-09",
+        "potentialShares": 1888334,
+        "strikePrice": 3,
+        "type": "warrant"
+      },
+      {
+        "expiration": "2029-09-10",
+        "faceValue": null,
+        "issuedDate": "2024-09-10",
+        "potentialShares": 1716668,
+        "strikePrice": 3,
+        "type": "warrant"
+      },
+      {
+        "expiration": "2029-09-10",
+        "faceValue": null,
+        "issuedDate": "2024-09-10",
+        "potentialShares": 50000,
+        "strikePrice": 3,
+        "type": "warrant"
+      },
+      {
+        "expiration": "2030-08-26",
+        "faceValue": null,
+        "issuedDate": "2025-08-26",
+        "potentialShares": 400000,
+        "strikePrice": 4,
+        "type": "warrant"
+      },
+      {
+        "expiration": "2030-08-26",
+        "faceValue": null,
+        "issuedDate": "2025-08-26",
+        "potentialShares": 200000,
+        "strikePrice": 6,
+        "type": "warrant"
+      },
+      {
+        "expiration": "2030-08-26",
+        "faceValue": null,
+        "issuedDate": "2025-08-26",
+        "potentialShares": 200000,
+        "strikePrice": 8,
+        "type": "warrant"
+      },
+      {
+        "expiration": "2030-08-26",
+        "faceValue": null,
+        "issuedDate": "2025-08-26",
+        "potentialShares": 400000,
+        "strikePrice": 12,
+        "type": "warrant"
+      },
+      {
+        "expiration": "2030-08-26",
+        "faceValue": null,
+        "issuedDate": "2025-08-26",
+        "potentialShares": 100000,
+        "strikePrice": 8.4,
+        "type": "warrant"
+      },
+      {
+        "expiration": null,
+        "faceValue": null,
+        "issuedDate": null,
+        "potentialShares": 109274,
+        "strikePrice": 48.98,
+        "type": "option"
+      }
+    ],
+    "TRON": [
+      {
+        "expiration": null,
+        "faceValue": null,
+        "issuedDate": "2025-05-21",
+        "potentialShares": 8928571,
+        "strikePrice": 0.56,
+        "type": "preferred"
+      },
+      {
+        "expiration": null,
+        "faceValue": null,
+        "issuedDate": "2025-06-16",
+        "potentialShares": 54878000,
+        "strikePrice": 0.5,
+        "type": "preferred"
+      },
+      {
+        "expiration": "2027-05-21",
+        "faceValue": null,
+        "issuedDate": "2025-05-21",
+        "potentialShares": 8928571,
+        "strikePrice": 0.65,
+        "type": "warrant"
+      },
+      {
+        "expiration": null,
+        "faceValue": null,
+        "issuedDate": null,
+        "potentialShares": 500000,
+        "strikePrice": 0.56,
+        "type": "option"
+      }
+    ],
     "TWAV": [
       {
         "expiration": "2026-06-28",
@@ -4321,7 +4643,7 @@
       {
         "calendarQuarter": 4,
         "calendarYear": 2025,
-        "earningsDate": "2026-02-13",
+        "earningsDate": "2026-02-16",
         "earningsTime": null,
         "epsActual": null,
         "epsEstimate": null,
@@ -4333,7 +4655,7 @@
         "revenueActual": null,
         "revenueEstimate": null,
         "sharesAtQuarterEnd": 1142248401,
-        "status": "upcoming",
+        "status": "reported",
         "ticker": "3350.T"
       }
     ],
@@ -4827,12 +5149,12 @@
         "epsEstimate": null,
         "fiscalQuarter": 1,
         "fiscalYear": 2026,
-        "holdingsAtQuarterEnd": 150000,
-        "holdingsPerShare": 3.333,
+        "holdingsAtQuarterEnd": 0,
+        "holdingsPerShare": 0,
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 45000000,
+        "sharesAtQuarterEnd": 860457,
         "status": "reported",
         "ticker": "BNC"
       },
@@ -4846,11 +5168,11 @@
         "fiscalQuarter": 2,
         "fiscalYear": 2026,
         "holdingsAtQuarterEnd": 512000,
-        "holdingsPerShare": 11.62,
+        "holdingsPerShare": 0.0113,
         "netIncome": 283600000,
         "revenueActual": null,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 44062938,
+        "sharesAtQuarterEnd": 45321002,
         "status": "reported",
         "ticker": "BNC"
       },
@@ -5343,8 +5665,8 @@
         "epsEstimate": null,
         "fiscalQuarter": 3,
         "fiscalYear": 2025,
-        "holdingsAtQuarterEnd": 562535,
-        "holdingsPerShare": 0.2151,
+        "holdingsAtQuarterEnd": 467632,
+        "holdingsPerShare": 0.1789,
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
@@ -5400,7 +5722,7 @@
         "fiscalQuarter": 4,
         "fiscalYear": 2025,
         "holdingsAtQuarterEnd": 290062,
-        "holdingsPerShare": 2.111,
+        "holdingsPerShare": 0.002111,
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
@@ -5646,7 +5968,7 @@
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 199000000,
+        "sharesAtQuarterEnd": 220657016,
         "status": "reported",
         "ticker": "DJT"
       },
@@ -5662,9 +5984,9 @@
         "holdingsAtQuarterEnd": 0,
         "holdingsPerShare": 0,
         "netIncome": -31726600,
-        "revenueActual": 871900,
+        "revenueActual": 821200,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 199000000,
+        "sharesAtQuarterEnd": 220623372,
         "status": "reported",
         "ticker": "DJT"
       },
@@ -5680,9 +6002,9 @@
         "holdingsAtQuarterEnd": 0,
         "holdingsPerShare": 0,
         "netIncome": -20001900,
-        "revenueActual": 832600,
+        "revenueActual": 883300,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 280000000,
+        "sharesAtQuarterEnd": 277067396,
         "status": "reported",
         "ticker": "DJT"
       },
@@ -5734,11 +6056,11 @@
         "fiscalQuarter": 4,
         "fiscalYear": 2025,
         "holdingsAtQuarterEnd": 6854000,
-        "holdingsPerShare": 0.06857,
+        "holdingsPerShare": 0.0705,
         "netIncome": -166974340,
         "revenueActual": 18187525,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 99960397,
+        "sharesAtQuarterEnd": 97226597,
         "status": "reported",
         "ticker": "FWDI"
       },
@@ -6085,12 +6407,12 @@
         "epsEstimate": null,
         "fiscalQuarter": 2,
         "fiscalYear": 2025,
-        "holdingsAtQuarterEnd": 0,
-        "holdingsPerShare": 0,
+        "holdingsAtQuarterEnd": 1306452,
+        "holdingsPerShare": 0.2691,
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 8097659,
+        "sharesAtQuarterEnd": 4854827,
         "status": "reported",
         "ticker": "HYPD"
       },
@@ -6103,8 +6425,8 @@
         "epsEstimate": null,
         "fiscalQuarter": 3,
         "fiscalYear": 2025,
-        "holdingsAtQuarterEnd": 1459615,
-        "holdingsPerShare": 0.0598,
+        "holdingsAtQuarterEnd": 839889,
+        "holdingsPerShare": 0.03442,
         "netIncome": -5800000,
         "revenueActual": null,
         "revenueEstimate": null,
@@ -6121,8 +6443,8 @@
         "epsEstimate": null,
         "fiscalQuarter": 4,
         "fiscalYear": 2025,
-        "holdingsAtQuarterEnd": 1459615,
-        "holdingsPerShare": 0.0598,
+        "holdingsAtQuarterEnd": 839889,
+        "holdingsPerShare": 0.03442,
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
@@ -6564,11 +6886,11 @@
         "fiscalQuarter": 4,
         "fiscalYear": 2020,
         "holdingsAtQuarterEnd": 40824,
-        "holdingsPerShare": 0.0004429206900292937,
+        "holdingsPerShare": 0.00044291948866364146,
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 92170000,
+        "sharesAtQuarterEnd": 92170250,
         "status": "reported",
         "ticker": "MSTR"
       },
@@ -6582,11 +6904,11 @@
         "fiscalQuarter": 1,
         "fiscalYear": 2021,
         "holdingsAtQuarterEnd": 91326,
-        "holdingsPerShare": 0.0009526024825284239,
+        "holdingsPerShare": 0.0009525999984353853,
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 95870000,
+        "sharesAtQuarterEnd": 95870250,
         "status": "reported",
         "ticker": "MSTR"
       },
@@ -6600,11 +6922,11 @@
         "fiscalQuarter": 2,
         "fiscalYear": 2021,
         "holdingsAtQuarterEnd": 92079,
-        "holdingsPerShare": 0.0009447876051713524,
+        "holdingsPerShare": 0.0009447851816509808,
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 97460000,
+        "sharesAtQuarterEnd": 97460250,
         "status": "reported",
         "ticker": "MSTR"
       },
@@ -6618,11 +6940,11 @@
         "fiscalQuarter": 3,
         "fiscalYear": 2021,
         "holdingsAtQuarterEnd": 114042,
-        "holdingsPerShare": 0.001169901518260156,
+        "holdingsPerShare": 0.001169898517904909,
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 97480000,
+        "sharesAtQuarterEnd": 97480250,
         "status": "reported",
         "ticker": "MSTR"
       },
@@ -6636,11 +6958,11 @@
         "fiscalQuarter": 4,
         "fiscalYear": 2021,
         "holdingsAtQuarterEnd": 124391,
-        "holdingsPerShare": 0.0012009171654759605,
+        "holdingsPerShare": 0.0012009142669572627,
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 103580000,
+        "sharesAtQuarterEnd": 103580250,
         "status": "reported",
         "ticker": "MSTR"
       },
@@ -6654,11 +6976,11 @@
         "fiscalQuarter": 1,
         "fiscalYear": 2022,
         "holdingsAtQuarterEnd": 125051,
-        "holdingsPerShare": 0.0011080187843345737,
+        "holdingsPerShare": 0.001108016329930157,
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 112860000,
+        "sharesAtQuarterEnd": 112860250,
         "status": "reported",
         "ticker": "MSTR"
       },
@@ -6672,11 +6994,11 @@
         "fiscalQuarter": 2,
         "fiscalYear": 2022,
         "holdingsAtQuarterEnd": 129699,
-        "holdingsPerShare": 0.0011479819437068507,
+        "holdingsPerShare": 0.0011479794034798118,
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 112980000,
+        "sharesAtQuarterEnd": 112980250,
         "status": "reported",
         "ticker": "MSTR"
       },
@@ -6690,11 +7012,11 @@
         "fiscalQuarter": 3,
         "fiscalYear": 2022,
         "holdingsAtQuarterEnd": 130000,
-        "holdingsPerShare": 0.0011503406778161224,
+        "holdingsPerShare": 0.0011503381330454539,
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 113010000,
+        "sharesAtQuarterEnd": 113010250,
         "status": "reported",
         "ticker": "MSTR"
       },
@@ -6708,11 +7030,11 @@
         "fiscalQuarter": 4,
         "fiscalYear": 2022,
         "holdingsAtQuarterEnd": 132500,
-        "holdingsPerShare": 0.0011707015373740943,
+        "holdingsPerShare": 0.0011706989514513354,
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 113180000,
+        "sharesAtQuarterEnd": 113180250,
         "status": "reported",
         "ticker": "MSTR"
       },
@@ -6726,11 +7048,11 @@
         "fiscalQuarter": 1,
         "fiscalYear": 2023,
         "holdingsAtQuarterEnd": 138955,
-        "holdingsPerShare": 0.0012031777643085981,
+        "holdingsPerShare": 0.0012031751598078626,
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 115490000,
+        "sharesAtQuarterEnd": 115490250,
         "status": "reported",
         "ticker": "MSTR"
       },
@@ -6744,11 +7066,11 @@
         "fiscalQuarter": 2,
         "fiscalYear": 2023,
         "holdingsAtQuarterEnd": 152333,
-        "holdingsPerShare": 0.001175499652750984,
+        "holdingsPerShare": 0.0011754973850270371,
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 129590000,
+        "sharesAtQuarterEnd": 129590250,
         "status": "reported",
         "ticker": "MSTR"
       },
@@ -6762,11 +7084,11 @@
         "fiscalQuarter": 3,
         "fiscalYear": 2023,
         "holdingsAtQuarterEnd": 158245,
-        "holdingsPerShare": 0.0011236597315912803,
+        "holdingsPerShare": 0.0011236577368853638,
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 140830000,
+        "sharesAtQuarterEnd": 140830250,
         "status": "reported",
         "ticker": "MSTR"
       },
@@ -6780,11 +7102,11 @@
         "fiscalQuarter": 4,
         "fiscalYear": 2023,
         "holdingsAtQuarterEnd": 189150,
-        "holdingsPerShare": 0.0013038533121941132,
+        "holdingsPerShare": 0.001303851065259762,
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 145070000,
+        "sharesAtQuarterEnd": 145070250,
         "status": "reported",
         "ticker": "MSTR"
       },
@@ -6798,11 +7120,11 @@
         "fiscalQuarter": 1,
         "fiscalYear": 2024,
         "holdingsAtQuarterEnd": 214246,
-        "holdingsPerShare": 0.001270132795826417,
+        "holdingsPerShare": 0.0012701309133701189,
         "netIncome": -53100000,
         "revenueActual": 115200000,
         "revenueEstimate": 121700000,
-        "sharesAtQuarterEnd": 168680000,
+        "sharesAtQuarterEnd": 168680250,
         "status": "reported",
         "ticker": "MSTR"
       },
@@ -6816,11 +7138,11 @@
         "fiscalQuarter": 2,
         "fiscalYear": 2024,
         "holdingsAtQuarterEnd": 226331,
-        "holdingsPerShare": 0.001282546608488695,
+        "holdingsPerShare": 0.0012825447915441838,
         "netIncome": -102600000,
         "revenueActual": 111400000,
         "revenueEstimate": 119300000,
-        "sharesAtQuarterEnd": 176470000,
+        "sharesAtQuarterEnd": 176470250,
         "status": "reported",
         "ticker": "MSTR"
       },
@@ -6834,11 +7156,11 @@
         "fiscalQuarter": 3,
         "fiscalYear": 2024,
         "holdingsAtQuarterEnd": 252220,
-        "holdingsPerShare": 0.001269232933676933,
+        "holdingsPerShare": 0.0012692313369060452,
         "netIncome": -340200000,
         "revenueActual": 116100000,
         "revenueEstimate": 122660000,
-        "sharesAtQuarterEnd": 198718449,
+        "sharesAtQuarterEnd": 198718699,
         "status": "reported",
         "ticker": "MSTR"
       },
@@ -6852,11 +7174,11 @@
         "fiscalQuarter": 4,
         "fiscalYear": 2024,
         "holdingsAtQuarterEnd": 446400,
-        "holdingsPerShare": 0.0018248051577986974,
+        "holdingsPerShare": 0.0018248032929294878,
         "netIncome": 36200000,
         "revenueActual": 120700000,
         "revenueEstimate": 123000000,
-        "sharesAtQuarterEnd": 244628857,
+        "sharesAtQuarterEnd": 244629107,
         "status": "reported",
         "ticker": "MSTR"
       },
@@ -6870,11 +7192,11 @@
         "fiscalQuarter": 1,
         "fiscalYear": 2025,
         "holdingsAtQuarterEnd": 528185,
-        "holdingsPerShare": 0.00198433748971549,
+        "holdingsPerShare": 0.001984335625978554,
         "netIncome": -4217000000,
         "revenueActual": 111100000,
         "revenueEstimate": 117000000,
-        "sharesAtQuarterEnd": 266177000,
+        "sharesAtQuarterEnd": 266177250,
         "status": "reported",
         "ticker": "MSTR"
       },
@@ -6888,11 +7210,11 @@
         "fiscalQuarter": 2,
         "fiscalYear": 2025,
         "holdingsAtQuarterEnd": 597325,
-        "holdingsPerShare": 0.002126029513308039,
+        "holdingsPerShare": 0.002126027621541635,
         "netIncome": -102600000,
         "revenueActual": 111400000,
         "revenueEstimate": 119300000,
-        "sharesAtQuarterEnd": 280958000,
+        "sharesAtQuarterEnd": 280958250,
         "status": "reported",
         "ticker": "MSTR"
       },
@@ -6906,11 +7228,11 @@
         "fiscalQuarter": 3,
         "fiscalYear": 2025,
         "holdingsAtQuarterEnd": 640031,
-        "holdingsPerShare": 0.002234412446415101,
+        "holdingsPerShare": 0.002234410496277286,
         "netIncome": 2785024000,
         "revenueActual": 128691000,
         "revenueEstimate": 122660000,
-        "sharesAtQuarterEnd": 286442640,
+        "sharesAtQuarterEnd": 286442890,
         "status": "reported",
         "ticker": "MSTR"
       },
@@ -6924,11 +7246,11 @@
         "fiscalQuarter": 4,
         "fiscalYear": 2025,
         "holdingsAtQuarterEnd": 672498,
-        "holdingsPerShare": 0.0023423171768115134,
+        "holdingsPerShare": 0.0023423151372348235,
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 287108000,
+        "sharesAtQuarterEnd": 287108250,
         "status": "reported",
         "ticker": "MSTR"
       }
@@ -6948,7 +7270,7 @@
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 15674052,
+        "sharesAtQuarterEnd": 23117191,
         "status": "reported",
         "ticker": "NA"
       },
@@ -7037,12 +7359,12 @@
         "epsEstimate": null,
         "fiscalQuarter": 4,
         "fiscalYear": 2025,
-        "holdingsAtQuarterEnd": 12000000,
-        "holdingsPerShare": 0.0944,
+        "holdingsAtQuarterEnd": 12857533,
+        "holdingsPerShare": 0.1036,
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 127025563,
+        "sharesAtQuarterEnd": 124093048,
         "status": "upcoming",
         "ticker": "PURR"
       },
@@ -7333,8 +7655,8 @@
         "epsEstimate": null,
         "fiscalQuarter": 3,
         "fiscalYear": 2025,
-        "holdingsAtQuarterEnd": 435000,
-        "holdingsPerShare": 0.0189,
+        "holdingsAtQuarterEnd": 435159,
+        "holdingsPerShare": 0.01892,
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
@@ -7573,12 +7895,12 @@
         "epsEstimate": null,
         "fiscalQuarter": 2,
         "fiscalYear": 2025,
-        "holdingsAtQuarterEnd": 20800,
-        "holdingsPerShare": 8.85,
+        "holdingsAtQuarterEnd": 5031,
+        "holdingsPerShare": 3.154,
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 2350307,
+        "sharesAtQuarterEnd": 1594953,
         "status": "reported",
         "ticker": "TWAV"
       },
@@ -7591,8 +7913,8 @@
         "epsEstimate": null,
         "fiscalQuarter": 3,
         "fiscalYear": 2025,
-        "holdingsAtQuarterEnd": 21943,
-        "holdingsPerShare": 6.84,
+        "holdingsAtQuarterEnd": 21822,
+        "holdingsPerShare": 6.804,
         "netIncome": -2290000,
         "revenueActual": null,
         "revenueEstimate": null,
@@ -7634,7 +7956,7 @@
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 1320924,
+        "sharesAtQuarterEnd": 1430429,
         "status": "reported",
         "ticker": "UPXI"
       },
@@ -7670,7 +7992,7 @@
         "netIncome": null,
         "revenueActual": null,
         "revenueEstimate": null,
-        "sharesAtQuarterEnd": 58888756,
+        "sharesAtQuarterEnd": 58893261,
         "status": "reported",
         "ticker": "UPXI"
       },
