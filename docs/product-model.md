@@ -1,107 +1,63 @@
 # DATCAP Product Model
 
-> Canonical reference for site structure and metric philosophy.
+> Canonical reference for site structure, metric philosophy, and page layout.
 > All UI suggestions, ranking logic, and metric calculations must reinforce this model.
+> Updated: 2026-03-07
 
 ---
 
-## Core Insight
+## Product Purpose
 
-DAT companies are evaluated through **three independent dimensions**.
+DATCAP is: **CoinMarketCap for Digital Asset Treasury (DAT) companies.**
 
-1. **Size** — Treasury Value
-2. **Growth** — HPS Growth (Holdings Per Share Growth)
-3. **Efficiency** — Wrapper Efficiency (Growth relative to premium)
+The platform allows users to:
 
-Each answers a different question. They should **not be collapsed into a single ranking metric**.
+1. Understand the structure of the DAT sector
+2. Identify which treasury managers are executing best
+3. Evaluate whether wrappers justify their premium
 
----
-
-## The Three Dimensions
-
-### 1. Size (Sector Structure)
-
-**Metric:** Treasury value (total crypto holdings in USD)
-
-**Question:** Who are the major players in the DAT sector?
-
-**Purpose:** Sector orientation, market structure, liquidity context.
-
-**This is the default view of the homepage.**
-
-**Why default:**
-The DAT industry is still small and uneven. Growth metrics alone produce misleading rankings.
-A $48M treasury can show 700% growth while a $50B treasury grows 15%.
-Default size ranking avoids this statistical distortion.
-
-### 2. Growth (Treasury Execution)
-
-**Metric:** HPS Growth (Holdings Per Share Growth)
-
-**Definition:**
-```
-HPS = crypto holdings / fully diluted shares
-HPS Growth = % change in HPS over time period
-```
-
-**Question:** Which treasury managers are increasing crypto per share fastest?
-
-**Interpretation:** This measures **execution skill**. This is the **Moneyball view** of DATs.
-
-### 3. Efficiency (Wrapper Valuation)
-
-**Metric:** Wrapper Efficiency = HPS Growth / mNAV
-
-**Question:** How much crypto-per-share growth do investors receive for the premium they pay?
-
-**Interpretation:** This measures **valuation efficiency**.
-
-A company with 20% HPS growth and 1.5x mNAV is less efficient than one with 15% HPS growth and 0.8x mNAV.
+Priorities: **clarity, transparency, simple financial primitives.**
 
 ---
 
-## Homepage Structure
+## Core Analytical Model
 
-The homepage supports three views via a tab toggle:
-
-```
-[ Size ]   [ Growth ]   [ Efficiency ]
-```
-
-- **Size** (default): sorted by treasury value
-- **Growth**: sorted by HPS Growth (90D)
-- **Efficiency**: sorted by Wrapper Efficiency (HPS Growth / mNAV)
-
-Each view shows the same companies with different sort + column emphasis.
-
-### Per-View Summary Banner
-
-| View | Banner Stats |
-|------|-------------|
-| Size | Total treasury value, company count, asset breakdown |
-| Growth | Median HPS growth, companies growing HPS, best/worst |
-| Efficiency | Median efficiency, best value plays |
-
----
-
-## Design Principles
-
-1. **Do not merge** these metrics into a single composite score.
-2. The default view prioritizes **sector orientation**, not performance.
-3. Growth and efficiency views are **analytical lenses**, not the primary ranking.
-4. Metrics remain **simple and auditable** — always derivable from: holdings, shares, HPS, mNAV.
-
----
-
-## Mental Model
+DAT companies are understood through three independent variables:
 
 ```
 crypto price  →  macro driver (external)
 HPS growth    →  treasury execution (management skill)
-mNAV          →  market valuation (investor sentiment)
+mNAV          →  wrapper valuation (investor sentiment)
 ```
 
-DATCAP visualizes the relationships between these variables rather than compressing them into a single number.
+Definitions:
+
+```
+HPS = crypto holdings / fully diluted shares
+Wrapper Efficiency = HPS Growth / mNAV
+```
+
+HPS and mNAV are **primitive variables**.
+Efficiency is a **derived analytical lens**.
+
+---
+
+## Metric Hierarchy
+
+### Primitive Metrics (Core)
+
+These must remain simple, auditable, and visible:
+
+- Treasury Value
+- HPS
+- HPS Growth
+- mNAV
+
+### Derived Metrics
+
+- Wrapper Efficiency = HPS Growth / mNAV
+
+**No composite scoring systems should be introduced.**
 
 ---
 
@@ -116,3 +72,250 @@ All derived analytics must be interpretable from these primitives:
 - `cryptoPrice` — spot price of underlying asset
 
 No metric should be introduced that cannot be explained as a function of these five values.
+
+---
+
+## Overview Page Structure
+
+Layout (top to bottom):
+
+```
+Header
+  ↓
+Primary sector chart (scatter plot)
+  ↓
+Filters
+  ↓
+Leaderboard
+```
+
+The **leaderboard** must remain the dominant element of the page.
+
+---
+
+## Homepage Chart
+
+A single primary visualization: **HPS Growth vs mNAV**
+
+```
+Y-axis  →  HPS Growth (90D)
+X-axis  →  mNAV
+Dot size →  Treasury Value
+```
+
+Purpose: Reveal execution vs valuation across the entire DAT sector.
+
+### Quadrants
+
+| Position | Label | Meaning |
+|----------|-------|---------|
+| Top-left | Undervalued performers | High growth, low premium — most interesting candidates |
+| Top-right | Elite wrappers | High growth, high premium — market recognizes execution |
+| Bottom-left | Turnaround candidates | Low growth, low premium — struggling or early-stage |
+| Bottom-right | Overpriced wrappers | Low growth, high premium — most fragile positions |
+
+Quadrant boundaries:
+- Vertical: mNAV = 1.0x (at-NAV vs premium)
+- Horizontal: Sector median HPS Growth
+
+This is the **"Moneyball chart"** — it reveals mispricing by comparing market price vs treasury execution.
+
+### Chart Interaction
+
+- Hover tooltips: Company, Treasury Value, HPS, HPS Growth, mNAV
+- Click: opens company page
+- Compare mode: select up to 4 companies for simultaneous visualization
+
+---
+
+## Leaderboard Structure
+
+Default ranking: **Treasury Value (Size view)**
+
+This prevents statistical distortions from very small companies dominating growth rankings.
+
+Three toggle views:
+
+```
+[ Size ]   [ Growth ]   [ Efficiency ]
+```
+
+### Size View
+
+Rank by: Treasury Value
+
+| Column | Purpose |
+|--------|---------|
+| Company | Name + ticker |
+| Asset | BTC, ETH, etc. |
+| Treasury Value | Total crypto holdings in USD |
+| HPS | Holdings per share |
+| mNAV | Premium/discount |
+| Leverage | Debt / Crypto NAV |
+
+### Growth View
+
+Rank by: HPS Growth (90D)
+
+| Column | Purpose |
+|--------|---------|
+| Company | Name + ticker |
+| Asset | BTC, ETH, etc. |
+| HPS Growth (90D) | Treasury execution |
+| mNAV | Premium/discount |
+| Treasury Value | Scale context |
+
+### Efficiency View
+
+Rank by: Wrapper Efficiency = HPS Growth / mNAV
+
+| Column | Purpose |
+|--------|---------|
+| Company | Name + ticker |
+| Asset | BTC, ETH, etc. |
+| Efficiency | Growth per unit of premium |
+| HPS Growth | Execution input |
+| mNAV | Valuation input |
+| Treasury Value | Scale context |
+
+---
+
+## Analytics Page
+
+Separate page (`/analytics`) with four charts:
+
+### 1. Treasury Density vs Scale
+
+```
+Y-axis  →  HPS (holdings per share)
+X-axis  →  Treasury Value
+Dot size →  Market Cap
+```
+
+Purpose: Reveal trade-offs between treasury scale and per-share crypto exposure.
+
+### 2. Flywheel Dynamics
+
+```
+Y-axis  →  HPS Growth
+X-axis  →  mNAV change
+```
+
+Purpose: Reveal whether companies convert premium expansion into treasury growth.
+
+### 3. Sector Growth Distribution
+
+Histogram of HPS Growth across all DAT companies.
+
+Purpose: Reveal dispersion of treasury execution across the sector.
+
+### 4. Sector mNAV History
+
+Time series showing median mNAV and average mNAV.
+
+Purpose: Reveal macro valuation cycles in the DAT sector.
+
+---
+
+## Company Page Structure
+
+Layout (top to bottom):
+
+```
+Company Header
+  ↓
+Balance Sheet
+  ↓
+Key Metrics
+  ↓
+Performance Chart
+  ↓
+Strategy / Overview
+  ↓
+Holdings History
+```
+
+### Company Header
+
+- Company name
+- Ticker
+- Asset focus
+- Treasury Value
+
+### Balance Sheet
+
+DAT companies are balance-sheet vehicles. Display this first.
+
+```
+Crypto + Cash - Debt - Preferred = Equity NAV
+```
+
+Fields:
+- Crypto holdings (quantity + USD value)
+- Cash
+- Debt
+- Preferred equity
+- Shares outstanding
+- Equity NAV (computed)
+
+### Key Metrics
+
+- HPS
+- HPS Growth (90D, 1Y)
+- mNAV
+- Leverage
+
+### Performance Chart
+
+Show on one chart:
+- Price
+- mNAV
+- HPS
+
+Provide anchor link: "Jump to performance chart"
+
+### Strategy Section
+
+- Treasury accumulation strategy
+- Capital markets strategy
+- Financing structure
+
+### Holdings History
+
+Timeline:
+- Date
+- Crypto added or removed
+- Source filing
+- Updated holdings total
+
+---
+
+## Design Principles
+
+1. **Do not merge** metrics into a single composite score
+2. The default view prioritizes **sector orientation**, not performance
+3. Growth and efficiency views are **analytical lenses**, not the primary ranking
+4. Metrics remain **simple and auditable** — always derivable from primitives
+5. The scatter plot is the **signature visualization** — it compresses the framework into one picture
+
+---
+
+## Key Questions the Site Must Answer
+
+1. Who controls the most crypto?
+2. Which treasury managers are increasing crypto per share fastest?
+3. Which wrappers justify their premium?
+
+Everything in the UI should reinforce these questions.
+
+---
+
+## Product Philosophy
+
+DATCAP functions as:
+
+```
+sector map + Moneyball scoreboard
+```
+
+It reveals relationships between treasury scale, treasury execution, and market valuation — without compressing them into a single score.
