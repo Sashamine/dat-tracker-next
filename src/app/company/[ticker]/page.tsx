@@ -60,6 +60,7 @@ import { StockPriceCell } from "@/components/price-cell";
 import { FilingCite } from "@/components/wiki-citation";
 import { getCompanyIntel } from "@/lib/data/company-intel";
 import { MobileHeader } from "@/components/mobile-header";
+import { CompanyPageTabs } from "@/components/company-page-tabs";
 import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
 import { MSTRCompanyView } from "@/components/MSTRCompanyView";
 import { BMNRCompanyView } from "@/components/BMNRCompanyView";
@@ -298,16 +299,37 @@ export default function CompanyPage() {
     return scores.reduce((a, b) => a + b, 0) / scores.length;
   }, [displayCompany?.confidenceScores]);
 
+  const CompanyPageSkeleton = () => (
+    <div className="min-h-screen bg-white dark:bg-gray-950 flex flex-col lg:flex-row">
+      <MobileHeader title={ticker.toUpperCase()} showBack />
+      <Suspense fallback={<div className="hidden lg:block fixed left-0 top-0 h-full w-64 bg-gray-50 dark:bg-gray-900" />}>
+        <AppSidebar className="hidden lg:block fixed left-0 top-0 h-full overflow-y-auto" />
+      </Suspense>
+      <main className="flex-1 lg:ml-64 lg:mr-72 px-3 py-4 lg:px-6 lg:py-8">
+        <div className="mx-auto max-w-6xl space-y-6">
+          <div className="space-y-3">
+            <div className="h-9 w-40 rounded bg-gray-200 dark:bg-gray-800 animate-pulse" />
+            <div className="h-5 w-72 rounded bg-gray-200 dark:bg-gray-800 animate-pulse" />
+            <div className="h-10 w-full max-w-md rounded bg-gray-200 dark:bg-gray-800 animate-pulse" />
+          </div>
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="h-28 rounded-lg bg-gray-100 dark:bg-gray-900 animate-pulse" />
+            ))}
+          </div>
+          <div className="h-80 rounded-lg bg-gray-100 dark:bg-gray-900 animate-pulse" />
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            <div className="h-64 rounded-lg bg-gray-100 dark:bg-gray-900 animate-pulse" />
+            <div className="h-64 rounded-lg bg-gray-100 dark:bg-gray-900 animate-pulse" />
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+
   // Wait for BOTH data sources to load to ensure consistency with main page
   if (isLoadingCompany || isLoadingCompanies) {
-    return (
-      <div className="min-h-screen bg-white dark:bg-gray-950 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600 dark:text-gray-400">Loading company data...</p>
-        </div>
-      </div>
-    );
+    return <CompanyPageSkeleton />;
   }
 
   if (!displayCompany) {
@@ -641,6 +663,7 @@ export default function CompanyPage() {
                 </span>
               )}
             </div>
+            <CompanyPageTabs ticker={displayCompany.ticker} className="mt-5" />
           </div>
           <div className="text-right">
             <StockPriceCell price={stockPrice} change24h={stockChange} className="text-2xl" />

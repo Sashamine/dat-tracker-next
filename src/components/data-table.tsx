@@ -711,7 +711,7 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
           <span className="text-sm text-gray-400 font-medium w-6">{index + 1}</span>
           <CompanyLogo ticker={company.ticker} />
           <div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <span className="font-bold text-gray-900 dark:text-gray-100">{company.ticker}</span>
               {company.notes && company.notes.toLowerCase().includes("no sec") && (
                 <TooltipProvider>
@@ -804,7 +804,7 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                   </Tooltip>
                 </TooltipProvider>
               )}
-              <Badge variant="outline" className={cn("text-xs", assetColors[company.asset] || assetColors.ETH)}>
+              <Badge variant="outline" className={cn("max-w-full text-xs", assetColors[company.asset] || assetColors.ETH)}>
                 {company.asset}
               </Badge>
               {company.pendingMerger && (

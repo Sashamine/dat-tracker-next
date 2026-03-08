@@ -68,16 +68,20 @@ export function FilterSidebar() {
         <h3 className="font-semibold text-gray-900 dark:text-gray-100">
           Filters
         </h3>
-        {hasActiveFilters && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={resetFilters}
-            className="text-xs text-gray-500 hover:text-gray-700"
-          >
-            Reset
-          </Button>
-        )}
+        <Button
+          variant={hasActiveFilters ? "default" : "outline"}
+          size="sm"
+          onClick={resetFilters}
+          disabled={!hasActiveFilters}
+          className={cn(
+            "text-xs font-semibold",
+            hasActiveFilters
+              ? "bg-indigo-600 text-white hover:bg-indigo-700"
+              : "text-gray-500 dark:text-gray-400"
+          )}
+        >
+          Clear All
+        </Button>
       </div>
 
       {/* Search */}
@@ -108,7 +112,7 @@ export function FilterSidebar() {
                 "px-2 py-0.5 text-xs rounded-md transition-colors border",
                 assets.includes(asset)
                   ? assetColors[asset] || "bg-indigo-600 text-white border-indigo-600"
-                  : "bg-white dark:bg-gray-800 text-gray-500 border-gray-200 dark:border-gray-700 hover:bg-gray-100"
+                  : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700"
               )}
             >
               {asset}
@@ -207,7 +211,7 @@ export function FilterSidebar() {
       {/* Active Filters Summary */}
       {hasActiveFilters && (
         <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-gray-500 dark:text-gray-400">
             Active filters applied. Share URL to preserve filters.
           </p>
         </div>

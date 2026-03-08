@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { AuditReportData } from "@/lib/audit/report-generator";
 import { formatLargeNumber, formatMNAV, formatPercent } from "@/lib/calculations";
 import { cn } from "@/lib/utils";
+import { CompanyPageTabs } from "@/components/company-page-tabs";
 import { FileText, Download, ArrowLeft, ShieldCheck, Clock, ExternalLink } from "lucide-react";
 
 export default function AuditReportPage() {
@@ -132,6 +133,7 @@ export default function AuditReportPage() {
               </p>
             </div>
           </div>
+          <CompanyPageTabs ticker={ticker} className="mt-6 print:hidden" />
         </div>
 
         {/* Content Body */}
