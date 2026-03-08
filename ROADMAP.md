@@ -20,55 +20,74 @@
 > **Product model:** `docs/product-model.md`
 > **NAV policy:** `docs/nav-treatment-policy.md`
 
-**Goal:** Structure the homepage around three independent dimensions: Size (default), Growth, and Efficiency.
+**Goal:** Align the site with the final product structure defined in `docs/product-model.md`.
 
-### 0.5.1 Three-View Homepage
+**Canonical spec:** `docs/product-model.md` — all UI work must conform to this document.
 
-The homepage supports three views via a tab toggle. Each shows the same companies with different sort + column emphasis.
+### 0.5.1 Three-View Leaderboard
+
+Default sort: Treasury Value (Size). Three toggle views with view-specific columns.
 
 **Current state (2026-03-07):**
 - Two-tab toggle exists: `[ Performance ]  [ Size ]`
-- Default sort is `hpsGrowth90d` (Growth) — **should be `holdingsValue` (Size)**
+- Default sort is `hpsGrowth90d` — **should be `holdingsValue`**
 - Efficiency view does not exist yet
-- All underlying data (HPS growth, mNAV) is already computed
 
 **Deliverables:**
 - [ ] Rename tabs: `[ Size ]  [ Growth ]  [ Efficiency ]`
-- [ ] Default sort: `holdingsValue` (Size view), not `hpsGrowth90d`
-- [ ] Size view: sorted by treasury value. Columns: Company, Asset, Treasury Value, mNAV, Market Cap
-- [ ] Growth view: sorted by HPS Growth (90D). Columns: Company, Asset, AHPS Growth (90D), mNAV, Treasury Value
-- [ ] Efficiency view: sorted by Wrapper Efficiency (HPS Growth / mNAV). Columns: Company, Asset, Efficiency, HPS Growth, mNAV
+- [ ] Default sort: `holdingsValue` (Size view)
+- [ ] Size view columns: Company, Asset, Treasury Value, HPS, mNAV, Leverage
+- [ ] Growth view columns: Company, Asset, HPS Growth (90D), mNAV, Treasury Value
+- [ ] Efficiency view columns: Company, Asset, Efficiency, HPS Growth, mNAV, Treasury Value
+- [ ] Compute Wrapper Efficiency = HPS Growth / mNAV
 - [ ] Per-view summary banner with view-appropriate stats
-- [ ] mNAV color context relative to sector median (<0.9x green, 0.9-1.3 neutral, >1.3x red)
 
-**Data availability:** 55 companies have holdings + sharesForMnav. 54 have 90+ days of DAT history. HPS growth computable for nearly the entire universe. Efficiency is trivially derived (HPS Growth / mNAV).
+### 0.5.2 Homepage Scatter Plot
 
-### 0.5.2 Dilution vs Accretion Chart (Company Page)
+The **primary sector visualization**, placed above the leaderboard on the overview page.
 
 **Deliverables:**
+- [ ] Y: HPS Growth (90D), X: mNAV, dot size: Treasury Value
+- [ ] Quadrant labels: undervalued performers, elite wrappers, turnaround candidates, overpriced wrappers
+- [ ] Quadrant boundaries: mNAV = 1.0x (vertical), sector median HPS Growth (horizontal)
+- [ ] Hover tooltips: Company, Treasury Value, HPS, HPS Growth, mNAV
+- [ ] Click → company page
+- [ ] Compare mode: select up to 4 companies
+
+### 0.5.3 Company Page Restructure
+
+Reorder company page to lead with balance sheet (DAT companies are balance-sheet vehicles).
+
+**Deliverables:**
+- [ ] Layout: Header → Balance Sheet → Key Metrics → Performance Chart → Strategy → Holdings History
+- [ ] Balance sheet equation: Crypto + Cash − Debt − Preferred = Equity NAV
+- [ ] Key metrics: HPS, HPS Growth (90D, 1Y), mNAV, Leverage
+- [ ] Performance chart: Price + mNAV + HPS on one chart
+- [ ] Anchor link: "Jump to performance chart"
+
+### 0.5.4 Analytics Page
+
+Separate page (`/analytics`) with four sector-level charts.
+
+**Deliverables:**
+- [ ] Treasury Density vs Scale: Y=HPS, X=Treasury Value, dot size=Market Cap
+- [ ] Flywheel Dynamics: Y=HPS Growth, X=mNAV change
+- [ ] Sector Growth Distribution: histogram of HPS Growth
+- [ ] Sector mNAV History: time series of median + average mNAV
+
+### 0.5.5 Dilution vs Accretion Chart (Company Page)
+
 - [ ] Dual-axis chart: BTC/share (line) + shares outstanding (bar) over time
 - [ ] Instantly shows: good managers (HPS up, shares stable) vs bad (shares exploding, HPS flat)
-- [ ] This is the "Moneyball chart" — the signature visualization
 
-### 0.5.3 Sector Scatter Plot
+### 0.5.6 AHPS Growth (deferred)
 
-**Deliverables:**
-- [ ] X: mNAV (premium/discount), Y: HPS Growth (90D)
-- [ ] Quadrants: upper-left = efficient wrappers, lower-right = overpriced + weak
-- [ ] Every DAT as a labeled dot, sized by treasury value
-- [ ] This is the visual encoding of the Efficiency dimension
+**Concept:** Accretive Holdings Per Share Growth — isolates management skill from crypto price movement.
 
-### 0.5.4 AHPS Growth (deferred)
+**Status:** Deferred. Requires granular capital events data (currently available for ~5 companies). Plain HPS Growth % is the leaderboard metric for now.
 
-**Concept:** Accretive Holdings Per Share Growth — isolates management skill from crypto price movement. Measures how efficiently management converts capital access into more crypto per share. Could become the "EPS of the DAT sector."
+### 0.5.7 NAV Composition Transparency
 
-**Status:** Deferred. Requires granular capital events data (currently available for ~5 companies: MSTR, BMNR, MARA, SBET, DDC). As the pipeline matures, more companies get full AHPS decomposition. For now, plain HPS Growth % is the leaderboard metric.
-
-### 0.5.5 NAV Composition Transparency
-
-**Goal:** Make the NAV treatment policy visible to users.
-
-**Deliverables:**
 - [ ] Document treatment rules in code (see `docs/nav-treatment-policy.md`)
 - [ ] Ensure all companies are consistently modeled (STKE equity investments gap)
 - [ ] Add explicit notes where non-direct crypto treatment applies
