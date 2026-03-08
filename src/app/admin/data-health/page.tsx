@@ -50,7 +50,8 @@ function fmtTs(s: string | null) {
 }
 
 export default async function AdminDataHealthPage() {
-  const base = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  const base = process.env.NEXT_PUBLIC_BASE_URL
+    || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
 
   const [summary, gaps, unverified] = await Promise.all([
     getJson<VerificationSummary>(`${base}/api/state/verification-summary`),
