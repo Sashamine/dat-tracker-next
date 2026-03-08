@@ -100,11 +100,11 @@ export function MobileHeader({ title = "DAT Tracker", showBack = false, classNam
                     Verify Holdings
                   </Link>
                   <Link
-                    href="/mnav"
+                    href="/analytics"
                     onClick={() => setMenuOpen(false)}
                     className="block px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
                   >
-                    Sector Statistics
+                    Sector
                   </Link>
                 </div>
               </div>
