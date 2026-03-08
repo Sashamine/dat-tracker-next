@@ -6,6 +6,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { CRYPTO_ICONS, ALL_ASSETS } from "@/components/app-sidebar";
 import { AggregateMNAVChart } from "@/components/aggregate-mnav-chart";
+import { useIsAdmin } from "@/lib/hooks/use-admin";
 import { Company } from "@/lib/types";
 
 interface MNAVStats {
@@ -30,6 +31,7 @@ interface MobileHeaderProps {
 
 export function MobileHeader({ title = "DAT Tracker", showBack = false, className, companies, prices, mnavStats }: MobileHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const isAdmin = useIsAdmin();
 
   return (
     <>
@@ -93,13 +95,6 @@ export function MobileHeader({ title = "DAT Tracker", showBack = false, classNam
                     All Companies
                   </Link>
                   <Link
-                    href="/verify"
-                    onClick={() => setMenuOpen(false)}
-                    className="block px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
-                  >
-                    Verify Holdings
-                  </Link>
-                  <Link
                     href="/analytics"
                     onClick={() => setMenuOpen(false)}
                     className="block px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
@@ -127,6 +122,38 @@ export function MobileHeader({ title = "DAT Tracker", showBack = false, classNam
                   </div>
                   <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-2">
                     <AggregateMNAVChart companies={companies} prices={prices} mnavStats={mnavStats} compact />
+                  </div>
+                </div>
+              )}
+
+              {/* Admin (visible only when authenticated) */}
+              {isAdmin && (
+                <div>
+                  <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+                    Admin
+                  </h3>
+                  <div className="space-y-1">
+                    <Link
+                      href="/anchors"
+                      onClick={() => setMenuOpen(false)}
+                      className="block px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+                    >
+                      SEC Anchors
+                    </Link>
+                    <Link
+                      href="/verify"
+                      onClick={() => setMenuOpen(false)}
+                      className="block px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+                    >
+                      Verify Holdings
+                    </Link>
+                    <Link
+                      href="/admin/data-health"
+                      onClick={() => setMenuOpen(false)}
+                      className="block px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+                    >
+                      Data Health
+                    </Link>
                   </div>
                 </div>
               )}
