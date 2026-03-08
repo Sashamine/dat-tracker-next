@@ -982,6 +982,11 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                 {company.leverageRatio >= 1 && <span>⚠️</span>}
                 {company.leverageRatio.toFixed(2)}x
               </span>
+            ) : company.cashStale ? (
+              <span className="inline-flex items-center gap-1 border-b border-dashed border-amber-400/60" title={`Cash data from ${company.cashAsOf} — may be stale`}>
+                <span className="text-amber-400/70">~</span>
+                <span className="text-gray-500">0.00x</span>
+              </span>
             ) : "—"}
           </p>
         </div>
@@ -1339,6 +1344,11 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                                 {company.leverageRatio >= 1 ? "⚠️ " : ""}
                                 {company.leverageRatio.toFixed(2)}x
                               </span>
+                            ) : company.cashStale ? (
+                              <span className="border-b border-dashed border-amber-400/60" title={`Cash data from ${company.cashAsOf} — may be stale`}>
+                                <span className="text-amber-400/70">~</span>
+                                <span className="text-gray-500">0.00x</span>
+                              </span>
                             ) : (
                               <span className="text-gray-400">—</span>
                             )}
@@ -1365,6 +1375,11 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                                 {company.cashStale && <span className="text-amber-400/70">~</span>}
                                 {company.leverageRatio >= 1 ? "⚠️ " : ""}
                                 {company.leverageRatio.toFixed(2)}x
+                              </span>
+                            ) : company.cashStale ? (
+                              <span className="border-b border-dashed border-amber-400/60" title={`Cash data from ${company.cashAsOf} — may be stale`}>
+                                <span className="text-amber-400/70">~</span>
+                                <span className="text-gray-500">0.00x</span>
                               </span>
                             ) : (
                               <span className="text-gray-400">—</span>
