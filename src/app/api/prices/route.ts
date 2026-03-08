@@ -46,6 +46,8 @@ const FMP_ONLY_STOCKS = [
   "STKE",      // Sol Strategies
   "FWDI",      // Forwardly
   "HSDT",      // Heliogen
+  "PURR",      // Hyperliquid Strategies - Alpaca IEX not returning data
+  "HYPD",      // HyperVerse - same issue
   ];
 
 // Stocks using Yahoo Finance (FMP doesn't cover well)

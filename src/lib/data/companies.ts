@@ -2300,12 +2300,11 @@ export const hypeCompanies: Company[] = [
     sharesSourceQuote: "SEC 8-K (Feb 11, 2026): 123,967,508 shares. Down from 127M after $10.5M buyback (~3M shares at ~$3.42 avg). $19.5M remaining of $30M program.",
     sharesSourceUrl: "/filings/purr/0001193125-26-045553",
     sharesAsOf: "2026-02-11",
-    cashReserves: 281_900_000,  // 8-K Feb 11: Dec 31, 2025 balance sheet. Subsequently deployed $129.5M for HYPE → ~$152M remaining.
-    restrictedCash: 281_900_000,  // No debt = cash not encumbered, don't subtract from EV
-    cashSource: "SEC 8-K (Feb 11): Dec 31 balance sheet $281.9M. Subsequently deployed $129.5M for ~5M HYPE. Remaining deployable ~$125M.",
-    cashSourceQuote: "SEC 8-K (Feb 11): Dec 31 balance sheet $281.9M. Subsequently deployed $129.5M for ~5M HYPE. Remaining deployable ~$125M.",
+    cashReserves: 152_400_000,  // 8-K Feb 11: Dec 31 balance $281.9M − $129.5M deployed for ~5M HYPE = ~$152M remaining
+    cashSource: "SEC 8-K (Feb 11, 2026): Dec 31 balance sheet $281.9M − $129.5M deployed for HYPE = ~$152M remaining as of Feb 3.",
+    cashSourceQuote: "SEC 8-K (Feb 11, 2026): Dec 31 balance sheet $281.9M − $129.5M deployed for HYPE = ~$152M remaining as of Feb 3.",
     cashSourceUrl: "/filings/purr/0001193125-26-045553",
-    cashAsOf: "2025-12-31",
+    cashAsOf: "2026-02-03",
     totalDebt: 0,
     debtSource: "SEC 8-K Feb 11, 2026 balance sheet: $0 debt",
     debtSourceQuote: "SEC 8-K Feb 11, 2026 balance sheet: $0 debt",
@@ -2314,13 +2313,6 @@ export const hypeCompanies: Company[] = [
     leader: "David Schamis (CEO), Bob Diamond (Board)",
     strategy: "HYPE treasury via Sonnet merger. 100% staked via Anchorage.",
     notes: "$617M total assets (Dec 31). $30M buyback ($10.5M used, $19.5M remaining). ~360K HYPE staking yield in first 2 months. $1B ChEF (Chardan) equity line unused. D1 Capital 6.3% holder (8M shares).",
-    dataWarnings: [
-      {
-        type: "stale-data",
-        message: "Cash ($282M) is Dec 31 balance sheet — subsequently deployed $129.5M for HYPE. Actual cash ~$152M as of Feb 3.",
-        severity: "warning",
-      },
-    ],
   },
   {
     id: "hypd",
