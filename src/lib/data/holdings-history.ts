@@ -386,7 +386,8 @@ const ABTC_HISTORY: HoldingsSnapshot[] = [
   // Q4 quarter-end anchor from FY2025 earnings release (8-K filed Feb 26, 2026)
   // 5,401 / 927,604,994 = 0.00000582 BTC/share (~582 sats)
   { date: "2025-12-31", holdings: 5_401, sharesOutstanding: 927_604_994, holdingsPerShare: 0.00000582, source: "SEC 8-K Feb 26, 2026 + Exhibit 99.1 FY2025 results", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312526073305/abtc-ex99_1.htm", methodology: "Year-end holdings disclosed in earnings release (5,401 BTC).", confidence: "high" },
-  // TODO: Jan 2026 - no PR/8-K found, company discloses via X now
+  // Mar 2026 - Eric Trump announcement, not SEC-verified
+  { date: "2026-03-04", holdings: 6_500, sharesOutstanding: 927_604_994, holdingsPerShare: 0.00000701, source: "Eric Trump announcement via Bitcoin Magazine (Mar 4, 2026)", sourceType: "press-release", sourceUrl: "https://bitcoinmagazine.com/business/eric-trump-american-bitcoin-reserves-surpass-6500-btc", confidence: "medium" },
 ];
 
 // NXTT (Next Technology Holding) removed - history of false financial reports, shareholder lawsuits
