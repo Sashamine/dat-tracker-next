@@ -416,6 +416,9 @@ async function main() {
 
     const stats = { snapshots: 0, inserted: 0, updated: 0, noop: 0, skipped: 0, failed: 0 };
 
+    // Track previous shares to detect carry-forward (stale shares with new dates)
+    let prevSharesOutstanding: number | undefined;
+
     for (const snapshot of company.history) {
       if (totalSnapshots >= limit) break;
 
@@ -438,6 +441,22 @@ async function main() {
       for (const metricDef of enabledMetrics) {
         const value = metricDef.getValue(snapshot);
         if (value === undefined || value === null) continue;
+
+        // Skip basic_shares when it's just carried forward from the previous
+        // snapshot. Writing a stale share count with a new as_of date causes
+        // latest_datapoints to present it as "current", overriding newer data
+        // from SEC filings or companies.ts. Only write when the value actually
+        // changed (indicating a verified update) or has an explicit sharesSource.
+        if (metricDef.metric === 'basic_shares') {
+          const isCarryForward = prevSharesOutstanding !== undefined
+            && value === prevSharesOutstanding
+            && !snapshot.sharesSource;
+          if (isCarryForward) {
+            stats.skipped++;
+            totalSkipped++;
+            continue;
+          }
+        }
 
         let unit = metricDef.getUnit(assetUnit);
         // Default behavior is to skip ambiguous MULTI holdings. Allow only
@@ -596,6 +615,11 @@ async function main() {
             error: err instanceof Error ? err.message : String(err),
           }));
         }
+      }
+
+      // Track shares for carry-forward detection on next snapshot
+      if (snapshot.sharesOutstanding != null) {
+        prevSharesOutstanding = snapshot.sharesOutstanding;
       }
     }
 
