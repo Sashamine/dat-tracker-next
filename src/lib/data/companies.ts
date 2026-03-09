@@ -2863,6 +2863,12 @@ export const zecCompanies: Company[] = [
         severity: "warning",
       },
     ],
+    totalDebt: 0,
+    debtAsOf: "2025-09-30",
+    debtSourceUrl: "/filings/cyph/0001104659-25-109827",
+    preferredEquity: 0,  // D1 had $67.7M phantom preferred from old Leap Therapeutics era (CIK 1509745). Zeroed in D1.
+    preferredAsOf: "2025-09-30",
+    preferredSourceUrl: "/filings/cyph/0001104659-25-109827",
     costBasisAvg: 334.41,
     costBasisSource: "SEC 8-K Dec 30, 2025 - cumulative average price per ZEC",
     costBasisSourceUrl: "/filings/cyph/0001104659-25-125039",
