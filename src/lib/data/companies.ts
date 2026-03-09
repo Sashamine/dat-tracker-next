@@ -2634,6 +2634,9 @@ export const taoCompanies: Company[] = [
     sharesSource: "SEC 10-Q Q3 2025 (filed Nov 13, 2025)",
     sharesSourceQuote: "SEC 10-Q Q3 2025 (filed Nov 13, 2025)",
     secCik: "0000746210",
+    totalDebt: 0,  // SEC 10-Q Q3 2025: no interest-bearing debt (old Oblong $2.4M fully repaid)
+    debtAsOf: "2025-09-30",
+    debtSourceUrl: "/filings/twav/0001437749-25-034612",
     cashReserves: 3_737_000,  // Sep 30, 2025 10-Q
     restrictedCash: 3_737_000,  // Earmarked for TAO purchases - add to NAV, not subtract from EV
     preferredEquity: 0,
