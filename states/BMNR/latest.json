@@ -3,7 +3,7 @@
   "ticker": "BMNR",
   "secCik": "0001829311",
   "asOf": "2026-03-01",
-  "generatedAt": "2026-03-07T00:36:04.384Z",
+  "generatedAt": "2026-03-09T13:43:06.549Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -36,7 +36,7 @@
     "source": {
       "cashSourceUrl": "/filings/bmnr/0001493152-26-008462",
       "debtSourceUrl": "/filings/bmnr/0001493152-26-002084",
-      "preferredSourceUrl": "/filings/bmnr/0001683168-24-004815"
+      "preferredSourceUrl": "/filings/bmnr/0001493152-26-002084"
     }
   },
   "verification": {

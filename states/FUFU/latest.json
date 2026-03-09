@@ -3,7 +3,7 @@
   "ticker": "FUFU",
   "secCik": "0001921158",
   "asOf": "2026-02-28",
-  "generatedAt": "2026-03-07T00:36:04.387Z",
+  "generatedAt": "2026-03-09T13:43:06.557Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -13,18 +13,18 @@
     "asset": "BTC",
     "amount": 1830,
     "source": {
-      "holdingsSource": "press-release",
+      "holdingsSource": "sec-filing",
       "holdingsSourceUrl": "/filings/fufu/0001213900-25-108472",
       "holdingsAccession": null
     }
   },
   "shares": {
-    "sharesForMnav": 164131946,
+    "sharesForMnav": 164516040,
     "sharesOutstandingFD": null,
-    "asOf": "2025-06-30",
+    "asOf": "2025-09-30",
     "source": {
-      "sharesSource": "SEC 6-K (filed 2025-09-05): CommonStockSharesOutstanding = 164,131,946 as of 2025-06-30",
-      "sharesSourceUrl": "/filings/fufu/0001213900-25-084744"
+      "sharesSource": "SEC 6-K Q3 2025 earnings: weighted avg basic shares 164,516,040 (Q3 2025)",
+      "sharesSourceUrl": "/filings/fufu/0001213900-25-108472"
     }
   },
   "balanceSheet": {

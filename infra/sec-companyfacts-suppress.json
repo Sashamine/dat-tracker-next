@@ -1,7 +1,8 @@
 {
   "schemaVersion": "0.1",
   "cash": [
-    "TRON"
+    "TRON",
+    "XRPN"
   ],
   "debt": [
     "BNC",
@@ -13,7 +14,8 @@
     "SUIG",
     "TAOX",
     "TRON",
-    "TWAV"
+    "TWAV",
+    "XRPN"
   ],
   "preferred": [
     "ABTC",

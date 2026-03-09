@@ -3,7 +3,7 @@
   "ticker": "BTCT.V",
   "secCik": null,
   "asOf": "2026-02-17",
-  "generatedAt": "2026-03-07T00:36:04.388Z",
+  "generatedAt": "2026-03-09T13:43:06.559Z",
   "listing": {
     "country": "CA",
     "exchangeMic": "XTSE",
@@ -30,7 +30,7 @@
   "balanceSheet": {
     "cashReserves": null,
     "restrictedCash": null,
-    "totalDebt": 25000000,
+    "totalDebt": 18120000,
     "preferredEquity": null,
     "asOf": "2025-12-31",
     "source": {
