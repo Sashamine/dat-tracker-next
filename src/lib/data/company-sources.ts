@@ -433,8 +433,8 @@ export const COMPANY_SOURCES: Record<string, CompanyDataSources> = {
   ABTC: {
     ticker: "ABTC",
     name: "American Bitcoin Corp",
-    secCik: "2068580",
-    secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002068580",
+    secCik: "0001755953",  // Active entity (inherited from Gryphon/Akerna). CIK 2068580 was pre-merger private entity.
+    secFilingsUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001755953",
     exchange: "NASDAQ",
     sharesSource: "diluted",
     reportsHoldingsFrequency: "monthly",

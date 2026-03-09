@@ -219,14 +219,16 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   ],
 
   // SUIG (SUI Group Holdings) - SUI treasury company
-  // Verified 2026-01-29 via SEC 8-K Jan 8, 2026 (accession 0001654954-26-000201)
-  // Treasury: 108,098,436 SUI (Jan 7, 2026) | Shares: 80.9M fully adjusted
-  // Note: 80.9M already includes pre-funded warrants - sharesForMnav uses this
+  // Updated 2026-03-09 via SEC 10-K FY2025 (accession 0001654954-26-001672, filed Feb 27, 2026)
+  // Treasury: 108,368,594 SUI (Feb 23, 2026) | Shares: 80,896,554 fully adjusted (Feb 23)
+  // Common: 76,802,872 (Dec 31 XBRL, confirmed Feb 20) + PFW remaining: 4,093,682 = 80,896,554
+  // PFW originally issued: 7,144,205 in PIPE. ~3,050,523 exercised as of Feb 23.
+  // 10-K: "15,098,076 stock for issuance upon the exercise of various warrants" (includes PFWs)
   // Director warrants below vest over 24mo (starting 6mo from Jan 2026), 5-year exercise
-  // 18 dilutive instruments totaling 16,600,923 shares:
+  // 18 dilutive instruments:
   //   Director (Quintenz): 4 tranches, 207,565 shares
   //   Foundation investor: 4 tranches, 3,113,468 shares
-  //   Pre-funded: 5,600,000 shares (already in base count)
+  //   Pre-funded: 4,093,682 shares remaining (already in base count)
   //   Placement Agent (A.G.P.): 3,113,469 shares
   //   Karatage Lead Investor: 4 tranches, 3,113,468 shares
   //   Management: 3 tranches, 1,245,388 shares
@@ -323,19 +325,20 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
       issuedDate: "2025-07-31",
       notes: "Sui Foundation investor warrants (tranche 4) - 207,565 shares @ $7.046",
     },
-    // Pre-funded warrants: ~5,600,000 shares @ $0.0001 exercise price
-    // NOTE: These are ALREADY included in the 80.9M sharesForMnav base count.
+    // Pre-funded warrants: 4,093,682 remaining of 7,144,205 originally issued @ $0.0001
+    // ~3,050,523 exercised (converted to common stock, offset by buybacks).
+    // NOTE: These are ALREADY included in the 80,896,554 sharesForMnav base count.
     // Listed here for transparency/documentation only — do NOT double-count in diluted share calcs.
     {
       type: "warrant",
       strikePrice: 0.0001,
-      potentialShares: 5_600_000,
-      source: "S-1 / 8-K Jan 8, 2026",
+      potentialShares: 4_093_682,
+      source: "SEC 10-K FY2025: 80,896,554 fully adjusted - 76,802,872 common = 4,093,682 PFW remaining",
       sourceUrl:
-        "/filings/suig/0001213900-25-088239",
+        "/filings/suig/0001654954-26-001672",
       expiration: "9999-12-31",  // No expiration (pre-funded)
-      issuedDate: "2025-01-01",
-      notes: "Pre-funded warrants (PFW) — already included in 80.9M sharesForMnav base. Listed for transparency only. Do NOT add to diluted count.",
+      issuedDate: "2025-07-31",
+      notes: "Pre-funded warrants (PFW) — 4,093,682 of 7,144,205 remain unexercised. Already included in 80,896,554 sharesForMnav base. Do NOT add to diluted count.",
     },
     // Placement Agent (A.G.P.) warrants — 3.75% of securities sold in PIPE
     {
