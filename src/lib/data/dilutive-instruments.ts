@@ -32,6 +32,7 @@ export interface DilutiveInstrument {
   expiration?: string; // ISO date when instrument expires/matures (optional)
   issuedDate?: string; // ISO date when instrument was issued (for historical tracking)
   notes?: string; // Additional context, e.g., "$150M convertible note"
+  includedInBase?: boolean; // true if these shares are ALREADY counted in sharesForMnav (e.g., pre-funded warrants)
 }
 
 export interface EffectiveSharesResult {
@@ -338,6 +339,7 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
         "/filings/suig/0001654954-26-001672",
       expiration: "9999-12-31",  // No expiration (pre-funded)
       issuedDate: "2025-07-31",
+      includedInBase: true,
       notes: "Pre-funded warrants (PFW) — 4,093,682 of 7,144,205 remain unexercised. Already included in 80,896,554 sharesForMnav base. Do NOT add to diluted count.",
     },
     // Placement Agent (A.G.P.) warrants — 3.75% of securities sold in PIPE
@@ -1036,6 +1038,17 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // If the resale S-1 isn't effective yet, NO tranches can vest. This is a material prerequisite
   // that the strike-price-as-vesting-trigger model doesn't capture.
   FWDI: [
+    {
+      type: "warrant",
+      strikePrice: 0.00001,
+      potentialShares: 12_864_602,
+      source: "SEC 10-Q Q1 FY2026 (CIK 0000038264)",
+      sourceUrl: "/filings/fwdi/0000038264-25-000042",
+      expiration: "9999-12-31",
+      issuedDate: "2025-09-15",
+      includedInBase: true,
+      notes: "Pre-funded warrants (PFW) @ $0.00001. Already included in sharesForMnav (96,003,639 = 83.1M common + 12.9M PFW).",
+    },
     // All 3 warrant tranches: $0.01 exercise price, BUT performance-based vesting.
     // Each tranche has 3 sub-tranches that vest at different stock price targets
     // (relative to $18.50 PIPE price). Perpetual (no expiration). Cashless exercise.
@@ -1080,6 +1093,17 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   //            2 Common Warrants @ $47.55 (ignored — negligible)
   //        8,957 Other Equity Warrants @ $563-$611K (ignored — deep OTM)
   HSDT: [
+    {
+      type: "warrant",
+      strikePrice: 0.001,
+      potentialShares: 23_930_181,
+      source: "8-K Feb 20, 2026 + 10-Q Q3 2025 Note 6",
+      sourceUrl: "/filings/hsdt/0001104659-26-018212",
+      expiration: "9999-12-31",
+      issuedDate: "2025-09-15",
+      includedInBase: true,
+      notes: "Pre-funded warrants (PFW) @ $0.001. Was 35.6M at Sep 30, ~11.7M exercised. Already included in sharesForMnav (76,732,785 = 52.8M common + 23.9M PFW).",
+    },
     // 2025 Stapled Warrants — issued with PIPE Sep 2025
     // One stapled warrant per PFW/share purchased in PIPE
     // Strike $10.134 = PIPE purchase price. Exercisable upon stockholder approval (received Oct 30, 2025)
@@ -1876,6 +1900,17 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   CYPH: [
     {
       type: "warrant",
+      strikePrice: 0.001,
+      potentialShares: 80_820_163,
+      source: "SEC 8-K Oct 9, 2025 (PIPE closing)",
+      sourceUrl: "/filings/cyph/0001104659-25-098082",
+      expiration: "9999-12-31",
+      issuedDate: "2025-10-08",
+      includedInBase: true,
+      notes: "Pre-funded warrants (PFW) @ $0.001. Already included in sharesForMnav (137,420,344 = 56.6M common + 80.8M PFW).",
+    },
+    {
+      type: "warrant",
       strikePrice: 0.5335,
       potentialShares: 71_985_605,
       source: "SEC 8-K Oct 9, 2025 (PIPE closing)",
@@ -2352,9 +2387,19 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Profile: 000108977 | Filing: Nov 25, 2025
   // Basic shares: 28,552,195
   // Pre-funded warrants: 9,479,090 @ $0.77 - ALREADY INCLUDED in sharesForMnav (38,031,285)
-  // DO NOT add pre-funded warrants here - would cause double-counting
-  // Only tracking stock options that are NOT in sharesForMnav
+  // Now tracked with includedInBase: true so D1 overlay can add them back
   XTAIF: [
+    {
+      type: "warrant",
+      strikePrice: 0.77,
+      potentialShares: 9_479_090,
+      source: "SEDAR+ Q2 FY26 MD&A (Sep 30, 2025)",
+      sourceUrl: "https://drive.google.com/file/d/1XJiVIe9jsgwusVoE818yL0OiLWvHKbPd/view",
+      expiration: "9999-12-31",
+      issuedDate: "2025-01-01",
+      includedInBase: true,
+      notes: "Pre-funded warrants (PFW) @ C$0.77. Already included in sharesForMnav (38,031,285 = 28.6M common + 9.5M PFW).",
+    },
     {
       type: "option",
       strikePrice: 1.00,
@@ -2393,6 +2438,17 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // Pre-Funded Warrants (706,261 @ $0.0001) added to sharesForMnav — essentially shares
   // Complex warrant structure from 2023 Private Placement + 2025 Private Placement
   TWAV: [
+    {
+      type: "warrant",
+      strikePrice: 0.0001,
+      potentialShares: 706_261,
+      source: "SEC 10-Q Q3 2025 Note 7",
+      sourceUrl: "/filings/twav/0001437749-25-034612",
+      expiration: "9999-12-31",
+      issuedDate: "2025-06-04",
+      includedInBase: true,
+      notes: "Pre-funded warrants (PFW) @ $0.0001. Already included in sharesForMnav (3,913,471 = 3,207,210 common + 706,261 PFW).",
+    },
     {
       type: "warrant",
       strikePrice: 3.41,  // Post-reverse-split adjusted price (Make Whole Provision)
@@ -3188,6 +3244,21 @@ dilutiveInstruments["BTCT.V"] = dilutiveInstruments["BTCT"];
  * @param stockPrice - Current stock price in USD
  * @returns Effective shares result with breakdown and ITM debt value
  */
+/**
+ * Returns the number of pre-funded warrant shares that are ALREADY
+ * included in a company's sharesForMnav base count.
+ *
+ * D1 basic_shares only tracks SEC XBRL CommonStockSharesOutstanding
+ * (common stock), so when D1 overrides static data, these PFW shares
+ * get dropped. The overlay uses this to add them back.
+ */
+export function getBaseIncludedShares(ticker: string): number {
+  const instruments = dilutiveInstruments[ticker] || [];
+  return instruments
+    .filter(i => i.includedInBase === true)
+    .reduce((sum, i) => sum + i.potentialShares, 0);
+}
+
 export function getEffectiveShares(
   ticker: string,
   basicShares: number,
@@ -3196,10 +3267,13 @@ export function getEffectiveShares(
   const instruments = dilutiveInstruments[ticker] || [];
   const today = new Date().toISOString().split("T")[0];
 
-  // Filter out expired instruments - their shares already converted to basic
+  // Filter out expired instruments and instruments already in base count
   const activeInstruments = instruments.filter((inst) => {
     if (inst.expiration && inst.expiration <= today) {
       return false; // Expired - shares already in basic count
+    }
+    if (inst.includedInBase) {
+      return false; // Already counted in sharesForMnav (e.g., pre-funded warrants)
     }
     return true;
   });
@@ -3271,8 +3345,12 @@ export function getEffectiveSharesAt(
 ): EffectiveSharesResult {
   const instruments = dilutiveInstruments[ticker] || [];
 
-  // Filter to instruments that existed at asOfDate
+  // Filter to instruments that existed at asOfDate (excluding base-included PFWs)
   const activeInstruments = instruments.filter((inst) => {
+    // Already counted in sharesForMnav (e.g., pre-funded warrants)
+    if (inst.includedInBase) {
+      return false;
+    }
     // Must have been issued by asOfDate (if issuedDate is tracked)
     if (inst.issuedDate && inst.issuedDate > asOfDate) {
       return false;
