@@ -8,9 +8,35 @@ export type D1MetricSourceMap = Record<string, Record<string, string | null>>; /
 export type D1MetricDateMap = Record<string, Record<string, string | null>>; // ticker -> metric -> as_of/reported_at
 
 /**
+ * Pick the most recent value by comparing as_of dates.
+ * When both D1 and static have values and dates, the newer one wins.
+ * Falls back to D1-first when dates are missing (legacy behavior).
+ */
+function pickNewest(
+  d1Val: number | undefined,
+  d1Date: string | null | undefined,
+  staticVal: number | undefined,
+  staticDate: string | null | undefined,
+): { value: number | undefined; isD1: boolean } {
+  const hasD1 = d1Val != null;
+  const hasStatic = staticVal != null;
+
+  if (!hasD1) return { value: staticVal, isD1: false };
+  if (!hasStatic) return { value: d1Val, isD1: true };
+
+  // Both have values — compare dates if available
+  if (d1Date && staticDate && staticDate > d1Date) {
+    return { value: staticVal, isD1: false };
+  }
+
+  // D1 wins by default (dates equal, missing, or D1 is newer)
+  return { value: d1Val, isD1: true };
+}
+
+/**
  * Overlays D1 latest-metrics values onto enriched Company objects.
- * D1-first with static fallback: `??` preserves D1 `0` (legitimate)
- * but falls back to static when D1 value is undefined.
+ * Date-aware: when both D1 and static have values with dates, the more
+ * recent one wins. Falls back to D1-first when dates are unavailable.
  *
  * Holdings precedence (matches company detail page):
  *   1. holdings_native (unit: BTC/ETH/etc) — preferred; USD derived downstream via live price
@@ -38,20 +64,27 @@ export function applyD1Overlay(
     const dateMap = dates?.[c.ticker];
     if (!metrics) return c;
 
+    // Date-aware picks: use whichever source (D1 or static) is more recent
+    const debt = pickNewest(metrics.debt_usd, dateMap?.debt_usd, c.totalDebt, c.debtAsOf);
+    const cash = pickNewest(metrics.cash_usd, dateMap?.cash_usd, c.cashReserves, c.cashAsOf);
+    const pref = pickNewest(metrics.preferred_equity_usd, dateMap?.preferred_equity_usd, c.preferredEquity, c.preferredAsOf);
+    const shares = pickNewest(metrics.basic_shares, dateMap?.basic_shares, c.sharesForMnav, c.sharesAsOf);
+
+    // Holdings: D1 must be positive to override
+    const d1HoldingsNative = (metrics.holdings_native != null && metrics.holdings_native > 0)
+      ? metrics.holdings_native : undefined;
+    const holdings = pickNewest(d1HoldingsNative, dateMap?.holdings_native, c.holdings, c.holdingsLastUpdated);
+
     // Track which fields were sourced from D1 (dev-mode debug aid)
     const d1Fields: string[] = [];
-    if (metrics.debt_usd            != null) d1Fields.push('totalDebt');
-    if (metrics.cash_usd            != null) d1Fields.push('cashReserves');
-    if (metrics.preferred_equity_usd != null) d1Fields.push('preferredEquity');
-    if (metrics.basic_shares        != null) d1Fields.push('sharesForMnav');
+    if (debt.isD1) d1Fields.push('totalDebt');
+    if (cash.isD1) d1Fields.push('cashReserves');
+    if (pref.isD1) d1Fields.push('preferredEquity');
+    if (shares.isD1) d1Fields.push('sharesForMnav');
+    if (holdings.isD1) d1Fields.push('holdings');
 
-    const hasNative = metrics.holdings_native != null && metrics.holdings_native > 0;
-    if (hasNative) d1Fields.push('holdings');
-
-    // Holdings basis: overlay can resolve native_units or static_fallback.
-    // The usd_fair_value tier requires live price context and is only used
-    // on the company detail page (see getHoldingsBasis helper below).
-    const holdingsBasis: HoldingsBasis = hasNative ? 'native_units' : 'static_fallback';
+    // Holdings basis depends on which source won
+    const holdingsBasis: HoldingsBasis = holdings.isD1 ? 'native_units' : 'static_fallback';
 
     // Warn when D1 values diverge significantly from static (>50% = likely stale XBRL)
     const divergenceChecks: [string, number | undefined, number | undefined][] = [
@@ -71,28 +104,22 @@ export function applyD1Overlay(
 
     const overlaid: Company = {
       ...c,
-      totalDebt:       metrics.debt_usd            ?? c.totalDebt,
-      cashReserves:    metrics.cash_usd             ?? c.cashReserves,
-      preferredEquity: metrics.preferred_equity_usd ?? c.preferredEquity,
-      sharesForMnav:   metrics.basic_shares         ?? c.sharesForMnav,
-      sharesAsOf:      metrics.basic_shares != null ? (dateMap?.basic_shares ?? c.sharesAsOf) : c.sharesAsOf,
-      debtAsOf:        metrics.debt_usd != null ? (dateMap?.debt_usd ?? c.debtAsOf) : c.debtAsOf,
-      cashAsOf:        metrics.cash_usd != null ? (dateMap?.cash_usd ?? c.cashAsOf) : c.cashAsOf,
+      totalDebt:       debt.value ?? c.totalDebt,
+      cashReserves:    cash.value ?? c.cashReserves,
+      preferredEquity: pref.value ?? c.preferredEquity,
+      sharesForMnav:   shares.value ?? c.sharesForMnav,
+      sharesAsOf:      shares.isD1 ? (dateMap?.basic_shares ?? c.sharesAsOf) : c.sharesAsOf,
+      debtAsOf:        debt.isD1 ? (dateMap?.debt_usd ?? c.debtAsOf) : c.debtAsOf,
+      cashAsOf:        cash.isD1 ? (dateMap?.cash_usd ?? c.cashAsOf) : c.cashAsOf,
       _staticCashAsOf: c.cashAsOf,  // Preserve original source date for staleness checks (D1 backfill can stamp carry-forward dates)
-      preferredAsOf:   metrics.preferred_equity_usd != null
-        ? (dateMap?.preferred_equity_usd ?? c.preferredAsOf)
-        : c.preferredAsOf,
+      preferredAsOf:   pref.isD1 ? (dateMap?.preferred_equity_usd ?? c.preferredAsOf) : c.preferredAsOf,
       // Prefer D1 receipt URLs where the metric was sourced from D1.
-      sharesSourceUrl:   metrics.basic_shares != null ? (sourceMap?.basic_shares ?? c.sharesSourceUrl) : c.sharesSourceUrl,
-      debtSourceUrl:     metrics.debt_usd != null ? (sourceMap?.debt_usd ?? c.debtSourceUrl) : c.debtSourceUrl,
-      cashSourceUrl:     metrics.cash_usd != null ? (sourceMap?.cash_usd ?? c.cashSourceUrl) : c.cashSourceUrl,
-      preferredSourceUrl: metrics.preferred_equity_usd != null
-        ? (sourceMap?.preferred_equity_usd ?? c.preferredSourceUrl)
-        : c.preferredSourceUrl,
-      // Only override holdings if D1 has a positive holdings_native value.
-      // bitcoin_holdings_usd is intentionally not used here — see precedence note above.
-      ...(hasNative ? { holdings: metrics.holdings_native } : {}),
-      ...(hasNative
+      sharesSourceUrl:   shares.isD1 ? (sourceMap?.basic_shares ?? c.sharesSourceUrl) : c.sharesSourceUrl,
+      debtSourceUrl:     debt.isD1 ? (sourceMap?.debt_usd ?? c.debtSourceUrl) : c.debtSourceUrl,
+      cashSourceUrl:     cash.isD1 ? (sourceMap?.cash_usd ?? c.cashSourceUrl) : c.cashSourceUrl,
+      preferredSourceUrl: pref.isD1 ? (sourceMap?.preferred_equity_usd ?? c.preferredSourceUrl) : c.preferredSourceUrl,
+      ...(holdings.isD1 ? { holdings: holdings.value } : {}),
+      ...(holdings.isD1
         ? {
             holdingsSourceUrl: sourceMap?.holdings_native ?? c.holdingsSourceUrl,
             holdingsLastUpdated: dateMap?.holdings_native ?? c.holdingsLastUpdated,
