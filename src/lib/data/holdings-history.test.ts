@@ -196,6 +196,33 @@ describe('Holdings History Source Tracking (Phase 7a)', () => {
     });
   });
 
+  describe('holdingsPerShare integrity', () => {
+    it('holdingsPerShare should match holdings / sharesOutstanding within 1%', () => {
+      const failures: string[] = [];
+
+      for (const { ticker, entry, index } of allEntries) {
+        if (!entry.holdings || entry.holdings === 0 || !entry.sharesOutstanding || entry.sharesOutstanding === 0) continue;
+        if (entry.holdingsPerShare === undefined || entry.holdingsPerShare === 0) continue;
+
+        const expected = entry.holdings / entry.sharesOutstanding;
+        const deviation = Math.abs(expected - entry.holdingsPerShare) / expected;
+
+        if (deviation > 0.01) {
+          failures.push(
+            `${ticker}[${index}] ${entry.date}: recorded=${entry.holdingsPerShare}, ` +
+            `expected=${expected.toFixed(10)} (${(deviation * 100).toFixed(1)}% off)`
+          );
+        }
+      }
+
+      if (failures.length > 0) {
+        console.log('\nHPS INTEGRITY FAILURES:\n' + failures.join('\n'));
+      }
+
+      expect(failures, 'All holdingsPerShare values must match holdings/shares within 1%').toHaveLength(0);
+    });
+  });
+
   describe('source tracking coverage', () => {
     it('reports source tracking statistics', () => {
       const stats = {

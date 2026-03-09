@@ -569,12 +569,12 @@ const FGNX_HISTORY: HoldingsSnapshot[] = [
   // Pre-treasury strategy (Dec 2024: only 1.27M shares pre-split = 253,581 post-split)
   { date: "2024-12-31", holdings: 0, sharesOutstanding: 253_581, holdingsPerShare: 0, stockPrice: 302.96, source: "10-K 2024", sharesSource: "10-Q Q3 2025 balance sheet (split-adjusted)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm" },
   // Post Private Placement (Aug 2025) - ~40M pre-funded warrants converted
-  { date: "2025-09-30", holdings: 50_770, sharesOutstanding: 7_966_838, holdingsPerShare: 6.373, stockPrice: 326.42, source: "10-Q Q3 2025", sharesSource: "10-Q cover page (split-adjusted: 39,834,188 / 5)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm", sourceType: "sec-filing" },
-  { date: "2025-11-12", holdings: 50_770, sharesOutstanding: 7_914_870, holdingsPerShare: 6.414, source: "10-Q Q3 2025 cover", sharesSource: "10-Q cover page Nov 12 (split-adjusted: 39,574,350 / 5)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm" },
+  { date: "2025-09-30", holdings: 50_770, sharesOutstanding: 7_966_838, holdingsPerShare: 0.006373, stockPrice: 326.42, source: "10-Q Q3 2025", sharesSource: "10-Q cover page (split-adjusted: 39,834,188 / 5)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm", sourceType: "sec-filing" },
+  { date: "2025-11-12", holdings: 50_770, sharesOutstanding: 7_914_870, holdingsPerShare: 0.006414, source: "10-Q Q3 2025 cover", sharesSource: "10-Q cover page Nov 12 (split-adjusted: 39,574,350 / 5)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm" },
   // Sold ETH for buybacks - repurchased 9.9M pre-split shares
-  { date: "2026-01-21", holdings: 37_594, sharesOutstanding: 6_720_000, holdingsPerShare: 5.594, source: "Press release Jan 21, 2026", sharesSource: "Press release (after 9.9M buybacks, split-adjusted: 33,600,000 / 5)", sourceUrl: "https://www.globenewswire.com/news-release/2026/01/21/3222681/0/en/FG-Nexus-Provides-Update-on-Common-and-Preferred-Share-Buyback-Programs-and-ETH-Holdings.html", sourceType: "press-release" },
+  { date: "2026-01-21", holdings: 37_594, sharesOutstanding: 6_720_000, holdingsPerShare: 0.005594, source: "Press release Jan 21, 2026", sharesSource: "Press release (after 9.9M buybacks, split-adjusted: 33,600,000 / 5)", sourceUrl: "https://www.globenewswire.com/news-release/2026/01/21/3222681/0/en/FG-Nexus-Provides-Update-on-Common-and-Preferred-Share-Buyback-Programs-and-ETH-Holdings.html", sourceType: "press-release" },
   // Post 1:5 reverse split (effective Feb 13, 2026) - shares already adjusted above
-  { date: "2026-02-13", holdings: 37_594, sharesOutstanding: 6_720_000, holdingsPerShare: 5.595, source: "1:5 reverse split effective Feb 13, 2026", sharesSource: "SEC 8-K Feb 13, 2026 (33.6M pre-split / 5)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315226006729/form8-k.htm", sourceType: "sec-filing", methodology: "Holdings carried from Jan 21 PR. Shares adjusted for 1:5 reverse split." },
+  { date: "2026-02-13", holdings: 37_594, sharesOutstanding: 6_720_000, holdingsPerShare: 0.005594, source: "1:5 reverse split effective Feb 13, 2026", sharesSource: "SEC 8-K Feb 13, 2026 (33.6M pre-split / 5)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315226006729/form8-k.htm", sourceType: "sec-filing", methodology: "Holdings carried from Jan 21 PR. Shares adjusted for 1:5 reverse split." },
 ];
 
 // ==================== ADDITIONAL SOL COMPANIES ====================
@@ -925,10 +925,10 @@ const ASST_HISTORY: HoldingsSnapshot[] = [
 // Fiscal year ends April 30. FY Q1=May-Jul, Q2=Aug-Oct, Q3=Nov-Jan, Q4=Feb-Apr
 // Dashboard: https://www.ceaindustries.com/dashboard.html
 const BNC_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-06-15", holdings: 150000, sharesOutstanding: 45_000_000, holdingsPerShare: 3.333, source: "Initial BNB treasury", sourceType: "press-release", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001855474&type=8-K" },
-  { date: "2025-09-30", holdings: 320000, sharesOutstanding: 55_000_000, holdingsPerShare: 5.818, stockPrice: 326.42, source: "Q3 2025 filing", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001855474&type=10-Q" },
-  { date: "2025-10-31", holdings: 512000, sharesOutstanding: 44_062_938, holdingsPerShare: 11.620, source: "FY Q2 2026 10-Q", sharesSource: "SEC 10-Q Dec 12, 2025", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001855474&type=10-Q" },
-  { date: "2026-01-28", holdings: 515_544, sharesOutstanding: 44_062_938, holdingsPerShare: 11.700, source: "Investor dashboard", sourceUrl: "https://www.ceaindustries.com/dashboard.html", sourceType: "company-website" },
+  { date: "2025-06-15", holdings: 150000, sharesOutstanding: 45_000_000, holdingsPerShare: 0.003333, source: "Initial BNB treasury", sourceType: "press-release", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001855474&type=8-K" },
+  { date: "2025-09-30", holdings: 320000, sharesOutstanding: 55_000_000, holdingsPerShare: 0.005818, stockPrice: 326.42, source: "Q3 2025 filing", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001855474&type=10-Q" },
+  { date: "2025-10-31", holdings: 512000, sharesOutstanding: 44_062_938, holdingsPerShare: 0.011620, source: "FY Q2 2026 10-Q", sharesSource: "SEC 10-Q Dec 12, 2025", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001855474&type=10-Q" },
+  { date: "2026-01-28", holdings: 515_544, sharesOutstanding: 44_062_938, holdingsPerShare: 0.011701, source: "Investor dashboard", sourceUrl: "https://www.ceaindustries.com/dashboard.html", sourceType: "company-website" },
 ];
 
 // Nano Labs (NA) - Hong Kong Web3 infrastructure, BNB treasury (also holds 1,000 BTC passive)
@@ -936,9 +936,9 @@ const BNC_HISTORY: HoldingsSnapshot[] = [
 // TODO BACKFILL: Historical share counts need verification from 20-F filings. Current ~20.7M per companiesmarketcap.
 //   SEC CIK: 1872302 | Search: https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=6-K
 const NA_HISTORY: HoldingsSnapshot[] = [
-  { date: "2025-07-04", holdings: 74_315, sharesOutstanding: 17_000_000, holdingsPerShare: 4.371, source: "Initial $50M BNB purchase", sourceUrl: "https://www.coindesk.com/markets/2025/07/04/nano-labs-buys-50m-in-bnb-in-1b-plan-to-hold-up-to-10-of-supply", sourceType: "press-release" },
-  { date: "2025-07-28", holdings: 128_000, sharesOutstanding: 18_000_000, holdingsPerShare: 7.111, source: "128K BNB milestone", sourceUrl: "https://www.globenewswire.com/news-release/2025/07/28/3122289/0/en/Nano-Labs-Further-Increases-BNB-Holdings-to-128-000-Tokens-Expanding-Strategic-Reserve-to-Over-US-100-Million-and-Upgrading-BNB-Reserve-Strategy.html", sourceType: "press-release" },
-  { date: "2025-12-31", holdings: 130_000, sharesOutstanding: 23_627_224, holdingsPerShare: 5.502, stockPrice: 155.61, source: "SEC 6-K Dec 31, 2025", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=6-K", sourceType: "sec-filing" },
+  { date: "2025-07-04", holdings: 74_315, sharesOutstanding: 17_000_000, holdingsPerShare: 0.004371, source: "Initial $50M BNB purchase", sourceUrl: "https://www.coindesk.com/markets/2025/07/04/nano-labs-buys-50m-in-bnb-in-1b-plan-to-hold-up-to-10-of-supply", sourceType: "press-release" },
+  { date: "2025-07-28", holdings: 128_000, sharesOutstanding: 18_000_000, holdingsPerShare: 0.007111, source: "128K BNB milestone", sourceUrl: "https://www.globenewswire.com/news-release/2025/07/28/3122289/0/en/Nano-Labs-Further-Increases-BNB-Holdings-to-128-000-Tokens-Expanding-Strategic-Reserve-to-Over-US-100-Million-and-Upgrading-BNB-Reserve-Strategy.html", sourceType: "press-release" },
+  { date: "2025-12-31", holdings: 130_000, sharesOutstanding: 23_627_224, holdingsPerShare: 0.005502, stockPrice: 155.61, source: "SEC 6-K Dec 31, 2025", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1872302&type=6-K", sourceType: "sec-filing" },
 ];
 
 // ==================== ADDITIONAL BTC ====================
@@ -956,15 +956,26 @@ const CEPO_HISTORY: HoldingsSnapshot[] = [
 
 // TWAV (Taoweave, fka Oblong) - TAO treasury
 // SEC CIK: 746210 | NOTE: Prior share counts (12M-18M) were completely fabricated.
-// Actual: ~1.1M shares Dec 2024 ? ~3.2M Nov 2025 via warrant exercises
-// TAO holdings started Jun 2025 with $8M purchase per 10-Q
+// Actual: ~1.1M shares Dec 2024 → ~3.2M Nov 2025 via warrant exercises
+// TAO holdings started Q2 2025 ($1.65M purchases), strategy launched Jun 2025
+//
+// SOURCE VERIFICATION:
+// - Q2 10-Q (Aug 14, 2025): 5,031.28 TAO, cost $1,652K, FMV $1,683K as of Jun 30
+// - Q3 10-Q (Nov 13, 2025): 21,822.03 TAO (21,811.63 staked + 10.40 unstaked), FMV $6,613K as of Sep 30
+// - Q3 press release (Nov 13): "Grows TAO Treasury to 21,822 Tokens in Q3 2025"
+// - Nov 12 update in press release: 21,943 TAO (includes staking rewards earned Oct-Nov)
+// - 8-K Dec 11, 2025: 24,382 TAO as of Dec 10
 const TWAV_HISTORY: HoldingsSnapshot[] = [
-  // Jun 2025: Private placement, TAO treasury strategy launched
-  { date: "2025-06-30", holdings: 0, sharesOutstanding: 1_594_953, holdingsPerShare: 0, stockPrice: 404.23, source: "Pre-TAO purchase (10-Q)", sharesSource: "SEC 10-Q Q3 2025", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000746210&type=10-Q" },
-  // Sep 30, 2025: 10-Q shows $6.6M digital assets, 21,943 TAO (implied), 3.2M shares
-  { date: "2025-09-30", holdings: 21_943, sharesOutstanding: 3_207_210, holdingsPerShare: 6.84, stockPrice: 326.42, source: "SEC 10-Q Q3 2025", sharesSource: "SEC 10-Q Q3 2025 (as of Nov 10)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/0001437749-25-034612-index.html", sourceType: "sec-filing" },
-  // Dec 10, 2025: 8-K reports 24,382 TAO holdings
-  { date: "2025-12-10", holdings: 24_382, sharesOutstanding: 3_207_210, holdingsPerShare: 7.60, source: "SEC 8-K Dec 11, 2025", sharesSource: "SEC 10-Q Q3 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/0001437749-25-037490-index.html", sourceType: "sec-filing" },
+  // Mar 31, 2025: No TAO yet (Q3 10-Q rollforward: "Digital asset balance on March 31, 2025: 0")
+  { date: "2025-03-31", holdings: 0, sharesOutstanding: 1_154_737, holdingsPerShare: 0, source: "SEC 10-Q Q3 2025 rollforward: zero TAO as of Mar 31", sharesSource: "SEC 10-Q Q1 2025 XBRL: CommonStockSharesOutstanding", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/000143774925026680/oblg20250630_10q.htm" },
+  // Jun 30, 2025: 5,031.28 TAO (Q2 10-Q Note 5: cost $1,652K, FMV $1,683K, all staked)
+  { date: "2025-06-30", holdings: 5_031, sharesOutstanding: 1_594_953, holdingsPerShare: 0.003154, source: "SEC 10-Q Q2 2025 Note 5: 5,031.28 TAO, FMV $1,683K", sharesSource: "SEC 10-Q Q2 2025 XBRL: CommonStockSharesOutstanding=1,594,764 (filing uses 1,594,953)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/000143774925026680/oblg20250630_10q.htm" },
+  // Sep 30, 2025: 21,822.03 TAO (Q3 10-Q Note 5: 21,811.63 staked + 10.40 unstaked, FMV $6,613K)
+  { date: "2025-09-30", holdings: 21_822, sharesOutstanding: 3_207_210, holdingsPerShare: 0.006803, source: "SEC 10-Q Q3 2025 Note 5: 21,822.03 TAO, FMV $6,613K", sharesSource: "SEC 10-Q Q3 2025 XBRL: CommonStockSharesOutstanding=3,207,210", sourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/000143774925034612/oblg20250930_10q.htm", sourceType: "sec-filing" },
+  // Nov 12, 2025: 21,943 TAO (press release in Q3 8-K: includes staking rewards earned Oct-Nov)
+  { date: "2025-11-12", holdings: 21_943, sharesOutstanding: 3_207_210, holdingsPerShare: 0.006841, source: "SEC 8-K Nov 13, 2025 Ex99.1: 'As of November 12, 2025, Oblong holds 21,943 TAO tokens'", sharesSource: "SEC 10-Q Q3 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/000143774925034619/ex_855994.htm", sourceType: "sec-filing" },
+  // Dec 10, 2025: 24,382 TAO (8-K Dec 11: increased from 21,943 over last 30 days)
+  { date: "2025-12-10", holdings: 24_382, sharesOutstanding: 3_207_210, holdingsPerShare: 0.007602, source: "SEC 8-K Dec 11, 2025: 'increased its TAO holdings to 24,382 tokens'", sharesSource: "SEC 10-Q Q3 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/000143774925037490/twav20251210_8k.htm", sourceType: "sec-filing" },
 ];
 
 // ==================== ADDITIONAL LTC ====================
