@@ -53,6 +53,22 @@ export function applyD1Overlay(
     // on the company detail page (see getHoldingsBasis helper below).
     const holdingsBasis: HoldingsBasis = hasNative ? 'native_units' : 'static_fallback';
 
+    // Warn when D1 values diverge significantly from static (>50% = likely stale XBRL)
+    const divergenceChecks: [string, number | undefined, number | undefined][] = [
+      ['cashReserves', metrics.cash_usd, c.cashReserves],
+      ['totalDebt', metrics.debt_usd, c.totalDebt],
+      ['preferredEquity', metrics.preferred_equity_usd, c.preferredEquity],
+      ['sharesForMnav', metrics.basic_shares, c.sharesForMnav],
+    ];
+    for (const [field, d1Val, staticVal] of divergenceChecks) {
+      if (d1Val != null && staticVal != null && staticVal > 0 && d1Val > 0) {
+        const pct = Math.abs((d1Val - staticVal) / staticVal) * 100;
+        if (pct > 50) {
+          console.warn(`[d1-overlay] ${c.ticker}.${field}: D1=${d1Val} vs static=${staticVal} (${pct.toFixed(0)}% divergence)`);
+        }
+      }
+    }
+
     const overlaid: Company = {
       ...c,
       totalDebt:       metrics.debt_usd            ?? c.totalDebt,
