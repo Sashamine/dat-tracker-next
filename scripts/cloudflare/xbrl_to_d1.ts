@@ -15,6 +15,7 @@ type MetricRow = {
   method?: string;
   confidence?: number;
   flags_json?: string;
+  xbrl_concept?: string;
 };
 
 function sh(cmd: string): string {
@@ -55,13 +56,13 @@ async function main() {
 
   const rows: MetricRow[] = [];
   if (typeof x.cashAndEquivalents === 'number') {
-    rows.push({ metric: 'cash_usd', value: x.cashAndEquivalents, unit: 'USD', as_of: x.cashDate, method: 'sec_companyfacts_xbrl' });
+    rows.push({ metric: 'cash_usd', value: x.cashAndEquivalents, unit: 'USD', as_of: x.cashDate, method: 'sec_companyfacts_xbrl', xbrl_concept: x.cashConcept });
   }
   if (typeof x.totalDebt === 'number') {
-    rows.push({ metric: 'debt_usd', value: x.totalDebt, unit: 'USD', as_of: x.debtDate, method: 'sec_companyfacts_xbrl' });
+    rows.push({ metric: 'debt_usd', value: x.totalDebt, unit: 'USD', as_of: x.debtDate, method: 'sec_companyfacts_xbrl', xbrl_concept: x.debtConcept });
   }
   if (typeof x.sharesOutstanding === 'number') {
-    rows.push({ metric: 'basic_shares', value: x.sharesOutstanding, unit: 'shares', as_of: x.sharesOutstandingDate, method: 'sec_companyfacts_xbrl' });
+    rows.push({ metric: 'basic_shares', value: x.sharesOutstanding, unit: 'shares', as_of: x.sharesOutstandingDate, method: 'sec_companyfacts_xbrl', xbrl_concept: x.sharesConcept });
   }
   if (typeof x.bitcoinHoldings === 'number') {
     // note: this is USD fair value per extractor
@@ -125,11 +126,11 @@ VALUES (${q(runId)}, ${q(startedAt)}, NULL, 'manual', NULL, ${q(`xbrl_to_d1 tick
   if (!artifactId) artifactId = 'unknown';
 
   const dpValues = rows
-    .map(r => `(${q(crypto.randomUUID())}, ${q(ticker)}, ${q(r.metric)}, ${r.value}, ${q(r.unit)}, 0, ${q(r.as_of)}, ${q(r.reported_at)}, ${q(artifactId)}, ${q(runId)}, ${q(r.method || null)}, ${r.confidence ?? 1.0}, ${q(r.flags_json || null)}, ${q(new Date().toISOString())})`)
+    .map(r => `(${q(crypto.randomUUID())}, ${q(ticker)}, ${q(r.metric)}, ${r.value}, ${q(r.unit)}, 0, ${q(r.as_of)}, ${q(r.reported_at)}, ${q(artifactId)}, ${q(runId)}, ${q(r.method || null)}, ${r.confidence ?? 1.0}, ${q(r.flags_json || null)}, ${q(new Date().toISOString())}, ${q(r.xbrl_concept || null)})`)
     .join(',\n');
 
   const dpSql = rows.length
-    ? `INSERT OR IGNORE INTO datapoints (datapoint_id, entity_id, metric, value, unit, scale, as_of, reported_at, artifact_id, run_id, method, confidence, flags_json, created_at) VALUES\n${dpValues};`
+    ? `INSERT OR IGNORE INTO datapoints (datapoint_id, entity_id, metric, value, unit, scale, as_of, reported_at, artifact_id, run_id, method, confidence, flags_json, created_at, xbrl_concept) VALUES\n${dpValues};`
     : '';
 
   if (dryRun) {

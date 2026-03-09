@@ -7,6 +7,7 @@ export type { HoldingsBasis };
 export type D1MetricMap = Record<string, Record<string, number>>; // ticker -> metric -> value
 export type D1MetricSourceMap = Record<string, Record<string, string | null>>; // ticker -> metric -> source_url
 export type D1MetricDateMap = Record<string, Record<string, string | null>>; // ticker -> metric -> as_of/reported_at
+export type D1MetricQuoteMap = Record<string, Record<string, string | null>>; // ticker -> metric -> citation_quote
 
 /**
  * Pick the most recent value by comparing as_of dates.
@@ -55,7 +56,8 @@ export function applyD1Overlay(
   companies: Company[],
   d1: D1MetricMap | null,
   sources?: D1MetricSourceMap | null,
-  dates?: D1MetricDateMap | null
+  dates?: D1MetricDateMap | null,
+  quotes?: D1MetricQuoteMap | null
 ): Company[] {
   if (!d1) return companies;
 
@@ -63,6 +65,7 @@ export function applyD1Overlay(
     const metrics = d1[c.ticker];
     const sourceMap = sources?.[c.ticker];
     const dateMap = dates?.[c.ticker];
+    const quoteMap = quotes?.[c.ticker];
     if (!metrics) return c;
 
     // Date-aware picks: use whichever source (D1 or static) is more recent
@@ -121,16 +124,21 @@ export function applyD1Overlay(
       cashAsOf:        cash.isD1 ? (dateMap?.cash_usd ?? c.cashAsOf) : c.cashAsOf,
       _staticCashAsOf: c.cashAsOf,  // Preserve original source date for staleness checks (D1 backfill can stamp carry-forward dates)
       preferredAsOf:   pref.isD1 ? (dateMap?.preferred_equity_usd ?? c.preferredAsOf) : c.preferredAsOf,
-      // Prefer D1 receipt URLs where the metric was sourced from D1.
+      // Prefer D1 receipt URLs and citation quotes where the metric was sourced from D1.
       sharesSourceUrl:   shares.isD1 ? (sourceMap?.basic_shares ?? c.sharesSourceUrl) : c.sharesSourceUrl,
+      sharesSourceQuote: shares.isD1 ? (quoteMap?.basic_shares ?? c.sharesSourceQuote) : c.sharesSourceQuote,
       debtSourceUrl:     debt.isD1 ? (sourceMap?.debt_usd ?? c.debtSourceUrl) : c.debtSourceUrl,
+      debtSourceQuote:   debt.isD1 ? (quoteMap?.debt_usd ?? c.debtSourceQuote) : c.debtSourceQuote,
       cashSourceUrl:     cash.isD1 ? (sourceMap?.cash_usd ?? c.cashSourceUrl) : c.cashSourceUrl,
+      cashSourceQuote:   cash.isD1 ? (quoteMap?.cash_usd ?? c.cashSourceQuote) : c.cashSourceQuote,
       preferredSourceUrl: pref.isD1 ? (sourceMap?.preferred_equity_usd ?? c.preferredSourceUrl) : c.preferredSourceUrl,
+      preferredSourceQuote: pref.isD1 ? (quoteMap?.preferred_equity_usd ?? c.preferredSourceQuote) : c.preferredSourceQuote,
       ...(holdings.isD1 ? { holdings: holdings.value } : {}),
       ...(holdings.isD1
         ? {
             holdingsSourceUrl: sourceMap?.holdings_native ?? c.holdingsSourceUrl,
             holdingsLastUpdated: dateMap?.holdings_native ?? c.holdingsLastUpdated,
+            sourceQuote: quoteMap?.holdings_native ?? c.sourceQuote,
           }
         : {}),
       // Overlay metadata (typed on Company interface)

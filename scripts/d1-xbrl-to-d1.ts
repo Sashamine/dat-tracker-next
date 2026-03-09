@@ -40,6 +40,7 @@ type MetricRow = {
   method: 'sec_companyfacts_xbrl';
   confidence: number;
   flags_json: string | null;
+  xbrl_concept: string | null;
 };
 
 type ExistingProposalRow = {
@@ -224,10 +225,13 @@ async function main() {
           filingDate?: string | null;
           cashAndEquivalents?: number | null;
           cashDate?: string | null;
+          cashConcept?: string | null;
           totalDebt?: number | null;
           debtDate?: string | null;
+          debtConcept?: string | null;
           sharesOutstanding?: number | null;
           sharesOutstandingDate?: string | null;
+          sharesConcept?: string | null;
           bitcoinHoldings?: number | null;
           bitcoinHoldingsNative?: number | null;
           bitcoinHoldingsNativeUnit?: string | null;
@@ -237,8 +241,10 @@ async function main() {
           bitcoinHoldingsDate?: string | null;
           preferredEquity?: number | null;
           preferredEquityDate?: string | null;
+          preferredEquityConcept?: string | null;
           restrictedCash?: number | null;
           restrictedCashDate?: string | null;
+          restrictedCashConcept?: string | null;
           otherInvestments?: number | null;
           otherInvestmentsDate?: string | null;
         }
@@ -272,6 +278,7 @@ async function main() {
         method: 'sec_companyfacts_xbrl',
         confidence: 1.0,
         flags_json: null,
+        xbrl_concept: x.cashConcept || null,
       });
     }
 
@@ -285,6 +292,7 @@ async function main() {
         method: 'sec_companyfacts_xbrl',
         confidence: 1.0,
         flags_json: null,
+        xbrl_concept: x.debtConcept || null,
       });
     }
 
@@ -298,6 +306,7 @@ async function main() {
         method: 'sec_companyfacts_xbrl',
         confidence: 1.0,
         flags_json: null,
+        xbrl_concept: x.restrictedCashConcept || null,
       });
     }
 
@@ -311,6 +320,7 @@ async function main() {
         method: 'sec_companyfacts_xbrl',
         confidence: 1.0,
         flags_json: null,
+        xbrl_concept: x.preferredEquityConcept || null,
       });
     }
 
@@ -324,6 +334,7 @@ async function main() {
         method: 'sec_companyfacts_xbrl',
         confidence: 1.0,
         flags_json: null,
+        xbrl_concept: null,
       });
     }
 
@@ -337,6 +348,7 @@ async function main() {
         method: 'sec_companyfacts_xbrl',
         confidence: 1.0,
         flags_json: null,
+        xbrl_concept: x.sharesConcept || null,
       });
     }
 
@@ -350,6 +362,7 @@ async function main() {
         method: 'sec_companyfacts_xbrl',
         confidence: 1.0,
         flags_json: null,
+        xbrl_concept: null,
       });
     }
 
@@ -385,6 +398,7 @@ async function main() {
         method: 'sec_companyfacts_xbrl',
         confidence: 1.0,
         flags_json: nativeFlags,
+        xbrl_concept: x.bitcoinHoldingsNativeConcept || null,
       });
     }
 
@@ -529,8 +543,8 @@ async function main() {
              datapoint_id, entity_id, metric, value, unit, scale,
              as_of, reported_at, artifact_id, run_id,
              method, confidence, flags_json, confidence_details_json, status,
-             proposal_key, created_at
-           ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+             proposal_key, created_at, xbrl_concept
+           ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
            ON CONFLICT(proposal_key) DO UPDATE SET
              value = excluded.value,
              unit = excluded.unit,
@@ -543,7 +557,8 @@ async function main() {
              confidence = excluded.confidence,
              flags_json = excluded.flags_json,
              confidence_details_json = excluded.confidence_details_json,
-             status = excluded.status;`,
+             status = excluded.status,
+             xbrl_concept = excluded.xbrl_concept;`,
           [
             crypto.randomUUID(),
             ticker,
@@ -562,6 +577,7 @@ async function main() {
             incoming.status,
             proposalKey,
             new Date().toISOString(),
+            r.xbrl_concept,
           ]
         );
 

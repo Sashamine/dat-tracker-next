@@ -13,6 +13,7 @@
 import crypto from 'node:crypto';
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 import OpenAI from 'openai';
+import { extractSearchSnippet as extractCitationSnippet } from '../src/lib/utils/citation';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const pdfjsLib = require('pdfjs-dist/legacy/build/pdf.mjs');
@@ -411,6 +412,10 @@ async function main() {
           continue;
         }
 
+        // Compute citation search snippet from the validated quote
+        const citationQuote = p.quote || null;
+        const citationSearchTerm = citationQuote ? extractCitationSnippet(citationQuote) : null;
+
         const incoming = {
           value: p.value,
           unit: p.unit,
@@ -424,6 +429,8 @@ async function main() {
           flags_json: null as string | null,
           confidence_details_json: null as string | null,
           status: 'candidate',
+          citation_quote: citationQuote,
+          citation_search_term: citationSearchTerm,
         };
 
         await d1.query(
@@ -431,8 +438,8 @@ async function main() {
              datapoint_id, entity_id, metric, value, unit, scale,
              as_of, reported_at, artifact_id, run_id,
              method, confidence, flags_json, confidence_details_json, status,
-             proposal_key, created_at
-           ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+             proposal_key, created_at, citation_quote, citation_search_term
+           ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
            ON CONFLICT(proposal_key) DO UPDATE SET
              value = excluded.value,
              unit = excluded.unit,
@@ -445,7 +452,9 @@ async function main() {
              confidence = excluded.confidence,
              flags_json = excluded.flags_json,
              confidence_details_json = excluded.confidence_details_json,
-             status = excluded.status;`,
+             status = excluded.status,
+             citation_quote = excluded.citation_quote,
+             citation_search_term = excluded.citation_search_term;`,
           [
             crypto.randomUUID(),
             ticker,
@@ -464,6 +473,8 @@ async function main() {
             incoming.status,
             proposalKey,
             new Date().toISOString(),
+            incoming.citation_quote,
+            incoming.citation_search_term,
           ]
         );
 

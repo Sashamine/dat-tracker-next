@@ -169,16 +169,21 @@ export interface XBRLExtractionResult {
   sharesOutstanding?: number;
   sharesOutstandingDate?: string;
   sharesSource?: string;
+  sharesConcept?: string;
 
   // Balance sheet
   totalDebt?: number;
   debtDate?: string;
+  debtConcept?: string;
   cashAndEquivalents?: number;
   cashDate?: string;
+  cashConcept?: string;
   restrictedCash?: number;
   restrictedCashDate?: string;
+  restrictedCashConcept?: string;
   preferredEquity?: number;
   preferredEquityDate?: string;
+  preferredEquityConcept?: string;
   otherInvestments?: number;
   otherInvestmentsDate?: string;
 
@@ -293,8 +298,8 @@ function findMostRecentValue(
   conceptNames: string[],
   preferredForms: string[] = ['10-K', '10-Q'],
   unitPreference: string[] = ['USD', 'BTC', 'shares', 'pure']
-): { value: number; date: string; form: string; accn: string; unit: string } | null {
-  let bestMatch: { value: number; date: string; form: string; accn: string; filed: string; unit: string } | null = null;
+): { value: number; date: string; form: string; accn: string; unit: string; conceptName?: string } | null {
+  let bestMatch: { value: number; date: string; form: string; accn: string; filed: string; unit: string; conceptName: string } | null = null;
 
   for (const conceptName of conceptNames) {
     // Parse namespace and concept
@@ -336,6 +341,7 @@ function findMostRecentValue(
             accn: entry.accn,
             filed: entry.filed,
             unit: unitKey,
+            conceptName,
           };
 
           // If we found a preferred form, stop searching
@@ -370,6 +376,7 @@ function findMostRecentValue(
     form: bestMatch.form,
     accn: bestMatch.accn,
     unit: bestMatch.unit,
+    conceptName: bestMatch.conceptName,
   };
 }
 
@@ -677,6 +684,7 @@ export async function extractXBRLData(ticker: string): Promise<XBRLExtractionRes
     result.sharesOutstanding = sharesData.value;
     result.sharesOutstandingDate = sharesData.date;
     result.sharesSource = sharesData.accn;
+    result.sharesConcept = sharesData.conceptName;
   }
 
   // Extract debt
@@ -684,6 +692,7 @@ export async function extractXBRLData(ticker: string): Promise<XBRLExtractionRes
   if (debtData) {
     result.totalDebt = debtData.value;
     result.debtDate = debtData.date;
+    result.debtConcept = debtData.conceptName;
   }
 
   // Extract cash
@@ -691,6 +700,7 @@ export async function extractXBRLData(ticker: string): Promise<XBRLExtractionRes
   if (cashData) {
     result.cashAndEquivalents = cashData.value;
     result.cashDate = cashData.date;
+    result.cashConcept = cashData.conceptName;
   }
 
   // Extract restricted cash (when available)
@@ -698,6 +708,7 @@ export async function extractXBRLData(ticker: string): Promise<XBRLExtractionRes
   if (restrictedCashData) {
     result.restrictedCash = restrictedCashData.value;
     result.restrictedCashDate = restrictedCashData.date;
+    result.restrictedCashConcept = restrictedCashData.conceptName;
   }
 
   // Extract preferred equity / mezzanine equity (when available)
@@ -705,6 +716,7 @@ export async function extractXBRLData(ticker: string): Promise<XBRLExtractionRes
   if (preferredEquityData) {
     result.preferredEquity = preferredEquityData.value;
     result.preferredEquityDate = preferredEquityData.date;
+    result.preferredEquityConcept = preferredEquityData.conceptName;
   }
 
   // Extract other investments (short-term investments / marketable securities)
