@@ -2385,19 +2385,50 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   ],
 
   // TWAV (TaoWeave, fka Oblong) - TAO treasury company
-  // Verified 2026-02-01 via SEC XBRL (CIK 746210)
+  // Verified 2026-03-09 via SEC 10-Q Q3 2025 (CIK 746210)
   // Ticker changed from OBLG to TWAV Dec 2025
-  // Warrants from Q1 2025 10-Q filing
+  // Pre-Funded Warrants (706,261 @ $0.0001) added to sharesForMnav — essentially shares
+  // Complex warrant structure from 2023 Private Placement + 2025 Private Placement
   TWAV: [
     {
       type: "warrant",
-      strikePrice: 1.72,  // ClassOfWarrantOrRightExercisePriceOfWarrantsOrRights1 @ 2024-03-31
-      potentialShares: 2_262_203,  // ClassOfWarrantOrRightOutstanding @ 2025-03-31
-      source: "SEC 10-Q Q1 2025",
-      sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=746210&type=10-Q",
-      expiration: "2026-06-28",  // Estimated - verify from 10-Q
-      issuedDate: "2021-06-28",
-      notes: "Legacy warrants from pre-TAO era. Slightly OTM at ~$1.65 stock price.",
+      strikePrice: 3.41,  // Post-reverse-split adjusted price (Make Whole Provision)
+      potentialShares: 1_902_997,  // Common Warrants + 2023 Placement Agent Warrants
+      source: "SEC 10-Q Q3 2025 Note 7: Warrants",
+      sourceUrl: "/filings/twav/0001437749-25-034612",
+      expiration: "2028-03-31",  // 5-year term from Mar 2023 issuance
+      issuedDate: "2023-03-31",
+      notes: "Common Warrants ($3.41) from 2023 Private Placement. 521,725 exercised in 9mo ended Sep 30, 2025.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 4.71,
+      potentialShares: 99_470,
+      source: "SEC 10-Q Q3 2025 Note 7: 2025 Placement Agent Warrants",
+      sourceUrl: "/filings/twav/0001437749-25-034612",
+      expiration: "2030-06-04",  // 5-year term from Jun 2025
+      issuedDate: "2025-06-04",
+      notes: "2025 Placement Agent Warrants @ $4.71.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 3.77,
+      potentialShares: 100_000,
+      source: "SEC 10-Q Q3 2025 Note 7: Advisor Warrants",
+      sourceUrl: "/filings/twav/0001437749-25-034612",
+      expiration: "2030-06-05",  // 5-year term from Jun 2025
+      issuedDate: "2025-06-05",
+      notes: "Advisor Warrants @ $3.77 from 2025 Private Placement.",
+    },
+    {
+      type: "warrant",
+      strikePrice: 3.77,
+      potentialShares: 8_097_347,  // Maximum if all Preferred Warrants exercised + converted
+      source: "SEC 10-Q Q3 2025 Note 7: max dilution scenario",
+      sourceUrl: "/filings/twav/0001437749-25-034612",
+      expiration: "2028-03-31",  // 5-year from preferred warrant issuance
+      issuedDate: "2023-03-31",
+      notes: "CONDITIONAL: Common Warrants issued upon exercise of Preferred Warrants → Series F conversion. Requires $975/share preferred warrant exercise + conversion at $3.77. 150 Series F Preferred outstanding as of Sep 30, 2025.",
     },
   ],
 

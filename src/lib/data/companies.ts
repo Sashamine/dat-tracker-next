@@ -2628,7 +2628,7 @@ export const taoCompanies: Company[] = [
     capitalRaisedAtm: 7_500_000,
     capitalRaisedAtmSource: "SEC S-3 shelf registration",
     capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000746210&type=S-3",
-    sharesForMnav: 3_207_210,  // SEC 10-Q Nov 13, 2025 (as of Nov 10, 2025)
+    sharesForMnav: 3_913_471,  // 3,207,210 common (SEC 10-Q Nov 10, 2025) + 706,261 Pre-Funded Warrants @ $0.0001 (essentially shares)
     sharesSourceUrl: "/filings/twav/0001437749-25-034612",
     sharesAsOf: "2025-11-10",
     sharesSource: "SEC 10-Q Q3 2025 (filed Nov 13, 2025)",
@@ -2649,7 +2649,7 @@ export const taoCompanies: Company[] = [
     investorRelationsUrl: "https://taoweave.com/investor-relations",
     leader: "Peter Holst (President & CEO)",
     strategy: "Decentralized AI treasury strategy via TAO accumulation",
-    notes: "Nasdaq: TWAV (changed from OBLG Dec 2025). 100% staked with BitGo. ~2.3M warrants @ $1.72. Audit note 2026-03-05: shares anchor date normalized to Dec 10, 2025 checkpoint to match canonical D1 latest metadata.",
+    notes: "Nasdaq: TWAV (changed from OBLG Dec 2025). 100% staked with BitGo. 706K pre-funded warrants ($0.0001) in sharesForMnav. ~2M common warrants @ $3.41, up to 8.1M conditional warrants @ $3.77 (from preferred exercises). Audit note 2026-03-05: shares anchor date normalized to Dec 10, 2025 checkpoint to match canonical D1 latest metadata.",
   },
 ];
 
