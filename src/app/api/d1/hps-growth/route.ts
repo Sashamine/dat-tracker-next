@@ -80,11 +80,11 @@ export async function GET() {
         s.shares
       FROM datapoints h
       INNER JOIN (
-        SELECT entity_id, as_of, MAX(value) AS shares
+        SELECT entity_id, as_of, value AS shares,
+               ROW_NUMBER() OVER (PARTITION BY entity_id, as_of ORDER BY created_at DESC) AS rn
         FROM datapoints
         WHERE metric = 'basic_shares' AND as_of IS NOT NULL AND value > 0
-        GROUP BY entity_id, as_of
-      ) s ON h.entity_id = s.entity_id AND h.as_of = s.as_of
+      ) s ON h.entity_id = s.entity_id AND h.as_of = s.as_of AND s.rn = 1
       WHERE h.metric = 'holdings_native' AND h.as_of IS NOT NULL AND h.value > 0
       ORDER BY h.entity_id ASC, h.as_of ASC
     `;
