@@ -1,4 +1,5 @@
 import { Company, type HoldingsBasis } from '@/lib/types';
+import { getBaseIncludedShares } from '@/lib/data/dilutive-instruments';
 
 // Re-export so existing `import { HoldingsBasis } from '@/lib/d1-overlay'` continues to work.
 export type { HoldingsBasis };
@@ -68,7 +69,14 @@ export function applyD1Overlay(
     const debt = pickNewest(metrics.debt_usd, dateMap?.debt_usd, c.totalDebt, c.debtAsOf);
     const cash = pickNewest(metrics.cash_usd, dateMap?.cash_usd, c.cashReserves, c.cashAsOf);
     const pref = pickNewest(metrics.preferred_equity_usd, dateMap?.preferred_equity_usd, c.preferredEquity, c.preferredAsOf);
-    const shares = pickNewest(metrics.basic_shares, dateMap?.basic_shares, c.sharesForMnav, c.sharesAsOf);
+    const sharesRaw = pickNewest(metrics.basic_shares, dateMap?.basic_shares, c.sharesForMnav, c.sharesAsOf);
+    // When D1 wins for shares, add back pre-funded warrant shares that are
+    // included in static sharesForMnav but missing from D1 basic_shares
+    // (D1 only tracks SEC XBRL CommonStockSharesOutstanding = common stock).
+    const pfwShares = sharesRaw.isD1 ? getBaseIncludedShares(c.ticker) : 0;
+    const shares = pfwShares > 0
+      ? { value: (sharesRaw.value ?? 0) + pfwShares, isD1: true }
+      : sharesRaw;
 
     // Holdings: D1 must be positive to override
     const d1HoldingsNative = (metrics.holdings_native != null && metrics.holdings_native > 0)
