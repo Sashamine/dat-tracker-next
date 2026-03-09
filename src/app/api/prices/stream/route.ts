@@ -174,9 +174,18 @@ async function fetchCryptoPrices(): Promise<Record<string, { price: number; chan
       console.error("CoinGecko fill fetch error:", error);
     }
 
-    // If fill fails, still return Kraken data rather than empty.
-    geckoCache = { data: krakenData, timestamp: Date.now() };
-    return krakenData;
+    // If CoinGecko fill fails, merge previous cached prices for missing symbols
+    // so HYPE/BNB/TRX/ZEC/HBAR don't disappear.
+    const merged = { ...krakenData };
+    if (geckoCache?.data) {
+      for (const symbol of missingFromKraken) {
+        if (geckoCache.data[symbol] && geckoCache.data[symbol].price > 0) {
+          merged[symbol] = geckoCache.data[symbol];
+        }
+      }
+    }
+    geckoCache = { data: merged, timestamp: Date.now() };
+    return merged;
   }
 
   // Fall back to CoinGecko if Kraken fails
