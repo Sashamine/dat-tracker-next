@@ -91,6 +91,28 @@ export function getCompanyAhpsMetrics({
   if (history && history.length >= 2) {
     const now = new Date();
     const ninetyDaysAgo = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+
+    // Don't count the PIPE agreement: use datStartDate as the earliest valid baseline.
+    // PIPE capital hits the balance sheet immediately, so the first post-datStartDate
+    // snapshot is the true starting point. Growth before that is PIPE deployment, not
+    // organic premium harvesting.
+    const datStart = company.datStartDate ? new Date(company.datStartDate) : null;
+
+    if (datStart && ninetyDaysAgo < datStart) {
+      return {
+        currentAhps: current.ahps,
+        ahpsGrowth90d: null,
+        ahpsGrowth90dAnnualized: null,
+        method,
+        usesAdjustedShares: current.adjusted,
+        basicShares,
+        dilutedShares: current.diluted,
+        notes: current.adjusted
+          ? `Dilution-adjusted (${dilutiveInstruments[ticker]?.length ?? 0} instruments tracked). Basic: ${basicShares.toLocaleString()}, diluted: ${current.diluted.toLocaleString()}.`
+          : "AHPS growth not yet available — less than 90 days since DAT strategy started.",
+      };
+    }
+
     const snapshot90d = findSnapshotOnOrBefore(history, ninetyDaysAgo, {
       getDate: (snapshot) => snapshot.date,
       // No maxLagDays: carry-forward is correct. A baseline from 6 months ago
