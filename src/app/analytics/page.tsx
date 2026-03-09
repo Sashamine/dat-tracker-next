@@ -467,10 +467,10 @@ function AnalyticsContent() {
   }, [companiesData]);
 
   const tickers = useMemo(() => allCompanies.map((company) => company.ticker), [allCompanies]);
-  const { data: d1Data, sources: d1Sources, dates: d1Dates } = useD1Fundamentals(tickers);
+  const { data: d1Data, sources: d1Sources, dates: d1Dates, quotes: d1Quotes } = useD1Fundamentals(tickers);
   const d1AllCompanies = useMemo(
-    () => applyD1Overlay(allCompanies, d1Data, d1Sources, d1Dates),
-    [allCompanies, d1Data, d1Sources, d1Dates]
+    () => applyD1Overlay(allCompanies, d1Data, d1Sources, d1Dates, d1Quotes),
+    [allCompanies, d1Data, d1Sources, d1Dates, d1Quotes]
   );
 
   const companies = useMemo(() => {

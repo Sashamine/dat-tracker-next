@@ -91,6 +91,9 @@ export type LatestDatapointRow = {
   confidence: number | null;
   flags_json: string | null;
   created_at: string;
+  citation_quote: string | null;
+  citation_search_term: string | null;
+  xbrl_concept: string | null;
   artifact?: {
     source_url: string | null;
     accession: string | null;
@@ -119,6 +122,9 @@ export type DatapointHistoryRow = {
   confidence: number | null;
   flags_json: string | null;
   created_at: string;
+  citation_quote: string | null;
+  citation_search_term: string | null;
+  xbrl_concept: string | null;
   artifact?: {
     source_url: string | null;
     accession: string | null;
@@ -146,6 +152,7 @@ export async function getLatestMetrics(
       d.datapoint_id, d.entity_id, d.metric, d.value, d.unit, d.scale,
       d.as_of, d.reported_at, d.artifact_id, d.run_id, d.method, d.confidence,
       d.flags_json, d.created_at,
+      d.citation_quote, d.citation_search_term, d.xbrl_concept,
       a.source_url AS artifact_source_url,
       a.accession AS artifact_accession,
       a.source_type AS artifact_source_type
@@ -173,6 +180,9 @@ export async function getLatestMetrics(
     confidence: r.confidence,
     flags_json: r.flags_json,
     created_at: r.created_at,
+    citation_quote: r.citation_quote ?? null,
+    citation_search_term: r.citation_search_term ?? null,
+    xbrl_concept: r.xbrl_concept ?? null,
     artifact: {
       source_url: r.artifact_source_url ?? null,
       accession: r.artifact_accession ?? null,
@@ -202,6 +212,7 @@ export async function getMetricHistory(
       d.datapoint_id, d.entity_id, d.metric, d.value, d.unit, d.scale,
       d.as_of, d.reported_at, d.artifact_id, d.run_id, d.method, d.confidence,
       d.flags_json, d.created_at,
+      d.citation_quote, d.citation_search_term, d.xbrl_concept,
       a.source_url AS artifact_source_url,
       a.accession AS artifact_accession,
       a.source_type AS artifact_source_type
@@ -217,7 +228,8 @@ export async function getMetricHistory(
     SELECT
       datapoint_id, entity_id, metric, value, unit, scale,
       as_of, reported_at, artifact_id, run_id, method, confidence,
-      flags_json, created_at
+      flags_json, created_at,
+      citation_quote, citation_search_term, xbrl_concept
     FROM datapoints
     WHERE entity_id = ?
       AND metric = ?
@@ -243,6 +255,9 @@ export async function getMetricHistory(
     confidence: r.confidence,
     flags_json: r.flags_json,
     created_at: r.created_at,
+    citation_quote: r.citation_quote ?? null,
+    citation_search_term: r.citation_search_term ?? null,
+    xbrl_concept: r.xbrl_concept ?? null,
     artifact: includeArtifacts
       ? {
           source_url: r.artifact_source_url ?? null,

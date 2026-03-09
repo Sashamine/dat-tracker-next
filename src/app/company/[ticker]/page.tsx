@@ -186,10 +186,10 @@ export default function CompanyPage() {
 
   // D1-first overlay for allCompanies — same pattern as overview pages
   const allTickers = useMemo(() => enrichedAllCompanies.map(c => c.ticker), [enrichedAllCompanies]);
-  const { data: d1BatchData, sources: d1BatchSources, dates: d1BatchDates } = useD1Fundamentals(allTickers);
+  const { data: d1BatchData, sources: d1BatchSources, dates: d1BatchDates, quotes: d1BatchQuotes } = useD1Fundamentals(allTickers);
   const allCompanies = useMemo(
-    () => applyD1Overlay(enrichedAllCompanies, d1BatchData, d1BatchSources, d1BatchDates),
-    [enrichedAllCompanies, d1BatchData, d1BatchSources, d1BatchDates]
+    () => applyD1Overlay(enrichedAllCompanies, d1BatchData, d1BatchSources, d1BatchDates, d1BatchQuotes),
+    [enrichedAllCompanies, d1BatchData, d1BatchSources, d1BatchDates, d1BatchQuotes]
   );
 
   // Calculate sidebar stats
