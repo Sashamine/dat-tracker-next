@@ -384,10 +384,10 @@ const ABTC_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-12-08", holdings: 4_783, sharesOutstanding: 927_604_994, holdingsPerShare: 0.00000516, source: "PR Newswire Dec 8, 2025 (SPS: 507, +17.3%)", sourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-increases-strategic-reserve-to-4-783-bitcoin-302637482.html", sourceType: "press-release" },
   { date: "2025-12-14", holdings: 5_098, sharesOutstanding: 927_604_994, holdingsPerShare: 0.00000549, source: "PR Newswire Dec 14, 2025 (Top 20 milestone)", sourceUrl: "https://www.prnewswire.com/news-releases/american-bitcoin-enters-top-20-publicly-traded-bitcoin-treasury-companies-by-holdings-302643079.html", sourceType: "press-release" },
   // Q4 quarter-end anchor from FY2025 earnings release (8-K filed Feb 26, 2026)
-  // 5,401 / 927,604,994 = 0.00000582 BTC/share (~582 sats)
-  { date: "2025-12-31", holdings: 5_401, sharesOutstanding: 927_604_994, holdingsPerShare: 0.00000582, source: "SEC 8-K Feb 26, 2026 + Exhibit 99.1 FY2025 results", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312526073305/abtc-ex99_1.htm", methodology: "Year-end holdings disclosed in earnings release (5,401 BTC).", confidence: "high" },
-  // Mar 2026 - Eric Trump announcement, not SEC-verified
-  { date: "2026-03-04", holdings: 6_500, sharesOutstanding: 927_604_994, holdingsPerShare: 0.00000701, source: "Eric Trump announcement via Bitcoin Magazine (Mar 4, 2026)", sourceType: "press-release", sourceUrl: "https://bitcoinmagazine.com/business/eric-trump-american-bitcoin-reserves-surpass-6500-btc", confidence: "medium" },
+  // SPS = 554 sats → shares = 5,401 × 100M / 554 = ~974,910,000 (Q4 ATM raised $150.5M gross proceeds)
+  { date: "2025-12-31", holdings: 5_401, sharesOutstanding: 974_910_000, holdingsPerShare: 0.00000554, source: "SEC 8-K Feb 26, 2026 + Exhibit 99.1 FY2025 results", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1755953/000119312526073305/abtc-ex99_1.htm", methodology: "Holdings: 5,401 BTC from earnings. Shares: derived from SPS=554 (5,401×100M/554=~975M). Q4 ATM $150.5M.", confidence: "high", sharesSource: "FY2025 earnings 8-K: SPS=554 implies ~975M shares" },
+  // Mar 2026 - Eric Trump announcement, not SEC-verified. Share count likely higher due to ongoing ATM.
+  { date: "2026-03-04", holdings: 6_500, sharesOutstanding: 974_910_000, holdingsPerShare: 0.00000667, source: "Eric Trump announcement via Bitcoin Magazine (Mar 4, 2026)", sourceType: "press-release", sourceUrl: "https://bitcoinmagazine.com/business/eric-trump-american-bitcoin-reserves-surpass-6500-btc", confidence: "medium", methodology: "Holdings from press release. Shares carried forward from Dec 31 (likely higher due to ATM)." },
 ];
 
 // NXTT (Next Technology Holding) removed - history of false financial reports, shareholder lawsuits
