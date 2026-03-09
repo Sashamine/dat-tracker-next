@@ -691,7 +691,8 @@ const CWD_HISTORY: HoldingsSnapshot[] = [
 // NOTE: Jan 2026 8-K shows actual holdings of 108M SUI, correcting earlier estimates
 // BACKFILLED: Pre-PIPE entries now use XBRL basic shares (~6.4M). Post-PIPE entries use actual share counts.
 // HPS discontinuity is expected: pre-PIPE float was tiny (~6M shares) vs post-PIPE (~80-83M shares).
-// Jan 2026 "fully adjusted shares" (80.9M) includes pre-funded warrants and reflects 7.8M buyback in Q4 2025.
+// FY2025 10-K: 76,802,872 common + 4,093,682 PFW = 80,896,554 fully adjusted (Feb 23, 2026)
+// 8.1M shares bought back in FY2025 ($18.9M). $50M buyback program ~$33M remaining.
 //   SEC CIK: 1425355 | Search: https://www.sec.gov/edgar/browse/?CIK=0001425355
 const SUIG_HISTORY: HoldingsSnapshot[] = [
   // Pre-PIPE entries use XBRL basic common shares (~6.4M). PIPE closed Jul 31, 2025 → massive share increase.
@@ -703,10 +704,14 @@ const SUIG_HISTORY: HoldingsSnapshot[] = [
   // Sep 30: 10-Q says "106 million SUI tokens". Shares from XBRL CommonStockSharesOutstanding = 83,068,868.
   // NOTE: Uses basic common shares (pre reverse-split/restructure methodology). See Jan 2026 entry for "fully adjusted" methodology.
   { date: "2025-09-30", holdings: 106_000_000, sharesOutstanding: 83_068_868, holdingsPerShare: 1.276, stockPrice: 326.42, source: "Q3 2025 10-Q (XBRL: CommonStockSharesOutstanding)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495425012949/mcvt_10q.htm", sourceType: "sec-filing" },
-  // Jan 2026: Methodology shift — "fully adjusted shares" = common stock post-buyback + pre-funded warrants (~5.6M PFW shares).
+  // Dec 31: FY2025 10-K — 105M SUI in treasury + 3M loaned = ~108M total. Common: 76,802,872. Cash: $21.9M.
+  // Buybacks: 8,077,337 shares for $18.9M in FY2025. Authorized shares increased to 2B.
+  { date: "2025-12-31", holdings: 108_000_000, sharesOutstanding: 80_896_554, holdingsPerShare: 1.335, source: "SEC 10-K FY2025 (filed Feb 27, 2026): '105 million SUI tokens in our treasury...loaned an additional 3 million SUI tokens'", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495426001672/suig_10k.htm", sourceType: "sec-filing", methodology: "Holdings: 10-K ~108M (105M treasury + 3M loaned). Shares: 76,802,872 common (XBRL) + 4,093,682 PFW = 80,896,554 fully adjusted.", sharesSource: "10-K XBRL CommonStockSharesOutstanding + PFW derivation from MD&A '80,896,554 fully adjusted'" },
+  // Jan 2026: Methodology shift — "fully adjusted shares" = common stock post-buyback + pre-funded warrants.
   // Company reports 108,098,436 SUI and 80.9M fully adjusted shares (includes 7.8M buyback in Q4 2025).
-  // This is a discontinuity from pre-Jan 2026 entries which used basic common shares only.
-  { date: "2026-01-07", holdings: 108098436, sharesOutstanding: 80_900_000, holdingsPerShare: 1.336, source: "SEC 8-K Jan 8, 2026", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000201/suig_8k.htm", sourceType: "sec-filing" },
+  { date: "2026-01-07", holdings: 108_098_436, sharesOutstanding: 80_900_000, holdingsPerShare: 1.336, source: "SEC 8-K Jan 8, 2026", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1425355/000165495426000201/suig_8k.htm", sourceType: "sec-filing" },
+  // Feb 23: Latest treasury update. Fully adjusted shares from 10-K MD&A.
+  { date: "2026-02-23", holdings: 108_368_594, sharesOutstanding: 80_896_554, holdingsPerShare: 1.340, source: "SEC 8-K Feb 23, 2026 treasury update + 10-K MD&A fully adjusted shares", sourceUrl: "/filings/suig/0001654954-26-001610", sourceType: "sec-filing", methodology: "Holdings from 8-K. Shares: 10-K MD&A '80,896,554 fully adjusted shares...as of February 23, 2026'", sharesSource: "10-K FY2025 MD&A" },
 ];
 
 // AVAX One (AVX) - AVAX treasury (formerly AgriFORCE, pivoted Nov 2025)
