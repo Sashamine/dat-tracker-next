@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { D1Client } from '@/lib/d1';
 import { allCompanies } from '@/lib/data/companies';
-import { findSnapshotOnOrBefore, GROWTH_LOOKBACK_GRACE_DAYS } from '@/lib/utils/growth-snapshots';
+import { findSnapshotOnOrBefore } from '@/lib/utils/growth-snapshots';
 
 /**
  * GET /api/d1/hps-growth
@@ -154,18 +154,18 @@ export async function GET() {
       const latest = snapshots[snapshots.length - 1];
       const currentHps = latest.holdings / latest.shares;
 
-      // Find closest snapshot on or before each target date
+      // Find closest snapshot on or before each target date.
+      // No maxLagDays: carry-forward is correct. If nothing changed since
+      // a snapshot 6 months ago, the state entering the window was still X.
+      // Growth should show 0%, not "no data".
       const snapshot30d = findSnapshotOnOrBefore(snapshots.slice(0, -1), new Date(`${d30}T00:00:00Z`), {
         getDate: (snapshot) => snapshot.as_of,
-        maxLagDays: GROWTH_LOOKBACK_GRACE_DAYS[30],
       });
       const snapshot90d = findSnapshotOnOrBefore(snapshots.slice(0, -1), new Date(`${d90}T00:00:00Z`), {
         getDate: (snapshot) => snapshot.as_of,
-        maxLagDays: GROWTH_LOOKBACK_GRACE_DAYS[90],
       });
       const snapshot1y = findSnapshotOnOrBefore(snapshots.slice(0, -1), new Date(`${d1y}T00:00:00Z`), {
         getDate: (snapshot) => snapshot.as_of,
-        maxLagDays: GROWTH_LOOKBACK_GRACE_DAYS[365],
       });
       const hps30dAgo = snapshot30d ? snapshot30d.holdings / snapshot30d.shares : null;
       const hps90dAgo = snapshot90d ? snapshot90d.holdings / snapshot90d.shares : null;
