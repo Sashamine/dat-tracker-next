@@ -2306,6 +2306,16 @@ export const hypeCompanies: Company[] = [
     cashSourceUrl: "/filings/purr/0001193125-26-045553",
     cashAsOf: "2026-02-03",
     totalDebt: 0,
+    preferredEquity: 2000,
+    preferredAsOf: "2025-12-31",
+    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/2078856/000119312526045901/",
+    dataWarnings: [
+      {
+        type: "stale-data",
+        message: "Balance sheet data may be stale (preferred as-of 2025-12-31).",
+        severity: "warning",
+      },
+    ],
     debtSource: "SEC 8-K Feb 11, 2026 balance sheet: $0 debt",
     debtSourceQuote: "SEC 8-K Feb 11, 2026 balance sheet: $0 debt",
     debtSourceUrl: "/filings/purr/0001193125-26-045553",

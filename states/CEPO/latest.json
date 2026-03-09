@@ -3,7 +3,7 @@
   "ticker": "CEPO",
   "secCik": "0002027708",
   "asOf": "2025-12-31",
-  "generatedAt": "2026-03-07T00:36:04.386Z",
+  "generatedAt": "2026-03-09T13:43:06.553Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -30,12 +30,12 @@
   "balanceSheet": {
     "cashReserves": 207000000,
     "restrictedCash": null,
-    "totalDebt": null,
+    "totalDebt": 530500000,
     "preferredEquity": null,
     "asOf": "2025-12-31",
     "source": {
       "cashSourceUrl": "/filings/cepo/0001213900-26-008287",
-      "debtSourceUrl": null,
+      "debtSourceUrl": "/filings/cepo/0001213900-25-064922",
       "preferredSourceUrl": null
     }
   },

@@ -3,7 +3,7 @@
   "ticker": "PURR",
   "secCik": "0002078856",
   "asOf": "2026-02-03",
-  "generatedAt": "2026-03-07T00:36:04.389Z",
+  "generatedAt": "2026-03-09T13:43:06.563Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -28,15 +28,15 @@
     }
   },
   "balanceSheet": {
-    "cashReserves": 281900000,
-    "restrictedCash": 281900000,
+    "cashReserves": 152400000,
+    "restrictedCash": null,
     "totalDebt": 0,
-    "preferredEquity": null,
-    "asOf": "2025-12-31",
+    "preferredEquity": 2000,
+    "asOf": "2026-02-03",
     "source": {
       "cashSourceUrl": "/filings/purr/0001193125-26-045553",
       "debtSourceUrl": "/filings/purr/0001193125-26-045553",
-      "preferredSourceUrl": null
+      "preferredSourceUrl": "https://www.sec.gov/Archives/edgar/data/2078856/000119312526045901/"
     }
   },
   "verification": {
