@@ -233,6 +233,7 @@ async function main() {
           sharesOutstandingDate?: string | null;
           sharesConcept?: string | null;
           bitcoinHoldings?: number | null;
+          bitcoinHoldingsUsdConcept?: string | null;
           bitcoinHoldingsNative?: number | null;
           bitcoinHoldingsNativeUnit?: string | null;
           bitcoinHoldingsNativeConcept?: string | null;
@@ -247,6 +248,7 @@ async function main() {
           restrictedCashConcept?: string | null;
           otherInvestments?: number | null;
           otherInvestmentsDate?: string | null;
+          otherInvestmentsConcept?: string | null;
         }
       | { success: false; error: string };
 
@@ -334,7 +336,7 @@ async function main() {
         method: 'sec_companyfacts_xbrl',
         confidence: 1.0,
         flags_json: null,
-        xbrl_concept: null,
+        xbrl_concept: x.otherInvestmentsConcept || null,
       });
     }
 
@@ -362,7 +364,7 @@ async function main() {
         method: 'sec_companyfacts_xbrl',
         confidence: 1.0,
         flags_json: null,
-        xbrl_concept: null,
+        xbrl_concept: x.bitcoinHoldingsUsdConcept || null,
       });
     }
 

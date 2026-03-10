@@ -162,6 +162,7 @@ export interface XBRLExtractionResult {
     usedPreferredFormPool: boolean;
     sortRule: string;
   };
+  bitcoinHoldingsUsdConcept?: string; // namespace:concept for USD fair value
   bitcoinHoldingsDate?: string;    // YYYY-MM-DD
   bitcoinHoldingsSource?: string;  // Filing accession number
 
@@ -186,6 +187,7 @@ export interface XBRLExtractionResult {
   preferredEquityConcept?: string;
   otherInvestments?: number;
   otherInvestmentsDate?: string;
+  otherInvestmentsConcept?: string;
 
   // Metadata
   filingType?: string;             // 10-K, 10-Q
@@ -558,7 +560,7 @@ function extractBitcoinHoldings(
   facts: SECCompanyFacts['facts'],
   ticker: string,
   unitPreference: string[] = ['USD', 'BTC', 'pure']
-): { value: number; date: string; form: string; accn: string; unit: string } | null {
+): { value: number; date: string; form: string; accn: string; unit: string; conceptName?: string } | null {
   // Get company-configured XBRL concepts (includes defaults)
   const configuredConcepts = getBitcoinConcepts(ticker);
   
@@ -644,6 +646,7 @@ export async function extractXBRLData(ticker: string): Promise<XBRLExtractionRes
     result.bitcoinHoldingsUnit = btcUsdData.unit;
     result.bitcoinHoldingsDate = btcUsdData.date;
     result.bitcoinHoldingsSource = btcUsdData.accn;
+    result.bitcoinHoldingsUsdConcept = btcUsdData.conceptName;
     result.filingType = btcUsdData.form;
     result.accessionNumber = btcUsdData.accn;
   }
@@ -724,6 +727,7 @@ export async function extractXBRLData(ticker: string): Promise<XBRLExtractionRes
   if (otherInvestmentsData) {
     result.otherInvestments = otherInvestmentsData.value;
     result.otherInvestmentsDate = otherInvestmentsData.date;
+    result.otherInvestmentsConcept = otherInvestmentsData.conceptName;
   }
 
   // Build SEC URL

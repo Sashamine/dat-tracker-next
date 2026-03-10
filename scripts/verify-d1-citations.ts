@@ -147,7 +147,9 @@ function mapXBRLResult(
     case 'holdings_native':
       return { value: x.bitcoinHoldingsNative as number | null, concept: x.bitcoinHoldingsNativeConcept as string | null, asOf: x.bitcoinHoldingsDate as string | null };
     case 'bitcoin_holdings_usd':
-      return { value: x.bitcoinHoldings as number | null, concept: null, asOf: x.bitcoinHoldingsDate as string | null };
+      return { value: x.bitcoinHoldings as number | null, concept: x.bitcoinHoldingsUsdConcept as string | null, asOf: x.bitcoinHoldingsDate as string | null };
+    case 'other_investments_usd':
+      return { value: x.otherInvestments as number | null, concept: x.otherInvestmentsConcept as string | null, asOf: x.otherInvestmentsDate as string | null };
     default:
       return { value: null, concept: null, asOf: null };
   }
