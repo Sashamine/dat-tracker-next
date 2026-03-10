@@ -1,5 +1,6 @@
 import crypto from 'node:crypto';
 import { D1Client } from '../d1';
+import { generateSecFilingCitation } from '../utils/citation';
 
 export type SecFilingHoldingsNativeWriteInput = {
   ticker: string;
@@ -431,13 +432,23 @@ export async function writeSecFilingHoldingsNativeDatapoint(
       status: 'candidate',
     };
 
+    const cite = generateSecFilingCitation({
+      metric: 'holdings_native',
+      value: input.holdingsNative,
+      unit: nativeUnit,
+      filingType: input.filingType,
+      asOf: asOf,
+      accession: accession,
+      extractionMethod: 'sec_filing_text',
+    });
+
     await d1.query(
       `INSERT INTO datapoints (
          datapoint_id, entity_id, metric, value, unit, scale,
          as_of, reported_at, artifact_id, run_id,
          method, confidence, flags_json, confidence_details_json, status,
-         proposal_key, created_at
-       ) VALUES (?, ?, 'holdings_native', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+         proposal_key, created_at, citation_quote, citation_search_term
+       ) VALUES (?, ?, 'holdings_native', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
        ON CONFLICT(proposal_key) DO UPDATE SET
          value = excluded.value,
          unit = excluded.unit,
@@ -450,7 +461,9 @@ export async function writeSecFilingHoldingsNativeDatapoint(
          confidence = excluded.confidence,
          flags_json = excluded.flags_json,
          confidence_details_json = excluded.confidence_details_json,
-         status = excluded.status;`,
+         status = excluded.status,
+         citation_quote = excluded.citation_quote,
+         citation_search_term = excluded.citation_search_term;`,
       [
         crypto.randomUUID(),
         ticker,
@@ -468,6 +481,8 @@ export async function writeSecFilingHoldingsNativeDatapoint(
         incoming.status,
         proposalKey,
         new Date().toISOString(),
+        cite.citation_quote,
+        cite.citation_search_term,
       ]
     );
 
