@@ -160,11 +160,14 @@ Remaining work from Phase 2 scope (now folded into Phase 3):
 - Every artifact should have a real, fetchable document
 - **Status: Not started**
 
-### 4b. Eliminate orphaned artifacts
-- 1,193 artifacts with no linked datapoints
-- Audit: are these duplicates of linked artifacts, or genuinely unused?
-- Either link them to datapoints or archive them
-- **Status: Not started**
+### 4b. Eliminate orphaned artifacts (DONE)
+- Audited 1,043 artifacts with no linked datapoints (was 1,193 at roadmap creation)
+- 629 sec_filing, 328 manual (R2 inventory imports with null ticker), 74 unmapped, 12 other
+- 39 were duplicates of linked artifacts (same accession); rest were genuinely unused
+- Deleted all 1,043 orphan rows from D1 (R2 files untouched)
+- Artifacts table: 1,599 → 556 (all linked, zero orphans)
+- Script: `scripts/d1-cleanup-orphaned-artifacts.ts`
+- **Status: Complete**
 
 ### 4c. Ingestion pipeline writes citations at insert time (DONE)
 - Added `generateXbrlCitation()` and `generateSecFilingCitation()` to `src/lib/utils/citation.ts`
@@ -172,10 +175,12 @@ Remaining work from Phase 2 scope (now folded into Phase 3):
 - Every new XBRL datapoint now arrives with `citation_quote`, `citation_search_term`, and `xbrl_concept`
 - **Status: Complete**
 
-### 4d. CI verification gate
-- No PR merges if verification rate drops below threshold
-- `verify-d1-citations.ts` runs in CI, blocks on regressions
-- **Status: Script exists, CI integration not done**
+### 4d. CI verification gate (DONE)
+- Lightweight `scripts/ci-verify-citations.ts` queries D1 provenance coverage (~5s)
+- `.github/workflows/verify-citations.yml` runs on PRs touching pipeline code
+- Blocks if all-time or current citation coverage drops below 100%
+- Comments on PR with uncited datapoints if gate fails
+- **Status: Complete**
 
 ### Phase 4 exit criteria
 - Zero synthetic artifacts
@@ -208,9 +213,9 @@ All datapoints are 100% cited. New datapoints arrive pre-cited. Focus shifts to 
 2. ~~**Phase 3b** (MSTR historical)~~ ✅ Done
 3. ~~**Phase 3a** (bulk historical sweep)~~ ✅ Done
 4. ~~**Phase 3c** (Metaplanet historical)~~ ✅ Done
-5. **Phase 4d** (CI verification gate) — block PRs that reduce verification rate
-6. **Phase 4a** (eliminate synthetic artifacts) — 270 artifacts with fake R2 keys
-7. **Phase 4b** (eliminate orphaned artifacts) — ~800 artifacts with no linked datapoints
+5. ~~**Phase 4d** (CI verification gate)~~ ✅ Done
+6. **Phase 4a** (eliminate synthetic artifacts) — 259 linked artifacts with fake R2 keys (GPT assigned)
+7. ~~**Phase 4b** (eliminate orphaned artifacts)~~ ✅ Done — 1,043 deleted, 0 remaining
 
 ---
 
@@ -224,5 +229,6 @@ All datapoints are 100% cited. New datapoints arrive pre-cited. Focus shifts to 
 | Current MISMATCH/errors | — | **0** | 0 | Phase 1i ✅ DONE |
 | All datapoints verified | 14.3% | **100%** | 95% | Phase 3 ✅ DONE |
 | New datapoints pre-cited | No | **Yes** | Yes | Phase 4c ✅ DONE |
-| Synthetic artifacts | 270 | ~270 | 0 | After Phase 4a |
-| Orphaned artifacts | 1,193 | ~800 | 0 | After Phase 4b |
+| Synthetic artifacts | 270 | 259 | 0 | After Phase 4a (GPT assigned) |
+| Orphaned artifacts | 1,193 | **0** | 0 | Phase 4b ✅ DONE |
+| CI citation gate | No | **Yes** | Yes | Phase 4d ✅ DONE |
