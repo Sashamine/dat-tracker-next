@@ -60,3 +60,10 @@ public/sec-content/
 # infra status (optional local scratch)
 .last-infra-ping
 infra/status-history/
+
+# Temp filing downloads (can be re-fetched)
+/.tmp-filings/
+
+# Processed SEC docs (large, local only)
+/processed-sec-docs/
+/cached-external-docs/
