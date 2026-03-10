@@ -781,7 +781,7 @@ export default function CompanyPage() {
                   </p>
                   <p className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">
                     <CitationPopover
-                      sourceUrl={displayCompany.holdingsSourceUrl}
+                      sourceUrl={holdingsSourceUrlResolved}
                       sourceLabel={displayCompany.holdingsSource}
                       sourceQuote={displayCompany.sourceQuote}
                       searchTerm={displayCompany.sourceSearchTerm}
@@ -799,7 +799,7 @@ export default function CompanyPage() {
                   <p className="text-sm text-gray-500 dark:text-gray-400">Market Cap</p>
                   <p className="text-2xl font-bold text-gray-700 dark:text-gray-300">
                     <CitationPopover
-                      sourceUrl={displayCompany.sharesSourceUrl}
+                      sourceUrl={sharesSourceUrlResolved}
                       sourceLabel={displayCompany.sharesSource}
                       sourceQuote={displayCompany.sharesSourceQuote}
                       searchTerm={displayCompany.sharesSearchTerm}
@@ -807,7 +807,7 @@ export default function CompanyPage() {
                       metric="basic_shares"
                       confidenceScore={displayCompany.confidenceScores?.['basic_shares']}
                       jurisdiction={displayCompany.jurisdiction}
-                      legacy={!displayCompany.sharesSourceUrl}
+                      legacy={!sharesSourceUrlResolved}
                     >
                       {formatLargeNumber(marketCap)}
                     </CitationPopover>
@@ -861,6 +861,8 @@ export default function CompanyPage() {
                     <CitationPopover
                       sourceUrl={cashSourceUrlResolved}
                       sourceLabel={displayCompany.cashSource}
+                      sourceQuote={displayCompany.cashSourceQuote}
+                      searchTerm={displayCompany.cashSearchTerm}
                       ticker={displayCompany.ticker}
                       metric="cash_usd"
                       confidenceScore={displayCompany.confidenceScores?.['cash_usd']}
@@ -1139,6 +1141,8 @@ export default function CompanyPage() {
                       <CitationPopover
                         sourceUrl={debtSourceUrlResolved}
                         sourceLabel={displayCompany.debtSource}
+                        sourceQuote={displayCompany.debtSourceQuote}
+                        searchTerm={displayCompany.debtSearchTerm}
                         ticker={displayCompany.ticker}
                         metric="debt_usd"
                         confidenceScore={displayCompany.confidenceScores?.['debt_usd']}
@@ -1240,8 +1244,10 @@ export default function CompanyPage() {
               <p className="text-sm text-gray-500 dark:text-gray-400">mNAV</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                 <CitationPopover
-                  sourceUrl={displayCompany.holdingsSourceUrl}
+                  sourceUrl={holdingsSourceUrlResolved}
                   sourceLabel={displayCompany.holdingsSource}
+                  sourceQuote={displayCompany.sourceQuote}
+                  searchTerm={displayCompany.sourceSearchTerm}
                   ticker={displayCompany.ticker}
                   metric="mnav"
                   confidenceScore={displayCompany.confidenceScores?.['mnav']}
@@ -1257,13 +1263,15 @@ export default function CompanyPage() {
               <p className="text-sm text-gray-500 dark:text-gray-400">Leverage</p>
               <p className={cn("text-2xl font-bold", debtToCryptoRatio >= 1 ? "text-amber-600" : "text-gray-900 dark:text-gray-100")}>
                 <CitationPopover
-                  sourceUrl={displayCompany.debtSourceUrl}
+                  sourceUrl={debtSourceUrlResolved}
                   sourceLabel={displayCompany.debtSource}
+                  sourceQuote={displayCompany.debtSourceQuote}
+                  searchTerm={displayCompany.debtSearchTerm}
                   ticker={displayCompany.ticker}
                   metric="debt_usd"
                   confidenceScore={displayCompany.confidenceScores?.['debt_usd']}
                   jurisdiction={displayCompany.jurisdiction}
-                  legacy={!displayCompany.debtSourceUrl}
+                  legacy={!debtSourceUrlResolved}
                 >
                   {debtToCryptoRatio > 0 ? `${debtToCryptoRatio.toFixed(2)}x` : "—"}
                 </CitationPopover>

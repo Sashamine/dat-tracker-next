@@ -38,9 +38,17 @@ function buildSearchRegex(searchTerm: string): RegExp {
   return new RegExp(pattern, 'gi');
 }
 
-/** Fetch document text from R2 (same prefix probe as fetch-content route) */
-async function fetchR2Doc(ticker: string, accession: string): Promise<string | null> {
+/** Fetch document text from R2 */
+async function fetchR2Doc(ticker: string, accession: string, r2Key?: string | null): Promise<string | null> {
   const lowerTicker = ticker.toLowerCase();
+
+  // Try direct r2_key first (most reliable)
+  if (r2Key && !r2Key.endsWith('.json') && !r2Key.endsWith('.pdf')) {
+    try {
+      const res = await fetch(`${R2_BASE_URL}/${r2Key}`, { signal: AbortSignal.timeout(10000) });
+      if (res.ok) return await res.text();
+    } catch {}
+  }
 
   // Try standard R2 prefixes
   for (const prefix of R2_PREFIXES) {
@@ -48,13 +56,8 @@ async function fetchR2Doc(ticker: string, accession: string): Promise<string | n
     try {
       const res = await fetch(url, { signal: AbortSignal.timeout(10000) });
       if (res.ok) return await res.text();
-    } catch {
-      // next prefix
-    }
+    } catch {}
   }
-
-  // Try external-sources with artifact_id pattern (some external docs use artifact_id as filename)
-  // These are covered by the prefix loop above since we added 'external-sources'
 
   return null;
 }
@@ -118,7 +121,8 @@ async function main() {
   // Process by accession (batch fetches)
   for (const [key, datapoints] of byAccession) {
     const [ticker, accession] = key.split('/');
-    const doc = await fetchR2Doc(ticker, accession);
+    const r2Key = datapoints[0]?.r2_key;
+    const doc = await fetchR2Doc(ticker, accession, r2Key);
 
     if (!doc) {
       for (const dp of datapoints) {
