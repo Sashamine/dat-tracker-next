@@ -15,6 +15,8 @@ type CitationPopoverProps = {
   legacy?: boolean;
   className?: string;
   sourceQuote?: string | null;
+  /** Pre-computed search term from D1 (preferred over extracting from quote) */
+  searchTerm?: string | null;
 };
 
 /**
@@ -55,6 +57,7 @@ export function CitationPopover({
   legacy = false,
   className,
   sourceQuote,
+  searchTerm,
 }: CitationPopoverProps) {
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLSpanElement | null>(null);
@@ -156,10 +159,13 @@ export function CitationPopover({
               href={(() => {
                 if (!sourceUrl) return sourceUrl;
                 // Only append ?q= for our internal filing viewer URLs
-                if (sourceQuote && isFilingViewerUrl(sourceUrl)) {
-                  const snippet = extractSearchSnippet(sourceQuote);
-                  const sep = sourceUrl.includes('?') ? '&' : '?';
-                  return `${sourceUrl}${sep}q=${encodeURIComponent(snippet)}`;
+                if (isFilingViewerUrl(sourceUrl)) {
+                  // Prefer pre-computed search term from D1, fall back to extracting from quote
+                  const snippet = searchTerm || (sourceQuote ? extractSearchSnippet(sourceQuote) : null);
+                  if (snippet) {
+                    const sep = sourceUrl.includes('?') ? '&' : '?';
+                    return `${sourceUrl}${sep}q=${encodeURIComponent(snippet)}`;
+                  }
                 }
                 return sourceUrl;
               })()}

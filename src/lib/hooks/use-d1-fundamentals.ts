@@ -4,19 +4,32 @@ type D1MetricMap = Record<string, Record<string, number>>; // ticker -> metric -
 type D1MetricSourceMap = Record<string, Record<string, string | null>>; // ticker -> metric -> source_url
 type D1MetricDateMap = Record<string, Record<string, string | null>>; // ticker -> metric -> as_of/reported_at
 type D1MetricQuoteMap = Record<string, Record<string, string | null>>; // ticker -> metric -> citation_quote
+type D1MetricSearchTermMap = Record<string, Record<string, string | null>>; // ticker -> metric -> citation_search_term
+type D1MetricAccessionMap = Record<string, Record<string, string | null>>; // ticker -> metric -> artifact accession
 
 type D1FundamentalsResult = {
   data: D1MetricMap | null;
   sources: D1MetricSourceMap | null;
   dates: D1MetricDateMap | null;
   quotes: D1MetricQuoteMap | null;
+  searchTerms: D1MetricSearchTermMap | null;
+  accessions: D1MetricAccessionMap | null;
   isLoading: boolean;
+};
+
+type D1FetchResult = {
+  values: D1MetricMap;
+  sources: D1MetricSourceMap;
+  dates: D1MetricDateMap;
+  quotes: D1MetricQuoteMap;
+  searchTerms: D1MetricSearchTermMap;
+  accessions: D1MetricAccessionMap;
 };
 
 const fetcher = async (
   url: string,
   tickers: string[]
-): Promise<{ values: D1MetricMap; sources: D1MetricSourceMap; dates: D1MetricDateMap; quotes: D1MetricQuoteMap }> => {
+): Promise<D1FetchResult> => {
   const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -32,11 +45,15 @@ const fetcher = async (
   const sources: D1MetricSourceMap = {};
   const dates: D1MetricDateMap = {};
   const quotes: D1MetricQuoteMap = {};
+  const searchTerms: D1MetricSearchTermMap = {};
+  const accessions: D1MetricAccessionMap = {};
   for (const [ticker, rows] of Object.entries(json.results)) {
     const map: Record<string, number> = {};
     const sourceMap: Record<string, string | null> = {};
     const dateMap: Record<string, string | null> = {};
     const quoteMap: Record<string, string | null> = {};
+    const searchTermMap: Record<string, string | null> = {};
+    const accessionMap: Record<string, string | null> = {};
     if (Array.isArray(rows)) {
       for (const row of rows as {
         metric: string;
@@ -44,20 +61,25 @@ const fetcher = async (
         as_of?: string | null;
         reported_at?: string | null;
         citation_quote?: string | null;
-        artifact?: { source_url: string | null };
+        citation_search_term?: string | null;
+        artifact?: { source_url: string | null; accession: string | null };
       }[]) {
         map[row.metric] = row.value;
         sourceMap[row.metric] = row.artifact?.source_url ?? null;
         dateMap[row.metric] = row.as_of ?? row.reported_at ?? null;
         quoteMap[row.metric] = row.citation_quote ?? null;
+        searchTermMap[row.metric] = row.citation_search_term ?? null;
+        accessionMap[row.metric] = row.artifact?.accession ?? null;
       }
     }
     values[ticker] = map;
     sources[ticker] = sourceMap;
     dates[ticker] = dateMap;
     quotes[ticker] = quoteMap;
+    searchTerms[ticker] = searchTermMap;
+    accessions[ticker] = accessionMap;
   }
-  return { values, sources, dates, quotes };
+  return { values, sources, dates, quotes, searchTerms, accessions };
 };
 
 /**
@@ -70,7 +92,7 @@ export function useD1Fundamentals(tickers: string[]): D1FundamentalsResult {
     ? `d1-fundamentals:${[...tickers].sort().join(',')}`
     : null;
 
-  const { data, isLoading } = useSWR<{ values: D1MetricMap; sources: D1MetricSourceMap; dates: D1MetricDateMap; quotes: D1MetricQuoteMap }>(
+  const { data, isLoading } = useSWR<D1FetchResult>(
     sortedKey,
     () => fetcher('/api/d1/latest-metrics/batch', tickers),
     {
@@ -82,5 +104,13 @@ export function useD1Fundamentals(tickers: string[]): D1FundamentalsResult {
     },
   );
 
-  return { data: data?.values ?? null, sources: data?.sources ?? null, dates: data?.dates ?? null, quotes: data?.quotes ?? null, isLoading };
+  return {
+    data: data?.values ?? null,
+    sources: data?.sources ?? null,
+    dates: data?.dates ?? null,
+    quotes: data?.quotes ?? null,
+    searchTerms: data?.searchTerms ?? null,
+    accessions: data?.accessions ?? null,
+    isLoading,
+  };
 }

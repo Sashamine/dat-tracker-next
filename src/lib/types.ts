@@ -209,6 +209,7 @@ export interface Company {
   accessionNumber?: string;        // SEC accession number (XXXXXXXXXX-YY-ZZZZZZ) for primary holdings source
   sourceType?: HoldingsSource;     // Alias for holdingsSource on citation (sec-filing, regulatory-filing, etc.)
   sourceQuote?: string;            // Verbatim quote from the cited document containing the holdings value
+  sourceSearchTerm?: string;       // Pre-computed search term for deep linking into the holdings source document
   holdingsDerived?: boolean;       // True if holdings count is calculated across multiple filings (not stated in any single doc)
   holdingsCalculation?: string;    // Human-readable calculation chain, e.g. "50,778 (Q3 10-Q) - 7,550 sold = 30,044"
   
@@ -228,24 +229,28 @@ export interface Company {
   sharesSource?: string; // e.g., "Q3 2025 10-Q", "mNAV.com", "strategy.com"
   sharesSourceUrl?: string; // Link to SEC filing or dashboard
   sharesSourceQuote?: string; // Verbatim quote from source document
+  sharesSearchTerm?: string; // Pre-computed search term for deep linking into document
 
   // Debt tracking
   debtAsOf?: string; // ISO date of debt data
   debtSource?: string; // e.g., "Q3 2025 10-Q", "strategy.com"
   debtSourceUrl?: string;
   debtSourceQuote?: string; // Verbatim quote from source document
+  debtSearchTerm?: string;
 
   // Cash tracking
   cashAsOf?: string; // ISO date of cash data
   cashSource?: string;
   cashSourceUrl?: string;
   cashSourceQuote?: string; // Verbatim quote from source document
+  cashSearchTerm?: string;
 
   // Preferred equity tracking
   preferredAsOf?: string;
   preferredSource?: string;
   preferredSourceUrl?: string;
   preferredSourceQuote?: string; // Verbatim quote from source document
+  preferredSearchTerm?: string;
   // Verification sources
   secCik?: string;              // SEC CIK number for EDGAR lookups (US companies)
   asxAnnouncementsUrl?: string; // ASX announcements/listing URL (AU tickers)

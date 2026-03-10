@@ -8,6 +8,8 @@ export type D1MetricMap = Record<string, Record<string, number>>; // ticker -> m
 export type D1MetricSourceMap = Record<string, Record<string, string | null>>; // ticker -> metric -> source_url
 export type D1MetricDateMap = Record<string, Record<string, string | null>>; // ticker -> metric -> as_of/reported_at
 export type D1MetricQuoteMap = Record<string, Record<string, string | null>>; // ticker -> metric -> citation_quote
+export type D1MetricSearchTermMap = Record<string, Record<string, string | null>>; // ticker -> metric -> citation_search_term
+export type D1MetricAccessionMap = Record<string, Record<string, string | null>>; // ticker -> metric -> artifact accession
 
 /**
  * Pick the most recent value by comparing as_of dates.
@@ -52,12 +54,30 @@ function pickNewest(
  *
  * Returns companies unchanged if d1 is null (graceful fallback).
  */
+/**
+ * Build a filing viewer URL from ticker + accession when available.
+ * Falls back to the artifact's source_url.
+ */
+function buildSourceUrl(
+  ticker: string,
+  sourceUrl: string | null | undefined,
+  accession: string | null | undefined,
+): string | null {
+  // If we have an accession, prefer the internal filing viewer (supports ?q= deep linking)
+  if (accession) {
+    return `/filings/${ticker.toLowerCase()}/${accession}`;
+  }
+  return sourceUrl ?? null;
+}
+
 export function applyD1Overlay(
   companies: Company[],
   d1: D1MetricMap | null,
   sources?: D1MetricSourceMap | null,
   dates?: D1MetricDateMap | null,
-  quotes?: D1MetricQuoteMap | null
+  quotes?: D1MetricQuoteMap | null,
+  searchTerms?: D1MetricSearchTermMap | null,
+  accessions?: D1MetricAccessionMap | null,
 ): Company[] {
   if (!d1) return companies;
 
@@ -66,6 +86,8 @@ export function applyD1Overlay(
     const sourceMap = sources?.[c.ticker];
     const dateMap = dates?.[c.ticker];
     const quoteMap = quotes?.[c.ticker];
+    const searchTermMap = searchTerms?.[c.ticker];
+    const accessionMap = accessions?.[c.ticker];
     if (!metrics) return c;
 
     // Date-aware picks: use whichever source (D1 or static) is more recent
@@ -125,20 +147,26 @@ export function applyD1Overlay(
       _staticCashAsOf: c.cashAsOf,  // Preserve original source date for staleness checks (D1 backfill can stamp carry-forward dates)
       preferredAsOf:   pref.isD1 ? (dateMap?.preferred_equity_usd ?? c.preferredAsOf) : c.preferredAsOf,
       // Prefer D1 receipt URLs and citation quotes where the metric was sourced from D1.
-      sharesSourceUrl:   shares.isD1 ? (sourceMap?.basic_shares ?? c.sharesSourceUrl) : c.sharesSourceUrl,
+      // When accession is available, build internal filing viewer URL for ?q= deep linking.
+      sharesSourceUrl:   shares.isD1 ? (buildSourceUrl(c.ticker, sourceMap?.basic_shares, accessionMap?.basic_shares) ?? c.sharesSourceUrl) : c.sharesSourceUrl,
       sharesSourceQuote: shares.isD1 ? (quoteMap?.basic_shares ?? c.sharesSourceQuote) : c.sharesSourceQuote,
-      debtSourceUrl:     debt.isD1 ? (sourceMap?.debt_usd ?? c.debtSourceUrl) : c.debtSourceUrl,
+      sharesSearchTerm:  shares.isD1 ? (searchTermMap?.basic_shares ?? c.sharesSearchTerm) : c.sharesSearchTerm,
+      debtSourceUrl:     debt.isD1 ? (buildSourceUrl(c.ticker, sourceMap?.debt_usd, accessionMap?.debt_usd) ?? c.debtSourceUrl) : c.debtSourceUrl,
       debtSourceQuote:   debt.isD1 ? (quoteMap?.debt_usd ?? c.debtSourceQuote) : c.debtSourceQuote,
-      cashSourceUrl:     cash.isD1 ? (sourceMap?.cash_usd ?? c.cashSourceUrl) : c.cashSourceUrl,
+      debtSearchTerm:    debt.isD1 ? (searchTermMap?.debt_usd ?? c.debtSearchTerm) : c.debtSearchTerm,
+      cashSourceUrl:     cash.isD1 ? (buildSourceUrl(c.ticker, sourceMap?.cash_usd, accessionMap?.cash_usd) ?? c.cashSourceUrl) : c.cashSourceUrl,
       cashSourceQuote:   cash.isD1 ? (quoteMap?.cash_usd ?? c.cashSourceQuote) : c.cashSourceQuote,
-      preferredSourceUrl: pref.isD1 ? (sourceMap?.preferred_equity_usd ?? c.preferredSourceUrl) : c.preferredSourceUrl,
+      cashSearchTerm:    cash.isD1 ? (searchTermMap?.cash_usd ?? c.cashSearchTerm) : c.cashSearchTerm,
+      preferredSourceUrl: pref.isD1 ? (buildSourceUrl(c.ticker, sourceMap?.preferred_equity_usd, accessionMap?.preferred_equity_usd) ?? c.preferredSourceUrl) : c.preferredSourceUrl,
       preferredSourceQuote: pref.isD1 ? (quoteMap?.preferred_equity_usd ?? c.preferredSourceQuote) : c.preferredSourceQuote,
+      preferredSearchTerm: pref.isD1 ? (searchTermMap?.preferred_equity_usd ?? c.preferredSearchTerm) : c.preferredSearchTerm,
       ...(holdings.isD1 ? { holdings: holdings.value } : {}),
       ...(holdings.isD1
         ? {
-            holdingsSourceUrl: sourceMap?.holdings_native ?? c.holdingsSourceUrl,
+            holdingsSourceUrl: buildSourceUrl(c.ticker, sourceMap?.holdings_native, accessionMap?.holdings_native) ?? c.holdingsSourceUrl,
             holdingsLastUpdated: dateMap?.holdings_native ?? c.holdingsLastUpdated,
             sourceQuote: quoteMap?.holdings_native ?? c.sourceQuote,
+            sourceSearchTerm: searchTermMap?.holdings_native ?? c.sourceSearchTerm,
           }
         : {}),
       // Overlay metadata (typed on Company interface)
