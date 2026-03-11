@@ -12,6 +12,8 @@
  * - ASX (Australia): DCC.AX — BTC holdings from treasury information PDFs
  * - LSE RNS (UK): SWC — BTC holdings from Bitcoin Purchase announcements
  * - CVM (Brazil): OBTC3 — BTC holdings + shares from Comunicado ao Mercado PDFs
+ * - BTCT Website (Canada): BTCT.V — BTC holdings + shares from btctcorp.com homepage
+ * - Remixpoint Website (Japan): 3825.T — BTC holdings from remixpoint.co.jp/digital-asset/
  *
  * Usage:
  *   GET /api/cron/foreign-to-d1?manual=true
@@ -767,6 +769,160 @@ async function fetchCvm(): Promise<ForeignFetcherResult[]> {
   return results;
 }
 
+// ─── BTCT Website Fetcher (Canada) ──────────────────────────────────────────
+
+async function fetchBtctWebsite(): Promise<ForeignFetcherResult[]> {
+  const results: ForeignFetcherResult[] = [];
+
+  try {
+    const { fetchBtctWebsite: fetchSite } = await import('@/lib/fetchers/btct-website');
+    const data = await fetchSite();
+    const dataPoints: ForeignDataPoint[] = [];
+    const skipped: Array<{ id: string; reason: string }> = [];
+
+    if (data.btcHoldings === null) {
+      skipped.push({ id: 'btctcorp.com', reason: 'No BTC holdings found on page' });
+    } else if (data.asOfDate === null) {
+      skipped.push({ id: 'btctcorp.com', reason: 'No as-of date found on page' });
+    } else {
+      const cite = generateForeignCitation({
+        metric: 'holdings_native',
+        value: data.btcHoldings,
+        unit: 'BTC',
+        filingSystem: 'company_website',
+        asOf: data.asOfDate,
+        accession: `BTCT-WEB-${data.asOfDate}`,
+      });
+
+      dataPoints.push({
+        entityId: 'BTCT.V',
+        metric: 'holdings_native',
+        value: data.btcHoldings,
+        unit: 'BTC',
+        asOf: data.asOfDate,
+        reportedAt: new Date().toISOString().slice(0, 10),
+        filingSystem: 'company_website',
+        accession: `BTCT-WEB-${data.asOfDate}`,
+        sourceUrl: 'https://btctcorp.com',
+        sourceType: 'company_website',
+        citationQuote: cite.citation_quote,
+        citationSearchTerm: cite.citation_search_term,
+        method: 'website_html_regex',
+        confidence: 0.9,
+      });
+
+      // Also ingest shares if available
+      if (data.sharesOutstanding !== null) {
+        const sharesCite = generateForeignCitation({
+          metric: 'basic_shares',
+          value: data.sharesOutstanding,
+          unit: 'shares',
+          filingSystem: 'company_website',
+          asOf: data.asOfDate,
+          accession: `BTCT-WEB-${data.asOfDate}-shares`,
+        });
+
+        dataPoints.push({
+          entityId: 'BTCT.V',
+          metric: 'basic_shares',
+          value: data.sharesOutstanding,
+          unit: 'shares',
+          asOf: data.asOfDate,
+          reportedAt: new Date().toISOString().slice(0, 10),
+          filingSystem: 'company_website',
+          accession: `BTCT-WEB-${data.asOfDate}-shares`,
+          sourceUrl: 'https://btctcorp.com',
+          sourceType: 'company_website',
+          citationQuote: sharesCite.citation_quote,
+          citationSearchTerm: sharesCite.citation_search_term,
+          method: 'website_html_regex',
+          confidence: 0.85,
+        });
+      }
+    }
+
+    results.push({
+      ticker: 'BTCT.V',
+      filingSystem: 'company_website',
+      dataPoints,
+      skipped,
+    });
+  } catch (err) {
+    results.push({
+      ticker: 'BTCT.V',
+      filingSystem: 'company_website',
+      dataPoints: [],
+      skipped: [],
+      error: err instanceof Error ? err.message : String(err),
+    });
+  }
+
+  return results;
+}
+
+// ─── Remixpoint Website Fetcher (Japan) ─────────────────────────────────────
+
+async function fetchRemixpointWebsite(): Promise<ForeignFetcherResult[]> {
+  const results: ForeignFetcherResult[] = [];
+
+  try {
+    const { fetchRemixpointWebsite: fetchSite } = await import('@/lib/fetchers/remixpoint-website');
+    const data = await fetchSite();
+    const dataPoints: ForeignDataPoint[] = [];
+    const skipped: Array<{ id: string; reason: string }> = [];
+
+    if (data.btcHoldings === null) {
+      skipped.push({ id: 'remixpoint.co.jp', reason: 'No BTC holdings found on page' });
+    } else {
+      // No explicit date on website — use today's date
+      const asOf = new Date().toISOString().slice(0, 10);
+
+      const cite = generateForeignCitation({
+        metric: 'holdings_native',
+        value: data.btcHoldings,
+        unit: 'BTC',
+        filingSystem: 'company_website',
+        asOf,
+        accession: `REMIX-WEB-${asOf}`,
+      });
+
+      dataPoints.push({
+        entityId: '3825.T',
+        metric: 'holdings_native',
+        value: data.btcHoldings,
+        unit: 'BTC',
+        asOf,
+        reportedAt: asOf,
+        filingSystem: 'company_website',
+        accession: `REMIX-WEB-${asOf}`,
+        sourceUrl: 'https://www.remixpoint.co.jp/digital-asset/',
+        sourceType: 'company_website',
+        citationQuote: cite.citation_quote,
+        citationSearchTerm: cite.citation_search_term,
+        method: 'website_html_regex',
+        confidence: 0.85,
+      });
+    }
+
+    results.push({
+      ticker: '3825.T',
+      filingSystem: 'company_website',
+      dataPoints,
+      skipped,
+    });
+  } catch (err) {
+    results.push({
+      ticker: '3825.T',
+      filingSystem: 'company_website',
+      dataPoints: [],
+      skipped: [],
+      error: err instanceof Error ? err.message : String(err),
+    });
+  }
+
+  return results;
+}
+
 // ─── Main Handler ───────────────────────────────────────────────────────────
 
 const SYSTEM_FETCHERS: Record<string, () => Promise<ForeignFetcherResult[]>> = {
@@ -777,6 +933,8 @@ const SYSTEM_FETCHERS: Record<string, () => Promise<ForeignFetcherResult[]>> = {
   asx: fetchAsx,
   lse_rns: fetchLseRns,
   cvm: fetchCvm,
+  btct_website: fetchBtctWebsite,
+  remixpoint_website: fetchRemixpointWebsite,
 };
 
 export async function GET(request: NextRequest) {
