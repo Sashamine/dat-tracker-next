@@ -11,6 +11,7 @@
 
 import crypto from 'node:crypto';
 import { D1Client } from '@/lib/d1';
+import { r2PutObject } from '@/lib/r2/client';
 
 /**
  * A single data point extracted from a foreign regulatory filing.
@@ -51,6 +52,11 @@ export interface ForeignDataPoint {
 
   /** Optional: artifact already exists (skip R2 upload) */
   existingArtifactId?: string;
+
+  /** Optional: raw source document bytes for R2 upload */
+  sourceBytes?: Uint8Array;
+  /** Content type for R2 upload (e.g., 'application/pdf', 'text/html') */
+  sourceContentType?: string;
 }
 
 /**
@@ -158,11 +164,26 @@ export async function ingestForeignDataPoints(
         if (existing.results.length > 0) {
           artifactId = existing.results[0].artifact_id;
         } else {
-          // Create a minimal artifact record (R2 doc may be uploaded separately)
+          // Create a minimal artifact record and optionally upload source to R2
           artifactId = crypto.randomUUID();
-          const contentHash = crypto.createHash('md5')
-            .update(`${dp.sourceType}|${dp.entityId}|${dp.accession}`)
-            .digest('hex');
+          const r2Key = `foreign-filings/${dp.entityId.toLowerCase()}/${dp.accession}`;
+          const contentHash = dp.sourceBytes
+            ? crypto.createHash('md5').update(dp.sourceBytes).digest('hex')
+            : crypto.createHash('md5').update(`${dp.sourceType}|${dp.entityId}|${dp.accession}`).digest('hex');
+
+          // Upload source document to R2 if bytes are provided
+          if (dp.sourceBytes) {
+            try {
+              await r2PutObject({
+                key: r2Key,
+                body: dp.sourceBytes,
+                contentType: dp.sourceContentType,
+              });
+            } catch (r2Err) {
+              // Log but don't fail — artifact record is still useful without R2 doc
+              console.error(`[R2] Failed to upload ${r2Key}:`, r2Err instanceof Error ? r2Err.message : r2Err);
+            }
+          }
 
           await d1.query(
             `INSERT OR IGNORE INTO artifacts (
@@ -175,7 +196,7 @@ export async function ingestForeignDataPoints(
               dp.sourceUrl,
               contentHash,
               new Date().toISOString(),
-              `foreign-filings/${dp.entityId.toLowerCase()}/${dp.accession}`,
+              r2Key,
               dp.entityId,
               dp.accession,
             ]
