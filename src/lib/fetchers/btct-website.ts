@@ -40,10 +40,9 @@ export async function fetchBtctWebsite(): Promise<BtctWebsiteData> {
 /**
  * Parse BTC holdings data from btctcorp.com HTML.
  *
- * The page structure has metrics in heading/paragraph pairs:
- * - "Bitcoin Holdings" heading with "761.63" value
- * - "Shares Outstanding" heading with "9,893,980" value
- * - "As of February 28, 2026" date reference
+ * Page layout: values PRECEDE their labels in stripped text:
+ * "761.63 Bitcoin Holdings 9,893,980 Shares Outstanding 11,977,313 Diluted Shares Outstanding"
+ * "As of February 28, 2026"
  */
 export function parseBtctHomepage(html: string): BtctWebsiteData {
   const result: BtctWebsiteData = {
@@ -64,28 +63,35 @@ export function parseBtctHomepage(html: string): BtctWebsiteData {
     .replace(/\s+/g, ' ')
     .trim();
 
-  // Pattern 1: "Bitcoin Holdings" followed by a number
-  const holdingsMatch = text.match(/Bitcoin\s+Holdings[:\s]+([0-9,]+(?:\.\d+)?)/i);
+  // Page layout: values PRECEDE their labels in stripped text
+  // e.g., "761.63 Bitcoin Holdings 9,893,980 Shares Outstanding 11,977,313 Diluted Shares Outstanding"
+
+  // Pattern 1: Number before "Bitcoin Holdings"
+  const holdingsMatch = text.match(/([0-9,]+(?:\.\d+)?)\s+Bitcoin\s+Holdings/i);
   if (holdingsMatch) {
     result.btcHoldings = parseFloat(holdingsMatch[1].replace(/,/g, ''));
   }
 
-  // Pattern 2: "Shares Outstanding" followed by a number
-  const sharesMatch = text.match(/Shares\s+Outstanding[:\s]+([0-9,]+)/i);
+  // Pattern 2: Number before "Shares Outstanding" (exclude "Diluted" match)
+  // Text: "9,893,980 Shares Outstanding 11,977,313 Diluted Shares Outstanding"
+  const sharesMatch = text.match(/([0-9,]+)\s+Shares\s+Outstanding\s+[0-9]/i);
   if (sharesMatch) {
     result.sharesOutstanding = parseFloat(sharesMatch[1].replace(/,/g, ''));
   }
 
-  // Pattern 3: "Diluted Shares Outstanding" followed by a number
-  const dilutedMatch = text.match(/Diluted\s+Shares\s+Outstanding[:\s]+([0-9,]+)/i);
+  // Pattern 3: Number before "Diluted Shares Outstanding"
+  const dilutedMatch = text.match(/([0-9,]+)\s+Diluted\s+Shares\s+Outstanding/i);
   if (dilutedMatch) {
     result.dilutedShares = parseFloat(dilutedMatch[1].replace(/,/g, ''));
   }
 
-  // Pattern 4: "Bitcoin per Share" or "BPS" followed by a number
-  const bpsMatch = text.match(/Bitcoin\s+per\s+Share[^0-9]*([0-9.]+)/i);
+  // Pattern 4: Number before "Bitcoin per Share" — may be "0.0000 6359" (split by HTML)
+  // Text: "₿0.0000 6359 Bitcoin per Share"
+  const bpsMatch = text.match(/([0-9.]+\s*[0-9]*)\s+Bitcoin\s+per\s+Share/i);
   if (bpsMatch) {
-    result.btcPerShare = parseFloat(bpsMatch[1]);
+    // Rejoin split number: "0.0000 6359" → "0.00006359"
+    const joined = bpsMatch[1].replace(/\s+/g, '');
+    result.btcPerShare = parseFloat(joined);
   }
 
   // Pattern 5: "As of Month DD, YYYY"

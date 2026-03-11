@@ -64,32 +64,31 @@ export function parseRemixpointPage(html: string): RemixpointWebsiteData {
     .replace(/\s+/g, ' ')
     .trim();
 
-  // Pattern: "Bitcoin（BTC）" followed by a number with many decimals
-  const btcMatch = text.match(/Bitcoin[^0-9]*BTC[^0-9]*([0-9,]+\.\d+)/i);
+  // Page uses Japanese names: "ビットコイン (BTC) 1,411.29831101 BTC"
+  // Match the precise number before the ticker symbol
+
+  const btcMatch = text.match(/(?:ビットコイン|Bitcoin)\s*\(BTC\)\s*([0-9,]+\.\d+)\s*BTC/i);
   if (btcMatch) {
     result.btcHoldings = parseFloat(btcMatch[1].replace(/,/g, ''));
   }
 
-  // Ethereum
-  const ethMatch = text.match(/Ethereum[^0-9]*ETH[^0-9]*([0-9,]+\.\d+)/i);
+  const ethMatch = text.match(/(?:イーサリアム|Ethereum)\s*\(ETH\)\s*([0-9,]+\.\d+)\s*ETH/i);
   if (ethMatch) {
     result.ethHoldings = parseFloat(ethMatch[1].replace(/,/g, ''));
   }
 
-  // XRP
-  const xrpMatch = text.match(/XRP[^0-9]*([0-9,]+\.\d+)/i);
+  // XRP — "エックスアールピー (XRP) 1,191,204.799501 XRP"
+  const xrpMatch = text.match(/(?:エックスアールピー|XRP)\s*\(XRP\)\s*([0-9,]+\.\d+)\s*XRP/i);
   if (xrpMatch) {
     result.xrpHoldings = parseFloat(xrpMatch[1].replace(/,/g, ''));
   }
 
-  // Solana
-  const solMatch = text.match(/Solana[^0-9]*SOL[^0-9]*([0-9,]+\.\d+)/i);
+  const solMatch = text.match(/(?:ソラナ|Solana)\s*\(SOL\)\s*([0-9,]+\.\d+)\s*SOL/i);
   if (solMatch) {
     result.solHoldings = parseFloat(solMatch[1].replace(/,/g, ''));
   }
 
-  // Dogecoin
-  const dogeMatch = text.match(/Dogecoin[^0-9]*DOGE[^0-9]*([0-9,]+\.\d+)/i);
+  const dogeMatch = text.match(/(?:ドージコイン|Dogecoin)\s*\(DOGE\)\s*([0-9,]+\.\d+)\s*DOGE/i);
   if (dogeMatch) {
     result.dogeHoldings = parseFloat(dogeMatch[1].replace(/,/g, ''));
   }
