@@ -19,6 +19,9 @@ const nextConfig: NextConfig = {
   outputFileTracingExcludes: {
     "*": ["public/sec/**", "public/sec-content/**"],
   },
+  // Keep pdf-parse as an external package (not bundled) so its CJS exports
+  // resolve correctly at runtime. Bundling it breaks the CJS→ESM interop.
+  serverExternalPackages: ["pdf-parse"],
 };
 
 export default nextConfig;

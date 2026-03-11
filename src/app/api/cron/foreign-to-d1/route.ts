@@ -156,8 +156,9 @@ async function fetchHkex(): Promise<ForeignFetcherResult[]> {
       }
 
       // Extract text from PDF (pdf-parse v1 — pinned in package.json)
-      // Dynamic import to avoid pdf-parse's module-level side effect that tries
-      // to open ./test/data/05-versions-space.pdf at import time
+      // Dynamic import avoids module-level side effect (test PDF read).
+      // pdf-parse is externalized via next.config.ts serverExternalPackages
+      // to preserve CJS→ESM interop.
       let text: string;
       try {
         const pdfParse = (await import('pdf-parse')).default;
