@@ -14,6 +14,7 @@
  * - CVM (Brazil): OBTC3 — BTC holdings + shares from Comunicado ao Mercado PDFs
  * - BTCT Website (Canada): BTCT.V — BTC holdings + shares from btctcorp.com homepage
  * - Remixpoint Website (Japan): 3825.T — BTC holdings from remixpoint.co.jp/digital-asset/
+ * - Luxxfolio Website (Canada): LUXFF — LTC holdings + shares from press releases
  *
  * Usage:
  *   GET /api/cron/foreign-to-d1?manual=true
@@ -923,6 +924,99 @@ async function fetchRemixpointWebsite(): Promise<ForeignFetcherResult[]> {
   return results;
 }
 
+// ─── Luxxfolio Website Fetcher (Canada) ─────────────────────────────────────
+
+async function fetchLuxxfolioWebsite(): Promise<ForeignFetcherResult[]> {
+  const results: ForeignFetcherResult[] = [];
+
+  try {
+    const { fetchLuxxfolioNews } = await import('@/lib/fetchers/luxxfolio-website');
+    const data = await fetchLuxxfolioNews();
+    const dataPoints: ForeignDataPoint[] = [];
+    const skipped: Array<{ id: string; reason: string }> = [];
+
+    if (data.ltcHoldings === null) {
+      skipped.push({ id: 'luxxfolio.com', reason: 'No LTC holdings found in recent articles' });
+    } else if (data.asOfDate === null) {
+      skipped.push({ id: 'luxxfolio.com', reason: 'No date found in article' });
+    } else {
+      const sourceUrl = data.sourceUrl || 'https://www.luxxfolio.com/news';
+
+      const cite = generateForeignCitation({
+        metric: 'holdings_native',
+        value: data.ltcHoldings,
+        unit: 'LTC',
+        filingSystem: 'company_website',
+        asOf: data.asOfDate,
+        accession: `LUXFF-WEB-${data.asOfDate}`,
+      });
+
+      dataPoints.push({
+        entityId: 'LUXFF',
+        metric: 'holdings_native',
+        value: data.ltcHoldings,
+        unit: 'LTC',
+        asOf: data.asOfDate,
+        reportedAt: data.asOfDate,
+        filingSystem: 'company_website',
+        accession: `LUXFF-WEB-${data.asOfDate}`,
+        sourceUrl,
+        sourceType: 'company_press_release',
+        citationQuote: cite.citation_quote,
+        citationSearchTerm: cite.citation_search_term,
+        method: 'website_html_regex',
+        confidence: 0.9,
+      });
+
+      // Also ingest shares if available
+      if (data.sharesOutstanding !== null) {
+        const sharesCite = generateForeignCitation({
+          metric: 'basic_shares',
+          value: data.sharesOutstanding,
+          unit: 'shares',
+          filingSystem: 'company_website',
+          asOf: data.asOfDate,
+          accession: `LUXFF-WEB-${data.asOfDate}-shares`,
+        });
+
+        dataPoints.push({
+          entityId: 'LUXFF',
+          metric: 'basic_shares',
+          value: data.sharesOutstanding,
+          unit: 'shares',
+          asOf: data.asOfDate,
+          reportedAt: data.asOfDate,
+          filingSystem: 'company_website',
+          accession: `LUXFF-WEB-${data.asOfDate}-shares`,
+          sourceUrl,
+          sourceType: 'company_press_release',
+          citationQuote: sharesCite.citation_quote,
+          citationSearchTerm: sharesCite.citation_search_term,
+          method: 'website_html_regex',
+          confidence: 0.85,
+        });
+      }
+    }
+
+    results.push({
+      ticker: 'LUXFF',
+      filingSystem: 'company_website',
+      dataPoints,
+      skipped,
+    });
+  } catch (err) {
+    results.push({
+      ticker: 'LUXFF',
+      filingSystem: 'company_website',
+      dataPoints: [],
+      skipped: [],
+      error: err instanceof Error ? err.message : String(err),
+    });
+  }
+
+  return results;
+}
+
 // ─── Main Handler ───────────────────────────────────────────────────────────
 
 const SYSTEM_FETCHERS: Record<string, () => Promise<ForeignFetcherResult[]>> = {
@@ -935,6 +1029,7 @@ const SYSTEM_FETCHERS: Record<string, () => Promise<ForeignFetcherResult[]>> = {
   cvm: fetchCvm,
   btct_website: fetchBtctWebsite,
   remixpoint_website: fetchRemixpointWebsite,
+  luxxfolio_website: fetchLuxxfolioWebsite,
 };
 
 export async function GET(request: NextRequest) {
