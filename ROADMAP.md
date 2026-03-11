@@ -284,23 +284,24 @@ Separate page (`/analytics`) with four sector-level charts.
 **Goal:** Bring foreign companies to the same citation quality as SEC-covered companies — automated document fetch, data extraction, and D1 ingestion with full provenance.
 
 **Current state (updated 2026-03-11):**
-- 8 systems fully automated: AMF, HKEX, TDnet, MFN, ASX, LSE RNS, CVM — live in D1 via `/api/cron/foreign-to-d1`
-- Cron runs daily at 8:00 UTC (vercel.json)
+- 10 systems fully automated: AMF, HKEX, TDnet (3 companies), MFN, ASX, LSE RNS, CVM, BTCT website, Remixpoint website
+- All live in D1 via `/api/cron/foreign-to-d1`, cron runs daily at 8:00 UTC (vercel.json)
 - Shared infrastructure: `ForeignDataPoint` type, `ingestForeignDataPoints()`, proposal key dedup
-- Remaining: EDINET XBRL (Japan 3825.T, 3189.T), SEDAR+ (Canada), BaFin (DE)
+- Remaining: EDINET XBRL (JP-GAAP), SEDAR+ (Canada, needs Playwright), BaFin (DE, no BTC source)
 
 **Company inventory by filing system:**
 
 | System | Companies | Status |
 |--------|-----------|--------|
-| **TDnet** (Japan) | 3350.T | **Automated** — shares + BTC from earnings PDFs |
-| **EDINET** (Japan) | 3825.T, 3189.T | Fetch-only, no extraction |
+| **TDnet** (Japan) | 3350.T, 3189.T, 3825.T | **Automated** — shares + BTC from earnings PDFs (multi-company scan) |
+| **EDINET** (Japan) | 3825.T, 3189.T | Fetch-only, no XBRL extraction yet |
 | **HKEX** (Hong Kong) | 0434.HK | **Automated** — BTC from filing PDFs (R2 cache) |
 | **AMF** (France) | ALCPB | **Automated** — BTC from filing titles |
 | **MFN** (Sweden) | H100.ST | **Automated** — BTC from press release titles |
 | **ASX** (Australia) | DCC.AX | **Automated** — BTC from treasury information PDFs |
 | **LSE RNS** (UK) | SWC | **Automated** — BTC from Bitcoin Purchase RNS via InvestEgate |
-| **SEDAR+** (Canada) | ETHM, BTCT.V, XTAIF, LUXFF | Calendar check only, needs Playwright |
+| **SEDAR+** (Canada) | ETHM, XTAIF, LUXFF | Calendar check only, needs Playwright |
+| **Company Website** | BTCT.V, 3825.T | **Automated** — BTC + shares scraped from static HTML |
 | **CVM/B3** (Brazil) | OBTC3 | **Automated** — BTC + shares from Comunicado ao Mercado PDFs |
 | **BaFin/DGAP** (Germany) | SRAG.DU | No automation (press releases don't contain BTC counts) |
 
