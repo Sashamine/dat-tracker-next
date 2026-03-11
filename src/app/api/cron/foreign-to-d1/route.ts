@@ -18,6 +18,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'node:crypto';
 import { D1Client } from '@/lib/d1';
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+import pdfParseLib from 'pdf-parse';
 import {
   type ForeignDataPoint,
   type ForeignFetcherResult,
@@ -158,10 +160,7 @@ async function fetchHkex(): Promise<ForeignFetcherResult[]> {
       // Extract text from PDF (pdf-parse v1 — pinned in package.json)
       let text: string;
       try {
-        const { createRequire } = await import('node:module');
-        const req = createRequire(import.meta.url);
-        const pdfParse = req('pdf-parse') as (buf: Buffer) => Promise<{ text: string }>;
-        const result = await pdfParse(Buffer.from(pdfBuf));
+        const result = await pdfParseLib(Buffer.from(pdfBuf));
         text = result.text;
       } catch (e) {
         skipped.push({ id: filing.docId, reason: `pdf-parse failed: ${e instanceof Error ? e.message : String(e)}` });
