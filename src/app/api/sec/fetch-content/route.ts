@@ -50,6 +50,21 @@ const TICKER_CIKS: Record<string, string> = {
   xrpn: "1991453",
   cyph: "1509745",
   bnc: "1952979",
+  ddc: "1808110",
+  zooz: "1992818",
+  fwdi: "38264",
+  cifr: "1819989",
+  coin: "1679788",
+  corz: "1839341",
+  glxy: "1859392",
+  hive: "1062993",
+  hood: "1783879",
+  hut: "1731160",
+  iren: "1878848",
+  sdig: "1771124",
+  smlr: "1564590",
+  sq: "1628280",
+  wulf: "1083301",
 };
 
 /**
@@ -111,15 +126,7 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  const cik = TICKER_CIKS[ticker];
-  if (!cik) {
-    return NextResponse.json(
-      { error: `Unknown ticker: ${ticker}` },
-      { status: 404 }
-    );
-  }
-
-  // Try R2 cache first (unless skipCache=true)
+  // Try R2 cache first (unless skipCache=true) — works for all tickers including foreign
   if (!skipCache) {
     const r2Content = await fetchFromR2(ticker, accession);
     if (r2Content) {
@@ -133,9 +140,17 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  // Fall back to SEC
+  // Fall back to SEC EDGAR (requires CIK mapping)
+  const cik = TICKER_CIKS[ticker];
+  if (!cik) {
+    return NextResponse.json(
+      { error: `No document found for ${ticker}/${accession}` },
+      { status: 404 }
+    );
+  }
+
   console.log(`[SEC Fetch] Not in R2, fetching from SEC: ${ticker}/${accession}`);
-  
+
   // Clean accession for SEC URL (remove dashes)
   const accessionClean = accession.replace(/-/g, "");
 
