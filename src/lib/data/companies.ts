@@ -528,13 +528,13 @@ export const btcCompanies: Company[] = [
     asset: "BTC",
     tier: 1,
     // HOLDINGS: from provenance (mstr-holdings-verified.ts)
-    holdings: MSTR_PROVENANCE.holdings?.value || 720_737,
+    holdings: MSTR_PROVENANCE.holdings?.value || 738_731,
     holdingsLastUpdated: MSTR_PROVENANCE_DEBUG.holdingsDate,
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "/filings/mstr/0001193125-26-084264",
-    accessionNumber: "0001193125-26-084264",
+    holdingsSourceUrl: "/filings/mstr/0001193125-26-097598",
+    accessionNumber: "0001193125-26-097598",
     sourceType: "sec-filing",
-    sourceQuote: "Aggregate BTC Holdings 720,737",
+    sourceQuote: "Aggregate BTC Holdings 738,731",
     datStartDate: "2020-08-11", // First BTC purchase announcement
     website: "https://www.strategy.com",
     twitter: "https://twitter.com/Strategy",
