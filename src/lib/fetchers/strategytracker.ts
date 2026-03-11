@@ -1,20 +1,26 @@
 /**
  * StrategyTracker.com Data Fetcher
  *
- * Fetches real-time BTC holdings data from StrategyTracker's public JSON API
- * at data.strategytracker.com. Updated every ~15 minutes.
+ * Fetches real-time BTC holdings and capital structure data from
+ * StrategyTracker's public JSON API at data.strategytracker.com.
+ * Updated every ~15 minutes.
  *
  * Coverage (17 companies as of March 2026):
- * - 3350.T (Metaplanet) — primary use case, real-time BTC holdings
+ * - 3350.T (Metaplanet) — primary use case, real-time BTC + capital structure
  * - MSTR (Strategy), ASST (Strive), DDC, EMPD, ZOOZ, etc.
  * - BTCT.V, H100, DCC.AX, ALCPB.PA, SWC.AQ, OBTC3.SA, CASH3.SA
  *
  * Data source: analytics.metaplanet.jp is a whitelabel of StrategyTracker.
  * The underlying data API is at data.strategytracker.com (no auth required).
  *
+ * Two data tiers:
+ *   Light file: holdings, mNAV, stock price (small payload, fast)
+ *   Full file:  + preferred stocks, debt instruments, shares, cash (~1MB)
+ *
  * API structure:
  *   GET /latest.json → { version, timestamp, files: { full, light } }
- *   GET /{light-file} → { timestamp, companies: { [ticker]: CompanyData } }
+ *   GET /{light-file} → { timestamp, companies: { [ticker]: LightCompanyData } }
+ *   GET /{full-file} → { timestamp, companies: { [ticker]: FullCompanyData } }
  *   GET /prices-live.json → { prices: { [ticker]: PriceData } }
  */
 
@@ -37,6 +43,42 @@ export interface StrategyTrackerCompany {
   partner_key: string;
 }
 
+/** Full data includes processedMetrics with capital structure detail */
+export interface StrategyTrackerFullCompany {
+  processedMetrics: {
+    sharesOutstanding: number | null;
+    latestTotalShares: number | null;
+    latestDilutedShares: number | null;
+    latestDebt: number | null;
+    latestCashBalance: number | null;
+    latestBtcBalance: number | null;
+    latestCostBasis: number | null;
+    latestTreasuryDate: string | null;
+    navPremiumBasic: number | null;
+    navPremiumDiluted: number | null;
+    hasPreferredStocks: boolean;
+    hasDebtInstruments: boolean;
+    preferredStocks: StrategyTrackerPreferred[] | null;
+    debtSummary: {
+      totalDebt: number;
+      totalDebtUsd: number;
+      instrumentCount: number;
+      convertibleCount: number;
+    } | null;
+  };
+  [key: string]: unknown;
+}
+
+export interface StrategyTrackerPreferred {
+  ticker: string;
+  name: string;
+  notionalMillions: number;
+  notionalUSD: number;
+  currency: string;
+  dividendRate: number;
+  isTraded: boolean;
+}
+
 export interface StrategyTrackerData {
   timestamp: string;
   version: string;
@@ -48,6 +90,11 @@ export interface StrategyTrackerData {
     totalHoldingsValue: number;
   };
   companies: Record<string, StrategyTrackerCompany>;
+}
+
+export interface StrategyTrackerFullData {
+  timestamp: string;
+  companies: Record<string, StrategyTrackerFullCompany>;
 }
 
 /**
@@ -69,7 +116,7 @@ export const ST_TICKER_TO_ENTITY: Record<string, string> = {
 /**
  * Fetch the latest version pointer from StrategyTracker.
  */
-async function fetchLatest(): Promise<{ version: string; lightFile: string }> {
+async function fetchLatest(): Promise<{ version: string; lightFile: string; fullFile: string }> {
   const res = await fetch(`${DATA_BASE}/latest.json`, {
     headers: { 'User-Agent': USER_AGENT },
   });
@@ -80,11 +127,12 @@ async function fetchLatest(): Promise<{ version: string; lightFile: string }> {
   return {
     version: data.version,
     lightFile: data.files.light,
+    fullFile: data.files.full,
   };
 }
 
 /**
- * Fetch the light company data file.
+ * Fetch the light company data file (small, fast — holdings + mNAV only).
  */
 export async function fetchStrategyTrackerData(): Promise<StrategyTrackerData> {
   const { lightFile } = await fetchLatest();
@@ -94,6 +142,21 @@ export async function fetchStrategyTrackerData(): Promise<StrategyTrackerData> {
   });
 
   if (!res.ok) throw new Error(`StrategyTracker data file failed: ${res.status}`);
+  return res.json();
+}
+
+/**
+ * Fetch the full company data file (~1MB — includes capital structure,
+ * preferred stocks, debt instruments, shares outstanding, etc.)
+ */
+export async function fetchStrategyTrackerFullData(): Promise<StrategyTrackerFullData> {
+  const { fullFile } = await fetchLatest();
+
+  const res = await fetch(`${DATA_BASE}/${fullFile}`, {
+    headers: { 'User-Agent': USER_AGENT },
+  });
+
+  if (!res.ok) throw new Error(`StrategyTracker full data file failed: ${res.status}`);
   return res.json();
 }
 

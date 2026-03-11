@@ -20,7 +20,7 @@ export interface ForeignDataPoint {
   /** Ticker symbol (e.g., '3350.T', '0434.HK', 'ALCPB') */
   entityId: string;
   /** Metric name matching D1 schema */
-  metric: 'holdings_native' | 'basic_shares' | 'cash_usd' | 'debt_usd';
+  metric: 'holdings_native' | 'basic_shares' | 'cash_usd' | 'debt_usd' | 'preferred_equity_usd';
   /** Numeric value */
   value: number;
   /** Unit (e.g., 'BTC', 'shares', 'USD', 'JPY') */

@@ -1024,49 +1024,85 @@ async function fetchStrategyTracker(): Promise<ForeignFetcherResult[]> {
   const results: ForeignFetcherResult[] = [];
 
   try {
-    const { fetchStrategyTrackerData, ST_TICKER_TO_ENTITY } = await import('@/lib/fetchers/strategytracker');
+    const {
+      fetchStrategyTrackerFullData,
+      ST_TICKER_TO_ENTITY,
+    } = await import('@/lib/fetchers/strategytracker');
 
-    const data = await fetchStrategyTrackerData();
-    // Use the API timestamp as reportedAt, truncated to date
+    const data = await fetchStrategyTrackerFullData();
     const reportedAt = data.timestamp.slice(0, 10);
 
     // For now, only ingest Metaplanet — other companies have dedicated fetchers
     // that provide higher-confidence data from primary regulatory sources.
     const TARGET_ENTITIES = new Set(['3350.T']);
 
-    for (const [stTicker, stCompany] of Object.entries(data.companies)) {
+    for (const [stTicker, fullCompany] of Object.entries(data.companies)) {
       const entityId = ST_TICKER_TO_ENTITY[stTicker];
       if (!entityId || !TARGET_ENTITIES.has(entityId)) continue;
 
-      if (stCompany.holdings <= 0) continue;
+      const pm = fullCompany.processedMetrics;
+      if (!pm || !pm.latestBtcBalance || pm.latestBtcBalance <= 0) continue;
 
-      const asOf = reportedAt; // StrategyTracker updates in real-time
+      const asOf = pm.latestTreasuryDate || reportedAt;
+      const sourceUrl = 'https://analytics.metaplanet.jp';
+      const dataPoints: ForeignDataPoint[] = [];
 
-      const cite = generateForeignCitation({
-        metric: 'holdings_native',
-        value: stCompany.holdings,
-        unit: 'BTC',
-        filingSystem: 'strategytracker',
-        asOf,
-        accession: `ST-${stTicker}-${asOf}`,
-      });
+      // Helper to create a data point for a given metric
+      const addPoint = (metric: ForeignDataPoint['metric'], value: number, unit: string, suffix: string) => {
+        const cite = generateForeignCitation({
+          metric,
+          value,
+          unit,
+          filingSystem: 'strategytracker',
+          asOf,
+          accession: `ST-${stTicker}-${asOf}-${suffix}`,
+        });
 
-      const dataPoints: ForeignDataPoint[] = [{
-        entityId,
-        metric: 'holdings_native',
-        value: stCompany.holdings,
-        unit: 'BTC',
-        asOf,
-        reportedAt,
-        filingSystem: 'strategytracker',
-        accession: `ST-${stTicker}-${asOf}`,
-        sourceUrl: `https://analytics.metaplanet.jp`,
-        sourceType: 'third_party_tracker',
-        citationQuote: cite.citation_quote,
-        citationSearchTerm: cite.citation_search_term,
-        method: 'strategytracker_api',
-        confidence: 0.8, // Third-party aggregator, not primary source
-      }];
+        dataPoints.push({
+          entityId,
+          metric,
+          value,
+          unit,
+          asOf,
+          reportedAt,
+          filingSystem: 'strategytracker',
+          accession: `ST-${stTicker}-${asOf}-${suffix}`,
+          sourceUrl,
+          sourceType: 'third_party_tracker',
+          citationQuote: cite.citation_quote,
+          citationSearchTerm: cite.citation_search_term,
+          method: 'strategytracker_api',
+          confidence: 0.8,
+        });
+      };
+
+      // BTC holdings
+      addPoint('holdings_native', pm.latestBtcBalance, 'BTC', 'btc');
+
+      // Shares outstanding (basic)
+      if (pm.sharesOutstanding != null && pm.sharesOutstanding > 0) {
+        addPoint('basic_shares', pm.sharesOutstanding, 'shares', 'shares');
+      }
+
+      // Total debt (USD)
+      if (pm.latestDebt != null && pm.latestDebt > 0) {
+        addPoint('debt_usd', pm.latestDebt, 'USD', 'debt');
+      }
+
+      // Cash (USD)
+      if (pm.latestCashBalance != null && pm.latestCashBalance > 0) {
+        addPoint('cash_usd', pm.latestCashBalance, 'USD', 'cash');
+      }
+
+      // Preferred equity (USD) — sum of all preferred stock notional values
+      if (pm.hasPreferredStocks && pm.preferredStocks && pm.preferredStocks.length > 0) {
+        const totalPreferredUsd = pm.preferredStocks.reduce(
+          (sum, p) => sum + (p.notionalUSD || 0), 0
+        );
+        if (totalPreferredUsd > 0) {
+          addPoint('preferred_equity_usd', totalPreferredUsd, 'USD', 'pref');
+        }
+      }
 
       results.push({
         ticker: entityId,
@@ -1076,7 +1112,6 @@ async function fetchStrategyTracker(): Promise<ForeignFetcherResult[]> {
       });
     }
 
-    // If no results produced for target entities, report empty
     if (results.length === 0) {
       results.push({
         ticker: '3350.T',
