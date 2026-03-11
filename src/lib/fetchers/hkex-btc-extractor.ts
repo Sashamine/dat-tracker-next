@@ -33,8 +33,8 @@ export function parseHkexBtcHoldings(text: string): HkexBtcExtraction {
   const candidates: HkexBtcExtraction['candidates'] = [];
   let avgCost: number | null = null;
 
-  // Pattern 1: "held approximately X,XXX Bitcoins" or "held X,XXX BTC"
-  const HELD_RE = /held\s+(?:approximately\s+)?([\d,]+(?:\.\d+)?)\s*(?:Bitcoins?|BTC)/gi;
+  // Pattern 1: "held approximately X,XXX Bitcoins" or "held X,XXX BTC" or "held X,XXX units of BTC"
+  const HELD_RE = /held\s+(?:approximately\s+)?([\d,]+(?:\.\d+)?)\s*(?:units?\s+of\s+)?(?:Bitcoins?|BTC)/gi;
   let m: RegExpExecArray | null;
   while ((m = HELD_RE.exec(text)) !== null) {
     const raw = m[1].replace(/,/g, '');
@@ -52,8 +52,8 @@ export function parseHkexBtcHoldings(text: string): HkexBtcExtraction {
     });
   }
 
-  // Pattern 2: "total of approximately X,XXX BTC" or "total of X,XXX Bitcoin"
-  const TOTAL_RE = /total\s+of\s+(?:approximately\s+)?([\d,]+(?:\.\d+)?)\s*(?:Bitcoins?|BTC)/gi;
+  // Pattern 2: "total of approximately X,XXX BTC" or "total of X,XXX Bitcoin" or "total of X,XXX units of BTC"
+  const TOTAL_RE = /total\s+of\s+(?:approximately\s+)?([\d,]+(?:\.\d+)?)\s*(?:units?\s+of\s+)?(?:Bitcoins?|BTC)/gi;
   while ((m = TOTAL_RE.exec(text)) !== null) {
     const raw = m[1].replace(/,/g, '');
     const n = parseFloat(raw);
@@ -107,21 +107,27 @@ export function parseHkexBtcHoldings(text: string): HkexBtcExtraction {
     });
   }
 
-  // Extract average cost: "aggregate cost of approximately US$X million"
-  const COST_RE = /(?:aggregate|average)\s+cost\s+(?:of\s+)?(?:approximately\s+)?(?:US?\$|USD\s*)?([\d,]+(?:\.\d+)?)\s*(million|billion)?/gi;
+  // Extract average cost: "aggregate cost of approximately US$X million" or "average cost of approximately US$X per unit"
+  const COST_RE = /(?:aggregate|average)\s+cost\s+(?:of\s+)?(?:approximately\s+)?(?:US?\$|USD\s*)?([\d,]+(?:\.\d+)?)\s*(million|billion|per\s+unit)?/gi;
   const costMatch = COST_RE.exec(text);
   if (costMatch) {
     let cost = parseFloat(costMatch[1].replace(/,/g, ''));
-    if (costMatch[2]?.toLowerCase() === 'million') cost *= 1_000_000;
-    if (costMatch[2]?.toLowerCase() === 'billion') cost *= 1_000_000_000;
+    const qualifier = costMatch[2]?.toLowerCase().trim();
+    if (qualifier === 'million') cost *= 1_000_000;
+    if (qualifier === 'billion') cost *= 1_000_000_000;
 
-    // Calculate avg cost per BTC
-    const bestHoldings = candidates.sort((a, b) => {
-      if (a.confidence !== b.confidence) return a.confidence === 'high' ? -1 : 1;
-      return b.value - a.value;
-    })[0];
-    if (bestHoldings && bestHoldings.value > 0) {
-      avgCost = Math.round(cost / bestHoldings.value);
+    if (qualifier === 'per unit') {
+      // Already per-unit cost
+      avgCost = Math.round(cost);
+    } else {
+      // Aggregate cost — divide by holdings to get per-unit
+      const bestHoldings = [...candidates].sort((a, b) => {
+        if (a.confidence !== b.confidence) return a.confidence === 'high' ? -1 : 1;
+        return b.value - a.value;
+      })[0];
+      if (bestHoldings && bestHoldings.value > 0) {
+        avgCost = Math.round(cost / bestHoldings.value);
+      }
     }
   }
 
