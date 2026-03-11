@@ -284,7 +284,7 @@ Separate page (`/analytics`) with four sector-level charts.
 **Goal:** Bring foreign companies to the same citation quality as SEC-covered companies — automated document fetch, data extraction, and D1 ingestion with full provenance.
 
 **Current state (updated 2026-03-11):**
-- 10 systems fully automated: AMF, HKEX, TDnet (3 companies), MFN, ASX, LSE RNS, CVM, BTCT website, Remixpoint website
+- 11 systems fully automated: AMF, HKEX, TDnet (3 companies), MFN, ASX, LSE RNS, CVM, BTCT website, Remixpoint website, Luxxfolio website
 - All live in D1 via `/api/cron/foreign-to-d1`, cron runs daily at 8:00 UTC (vercel.json)
 - Shared infrastructure: `ForeignDataPoint` type, `ingestForeignDataPoints()`, proposal key dedup
 - Remaining: EDINET XBRL (JP-GAAP), SEDAR+ (Canada, needs Playwright), BaFin (DE, no BTC source)
@@ -300,8 +300,8 @@ Separate page (`/analytics`) with four sector-level charts.
 | **MFN** (Sweden) | H100.ST | **Automated** — BTC from press release titles |
 | **ASX** (Australia) | DCC.AX | **Automated** — BTC from treasury information PDFs |
 | **LSE RNS** (UK) | SWC | **Automated** — BTC from Bitcoin Purchase RNS via InvestEgate |
-| **SEDAR+** (Canada) | ETHM, XTAIF, LUXFF | Calendar check only, needs Playwright |
-| **Company Website** | BTCT.V, 3825.T | **Automated** — BTC + shares scraped from static HTML |
+| **SEDAR+** (Canada) | ETHM, XTAIF | Calendar check only, needs Playwright |
+| **Company Website** | BTCT.V, 3825.T, LUXFF | **Automated** — BTC/LTC + shares scraped from static HTML and news articles |
 | **CVM/B3** (Brazil) | OBTC3 | **Automated** — BTC + shares from Comunicado ao Mercado PDFs |
 | **BaFin/DGAP** (Germany) | SRAG.DU | No automation (press releases don't contain BTC counts) |
 
