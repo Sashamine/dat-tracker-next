@@ -163,7 +163,11 @@ async function fetchHkex(): Promise<ForeignFetcherResult[]> {
       let text: string;
       try {
         // @ts-expect-error - pdf-parse/lib/pdf-parse has no type declarations
-        const pdfParse = (await import('pdf-parse/lib/pdf-parse')).default;
+        const mod = await import('pdf-parse/lib/pdf-parse');
+        const pdfParse = typeof mod === 'function' ? mod : mod.default;
+        if (typeof pdfParse !== 'function') {
+          throw new Error(`pdf-parse resolved to ${typeof pdfParse}, keys: ${Object.keys(mod).join(',')}`);
+        }
         const result = await pdfParse(Buffer.from(pdfBuf));
         text = result.text;
       } catch (e) {
@@ -174,7 +178,10 @@ async function fetchHkex(): Promise<ForeignFetcherResult[]> {
       const extraction = parseHkexBtcHoldings(text);
 
       if (extraction.candidates.length === 0) {
-        skipped.push({ id: filing.docId, reason: 'No BTC holdings found in PDF text' });
+        // Include text snippet for debugging
+        const snippet = text.slice(0, 500).replace(/\s+/g, ' ');
+        const btcMentions = (text.match(/btc|bitcoin/gi) || []).length;
+        skipped.push({ id: filing.docId, reason: `No BTC holdings found in PDF text (len=${text.length}, btcMentions=${btcMentions}, snippet=${snippet.slice(0, 200)})` });
         continue;
       }
 
