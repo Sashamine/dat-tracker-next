@@ -3196,9 +3196,10 @@ export const dogeCompanies: Company[] = [
     cashSourceUrl: "/filings/btog/0001104659-25-105009",
     cashAsOf: "2025-06-30",
     secCik: "0001735556",
+    encumberedHoldings: 40_543_745,  // DOGE pledged as collateral per 20-F FY2025
     leader: "Jinghai Jiang (CEO)",
     strategy: "Quarterly DOGE acquisitions via $500M facility.",
-    notes: "Nasdaq listed. 1:60 reverse split Jan 20, 2026. $16.3M convertible debt outstanding. Audit note 2026-03-05: lock metadata re-anchored to SEC 6-K/legal channel and cash normalized to D1/XBRL value ($55,639). Data quality classification: LEGAL_MATCH for shares; holdings are legal-channel anchored but not yet mapped to a single exhibit-level quote URL in-repo.",
+    notes: "Nasdaq listed. 1:60 reverse split Jan 20, 2026. $16.3M convertible debt outstanding. 40.5M DOGE (57.5%) pledged as collateral for financings/convertible notes (20-F). Audit note 2026-03-05: lock metadata re-anchored to SEC 6-K/legal channel and cash normalized to D1/XBRL value ($55,639). Data quality classification: LEGAL_MATCH for shares; holdings are legal-channel anchored but not yet mapped to a single exhibit-level quote URL in-repo.",
   },
 ];
 
