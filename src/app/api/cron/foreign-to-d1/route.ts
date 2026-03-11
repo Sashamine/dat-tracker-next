@@ -8,6 +8,9 @@
  * - TDnet (Japan): Metaplanet (3350.T) — shares + BTC holdings from earnings PDFs
  * - HKEX (Hong Kong): Boyaa (0434.HK) — BTC holdings from filing PDFs
  * - AMF (France): ALCPB — BTC holdings from filing titles
+ * - MFN (Sweden): H100.ST — BTC holdings from press release titles
+ * - ASX (Australia): DCC.AX — BTC holdings from treasury information PDFs
+ * - LSE RNS (UK): SWC — BTC holdings from Bitcoin Purchase announcements
  *
  * Usage:
  *   GET /api/cron/foreign-to-d1?manual=true
@@ -396,6 +399,205 @@ async function fetchMfn(): Promise<ForeignFetcherResult[]> {
   return results;
 }
 
+// ─── LSE RNS Fetcher (UK) ────────────────────────────────────────────────────
+
+async function fetchLseRns(): Promise<ForeignFetcherResult[]> {
+  const results: ForeignFetcherResult[] = [];
+
+  try {
+    const {
+      getRnsAnnouncements,
+      fetchRnsAnnouncementText,
+      parseBtcFromRnsText,
+    } = await import('@/lib/fetchers/lse-rns');
+
+    const announcements = await getRnsAnnouncements('SWC');
+    const dataPoints: ForeignDataPoint[] = [];
+    const skipped: Array<{ id: string; reason: string }> = [];
+
+    // Process the most recent 3 Bitcoin Purchase announcements
+    for (const ann of announcements.slice(0, 3)) {
+      // Rate-limit InvestEgate fetches
+      await new Promise(r => setTimeout(r, 1000));
+
+      let text: string;
+      try {
+        text = await fetchRnsAnnouncementText(ann.url);
+      } catch (e) {
+        skipped.push({ id: ann.articleId, reason: `Fetch failed: ${e instanceof Error ? e.message : String(e)}` });
+        continue;
+      }
+
+      const extraction = parseBtcFromRnsText(text);
+
+      if (extraction.totalBtc === null) {
+        skipped.push({ id: ann.articleId, reason: `No total BTC in text: "${ann.title}"` });
+        continue;
+      }
+
+      const asOf = extraction.date || new Date().toISOString().slice(0, 10);
+
+      const cite = generateForeignCitation({
+        metric: 'holdings_native',
+        value: extraction.totalBtc,
+        unit: 'BTC',
+        filingSystem: 'lse_rns',
+        asOf,
+        accession: ann.articleId,
+      });
+
+      dataPoints.push({
+        entityId: 'SWC',
+        metric: 'holdings_native',
+        value: extraction.totalBtc,
+        unit: 'BTC',
+        asOf,
+        reportedAt: asOf,
+        filingSystem: 'lse_rns',
+        accession: `RNS-${ann.articleId}`,
+        sourceUrl: ann.url,
+        sourceType: 'rns_announcement',
+        citationQuote: cite.citation_quote,
+        citationSearchTerm: cite.citation_search_term,
+        method: 'rns_text_parse',
+        confidence: 0.95,
+      });
+    }
+
+    // Keep only the most recent holding per date
+    const byDate = new Map<string, ForeignDataPoint>();
+    for (const dp of dataPoints) {
+      if (!byDate.has(dp.asOf) || dp.value > (byDate.get(dp.asOf)?.value ?? 0)) {
+        byDate.set(dp.asOf, dp);
+      }
+    }
+
+    results.push({
+      ticker: 'SWC',
+      filingSystem: 'lse_rns',
+      dataPoints: [...byDate.values()],
+      skipped,
+    });
+  } catch (err) {
+    results.push({
+      ticker: 'SWC',
+      filingSystem: 'lse_rns',
+      dataPoints: [],
+      skipped: [],
+      error: err instanceof Error ? err.message : String(err),
+    });
+  }
+
+  return results;
+}
+
+// ─── ASX Fetcher (Australia) ─────────────────────────────────────────────────
+
+async function fetchAsx(): Promise<ForeignFetcherResult[]> {
+  const results: ForeignFetcherResult[] = [];
+
+  try {
+    const {
+      getAsxAnnouncements,
+      filterTreasuryAnnouncements,
+      getAsxPdfUrl,
+      parseBtcFromAsxTreasuryPdf,
+    } = await import('@/lib/fetchers/asx');
+
+    const announcements = await getAsxAnnouncements('DCC.AX', 50);
+    const treasuryFilings = filterTreasuryAnnouncements(announcements);
+    const dataPoints: ForeignDataPoint[] = [];
+    const skipped: Array<{ id: string; reason: string }> = [];
+
+    for (const filing of treasuryFilings.slice(0, 3)) {
+      // Download PDF
+      const pdfUrl = getAsxPdfUrl(filing.documentKey);
+      let pdfBuf: ArrayBuffer;
+      try {
+        const res = await fetch(pdfUrl, {
+          headers: { 'User-Agent': 'dat-tracker-next/1.0' },
+        });
+        if (!res.ok) {
+          skipped.push({ id: filing.documentKey, reason: `PDF fetch failed: ${res.status}` });
+          continue;
+        }
+        pdfBuf = await res.arrayBuffer();
+      } catch (e) {
+        skipped.push({ id: filing.documentKey, reason: `PDF fetch error: ${e instanceof Error ? e.message : String(e)}` });
+        continue;
+      }
+
+      // Extract text from PDF
+      let text: string;
+      try {
+        // @ts-expect-error - pdf-parse/lib/pdf-parse has no type declarations
+        const mod = await import('pdf-parse/lib/pdf-parse');
+        const pdfParse = typeof mod === 'function' ? mod : mod.default;
+        if (typeof pdfParse !== 'function') {
+          throw new Error(`pdf-parse resolved to ${typeof pdfParse}`);
+        }
+        const result = await pdfParse(Buffer.from(pdfBuf));
+        text = result.text;
+      } catch (e) {
+        skipped.push({ id: filing.documentKey, reason: `pdf-parse failed: ${e instanceof Error ? e.message : String(e)}` });
+        continue;
+      }
+
+      const extraction = parseBtcFromAsxTreasuryPdf(text);
+
+      if (extraction.totalBtc === null) {
+        skipped.push({ id: filing.documentKey, reason: 'No BTC holdings found in PDF' });
+        continue;
+      }
+
+      const asOf = extraction.periodEnd || filing.date.slice(0, 10);
+
+      const cite = generateForeignCitation({
+        metric: 'holdings_native',
+        value: extraction.totalBtc,
+        unit: 'BTC',
+        filingSystem: 'asx',
+        asOf,
+        accession: filing.documentKey,
+      });
+
+      dataPoints.push({
+        entityId: 'DCC.AX',
+        metric: 'holdings_native',
+        value: extraction.totalBtc,
+        unit: 'BTC',
+        asOf,
+        reportedAt: filing.date.slice(0, 10),
+        filingSystem: 'asx',
+        accession: `ASX-${filing.documentKey}`,
+        sourceUrl: pdfUrl,
+        sourceType: 'asx_treasury_pdf',
+        citationQuote: cite.citation_quote,
+        citationSearchTerm: cite.citation_search_term,
+        method: 'asx_pdf_regex',
+        confidence: 0.95,
+      });
+    }
+
+    results.push({
+      ticker: 'DCC.AX',
+      filingSystem: 'asx',
+      dataPoints,
+      skipped,
+    });
+  } catch (err) {
+    results.push({
+      ticker: 'DCC.AX',
+      filingSystem: 'asx',
+      dataPoints: [],
+      skipped: [],
+      error: err instanceof Error ? err.message : String(err),
+    });
+  }
+
+  return results;
+}
+
 // ─── Main Handler ───────────────────────────────────────────────────────────
 
 const SYSTEM_FETCHERS: Record<string, () => Promise<ForeignFetcherResult[]>> = {
@@ -403,6 +605,8 @@ const SYSTEM_FETCHERS: Record<string, () => Promise<ForeignFetcherResult[]>> = {
   hkex: fetchHkex,
   amf: fetchAmf,
   mfn: fetchMfn,
+  asx: fetchAsx,
+  lse_rns: fetchLseRns,
 };
 
 export async function GET(request: NextRequest) {
