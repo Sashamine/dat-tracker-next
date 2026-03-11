@@ -299,6 +299,21 @@ export async function GET(request: NextRequest) {
 
         if (dedupeCollision.results.length) {
           const legacy = dedupeCollision.results[0];
+
+          // Always backfill citations on dedupe collision if we have better data
+          if (r.citation_quote && r.citation_search_term) {
+            await d1.query(
+              `UPDATE datapoints
+               SET citation_quote = ?,
+                   citation_search_term = ?
+               WHERE datapoint_id = ?
+                 AND (citation_quote IS NULL
+                      OR citation_search_term IS NULL
+                      OR citation_quote LIKE 'Series A Preferred Stock%');`,
+              [r.citation_quote, r.citation_search_term, legacy.datapoint_id]
+            );
+          }
+
           if (legacy.proposal_key) {
             datapointsNoop += 1;
             continue;
