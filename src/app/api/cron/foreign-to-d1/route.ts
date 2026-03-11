@@ -323,12 +323,86 @@ async function fetchAmf(): Promise<ForeignFetcherResult[]> {
   return results;
 }
 
+// ─── MFN Fetcher (Sweden) ───────────────────────────────────────────────────
+
+async function fetchMfn(): Promise<ForeignFetcherResult[]> {
+  const results: ForeignFetcherResult[] = [];
+
+  try {
+    const { getMfnReleases, parseBtcFromMfnTitle } = await import('@/lib/fetchers/mfn');
+
+    const releases = await getMfnReleases('H100.ST', 15);
+    const dataPoints: ForeignDataPoint[] = [];
+    const skipped: Array<{ id: string; reason: string }> = [];
+
+    for (const release of releases) {
+      const holdings = parseBtcFromMfnTitle(release.title);
+      if (holdings === null) {
+        skipped.push({ id: release.date, reason: `No BTC holdings in title: "${release.title.slice(0, 60)}"` });
+        continue;
+      }
+
+      const cite = generateForeignCitation({
+        metric: 'holdings_native',
+        value: holdings,
+        unit: 'BTC',
+        filingSystem: 'mfn',
+        asOf: release.date,
+        accession: `MFN-${release.date}`,
+      });
+
+      dataPoints.push({
+        entityId: 'H100.ST',
+        metric: 'holdings_native',
+        value: holdings,
+        unit: 'BTC',
+        asOf: release.date,
+        reportedAt: release.date,
+        filingSystem: 'mfn',
+        accession: `MFN-${release.date}-${holdings}`,
+        sourceUrl: release.url,
+        sourceType: 'mfn_press_release',
+        citationQuote: cite.citation_quote,
+        citationSearchTerm: cite.citation_search_term,
+        method: 'mfn_title_parse',
+        confidence: 0.95,
+      });
+    }
+
+    // Keep only the most recent holding per date
+    const byDate = new Map<string, ForeignDataPoint>();
+    for (const dp of dataPoints) {
+      if (!byDate.has(dp.asOf) || dp.value > (byDate.get(dp.asOf)?.value ?? 0)) {
+        byDate.set(dp.asOf, dp);
+      }
+    }
+
+    results.push({
+      ticker: 'H100.ST',
+      filingSystem: 'mfn',
+      dataPoints: [...byDate.values()],
+      skipped,
+    });
+  } catch (err) {
+    results.push({
+      ticker: 'H100.ST',
+      filingSystem: 'mfn',
+      dataPoints: [],
+      skipped: [],
+      error: err instanceof Error ? err.message : String(err),
+    });
+  }
+
+  return results;
+}
+
 // ─── Main Handler ───────────────────────────────────────────────────────────
 
 const SYSTEM_FETCHERS: Record<string, () => Promise<ForeignFetcherResult[]>> = {
   tdnet: fetchTdnet,
   hkex: fetchHkex,
   amf: fetchAmf,
+  mfn: fetchMfn,
 };
 
 export async function GET(request: NextRequest) {
