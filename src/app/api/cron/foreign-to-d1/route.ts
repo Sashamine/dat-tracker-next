@@ -15,6 +15,7 @@
  * - BTCT Website (Canada): BTCT.V — BTC holdings + shares from btctcorp.com homepage
  * - Remixpoint Website (Japan): 3825.T — BTC holdings from remixpoint.co.jp/digital-asset/
  * - Luxxfolio Website (Canada): LUXFF — LTC holdings + shares from press releases
+ * - StrategyTracker API: 3350.T (Metaplanet) — real-time BTC holdings from data.strategytracker.com
  *
  * Usage:
  *   GET /api/cron/foreign-to-d1?manual=true
@@ -1017,6 +1018,86 @@ async function fetchLuxxfolioWebsite(): Promise<ForeignFetcherResult[]> {
   return results;
 }
 
+// ─── StrategyTracker Fetcher (Metaplanet + others) ──────────────────────────
+
+async function fetchStrategyTracker(): Promise<ForeignFetcherResult[]> {
+  const results: ForeignFetcherResult[] = [];
+
+  try {
+    const { fetchStrategyTrackerData, ST_TICKER_TO_ENTITY } = await import('@/lib/fetchers/strategytracker');
+
+    const data = await fetchStrategyTrackerData();
+    // Use the API timestamp as reportedAt, truncated to date
+    const reportedAt = data.timestamp.slice(0, 10);
+
+    // For now, only ingest Metaplanet — other companies have dedicated fetchers
+    // that provide higher-confidence data from primary regulatory sources.
+    const TARGET_ENTITIES = new Set(['3350.T']);
+
+    for (const [stTicker, stCompany] of Object.entries(data.companies)) {
+      const entityId = ST_TICKER_TO_ENTITY[stTicker];
+      if (!entityId || !TARGET_ENTITIES.has(entityId)) continue;
+
+      if (stCompany.holdings <= 0) continue;
+
+      const asOf = reportedAt; // StrategyTracker updates in real-time
+
+      const cite = generateForeignCitation({
+        metric: 'holdings_native',
+        value: stCompany.holdings,
+        unit: 'BTC',
+        filingSystem: 'strategytracker',
+        asOf,
+        accession: `ST-${stTicker}-${asOf}`,
+      });
+
+      const dataPoints: ForeignDataPoint[] = [{
+        entityId,
+        metric: 'holdings_native',
+        value: stCompany.holdings,
+        unit: 'BTC',
+        asOf,
+        reportedAt,
+        filingSystem: 'strategytracker',
+        accession: `ST-${stTicker}-${asOf}`,
+        sourceUrl: `https://analytics.metaplanet.jp`,
+        sourceType: 'third_party_tracker',
+        citationQuote: cite.citation_quote,
+        citationSearchTerm: cite.citation_search_term,
+        method: 'strategytracker_api',
+        confidence: 0.8, // Third-party aggregator, not primary source
+      }];
+
+      results.push({
+        ticker: entityId,
+        filingSystem: 'strategytracker',
+        dataPoints,
+        skipped: [],
+      });
+    }
+
+    // If no results produced for target entities, report empty
+    if (results.length === 0) {
+      results.push({
+        ticker: '3350.T',
+        filingSystem: 'strategytracker',
+        dataPoints: [],
+        skipped: [{ id: 'strategytracker', reason: 'No target companies found in API response' }],
+      });
+    }
+  } catch (err) {
+    results.push({
+      ticker: '3350.T',
+      filingSystem: 'strategytracker',
+      dataPoints: [],
+      skipped: [],
+      error: err instanceof Error ? err.message : String(err),
+    });
+  }
+
+  return results;
+}
+
 // ─── Main Handler ───────────────────────────────────────────────────────────
 
 const SYSTEM_FETCHERS: Record<string, () => Promise<ForeignFetcherResult[]>> = {
@@ -1030,6 +1111,7 @@ const SYSTEM_FETCHERS: Record<string, () => Promise<ForeignFetcherResult[]>> = {
   btct_website: fetchBtctWebsite,
   remixpoint_website: fetchRemixpointWebsite,
   luxxfolio_website: fetchLuxxfolioWebsite,
+  strategytracker: fetchStrategyTracker,
 };
 
 export async function GET(request: NextRequest) {
