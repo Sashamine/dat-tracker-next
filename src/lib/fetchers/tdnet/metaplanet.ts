@@ -51,6 +51,13 @@ export const METHOD = 'jp_tdnet_pdf' as const;
 export const BTC_METRIC = 'holdings_native' as const;
 export const BTC_METHOD = 'jp_tdnet_pdf_btc' as const;
 
+/** TDnet company codes: stock code + trailing 0 */
+export const TDNET_COMPANIES: Record<string, { code: string; name: string }> = {
+  '3350.T': { code: '33500', name: 'Metaplanet' },
+  '3189.T': { code: '31890', name: 'ANAP Holdings' },
+  '3825.T': { code: '38250', name: 'Remixpoint' },
+};
+
 const PREFERRED_TITLE_KEYWORDS: readonly string[] = [
   '決算短信',
   '発行済株式',
@@ -97,7 +104,7 @@ export interface ArtifactMeta {
 }
 
 export interface ShareDataPoint {
-  entityId: typeof ENTITY_ID;
+  entityId: string;
   metric: typeof METRIC;
   asOf: string;
   value: number;
@@ -178,7 +185,7 @@ async function fetchBytes(url: string): Promise<Buffer> {
   }
 }
 
-export async function fetchDailyListings(yyyymmdd: string): Promise<TdnetFilingEntry[]> {
+export async function fetchDailyListings(yyyymmdd: string, codes?: Set<string>): Promise<TdnetFilingEntry[]> {
   const url = DAILY_LIST_URL(yyyymmdd);
 
   let htmlBytes = cacheRead(url, HTML_CACHE_TTL_MS);
@@ -192,10 +199,11 @@ export async function fetchDailyListings(yyyymmdd: string): Promise<TdnetFilingE
     }
   }
 
-  return parseListingHtml(htmlBytes.toString('utf8'));
+  return parseListingHtml(htmlBytes.toString('utf8'), codes);
 }
 
-function parseListingHtml(html: string): TdnetFilingEntry[] {
+function parseListingHtml(html: string, codes?: Set<string>): TdnetFilingEntry[] {
+  const filterCodes = codes ?? new Set([METAPLANET_TDNET_CODE]);
   const entries: TdnetFilingEntry[] = [];
 
   const ROW_RE = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
@@ -217,7 +225,7 @@ function parseListingHtml(html: string): TdnetFilingEntry[] {
     const rawTime = stripTags(cells[0]).trim();
     const titleCell = cells[3] ?? '';
 
-    if (rawCode !== METAPLANET_TDNET_CODE) continue;
+    if (!filterCodes.has(rawCode)) continue;
 
     const hrefMatch = HREF_RE.exec(titleCell);
     if (!hrefMatch) continue;
@@ -244,7 +252,12 @@ function stripTags(html: string): string {
   return html.replace(/<[^>]+>/g, '');
 }
 
-export async function findMetaplanetFilings(startDate: Date, endDate: Date): Promise<TdnetFilingEntry[]> {
+/**
+ * Scan TDnet daily listing pages for filings matching any of the given codes.
+ * When multiple companies share the same date range, this is efficient because
+ * each daily page is fetched only once and filtered for all codes.
+ */
+export async function findFilings(codes: Set<string>, startDate: Date, endDate: Date): Promise<TdnetFilingEntry[]> {
   const results: TdnetFilingEntry[] = [];
   const seen = new Set<string>();
   const cursor = new Date(startDate);
@@ -252,7 +265,7 @@ export async function findMetaplanetFilings(startDate: Date, endDate: Date): Pro
   while (cursor <= endDate) {
     const yyyymmdd = toYYYYMMDD(cursor);
     try {
-      const day = await fetchDailyListings(yyyymmdd);
+      const day = await fetchDailyListings(yyyymmdd, codes);
       for (const entry of day) {
         if (!seen.has(entry.pdfUrl)) {
           seen.add(entry.pdfUrl);
@@ -266,6 +279,10 @@ export async function findMetaplanetFilings(startDate: Date, endDate: Date): Pro
   }
 
   return results;
+}
+
+export async function findMetaplanetFilings(startDate: Date, endDate: Date): Promise<TdnetFilingEntry[]> {
+  return findFilings(new Set([METAPLANET_TDNET_CODE]), startDate, endDate);
 }
 
 export function scoreFilingForShares(entry: TdnetFilingEntry): number {
@@ -301,7 +318,7 @@ export interface BtcExtraction {
 }
 
 export interface BtcHoldingsDataPoint {
-  entityId: typeof ENTITY_ID;
+  entityId: string;
   metric: typeof BTC_METRIC;
   asOf: string;
   value: number;
@@ -486,7 +503,8 @@ export function parseBtcHoldings(text: string): BtcExtraction {
   return { candidates };
 }
 
-export async function ingestFromUrls(entries: TdnetFilingEntry[]): Promise<ExtractionResult> {
+export async function ingestFromUrls(entries: TdnetFilingEntry[], entityId?: string): Promise<ExtractionResult> {
+  const entity = entityId ?? ENTITY_ID;
   const dataPoints: ShareDataPoint[] = [];
   const btcDataPoints: BtcHoldingsDataPoint[] = [];
   const skipped: Array<{ pdfUrl: string; reason: string }> = [];
@@ -542,7 +560,7 @@ export async function ingestFromUrls(entries: TdnetFilingEntry[]): Promise<Extra
       })[0];
 
       const dp: ShareDataPoint = {
-        entityId: ENTITY_ID,
+        entityId: entity as typeof ENTITY_ID,
         metric: METRIC,
         asOf: periodEnd,
         value: best.value,
@@ -568,7 +586,7 @@ export async function ingestFromUrls(entries: TdnetFilingEntry[]): Promise<Extra
       })[0];
 
       const btcDp: BtcHoldingsDataPoint = {
-        entityId: ENTITY_ID,
+        entityId: entity as typeof ENTITY_ID,
         metric: BTC_METRIC,
         asOf: periodEnd,
         value: bestBtc.value,
