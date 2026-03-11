@@ -60,6 +60,8 @@ export const METAPLANET_TDNET_CODE = '33500';
 export const ENTITY_ID = '3350.T';
 export const METRIC = 'basic_shares' as const;
 export const METHOD = 'jp_tdnet_pdf' as const;
+export const BTC_METRIC = 'holdings_native' as const;
+export const BTC_METHOD = 'jp_tdnet_pdf_btc' as const;
 
 const PREFERRED_TITLE_KEYWORDS: readonly string[] = [
   '決算短信',
@@ -119,6 +121,7 @@ export interface ShareDataPoint {
 
 export interface ExtractionResult {
   dataPoints: ShareDataPoint[];
+  btcDataPoints: BtcHoldingsDataPoint[];
   skipped: Array<{ pdfUrl: string; reason: string }>;
 }
 
@@ -303,6 +306,21 @@ export interface PdfExtraction {
   periodEndNote: string;
 }
 
+export interface BtcExtraction {
+  candidates: Array<{ value: number; label: string; context: string; confidence: 'high' | 'medium' }>;
+}
+
+export interface BtcHoldingsDataPoint {
+  entityId: typeof ENTITY_ID;
+  metric: typeof BTC_METRIC;
+  asOf: string;
+  value: number;
+  method: typeof BTC_METHOD;
+  sourceUrl: string;
+  artifact: ArtifactMeta;
+  asOfNote: string;
+}
+
 async function extractPdfText(pdfBytes: Buffer): Promise<string> {
   const pdfParse = loadPdfParse();
   const result = await pdfParse(pdfBytes);
@@ -403,12 +421,89 @@ export function parsePdfText(text: string, titleHint = ''): PdfExtraction {
   return { candidates, periodEnd, periodEndNote };
 }
 
+/**
+ * Parse BTC holdings from Japanese financial filing text.
+ *
+ * Metaplanet's earnings reports (決算短信) and TDnet disclosures mention
+ * Bitcoin holdings in patterns like:
+ * - "ビットコイン 35,102 BTC"
+ * - "暗号資産 ビットコイン 35,102BTC"
+ * - "BTC保有数 35,102"
+ * - "35,102 BTC" (generic)
+ * - "ビットコイン（BTC）保有数量：35,102"
+ *
+ * Also handles Metaplanet's operational update disclosures (適時開示)
+ * which mention purchase amounts and total holdings.
+ */
+export function parseBtcHoldings(text: string): BtcExtraction {
+  const candidates: BtcExtraction['candidates'] = [];
+
+  // Pattern 1: "X,XXX BTC" or "X,XXX BTC" near ビットコイン/暗号資産 context
+  // Look in a window around Bitcoin-related keywords
+  const BTC_KEYWORDS = ['ビットコイン', '暗号資産', 'Bitcoin', 'BTC保有', 'BTC残高'];
+  for (const keyword of BTC_KEYWORDS) {
+    let searchFrom = 0;
+    while (true) {
+      const idx = text.indexOf(keyword, searchFrom);
+      if (idx === -1) break;
+      searchFrom = idx + keyword.length;
+
+      // Search in a window after the keyword
+      const window = text.slice(idx, idx + 500);
+
+      // Match "X,XXX BTC" or "X,XXX.XX BTC"
+      const BTC_NUM_RE = /(\d[\d,]+(?:\.\d+)?)\s*BTC/g;
+      let m: RegExpExecArray | null;
+      while ((m = BTC_NUM_RE.exec(window)) !== null) {
+        const raw = m[1].replace(/,/g, '');
+        const n = parseFloat(raw);
+        // Sanity: Metaplanet holds thousands of BTC; filter out prices/small values
+        if (!isFinite(n) || n < 100 || n > 10_000_000) continue;
+
+        const contextStart = Math.max(0, m.index - 40);
+        const ctx = window.slice(contextStart, m.index + m[0].length + 20);
+
+        // Higher confidence if near 保有 (holdings), 合計 (total), or 総数 (total count)
+        const isHoldings = /保有|合計|総数|total/i.test(ctx);
+        candidates.push({
+          value: n,
+          label: isHoldings ? 'BTC保有数（合計）' : 'BTC',
+          context: ctx.replace(/\s+/g, ' ').trim(),
+          confidence: isHoldings ? 'high' : 'medium',
+        });
+      }
+    }
+  }
+
+  // Pattern 2: Standalone "X,XXX BTC" not near keywords (fallback)
+  if (candidates.length === 0) {
+    const STANDALONE_RE = /(\d[\d,]+)\s*BTC/g;
+    let m: RegExpExecArray | null;
+    while ((m = STANDALONE_RE.exec(text)) !== null) {
+      const raw = m[1].replace(/,/g, '');
+      const n = parseInt(raw, 10);
+      if (!isFinite(n) || n < 100 || n > 10_000_000) continue;
+      const ctx = text.slice(Math.max(0, m.index - 40), m.index + m[0].length + 20);
+      candidates.push({
+        value: n,
+        label: 'BTC (standalone)',
+        context: ctx.replace(/\s+/g, ' ').trim(),
+        confidence: 'medium',
+      });
+    }
+  }
+
+  return { candidates };
+}
+
 export async function ingestFromUrls(entries: TdnetFilingEntry[]): Promise<ExtractionResult> {
   const dataPoints: ShareDataPoint[] = [];
+  const btcDataPoints: BtcHoldingsDataPoint[] = [];
   const skipped: Array<{ pdfUrl: string; reason: string }> = [];
 
   const sorted = [...entries].sort((a, b) => scoreFilingForShares(b) - scoreFilingForShares(a));
-  const byAsOf = new Map<string, ShareDataPoint>();
+  const sharesByAsOf = new Map<string, ShareDataPoint>();
+  const btcByAsOf = new Map<string, BtcHoldingsDataPoint>();
 
   for (const entry of sorted) {
     const score = scoreFilingForShares(entry);
@@ -434,52 +529,75 @@ export async function ingestFromUrls(entries: TdnetFilingEntry[]): Promise<Extra
     }
 
     const extraction = parsePdfText(text, entry.title);
-
-    if (extraction.candidates.length === 0) {
-      skipped.push({ pdfUrl: entry.pdfUrl, reason: 'No share count found in PDF text' });
-      continue;
-    }
-
-    if (!extraction.periodEnd) {
-      skipped.push({
-        pdfUrl: entry.pdfUrl,
-        reason: 'Could not determine period-end date. Hint: try providing an explicit date via --override-date',
-      });
-      continue;
-    }
-
-    const best = extraction.candidates.sort((a, b) => {
-      if (a.confidence !== b.confidence) return a.confidence === 'high' ? -1 : 1;
-      return b.value - a.value;
-    })[0];
+    const btcExtraction = parseBtcHoldings(text);
 
     const contentHash = crypto.createHash('md5').update(pdfBytes).digest('hex');
     const artifactId = crypto.createHash('sha256').update(`tdnet:${entry.pdfUrl}`).digest('hex').slice(0, 32);
 
-    const dp: ShareDataPoint = {
-      entityId: ENTITY_ID,
-      metric: METRIC,
-      asOf: extraction.periodEnd,
-      value: best.value,
-      method: METHOD,
-      sourceUrl: entry.pdfUrl,
-      artifact: {
-        artifactId,
-        pdfUrl: entry.pdfUrl,
-        publishedAt: entry.publishedAt,
-        contentHash,
-      },
-      asOfNote: extraction.periodEndNote,
+    const artifactMeta: ArtifactMeta = {
+      artifactId,
+      pdfUrl: entry.pdfUrl,
+      publishedAt: entry.publishedAt,
+      contentHash,
     };
 
-    const existing = byAsOf.get(extraction.periodEnd);
-    if (!existing || best.confidence === 'high') {
-      byAsOf.set(extraction.periodEnd, dp);
+    // Extract period end (needed for both share and BTC data points)
+    const periodEnd = extraction.periodEnd;
+
+    // Share extraction (existing logic)
+    if (extraction.candidates.length > 0 && periodEnd) {
+      const best = [...extraction.candidates].sort((a, b) => {
+        if (a.confidence !== b.confidence) return a.confidence === 'high' ? -1 : 1;
+        return b.value - a.value;
+      })[0];
+
+      const dp: ShareDataPoint = {
+        entityId: ENTITY_ID,
+        metric: METRIC,
+        asOf: periodEnd,
+        value: best.value,
+        method: METHOD,
+        sourceUrl: entry.pdfUrl,
+        artifact: artifactMeta,
+        asOfNote: extraction.periodEndNote,
+      };
+
+      const existing = sharesByAsOf.get(periodEnd);
+      if (!existing || best.confidence === 'high') {
+        sharesByAsOf.set(periodEnd, dp);
+      }
+    } else if (extraction.candidates.length === 0) {
+      skipped.push({ pdfUrl: entry.pdfUrl, reason: 'No share count found in PDF text' });
+    }
+
+    // BTC holdings extraction (new)
+    if (btcExtraction.candidates.length > 0 && periodEnd) {
+      const bestBtc = [...btcExtraction.candidates].sort((a, b) => {
+        if (a.confidence !== b.confidence) return a.confidence === 'high' ? -1 : 1;
+        return b.value - a.value; // Prefer largest value (total holdings)
+      })[0];
+
+      const btcDp: BtcHoldingsDataPoint = {
+        entityId: ENTITY_ID,
+        metric: BTC_METRIC,
+        asOf: periodEnd,
+        value: bestBtc.value,
+        method: BTC_METHOD,
+        sourceUrl: entry.pdfUrl,
+        artifact: artifactMeta,
+        asOfNote: `BTC: ${bestBtc.label} — ${btcExtraction.candidates.length} candidate(s) in PDF`,
+      };
+
+      const existingBtc = btcByAsOf.get(periodEnd);
+      if (!existingBtc || bestBtc.confidence === 'high') {
+        btcByAsOf.set(periodEnd, btcDp);
+      }
     }
   }
 
-  dataPoints.push(...byAsOf.values());
-  return { dataPoints, skipped };
+  dataPoints.push(...sharesByAsOf.values());
+  btcDataPoints.push(...btcByAsOf.values());
+  return { dataPoints, btcDataPoints, skipped };
 }
 
 export async function ingestByDateRange(opts: { startDate: Date; endDate: Date }): Promise<ExtractionResult> {
@@ -494,7 +612,7 @@ export async function ingestByDateRange(opts: { startDate: Date; endDate: Date }
   const endDate = new Date(Math.min(opts.endDate.getTime(), today.getTime()));
 
   if (startDate > endDate) {
-    return { dataPoints: [], skipped: [{ pdfUrl: '', reason: `TDnet date-range clamped to last ${LOOKBACK_DAYS} days; requested range too old` }] };
+    return { dataPoints: [], btcDataPoints: [], skipped: [{ pdfUrl: '', reason: `TDnet date-range clamped to last ${LOOKBACK_DAYS} days; requested range too old` }] };
   }
 
   const filings = await findMetaplanetFilings(startDate, endDate);
