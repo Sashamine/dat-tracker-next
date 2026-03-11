@@ -284,10 +284,10 @@ Separate page (`/analytics`) with four sector-level charts.
 **Goal:** Bring foreign companies to the same citation quality as SEC-covered companies — automated document fetch, data extraction, and D1 ingestion with full provenance.
 
 **Current state (updated 2026-03-11):**
-- 7 systems fully automated: AMF, HKEX, TDnet, MFN, ASX, LSE RNS — live in D1 via `/api/cron/foreign-to-d1`
+- 8 systems fully automated: AMF, HKEX, TDnet, MFN, ASX, LSE RNS, CVM — live in D1 via `/api/cron/foreign-to-d1`
 - Cron runs daily at 8:00 UTC (vercel.json)
 - Shared infrastructure: `ForeignDataPoint` type, `ingestForeignDataPoints()`, proposal key dedup
-- Remaining: EDINET XBRL (Japan 3825.T, 3189.T), SEDAR+ (Canada), CVM (BR), BaFin (DE)
+- Remaining: EDINET XBRL (Japan 3825.T, 3189.T), SEDAR+ (Canada), BaFin (DE)
 
 **Company inventory by filing system:**
 
@@ -301,7 +301,7 @@ Separate page (`/analytics`) with four sector-level charts.
 | **ASX** (Australia) | DCC.AX | **Automated** — BTC from treasury information PDFs |
 | **LSE RNS** (UK) | SWC | **Automated** — BTC from Bitcoin Purchase RNS via InvestEgate |
 | **SEDAR+** (Canada) | ETHM, BTCT.V, XTAIF, LUXFF | Calendar check only, needs Playwright |
-| **CVM/B3** (Brazil) | OBTC3 | No automation (CSV index + Portuguese PDFs) |
+| **CVM/B3** (Brazil) | OBTC3 | **Automated** — BTC + shares from Comunicado ao Mercado PDFs |
 | **BaFin/DGAP** (Germany) | SRAG.DU | No automation (press releases don't contain BTC counts) |
 
 #### 4.3a Extraction Layer for Existing Fetchers (Quick wins)
@@ -359,10 +359,11 @@ Extend AMF model to Swedish and German regulators.
   - API: `asx.api.markitdigital.com/asx-research/1.0/companies/{code}/announcements`
   - PDFs: `asx.api.markitdigital.com/asx-research/1.0/file/{documentKey}?type=pdf`
   - Extracts: direct BTC, BTXX ETF BTC, total exposure, sats-per-share, period-end date
-- [ ] **CVM/B3 fetcher** (Brazil, OBTC3): Monitor CVM for OranjeBTC filings
-  - CVM uses CKAN API with CSV filing indexes + PDF documents in Portuguese
-  - Index: `dados.cvm.gov.br/dados/CIA_ABERTA/DOC/IPE/DADOS/ipe_cia_aberta_{year}.csv`
-  - PDFs via RAD/ENET download URL with protocol/sequence numbers
+- [x] **CVM/B3 fetcher** (Brazil, OBTC3): `cvm.ts` — ZIP/CSV index + Portuguese PDF extraction
+  - Index: `dados.cvm.gov.br/dados/CIA_ABERTA/DOC/IPE/DADOS/ipe_cia_aberta_{year}.zip`
+  - Custom ZIP extraction using DecompressionStream (no external library)
+  - Extracts: total BTC, shares outstanding, BTC acquired, BTC yield, period dates
+  - Brazilian number format: `.` = thousands, `,` = decimal
 
 **DoD:**
 - All 13 foreign companies have automated document fetch and extraction
