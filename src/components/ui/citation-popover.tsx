@@ -99,7 +99,7 @@ export function CitationPopover({
     >
       <button
         type="button"
-        onClick={() => setOpen(v => !v)}
+        onClick={(e) => { e.stopPropagation(); setOpen(v => !v); }}
         className={cn(
           "inline-flex items-center gap-1 transition-all rounded px-0.5 -mx-0.5",
           isLowConfidence 
@@ -117,7 +117,7 @@ export function CitationPopover({
       </button>
 
       {open && sourceUrl && (
-        <div className="absolute right-0 top-full z-50 mt-2 w-72 rounded-lg border border-gray-200 bg-white p-3 text-xs shadow-xl dark:border-gray-700 dark:bg-gray-900 animate-in fade-in zoom-in duration-100">
+        <div onClick={(e) => e.stopPropagation()} className="absolute right-0 top-full z-50 mt-2 w-72 rounded-lg border border-gray-200 bg-white p-3 text-xs shadow-xl dark:border-gray-700 dark:bg-gray-900 animate-in fade-in zoom-in duration-100">
           <div className="mb-2 flex items-center justify-between gap-2">
             <span className="font-semibold text-gray-900 dark:text-gray-100">Citation</span>
             {jurisdiction ? (
@@ -171,7 +171,8 @@ export function CitationPopover({
               })()}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 trackCitationSourceClick({ href: sourceUrl, ticker, metric });
                 setOpen(false);
               }}
