@@ -283,27 +283,26 @@ Separate page (`/analytics`) with four sector-level charts.
 
 **Goal:** Bring foreign companies to the same citation quality as SEC-covered companies — automated document fetch, data extraction, and D1 ingestion with full provenance.
 
-**Current state:**
-- 13 foreign companies across 7 filing systems
-- Tier 2 (document-only fetchers): EDINET, HKEX — download filings to R2 but no data extraction
-- Tier 3 (manual only): SEDAR+, LSE RNS, ASX, CVM/B3, MFN — no automation at all
-- AMF fetcher is the only one with full extraction (ALTBG/ALCPB)
-- TDnet/Metaplanet fetcher does dashboard scraping (not regulatory filings)
-- All foreign holdings currently come from `companies.ts` backfill with synthetic accessions
+**Current state (updated 2026-03-11):**
+- 4 systems fully automated: AMF, HKEX, TDnet, MFN — live in D1 via `/api/cron/foreign-to-d1`
+- Cron runs daily at 8:00 UTC (vercel.json)
+- Shared infrastructure: `ForeignDataPoint` type, `ingestForeignDataPoints()`, proposal key dedup
+- Remaining: EDINET XBRL (Japan 3825.T, 3189.T), SEDAR+ (Canada), LSE RNS (UK), ASX (AU), CVM (BR), BaFin (DE)
 
 **Company inventory by filing system:**
 
-| System | Companies | Existing Code | Status |
-|--------|-----------|---------------|--------|
-| **EDINET/TDnet** (Japan) | 3350.T, 3825.T, 3189.T | `edinet.ts`, `tdnet/metaplanet.ts`, `edinet-fetch` cron | Fetch-only, no extraction |
-| **HKEX** (Hong Kong) | 0434.HK | `hkex.ts`, `hkex-search.ts`, `hkex-pdf-extractor.ts`, `hkex-fetch` cron | Fetch-only, PDF text exists |
-| **AMF** (France) | ALCPB | `amf.ts` | **Full pipeline** (model for others) |
-| **SEDAR+** (Canada) | ETHM, BTCT.V, XTAIF, LUXFF | `sedar-check` cron (metadata only) | Calendar check only, no download |
-| **MFN** (Sweden) | H100.ST | None | No automation |
-| **LSE RNS** (UK) | SWC | None | No automation |
-| **ASX** (Australia) | DCC.AX | None | No automation |
-| **CVM/B3** (Brazil) | OBTC3 | None | No automation |
-| **BaFin/DGAP** (Germany) | SRAG.DU | None | No automation |
+| System | Companies | Status |
+|--------|-----------|--------|
+| **TDnet** (Japan) | 3350.T | **Automated** — shares + BTC from earnings PDFs |
+| **EDINET** (Japan) | 3825.T, 3189.T | Fetch-only, no extraction |
+| **HKEX** (Hong Kong) | 0434.HK | **Automated** — BTC from filing PDFs (R2 cache) |
+| **AMF** (France) | ALCPB | **Automated** — BTC from filing titles |
+| **MFN** (Sweden) | H100.ST | **Automated** — BTC from press release titles |
+| **SEDAR+** (Canada) | ETHM, BTCT.V, XTAIF, LUXFF | Calendar check only, no download |
+| **LSE RNS** (UK) | SWC | No automation |
+| **ASX** (Australia) | DCC.AX | No automation |
+| **CVM/B3** (Brazil) | OBTC3 | No automation |
+| **BaFin/DGAP** (Germany) | SRAG.DU | No automation (press releases don't contain BTC counts) |
 
 #### 4.3a Extraction Layer for Existing Fetchers (Quick wins)
 
@@ -313,15 +312,9 @@ Extend fetchers that already download documents to also extract holdings data.
 - [ ] **EDINET extraction**: Parse XBRL inline docs for BTC holdings (3350.T, 3825.T, 3189.T)
   - EDINET returns XBRL — similar structure to SEC, adapt existing XBRL parser
   - JP-GAAP taxonomy differs from US-GAAP; map relevant tags
-- [ ] **HKEX extraction**: Extract holdings from downloaded PDFs (0434.HK)
-  - `hkex-pdf-extractor.ts` already does text extraction
-  - Add regex/LLM layer to pull BTC count from extracted text
-- [ ] **TDnet structured extraction**: Replace Metaplanet dashboard scrape with TDnet filing parse
-  - TDnet disclosures are the regulatory source; dashboard is derivative
-  - Parse "適時開示" (timely disclosure) PDFs for holdings figures
-- [ ] **Unified foreign extraction interface**: Standard output format matching D1 datapoint schema
-  - `{ ticker, metric, value, asOf, accession, sourceUrl, sourceType, quote, searchTerm }`
-  - Reuse `batch-holdings-update.ts` pattern for D1 ingestion
+- [x] **HKEX extraction**: `hkex-btc-extractor.ts` — regex patterns for "units of BTC", R2 cache fallback for geo-blocking
+- [x] **TDnet structured extraction**: `parseBtcHoldings()` in `tdnet/metaplanet.ts` — shares + BTC from earnings PDFs
+- [x] **Unified foreign extraction interface**: `foreign-extraction.ts` — `ForeignDataPoint`, `ingestForeignDataPoints()`, `generateForeignCitation()`
 
 **DoD:**
 - Japan (3) and Hong Kong (1) companies have automated extraction with real accessions
@@ -347,8 +340,7 @@ Build document fetcher for Canadian companies (4 tickers).
 Extend AMF model to Swedish and German regulators.
 
 **Deliverables:**
-- [ ] **MFN fetcher** (Sweden, H100.ST): Monitor Modular Finance news feed for Hashdex filings
-  - MFN provides structured press releases; parse for NAV/holdings data
+- [x] **MFN fetcher** (Sweden, H100.ST): `mfn.ts` — scrapes mfn.se HTML, parses BTC from titles
 - [ ] **BaFin/DGAP fetcher** (Germany, SRAG.DU): Monitor DGAP ad-hoc disclosures
   - DGAP (Deutsche Gesellschaft für Ad-hoc-Publizität) publishes via EQS newswire
   - Parse for BTC holdings from annual/quarterly reports
@@ -374,10 +366,10 @@ Extend AMF model to Swedish and German regulators.
 #### 4.3e Foreign Cron Orchestration
 
 **Deliverables:**
-- [ ] **Unified foreign cron**: Single `/api/cron/foreign-filings` endpoint that dispatches to all fetchers
-  - Run daily (foreign filings are less frequent than SEC)
-  - Each fetcher checks for new documents since last run
-  - Extracted data flows into D1 as `candidate` datapoints (same as XBRL cron)
+- [x] **Unified foreign cron**: `/api/cron/foreign-to-d1` — dispatches to tdnet, hkex, amf, mfn
+  - Runs daily at 8:00 UTC (vercel.json)
+  - Each fetcher produces `ForeignDataPoint[]`, ingested via `ingestForeignDataPoints()`
+  - Proposal key deduplication prevents duplicate inserts
 - [ ] **Citation parity**: Foreign datapoints have same citation quality as SEC
   - Real accession numbers (regulatory filing IDs, not synthetic `REG-` prefixes)
   - Source documents in R2
