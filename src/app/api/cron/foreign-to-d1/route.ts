@@ -257,6 +257,8 @@ async function fetchHkex(): Promise<ForeignFetcherResult[]> {
         citationSearchTerm: cite.citation_search_term,
         method: 'hkex_pdf_regex',
         confidence: 0.85,
+        sourceBytes: new Uint8Array(pdfBuf),
+        sourceContentType: 'application/pdf',
       });
     }
 
@@ -602,6 +604,8 @@ async function fetchAsx(): Promise<ForeignFetcherResult[]> {
         citationSearchTerm: cite.citation_search_term,
         method: 'asx_pdf_regex',
         confidence: 0.95,
+        sourceBytes: new Uint8Array(pdfBuf),
+        sourceContentType: 'application/pdf',
       });
     }
 
@@ -711,6 +715,8 @@ async function fetchCvm(): Promise<ForeignFetcherResult[]> {
         citationSearchTerm: cite.citation_search_term,
         method: 'cvm_pdf_regex',
         confidence: 0.95,
+        sourceBytes: new Uint8Array(pdfBuf),
+        sourceContentType: 'application/pdf',
       });
 
       // Also ingest shares if available
@@ -739,6 +745,8 @@ async function fetchCvm(): Promise<ForeignFetcherResult[]> {
           citationSearchTerm: sharesCite.citation_search_term,
           method: 'cvm_pdf_regex',
           confidence: 0.9,
+          sourceBytes: new Uint8Array(pdfBuf),
+          sourceContentType: 'application/pdf',
         });
       }
     }
