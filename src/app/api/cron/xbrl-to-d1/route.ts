@@ -10,6 +10,7 @@ import { extractXBRLData } from '@/lib/sec/xbrl-extractor';
 import { D1Client } from '@/lib/d1';
 import { sendDiscordChannelMessage } from '@/lib/notifications/discord-channel';
 import { generateXbrlCitation } from '@/lib/utils/citation';
+import { ensureFilingInR2 } from '@/lib/sec/filing-downloader';
 import crypto from 'node:crypto';
 
 function verifyCronSecret(request: NextRequest): boolean {
@@ -388,6 +389,24 @@ export async function GET(request: NextRequest) {
         } else {
           datapointsUpdated += 1;
         }
+      }
+    }
+
+    // Ensure the filing document is in R2 for the filing viewer
+    if (!dryRun && accn && x.cik && (datapointsInserted > 0 || datapointsUpdated > 0)) {
+      try {
+        const dlResult = await ensureFilingInR2({
+          ticker,
+          accession: accn,
+          cik: x.cik,
+          artifactId,
+          d1,
+        });
+        if (dlResult.status === 'downloaded') {
+          console.log(`[XBRL→D1] ${ticker}: Filing downloaded to R2: ${dlResult.r2Key}`);
+        }
+      } catch (err) {
+        console.warn(`[XBRL→D1] ${ticker}: Filing download failed (non-blocking):`, err);
       }
     }
 
