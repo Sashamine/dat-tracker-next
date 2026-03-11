@@ -65,6 +65,7 @@ const TICKER_CIKS: Record<string, string> = {
   smlr: "1564590",
   sq: "1628280",
   wulf: "1083301",
+  bitf: "1710350",
 };
 
 /**
