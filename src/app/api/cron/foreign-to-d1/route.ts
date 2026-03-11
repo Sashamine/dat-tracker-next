@@ -148,10 +148,25 @@ async function fetchHkex(): Promise<ForeignFetcherResult[]> {
     const dataPoints: ForeignDataPoint[] = [];
     const skipped: Array<{ id: string; reason: string }> = [];
 
+    const R2_BASE = 'https://pub-1e4356c7aea34102aad6e3493b0c62f1.r2.dev';
+
     for (const filing of filings.slice(0, 3)) { // Check last 3 filings
-      const pdfBuf = await fetchFilingPdf(filing.url);
+      // Try R2 cache first (HKEX geo-blocks Vercel's US servers)
+      const stockCode = filing.stockCode.replace(/^0+/, '') || filing.stockCode;
+      const r2Url = `${R2_BASE}/hkex/${stockCode}/${filing.docId}.pdf`;
+      let pdfBuf: ArrayBuffer | null = null;
+      try {
+        const r2Res = await fetch(r2Url);
+        if (r2Res.ok) {
+          pdfBuf = await r2Res.arrayBuffer();
+        }
+      } catch { /* fall through to direct fetch */ }
+
       if (!pdfBuf) {
-        skipped.push({ id: filing.docId, reason: 'Failed to fetch PDF' });
+        pdfBuf = await fetchFilingPdf(filing.url);
+      }
+      if (!pdfBuf) {
+        skipped.push({ id: filing.docId, reason: 'Failed to fetch PDF from R2 and HKEX' });
         continue;
       }
 
@@ -178,10 +193,7 @@ async function fetchHkex(): Promise<ForeignFetcherResult[]> {
       const extraction = parseHkexBtcHoldings(text);
 
       if (extraction.candidates.length === 0) {
-        // Include text snippet for debugging
-        const snippet = text.slice(0, 500).replace(/\s+/g, ' ');
-        const btcMentions = (text.match(/btc|bitcoin/gi) || []).length;
-        skipped.push({ id: filing.docId, reason: `No BTC holdings found in PDF text (len=${text.length}, btcMentions=${btcMentions}, snippet=${snippet.slice(0, 200)})` });
+        skipped.push({ id: filing.docId, reason: 'No BTC holdings found in PDF text' });
         continue;
       }
 
