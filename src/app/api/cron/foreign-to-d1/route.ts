@@ -49,10 +49,10 @@ async function fetchTdnet(): Promise<ForeignFetcherResult[]> {
 
     const endDate = new Date();
     const startDate = new Date();
-    // TDnet has ~45 days of listings, but scraping is slow (2s rate limit per day).
-    // Use 14 days for cron to stay within Vercel timeout. For broader scans, use
-    // the TDnet ingestByDateRange directly with a longer window.
-    startDate.setDate(startDate.getDate() - 14);
+    // TDnet has ~45 days of listings, but scraping is slow (2s rate limit + retries).
+    // Use 7 days for cron to stay within Vercel 120s timeout. Earnings are quarterly
+    // so 7 days is sufficient for catching new filings.
+    startDate.setDate(startDate.getDate() - 7);
 
     const extraction = await ingestByDateRange({ startDate, endDate });
 

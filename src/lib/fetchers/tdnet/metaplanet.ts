@@ -29,28 +29,16 @@ import * as path from 'node:path';
 import * as crypto from 'node:crypto';
 import * as os from 'node:os';
 
-import { createRequire } from 'node:module';
-const _require = createRequire(import.meta.url);
-
-function loadPdfParse(): (buf: Buffer) => Promise<{ text: string }> {
-  try {
-    const mod = _require('pdf-parse');
-    // pdf-parse has changed exports across versions; support both shapes.
-    if (typeof mod === 'function') return mod;
-    if (mod && typeof mod.default === 'function') return mod.default;
-    if (mod && typeof mod.PDFParse === 'function') {
-      return async (buf: Buffer) => {
-        const p = new mod.PDFParse(new Uint8Array(buf));
-        await p.load();
-        const out = await p.getText();
-        const text = typeof out === 'string' ? out : (out?.text ?? '');
-        return { text };
-      };
-    }
-    throw new Error('pdf-parse export shape not recognized');
-  } catch {
-    throw new Error('Missing dependency: run `npm install pdf-parse @types/pdf-parse`');
+async function loadPdfParse(): Promise<(buf: Buffer) => Promise<{ text: string }>> {
+  // Import inner module directly to skip index.js test file side effect.
+  // pdf-parse is externalized via serverExternalPackages in next.config.ts.
+  // @ts-expect-error - pdf-parse/lib/pdf-parse has no type declarations
+  const mod = await import('pdf-parse/lib/pdf-parse');
+  const fn = typeof mod === 'function' ? mod : mod.default;
+  if (typeof fn !== 'function') {
+    throw new Error(`pdf-parse export shape not recognized: ${typeof fn}`);
   }
+  return fn;
 }
 
 export const TDNET_BASE = 'https://www.release.tdnet.info';
@@ -173,6 +161,8 @@ async function fetchBytes(url: string): Promise<Buffer> {
       return Buffer.from(await res.arrayBuffer());
     } catch (err) {
       clearTimeout(timer);
+      // 404 on daily listing pages = weekend/holiday, not transient — don't retry
+      if (err instanceof FetchError && err.status === 404) throw err;
       attempt++;
       if (attempt >= MAX_RETRY_ATTEMPTS) throw err;
 
@@ -322,7 +312,7 @@ export interface BtcHoldingsDataPoint {
 }
 
 async function extractPdfText(pdfBytes: Buffer): Promise<string> {
-  const pdfParse = loadPdfParse();
+  const pdfParse = await loadPdfParse();
   const result = await pdfParse(pdfBytes);
   return result.text;
 }
