@@ -64,6 +64,7 @@ import {
   writeSecFilingHoldingsNativeDatapoint,
   type SecFilingHoldingsNativeWriteResult,
 } from '@/lib/d1/sec-filing-holdings-native';
+import { ensureFilingInR2 } from '@/lib/sec/filing-downloader';
 
 // Path to companies.ts (relative to project root)
 const COMPANIES_FILE = 'src/lib/data/companies.ts';
@@ -700,6 +701,30 @@ async function processCompanyHybrid(
           `[SEC Update] ${ticker}: D1 holdings_native ${d1HoldingsNativeWrite.status}` +
           `${d1HoldingsNativeWrite.proposalKey ? ` (${d1HoldingsNativeWrite.proposalKey.slice(0, 12)}...)` : ''}`
         );
+
+        // Download filing document to R2 for the filing viewer (non-blocking)
+        if (
+          (d1HoldingsNativeWrite.status === 'inserted' || d1HoldingsNativeWrite.status === 'updated') &&
+          finalAccession &&
+          d1HoldingsNativeWrite.artifactId
+        ) {
+          try {
+            const dlResult = await ensureFilingInR2({
+              ticker,
+              accession: finalAccession,
+              cik,
+              artifactId: d1HoldingsNativeWrite.artifactId,
+              d1,
+            });
+            if (dlResult.status === 'downloaded') {
+              console.log(`[SEC Update] ${ticker}: Filing downloaded to R2: ${dlResult.r2Key}`);
+            } else if (dlResult.status !== 'skipped') {
+              console.log(`[SEC Update] ${ticker}: Filing download ${dlResult.status}: ${dlResult.reason}`);
+            }
+          } catch (err) {
+            console.warn(`[SEC Update] ${ticker}: Filing download failed (non-blocking):`, err);
+          }
+        }
       }
     }
 
