@@ -11,6 +11,7 @@
  * - MFN (Sweden): H100.ST — BTC holdings from press release titles
  * - ASX (Australia): DCC.AX — BTC holdings from treasury information PDFs
  * - LSE RNS (UK): SWC — BTC holdings from Bitcoin Purchase announcements
+ * - CVM (Brazil): OBTC3 — BTC holdings + shares from Comunicado ao Mercado PDFs
  *
  * Usage:
  *   GET /api/cron/foreign-to-d1?manual=true
@@ -598,6 +599,153 @@ async function fetchAsx(): Promise<ForeignFetcherResult[]> {
   return results;
 }
 
+// ─── CVM Fetcher (Brazil) ────────────────────────────────────────────────────
+
+async function fetchCvm(): Promise<ForeignFetcherResult[]> {
+  const results: ForeignFetcherResult[] = [];
+
+  try {
+    const {
+      getCvmFilingIndex,
+      filterBitcoinFilings,
+      downloadCvmPdf,
+      parseBtcFromCvmPdf,
+    } = await import('@/lib/fetchers/cvm');
+
+    const currentYear = new Date().getFullYear();
+    const filings = await getCvmFilingIndex(currentYear);
+    const btcFilings = filterBitcoinFilings(filings, 'OBTC3');
+    const dataPoints: ForeignDataPoint[] = [];
+    const skipped: Array<{ id: string; reason: string }> = [];
+
+    // Process the most recent 2 Bitcoin filings
+    const recent = btcFilings.slice(-2).reverse();
+    for (const filing of recent) {
+      if (!filing.downloadUrl) {
+        skipped.push({ id: filing.protocol, reason: 'No download URL' });
+        continue;
+      }
+
+      let pdfBuf: ArrayBuffer;
+      try {
+        pdfBuf = await downloadCvmPdf(filing.downloadUrl);
+        if (pdfBuf.byteLength < 10000) {
+          skipped.push({ id: filing.protocol, reason: `PDF too small (${pdfBuf.byteLength} bytes), likely truncated` });
+          continue;
+        }
+      } catch (e) {
+        skipped.push({ id: filing.protocol, reason: `PDF download error: ${e instanceof Error ? e.message : String(e)}` });
+        continue;
+      }
+
+      let text: string;
+      try {
+        // @ts-expect-error - pdf-parse/lib/pdf-parse has no type declarations
+        const mod = await import('pdf-parse/lib/pdf-parse');
+        const pdfParse = typeof mod === 'function' ? mod : mod.default;
+        if (typeof pdfParse !== 'function') {
+          throw new Error(`pdf-parse resolved to ${typeof pdfParse}`);
+        }
+        const result = await pdfParse(Buffer.from(pdfBuf));
+        text = result.text;
+      } catch (e) {
+        skipped.push({ id: filing.protocol, reason: `pdf-parse failed: ${e instanceof Error ? e.message : String(e)}` });
+        continue;
+      }
+
+      const extraction = parseBtcFromCvmPdf(text);
+
+      if (extraction.totalBtc === null) {
+        skipped.push({ id: filing.protocol, reason: 'No BTC holdings found in PDF' });
+        continue;
+      }
+
+      const asOf = extraction.periodEnd || filing.referenceDate;
+
+      const cite = generateForeignCitation({
+        metric: 'holdings_native',
+        value: extraction.totalBtc,
+        unit: 'BTC',
+        filingSystem: 'cvm',
+        asOf,
+        accession: filing.protocol,
+      });
+
+      dataPoints.push({
+        entityId: 'OBTC3',
+        metric: 'holdings_native',
+        value: extraction.totalBtc,
+        unit: 'BTC',
+        asOf,
+        reportedAt: filing.deliveryDate || filing.referenceDate,
+        filingSystem: 'cvm',
+        accession: `CVM-${filing.protocol.replace(/[^a-zA-Z0-9-]/g, '').slice(0, 30)}`,
+        sourceUrl: filing.downloadUrl,
+        sourceType: 'cvm_comunicado_pdf',
+        citationQuote: cite.citation_quote,
+        citationSearchTerm: cite.citation_search_term,
+        method: 'cvm_pdf_regex',
+        confidence: 0.95,
+      });
+
+      // Also ingest shares if available
+      if (extraction.sharesOutstanding !== null) {
+        const sharesCite = generateForeignCitation({
+          metric: 'basic_shares',
+          value: extraction.sharesOutstanding,
+          unit: 'shares',
+          filingSystem: 'cvm',
+          asOf,
+          accession: filing.protocol,
+        });
+
+        dataPoints.push({
+          entityId: 'OBTC3',
+          metric: 'basic_shares',
+          value: extraction.sharesOutstanding,
+          unit: 'shares',
+          asOf,
+          reportedAt: filing.deliveryDate || filing.referenceDate,
+          filingSystem: 'cvm',
+          accession: `CVM-${filing.protocol.replace(/[^a-zA-Z0-9-]/g, '').slice(0, 30)}-shares`,
+          sourceUrl: filing.downloadUrl,
+          sourceType: 'cvm_comunicado_pdf',
+          citationQuote: sharesCite.citation_quote,
+          citationSearchTerm: sharesCite.citation_search_term,
+          method: 'cvm_pdf_regex',
+          confidence: 0.9,
+        });
+      }
+    }
+
+    // Deduplicate by asOf date (keep latest)
+    const byDate = new Map<string, ForeignDataPoint>();
+    for (const dp of dataPoints) {
+      const key = `${dp.asOf}-${dp.metric}`;
+      if (!byDate.has(key)) {
+        byDate.set(key, dp);
+      }
+    }
+
+    results.push({
+      ticker: 'OBTC3',
+      filingSystem: 'cvm',
+      dataPoints: [...byDate.values()],
+      skipped,
+    });
+  } catch (err) {
+    results.push({
+      ticker: 'OBTC3',
+      filingSystem: 'cvm',
+      dataPoints: [],
+      skipped: [],
+      error: err instanceof Error ? err.message : String(err),
+    });
+  }
+
+  return results;
+}
+
 // ─── Main Handler ───────────────────────────────────────────────────────────
 
 const SYSTEM_FETCHERS: Record<string, () => Promise<ForeignFetcherResult[]>> = {
@@ -607,6 +755,7 @@ const SYSTEM_FETCHERS: Record<string, () => Promise<ForeignFetcherResult[]>> = {
   mfn: fetchMfn,
   asx: fetchAsx,
   lse_rns: fetchLseRns,
+  cvm: fetchCvm,
 };
 
 export async function GET(request: NextRequest) {
