@@ -248,14 +248,16 @@ Separate page (`/analytics`) with four sector-level charts.
 
 **Goal:** Automated detection and alerting when data goes stale.
 
-**Current state:**
+**Current state (2026-03-11):**
+- `/api/cron/staleness-monitor` runs daily at 9:30 UTC → Discord embed with overdue summary
+- Cadence-aware thresholds: SEC quarterly (120d), dashboards (45d), websites (60d), press releases (90d)
+- Per-ticker overrides: MSTR (30d, weekly 8-K), 3350.T (30d, StrategyTracker)
+- Currently 7 companies overdue, 5 on-schedule (correctly suppressed by cadence)
 - Cross-check script flags staleness (>90d warn, >180d fail for tier 1)
-- 15 companies currently stale (verified: no newer disclosures exist)
-- Manual web search to check for updates
 
 **Deliverables:**
-- [ ] Scheduled staleness report (weekly cron → Discord/email)
-- [ ] Per-company expected update cadence (quarterly filers vs. monthly dashboards)
+- [x] Scheduled staleness report (daily cron → Discord webhook embed)
+- [x] Per-company expected update cadence (quarterly filers vs. monthly dashboards)
 - [ ] Priority queue: tier 1 stale companies surfaced first
 - [ ] Track "days since last verification attempt" separately from "days since data updated"
 
@@ -284,9 +286,10 @@ Separate page (`/analytics`) with four sector-level charts.
 **Goal:** Bring foreign companies to the same citation quality as SEC-covered companies — automated document fetch, data extraction, and D1 ingestion with full provenance.
 
 **Current state (updated 2026-03-11):**
-- 11 systems fully automated: AMF, HKEX, TDnet (3 companies), MFN, ASX, LSE RNS, CVM, BTCT website, Remixpoint website, Luxxfolio website
+- 12 systems fully automated: AMF, HKEX, TDnet (3 companies), MFN, ASX, LSE RNS, CVM, BTCT website, Remixpoint website, Luxxfolio website, StrategyTracker API
 - All live in D1 via `/api/cron/foreign-to-d1`, cron runs daily at 8:00 UTC (vercel.json)
 - Shared infrastructure: `ForeignDataPoint` type, `ingestForeignDataPoints()`, proposal key dedup
+- StrategyTracker (`data.strategytracker.com`): public JSON API, real-time BTC + full capital structure for Metaplanet (and 16 other companies). Metaplanet stopped posting per-purchase TDnet filings in 2026.
 - Remaining: EDINET XBRL (JP-GAAP), SEDAR+ (Canada, needs Playwright), BaFin (DE, no BTC source)
 
 **Company inventory by filing system:**
@@ -303,6 +306,7 @@ Separate page (`/analytics`) with four sector-level charts.
 | **SEDAR+** (Canada) | ETHM, XTAIF | Calendar check only, needs Playwright |
 | **Company Website** | BTCT.V, 3825.T, LUXFF | **Automated** — BTC/LTC + shares scraped from static HTML and news articles |
 | **CVM/B3** (Brazil) | OBTC3 | **Automated** — BTC + shares from Comunicado ao Mercado PDFs |
+| **StrategyTracker API** | 3350.T (+ 16 others) | **Automated** — real-time BTC + shares + debt + cash + preferred from `data.strategytracker.com` |
 | **BaFin/DGAP** (Germany) | SRAG.DU | No automation (press releases don't contain BTC counts) |
 
 #### 4.3a Extraction Layer for Existing Fetchers (Quick wins)
@@ -472,6 +476,8 @@ Update this section when starting/stopping work so other agents see what's in-fl
 - Phase 3.2 Filing viewer quote highlighting
 
 ### Done (recent)
+- Staleness monitor cron + cadence-aware thresholds (Phase 4.1, PR #422) — 2026-03-11
+- StrategyTracker API: real-time Metaplanet BTC + capital structure (Phase 4.3, PRs #420-421) — 2026-03-11
 - QA bug fixes: B-1/2 (ABTC sync), B-3/7 (earnings/HPS data), B-6 (admin page), B-10/11 (asset aggregates), B-13/22 (mNAV formula) — 2026-03-07
 - Product model + NAV policy documented (`docs/product-model.md`, `docs/nav-treatment-policy.md`) — 2026-03-07
 - Audit report debt classification + STKE convertibles (PR #329) — 2026-03-07
