@@ -5,7 +5,7 @@
  * extracted data points to D1 with full citation chains.
  *
  * Currently supports:
- * - TDnet (Japan): Metaplanet (3350.T) — shares + BTC holdings from earnings PDFs
+ * - TDnet (Japan): Metaplanet (3350.T), ANAP (3189.T), Remixpoint (3825.T) — shares + BTC from earnings PDFs
  * - HKEX (Hong Kong): Boyaa (0434.HK) — BTC holdings from filing PDFs
  * - AMF (France): ALCPB — BTC holdings from filing titles
  * - MFN (Sweden): H100.ST — BTC holdings from press release titles
@@ -45,8 +45,9 @@ async function fetchTdnet(): Promise<ForeignFetcherResult[]> {
 
   try {
     const {
-      ingestByDateRange,
-      ENTITY_ID,
+      findFilings,
+      ingestFromUrls,
+      TDNET_COMPANIES,
       BTC_METRIC,
       BTC_METHOD,
     } = await import('@/lib/fetchers/tdnet/metaplanet');
@@ -58,74 +59,94 @@ async function fetchTdnet(): Promise<ForeignFetcherResult[]> {
     // so 7 days is sufficient for catching new filings.
     startDate.setDate(startDate.getDate() - 7);
 
-    const extraction = await ingestByDateRange({ startDate, endDate });
+    // Scan TDnet daily pages once for ALL Japanese companies (efficient — one HTTP
+    // request per day, filtered for all codes simultaneously)
+    const allCodes = new Set(Object.values(TDNET_COMPANIES).map(c => c.code));
+    const codeToTicker = new Map(
+      Object.entries(TDNET_COMPANIES).map(([ticker, c]) => [c.code, ticker])
+    );
+    const allFilings = await findFilings(allCodes, startDate, endDate);
 
-    const dataPoints: ForeignDataPoint[] = [];
-
-    // Convert BTC data points
-    for (const btcDp of extraction.btcDataPoints) {
-      const cite = generateForeignCitation({
-        metric: BTC_METRIC,
-        value: btcDp.value,
-        unit: 'BTC',
-        filingSystem: 'tdnet',
-        asOf: btcDp.asOf,
-        accession: btcDp.artifact.artifactId,
-      });
-
-      dataPoints.push({
-        entityId: ENTITY_ID,
-        metric: 'holdings_native',
-        value: btcDp.value,
-        unit: 'BTC',
-        asOf: btcDp.asOf,
-        reportedAt: btcDp.artifact.publishedAt || btcDp.asOf,
-        filingSystem: 'tdnet',
-        accession: `TDNET-${btcDp.artifact.artifactId.slice(0, 16)}`,
-        sourceUrl: btcDp.sourceUrl,
-        sourceType: 'tdnet_earnings_pdf',
-        citationQuote: cite.citation_quote,
-        citationSearchTerm: cite.citation_search_term,
-        method: BTC_METHOD,
-        confidence: 0.85,
-      });
+    // Group filings by company code
+    const filingsByTicker = new Map<string, typeof allFilings>();
+    for (const filing of allFilings) {
+      const ticker = codeToTicker.get(filing.code);
+      if (!ticker) continue;
+      if (!filingsByTicker.has(ticker)) filingsByTicker.set(ticker, []);
+      filingsByTicker.get(ticker)!.push(filing);
     }
 
-    // Convert share data points
-    for (const shareDp of extraction.dataPoints) {
-      const cite = generateForeignCitation({
-        metric: 'basic_shares',
-        value: shareDp.value,
-        unit: 'shares',
-        filingSystem: 'tdnet',
-        asOf: shareDp.asOf,
-        accession: shareDp.artifact.artifactId,
-      });
+    // Process each company's filings
+    for (const [ticker, company] of Object.entries(TDNET_COMPANIES)) {
+      const companyFilings = filingsByTicker.get(ticker) ?? [];
+      const extraction = await ingestFromUrls(companyFilings, ticker);
+      const dataPoints: ForeignDataPoint[] = [];
 
-      dataPoints.push({
-        entityId: ENTITY_ID,
-        metric: 'basic_shares',
-        value: shareDp.value,
-        unit: 'shares',
-        asOf: shareDp.asOf,
-        reportedAt: shareDp.artifact.publishedAt || shareDp.asOf,
+      // Convert BTC data points
+      for (const btcDp of extraction.btcDataPoints) {
+        const cite = generateForeignCitation({
+          metric: BTC_METRIC,
+          value: btcDp.value,
+          unit: 'BTC',
+          filingSystem: 'tdnet',
+          asOf: btcDp.asOf,
+          accession: btcDp.artifact.artifactId,
+        });
+
+        dataPoints.push({
+          entityId: ticker,
+          metric: 'holdings_native',
+          value: btcDp.value,
+          unit: 'BTC',
+          asOf: btcDp.asOf,
+          reportedAt: btcDp.artifact.publishedAt || btcDp.asOf,
+          filingSystem: 'tdnet',
+          accession: `TDNET-${btcDp.artifact.artifactId.slice(0, 16)}`,
+          sourceUrl: btcDp.sourceUrl,
+          sourceType: 'tdnet_earnings_pdf',
+          citationQuote: cite.citation_quote,
+          citationSearchTerm: cite.citation_search_term,
+          method: BTC_METHOD,
+          confidence: 0.85,
+        });
+      }
+
+      // Convert share data points
+      for (const shareDp of extraction.dataPoints) {
+        const cite = generateForeignCitation({
+          metric: 'basic_shares',
+          value: shareDp.value,
+          unit: 'shares',
+          filingSystem: 'tdnet',
+          asOf: shareDp.asOf,
+          accession: shareDp.artifact.artifactId,
+        });
+
+        dataPoints.push({
+          entityId: ticker,
+          metric: 'basic_shares',
+          value: shareDp.value,
+          unit: 'shares',
+          asOf: shareDp.asOf,
+          reportedAt: shareDp.artifact.publishedAt || shareDp.asOf,
+          filingSystem: 'tdnet',
+          accession: `TDNET-${shareDp.artifact.artifactId.slice(0, 16)}`,
+          sourceUrl: shareDp.sourceUrl,
+          sourceType: 'tdnet_earnings_pdf',
+          citationQuote: cite.citation_quote,
+          citationSearchTerm: cite.citation_search_term,
+          method: 'jp_tdnet_pdf',
+          confidence: 0.9,
+        });
+      }
+
+      results.push({
+        ticker,
         filingSystem: 'tdnet',
-        accession: `TDNET-${shareDp.artifact.artifactId.slice(0, 16)}`,
-        sourceUrl: shareDp.sourceUrl,
-        sourceType: 'tdnet_earnings_pdf',
-        citationQuote: cite.citation_quote,
-        citationSearchTerm: cite.citation_search_term,
-        method: 'jp_tdnet_pdf',
-        confidence: 0.9,
+        dataPoints,
+        skipped: extraction.skipped.map(s => ({ id: s.pdfUrl, reason: s.reason })),
       });
     }
-
-    results.push({
-      ticker: ENTITY_ID,
-      filingSystem: 'tdnet',
-      dataPoints,
-      skipped: extraction.skipped.map(s => ({ id: s.pdfUrl, reason: s.reason })),
-    });
   } catch (err) {
     results.push({
       ticker: '3350.T',
