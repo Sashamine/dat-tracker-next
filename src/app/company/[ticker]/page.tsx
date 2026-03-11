@@ -186,10 +186,10 @@ export default function CompanyPage() {
 
   // D1-first overlay for allCompanies — same pattern as overview pages
   const allTickers = useMemo(() => enrichedAllCompanies.map(c => c.ticker), [enrichedAllCompanies]);
-  const { data: d1BatchData, sources: d1BatchSources, dates: d1BatchDates, quotes: d1BatchQuotes } = useD1Fundamentals(allTickers);
+  const { data: d1BatchData, sources: d1BatchSources, dates: d1BatchDates, quotes: d1BatchQuotes, searchTerms: d1BatchSearchTerms, accessions: d1BatchAccessions } = useD1Fundamentals(allTickers);
   const allCompanies = useMemo(
-    () => applyD1Overlay(enrichedAllCompanies, d1BatchData, d1BatchSources, d1BatchDates, d1BatchQuotes),
-    [enrichedAllCompanies, d1BatchData, d1BatchSources, d1BatchDates, d1BatchQuotes]
+    () => applyD1Overlay(enrichedAllCompanies, d1BatchData, d1BatchSources, d1BatchDates, d1BatchQuotes, d1BatchSearchTerms, d1BatchAccessions),
+    [enrichedAllCompanies, d1BatchData, d1BatchSources, d1BatchDates, d1BatchQuotes, d1BatchSearchTerms, d1BatchAccessions]
   );
 
   // Calculate sidebar stats
@@ -381,18 +381,24 @@ export default function CompanyPage() {
   // Which tier resolved the holdings value?
   const holdingsBasis = getHoldingsBasis(d1ByMetric.holdings_native?.value, d1ByMetric.bitcoin_holdings_usd?.value);
   const d1Explain = d1ExplainInputs?.explain || {};
+  // Prefer filing viewer URL (/filings/{ticker}/{accession}) when accession is available
+  // for ?q= deep linking support. Falls back to artifact source_url, then Company field.
+  const resolveUrl = (receipt?: { source_url: string | null; accession: string | null }, fallback?: string) => {
+    if (receipt?.accession) return `/filings/${ticker.toLowerCase()}/${receipt.accession}`;
+    return receipt?.source_url || fallback;
+  };
   const holdingsSourceUrlResolved =
-    d1Explain.holdings_native?.receipt?.source_url ||
-    d1Explain.bitcoin_holdings_usd?.receipt?.source_url ||
+    resolveUrl(d1Explain.holdings_native?.receipt) ||
+    resolveUrl(d1Explain.bitcoin_holdings_usd?.receipt) ||
     displayCompany.holdingsSourceUrl;
   const sharesSourceUrlResolved =
-    d1Explain.basic_shares?.receipt?.source_url || displayCompany.sharesSourceUrl;
+    resolveUrl(d1Explain.basic_shares?.receipt, displayCompany.sharesSourceUrl);
   const cashSourceUrlResolved =
-    d1Explain.cash_usd?.receipt?.source_url || displayCompany.cashSourceUrl;
+    resolveUrl(d1Explain.cash_usd?.receipt, displayCompany.cashSourceUrl);
   const debtSourceUrlResolved =
-    d1Explain.debt_usd?.receipt?.source_url || displayCompany.debtSourceUrl;
+    resolveUrl(d1Explain.debt_usd?.receipt, displayCompany.debtSourceUrl);
   const preferredSourceUrlResolved =
-    d1Explain.preferred_equity_usd?.receipt?.source_url || displayCompany.preferredSourceUrl;
+    resolveUrl(d1Explain.preferred_equity_usd?.receipt, displayCompany.preferredSourceUrl);
 
   const ahpsRow = ahpsLeaderboardData?.results.find(
     (row) => row.ticker.toUpperCase() === displayCompany.ticker.toUpperCase()
@@ -775,8 +781,10 @@ export default function CompanyPage() {
                   </p>
                   <p className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">
                     <CitationPopover
-                      sourceUrl={displayCompany.holdingsSourceUrl}
+                      sourceUrl={holdingsSourceUrlResolved}
                       sourceLabel={displayCompany.holdingsSource}
+                      sourceQuote={displayCompany.sourceQuote}
+                      searchTerm={displayCompany.sourceSearchTerm}
                       ticker={displayCompany.ticker}
                       metric="holdings_native"
                       confidenceScore={displayCompany.confidenceScores?.['holdings_native']}
@@ -791,14 +799,15 @@ export default function CompanyPage() {
                   <p className="text-sm text-gray-500 dark:text-gray-400">Market Cap</p>
                   <p className="text-2xl font-bold text-gray-700 dark:text-gray-300">
                     <CitationPopover
-                      sourceUrl={displayCompany.sharesSourceUrl}
+                      sourceUrl={sharesSourceUrlResolved}
                       sourceLabel={displayCompany.sharesSource}
                       sourceQuote={displayCompany.sharesSourceQuote}
+                      searchTerm={displayCompany.sharesSearchTerm}
                       ticker={displayCompany.ticker}
                       metric="basic_shares"
                       confidenceScore={displayCompany.confidenceScores?.['basic_shares']}
                       jurisdiction={displayCompany.jurisdiction}
-                      legacy={!displayCompany.sharesSourceUrl}
+                      legacy={!sharesSourceUrlResolved}
                     >
                       {formatLargeNumber(marketCap)}
                     </CitationPopover>
@@ -813,6 +822,8 @@ export default function CompanyPage() {
                 <CitationPopover
                   sourceUrl={holdingsSourceUrlResolved}
                   sourceLabel={displayCompany.holdingsSource}
+                  sourceQuote={displayCompany.sourceQuote}
+                  searchTerm={displayCompany.sourceSearchTerm}
                   ticker={displayCompany.ticker}
                   metric="holdings_native"
                   confidenceScore={displayCompany.confidenceScores?.['holdings_native']}
@@ -850,6 +861,8 @@ export default function CompanyPage() {
                     <CitationPopover
                       sourceUrl={cashSourceUrlResolved}
                       sourceLabel={displayCompany.cashSource}
+                      sourceQuote={displayCompany.cashSourceQuote}
+                      searchTerm={displayCompany.cashSearchTerm}
                       ticker={displayCompany.ticker}
                       metric="cash_usd"
                       confidenceScore={displayCompany.confidenceScores?.['cash_usd']}
@@ -867,6 +880,7 @@ export default function CompanyPage() {
                       sourceUrl={debtSourceUrlResolved}
                       sourceLabel={displayCompany.debtSource}
                       sourceQuote={displayCompany.debtSourceQuote}
+                      searchTerm={displayCompany.debtSearchTerm}
                       ticker={displayCompany.ticker}
                       metric="debt_usd"
                       confidenceScore={displayCompany.confidenceScores?.['debt_usd']}
@@ -884,6 +898,7 @@ export default function CompanyPage() {
                       sourceUrl={preferredSourceUrlResolved}
                       sourceLabel={displayCompany.preferredSource}
                       sourceQuote={displayCompany.preferredSourceQuote}
+                      searchTerm={displayCompany.preferredSearchTerm}
                       ticker={displayCompany.ticker}
                       metric="preferred_equity_usd"
                       confidenceScore={displayCompany.confidenceScores?.['preferred_equity_usd']}
@@ -918,6 +933,8 @@ export default function CompanyPage() {
                   <CitationPopover
                     sourceUrl={holdingsSourceUrlResolved}
                     sourceLabel={displayCompany.holdingsSource}
+                    sourceQuote={displayCompany.sourceQuote}
+                    searchTerm={displayCompany.sourceSearchTerm}
                     ticker={displayCompany.ticker}
                     metric="holdings_native"
                     confidenceScore={displayCompany.confidenceScores?.['holdings_native']}
@@ -1081,6 +1098,7 @@ export default function CompanyPage() {
                      sourceUrl={cashSourceUrlResolved}
                      sourceLabel={displayCompany.cashSource}
                      sourceQuote={displayCompany.cashSourceQuote}
+                     searchTerm={displayCompany.cashSearchTerm}
                      ticker={displayCompany.ticker}
                      metric="cash_usd"
                      confidenceScore={displayCompany.confidenceScores?.['cash_usd']}
@@ -1123,6 +1141,8 @@ export default function CompanyPage() {
                       <CitationPopover
                         sourceUrl={debtSourceUrlResolved}
                         sourceLabel={displayCompany.debtSource}
+                        sourceQuote={displayCompany.debtSourceQuote}
+                        searchTerm={displayCompany.debtSearchTerm}
                         ticker={displayCompany.ticker}
                         metric="debt_usd"
                         confidenceScore={displayCompany.confidenceScores?.['debt_usd']}
@@ -1162,6 +1182,7 @@ export default function CompanyPage() {
                       sourceUrl={preferredSourceUrlResolved}
                       sourceLabel={displayCompany.preferredSource}
                       sourceQuote={displayCompany.preferredSourceQuote}
+                      searchTerm={displayCompany.preferredSearchTerm}
                       ticker={displayCompany.ticker}
                       metric="preferred_equity_usd"
                       confidenceScore={displayCompany.confidenceScores?.['preferred_equity_usd']}
@@ -1223,8 +1244,10 @@ export default function CompanyPage() {
               <p className="text-sm text-gray-500 dark:text-gray-400">mNAV</p>
               <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                 <CitationPopover
-                  sourceUrl={displayCompany.holdingsSourceUrl}
+                  sourceUrl={holdingsSourceUrlResolved}
                   sourceLabel={displayCompany.holdingsSource}
+                  sourceQuote={displayCompany.sourceQuote}
+                  searchTerm={displayCompany.sourceSearchTerm}
                   ticker={displayCompany.ticker}
                   metric="mnav"
                   confidenceScore={displayCompany.confidenceScores?.['mnav']}
@@ -1240,13 +1263,15 @@ export default function CompanyPage() {
               <p className="text-sm text-gray-500 dark:text-gray-400">Leverage</p>
               <p className={cn("text-2xl font-bold", debtToCryptoRatio >= 1 ? "text-amber-600" : "text-gray-900 dark:text-gray-100")}>
                 <CitationPopover
-                  sourceUrl={displayCompany.debtSourceUrl}
+                  sourceUrl={debtSourceUrlResolved}
                   sourceLabel={displayCompany.debtSource}
+                  sourceQuote={displayCompany.debtSourceQuote}
+                  searchTerm={displayCompany.debtSearchTerm}
                   ticker={displayCompany.ticker}
                   metric="debt_usd"
                   confidenceScore={displayCompany.confidenceScores?.['debt_usd']}
                   jurisdiction={displayCompany.jurisdiction}
-                  legacy={!displayCompany.debtSourceUrl}
+                  legacy={!debtSourceUrlResolved}
                 >
                   {debtToCryptoRatio > 0 ? `${debtToCryptoRatio.toFixed(2)}x` : "—"}
                 </CitationPopover>

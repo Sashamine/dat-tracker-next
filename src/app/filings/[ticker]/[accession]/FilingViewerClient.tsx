@@ -66,9 +66,11 @@ export default function FilingViewerClient({ ticker, accession, searchQuery, anc
       };
       const batch = tickerBatches[tickerLower] || 1;
       
-      // Try R2 first, then fall back to fetching from SEC via our API
+      // Try R2 first (multiple prefixes), then fall back to fetching from SEC via our API
       const urls = [
+        `${r2Base}/new-uploads/${tickerLower}/${accessionWithDashes}.txt`,
         `${r2Base}/batch${batch}/${tickerLower}/${accessionWithDashes}.txt`,
+        `${r2Base}/external-sources/${tickerLower}/${accessionWithDashes}.txt`,
         `/api/sec/fetch-content?ticker=${tickerLower}&accession=${accessionWithDashes}`,
       ];
       

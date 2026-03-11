@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import { D1Client } from "@/lib/d1";
 
 export const dynamic = "force-dynamic";
 
 // R2 bucket for cached filings
 const R2_BASE_URL = "https://pub-1e4356c7aea34102aad6e3493b0c62f1.r2.dev";
-const R2_PREFIXES = ["new-uploads", "batch1", "batch2", "batch3", "batch4", "batch5", "batch6"];
+const R2_PREFIXES = ["new-uploads", "batch1", "batch2", "batch3", "batch4", "batch5", "batch6", "external-sources"];
 
 // Map tickers to CIKs
 const TICKER_CIKS: Record<string, string> = {
@@ -52,12 +53,14 @@ const TICKER_CIKS: Record<string, string> = {
 };
 
 /**
- * Try to fetch filing from R2 cache first
- * Files are stored as: /{prefix}/{ticker}/{accession}.txt
+ * Try to fetch filing from R2 cache first.
+ * 1. Probe all prefix/{ticker}/{accession}.txt patterns
+ * 2. Fall back to D1 artifact r2_key lookup (handles UUID-named external-sources files)
  */
 async function fetchFromR2(ticker: string, accession: string): Promise<string | null> {
+  const tickerLower = ticker.toLowerCase();
   for (const prefix of R2_PREFIXES) {
-    const url = `${R2_BASE_URL}/${prefix}/${ticker.toLowerCase()}/${accession}.txt`;
+    const url = `${R2_BASE_URL}/${prefix}/${tickerLower}/${accession}.txt`;
     try {
       const res = await fetch(url);
       if (res.ok) {
@@ -68,6 +71,30 @@ async function fetchFromR2(ticker: string, accession: string): Promise<string | 
       // Try next prefix
     }
   }
+
+  // Fall back to D1 r2_key lookup (external-sources files use UUID filenames)
+  try {
+    const d1 = D1Client.fromEnv();
+    const { results } = await d1.query<{ r2_key: string }>(
+      `SELECT r2_key FROM artifacts WHERE accession = ? AND r2_key IS NOT NULL LIMIT 1`,
+      [accession]
+    );
+    if (results.length > 0) {
+      const r2Key = results[0].r2_key;
+      // Skip JSON/PDF — we need text/html content
+      if (!r2Key.endsWith('.json') && !r2Key.endsWith('.pdf')) {
+        const url = `${R2_BASE_URL}/${r2Key}`;
+        const res = await fetch(url);
+        if (res.ok) {
+          console.log(`[SEC Fetch] Found in R2 via D1 r2_key: ${r2Key}`);
+          return await res.text();
+        }
+      }
+    }
+  } catch (err) {
+    console.warn(`[SEC Fetch] D1 r2_key lookup failed for ${accession}:`, err);
+  }
+
   return null;
 }
 

@@ -1627,12 +1627,12 @@ export const btcCompanies: Company[] = [
     sharesSourceQuote: "EQS Buyback Update Mar 2, 2026: 406,021 shares repurchased total",
     sharesSourceUrl: "https://www.samara-ag.com/news",
     sharesAsOf: "2026-02-27",
-    // DEBT: €33M total as of H1 2025 → ~$39.1M USD
-    totalDebt: 39_100_000,  // €33M × 1.185 EUR/USD (H1 2025 balance sheet)
-    debtSource: "H1 2025 Interim: €17.7M Nordic bond (ISIN NO0013364398) + €15.3M interest-bearing loans = €33M",
-    debtSourceQuote: "H1 2025 Interim: €17.7M Nordic bond (ISIN NO0013364398) + €15.3M interest-bearing loans = €33M",
-    debtSourceUrl: "https://www.samara-ag.com/news",
-    debtAsOf: "2025-06-30",
+    // DEBT: €51M total as of Q3 2025 (unaudited) → ~$55.1M USD at 1.08 EUR/USD
+    totalDebt: 55_100_000,  // €51M × 1.08 EUR/USD (Q3 2025 corporate presentation, unaudited)
+    debtSource: "Q3 2025 Corporate Presentation (unaudited): €32.1M non-current (€15.9M loans + net bond) + €18.9M current (€12.7M loans + €4.4M overdraft + €0.7M financial) = €51M total",
+    debtSourceQuote: "Q3 2025 Corporate Presentation condensed balance sheet: non-current liabilities €32,078k + current liabilities €18,954k = €51,032k",
+    debtSourceUrl: "https://cdn.prod.website-files.com/687df2df76e1c946ba38115c/6953b14e79c15dbc18d6c7b0_2025.12_SAG%20Corporate%20Presentation_compressed.pdf",
+    debtAsOf: "2025-09-30",
     strategy: "BTC as primary treasury reserve. Uses Samara Alpha Market-Neutral BTC+ Fund for management.",
     notes: "Frankfurt/XETRA listed. Corrected holdings to 525 BTC (Mar 2026). Previous 2k+ estimate included non-BTC fund assets incorrectly labeled as intangibles. Active share buyback (406k shares). Issued Europe's first Bitcoin Bond (€20M, late 2024).",
   },

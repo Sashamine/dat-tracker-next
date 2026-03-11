@@ -16,6 +16,7 @@
 import crypto from 'node:crypto';
 import { D1Client } from '../src/lib/d1';
 import { extractXBRLData } from '../src/lib/sec/xbrl-extractor';
+import { generateXbrlCitation } from '../src/lib/utils/citation';
 
 function argVal(name: string): string | null {
   const prefix = `--${name}=`;
@@ -41,6 +42,8 @@ type MetricRow = {
   confidence: number;
   flags_json: string | null;
   xbrl_concept: string | null;
+  citation_quote?: string | null;
+  citation_search_term?: string | null;
 };
 
 type ExistingProposalRow = {
@@ -233,6 +236,7 @@ async function main() {
           sharesOutstandingDate?: string | null;
           sharesConcept?: string | null;
           bitcoinHoldings?: number | null;
+          bitcoinHoldingsUsdConcept?: string | null;
           bitcoinHoldingsNative?: number | null;
           bitcoinHoldingsNativeUnit?: string | null;
           bitcoinHoldingsNativeConcept?: string | null;
@@ -247,6 +251,7 @@ async function main() {
           restrictedCashConcept?: string | null;
           otherInvestments?: number | null;
           otherInvestmentsDate?: string | null;
+          otherInvestmentsConcept?: string | null;
         }
       | { success: false; error: string };
 
@@ -334,7 +339,7 @@ async function main() {
         method: 'sec_companyfacts_xbrl',
         confidence: 1.0,
         flags_json: null,
-        xbrl_concept: null,
+        xbrl_concept: x.otherInvestmentsConcept || null,
       });
     }
 
@@ -362,7 +367,7 @@ async function main() {
         method: 'sec_companyfacts_xbrl',
         confidence: 1.0,
         flags_json: null,
-        xbrl_concept: null,
+        xbrl_concept: x.bitcoinHoldingsUsdConcept || null,
       });
     }
 
@@ -400,6 +405,21 @@ async function main() {
         flags_json: nativeFlags,
         xbrl_concept: x.bitcoinHoldingsNativeConcept || null,
       });
+    }
+
+    // Generate citations for each row (Phase 4c: pre-cite on ingest)
+    for (const r of rows) {
+      const cite = generateXbrlCitation({
+        metric: r.metric,
+        value: r.value,
+        unit: r.unit,
+        xbrlConcept: r.xbrl_concept,
+        asOf: r.as_of,
+        form: x.filingType || null,
+        accession: x.accessionNumber || null,
+      });
+      r.citation_quote = cite.citation_quote;
+      r.citation_search_term = cite.citation_search_term;
     }
 
     if (!rows.length) {
@@ -543,8 +563,8 @@ async function main() {
              datapoint_id, entity_id, metric, value, unit, scale,
              as_of, reported_at, artifact_id, run_id,
              method, confidence, flags_json, confidence_details_json, status,
-             proposal_key, created_at, xbrl_concept
-           ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+             proposal_key, created_at, xbrl_concept, citation_quote, citation_search_term
+           ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
            ON CONFLICT(proposal_key) DO UPDATE SET
              value = excluded.value,
              unit = excluded.unit,
@@ -558,7 +578,9 @@ async function main() {
              flags_json = excluded.flags_json,
              confidence_details_json = excluded.confidence_details_json,
              status = excluded.status,
-             xbrl_concept = excluded.xbrl_concept;`,
+             xbrl_concept = excluded.xbrl_concept,
+             citation_quote = excluded.citation_quote,
+             citation_search_term = excluded.citation_search_term;`,
           [
             crypto.randomUUID(),
             ticker,
@@ -578,6 +600,8 @@ async function main() {
             proposalKey,
             new Date().toISOString(),
             r.xbrl_concept,
+            r.citation_quote || null,
+            r.citation_search_term || null,
           ]
         );
 

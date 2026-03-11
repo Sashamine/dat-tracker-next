@@ -9,6 +9,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { extractXBRLData } from '@/lib/sec/xbrl-extractor';
 import { D1Client } from '@/lib/d1';
 import { sendDiscordChannelMessage } from '@/lib/notifications/discord-channel';
+import { generateXbrlCitation } from '@/lib/utils/citation';
 import crypto from 'node:crypto';
 
 function verifyCronSecret(request: NextRequest): boolean {
@@ -21,7 +22,7 @@ function verifyCronSecret(request: NextRequest): boolean {
 
 type Metric = 'cash_usd' | 'debt_usd' | 'basic_shares' | 'bitcoin_holdings_usd' | 'holdings_native';
 
-type MetricRow = { metric: Metric; value: number; unit: string; as_of?: string | null; reported_at?: string | null; flags_json?: string | null };
+type MetricRow = { metric: Metric; value: number; unit: string; as_of?: string | null; reported_at?: string | null; flags_json?: string | null; xbrl_concept?: string | null; citation_quote?: string | null; citation_search_term?: string | null };
 type ExistingProposalRow = {
   value: number;
   unit: string;
@@ -201,10 +202,13 @@ export async function GET(request: NextRequest) {
     }
 
     const rows: MetricRow[] = [];
-    if (typeof x.cashAndEquivalents === 'number') rows.push({ metric: 'cash_usd', value: x.cashAndEquivalents, unit: 'USD', as_of: x.cashDate || null });
-    if (typeof x.totalDebt === 'number') rows.push({ metric: 'debt_usd', value: x.totalDebt, unit: 'USD', as_of: x.debtDate || null });
-    if (typeof x.sharesOutstanding === 'number') rows.push({ metric: 'basic_shares', value: x.sharesOutstanding, unit: 'shares', as_of: x.sharesOutstandingDate || null });
-    if (typeof x.bitcoinHoldings === 'number') rows.push({ metric: 'bitcoin_holdings_usd', value: x.bitcoinHoldings, unit: 'USD', as_of: x.bitcoinHoldingsDate || null });
+    const xAccession = (x.accessionNumber || '').trim() || null;
+    const xForm = x.filingType || null;
+
+    if (typeof x.cashAndEquivalents === 'number') rows.push({ metric: 'cash_usd', value: x.cashAndEquivalents, unit: 'USD', as_of: x.cashDate || null, xbrl_concept: x.cashConcept || null });
+    if (typeof x.totalDebt === 'number') rows.push({ metric: 'debt_usd', value: x.totalDebt, unit: 'USD', as_of: x.debtDate || null, xbrl_concept: x.debtConcept || null });
+    if (typeof x.sharesOutstanding === 'number') rows.push({ metric: 'basic_shares', value: x.sharesOutstanding, unit: 'shares', as_of: x.sharesOutstandingDate || null, xbrl_concept: x.sharesConcept || null });
+    if (typeof x.bitcoinHoldings === 'number') rows.push({ metric: 'bitcoin_holdings_usd', value: x.bitcoinHoldings, unit: 'USD', as_of: x.bitcoinHoldingsDate || null, xbrl_concept: x.bitcoinHoldingsUsdConcept || null });
     if (typeof x.bitcoinHoldingsNative === 'number' && x.bitcoinHoldingsNativeUnit === 'BTC') {
       const impliedPriceUsd =
         typeof x.bitcoinHoldings === 'number' && x.bitcoinHoldingsNative > 0
@@ -219,6 +223,7 @@ export async function GET(request: NextRequest) {
         value: x.bitcoinHoldingsNative,
         unit: 'BTC',
         as_of: x.bitcoinHoldingsDate || null,
+        xbrl_concept: x.bitcoinHoldingsNativeConcept || null,
         flags_json: JSON.stringify({
           native_extraction: {
             concept: x.bitcoinHoldingsNativeConcept || null,
@@ -236,7 +241,21 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    for (const r of rows) r.reported_at = x.filingDate || r.as_of || null;
+    for (const r of rows) {
+      r.reported_at = x.filingDate || r.as_of || null;
+      // Generate citation at insert time (Phase 4c)
+      const cite = generateXbrlCitation({
+        metric: r.metric,
+        value: r.value,
+        unit: r.unit,
+        xbrlConcept: r.xbrl_concept || null,
+        asOf: r.as_of || null,
+        form: xForm,
+        accession: xAccession,
+      });
+      r.citation_quote = cite.citation_quote;
+      r.citation_search_term = cite.citation_search_term;
+    }
 
     datapointsAttempted += rows.length;
 
@@ -320,8 +339,8 @@ export async function GET(request: NextRequest) {
              datapoint_id, entity_id, metric, value, unit, scale,
              as_of, reported_at, artifact_id, run_id,
              method, confidence, flags_json, confidence_details_json, status,
-             proposal_key, created_at
-           ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+             proposal_key, created_at, xbrl_concept, citation_quote, citation_search_term
+           ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
            ON CONFLICT(proposal_key) DO UPDATE SET
              value = excluded.value,
              unit = excluded.unit,
@@ -334,7 +353,10 @@ export async function GET(request: NextRequest) {
              confidence = excluded.confidence,
              flags_json = excluded.flags_json,
              confidence_details_json = excluded.confidence_details_json,
-             status = excluded.status;`,
+             status = excluded.status,
+             xbrl_concept = excluded.xbrl_concept,
+             citation_quote = excluded.citation_quote,
+             citation_search_term = excluded.citation_search_term;`,
           [
             crypto.randomUUID(),
             ticker,
@@ -353,6 +375,9 @@ export async function GET(request: NextRequest) {
             incoming.status,
             proposalKey,
             nowIso(),
+            r.xbrl_concept || null,
+            r.citation_quote || null,
+            r.citation_search_term || null,
           ]
         );
 

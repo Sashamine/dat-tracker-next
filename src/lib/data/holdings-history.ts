@@ -1013,7 +1013,7 @@ const LUXFF_HISTORY: HoldingsSnapshot[] = [
 const IHLDF_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-07-15", holdings: 20000000, sharesOutstanding: 45_000_000, holdingsPerShare: 0.444, source: "Initial HBAR treasury", sourceType: "press-release", sourceUrl: "https://www.sedarplus.ca/csa-party/records/recordsForIssuerProfile.html?profileNo=000044016" },
   { date: "2025-09-30", holdings: 35000000, sharesOutstanding: 55_000_000, holdingsPerShare: 0.636, stockPrice: 326.42, source: "Q3 2025 filing", sourceType: "regulatory-filing", sourceUrl: "https://www.sedarplus.ca/csa-party/records/recordsForIssuerProfile.html?profileNo=000044016" },
-  { date: "2025-12-31", holdings: 48000000, sharesOutstanding: 65_000_000, holdingsPerShare: 0.738, stockPrice: 155.61, source: "Q4 2025 filing", sourceUrl: "https://www.sedarplus.ca/csa-party/records/recordsForIssuerProfile.html?profileNo=000044016", sourceType: "regulatory-filing" },
+  { date: "2025-12-31", holdings: 48_715_727, sharesOutstanding: 65_000_000, holdingsPerShare: 0.749, stockPrice: 155.61, source: "Q4 2025 filing: 48,715,727 HBAR (prior 48M was rounded)", sourceUrl: "https://www.sedarplus.ca/csa-party/records/recordsForIssuerProfile.html?profileNo=000044016", sourceType: "regulatory-filing" },
 ];
 
 // DDC Enterprise - BTC treasury company
@@ -1094,7 +1094,9 @@ const SRAG_HISTORY: HoldingsSnapshot[] = [
   { date: "2024-10-16", holdings: 421, sharesOutstanding: 92_190_761, holdingsPerShare: 0.00000457, source: "Company monthly commentary (Oct 2024): 'we hold 421 BTC on our balance sheet'", sourceType: "company-website", sourceUrl: "https://www.samara-ag.com/market-insights/bitcoin-rallies-past-72500" },
   { date: "2024-11-30", holdings: 525, sharesOutstanding: 92_190_761, holdingsPerShare: 0.00000570, source: "CEO Patrick Lowry X post (Nov 30, 2024): 421+104=525 BTC", sourceType: "company-reported", sourceUrl: "https://x.com/Patrick_Lowry_/status/1863071308914864387" },
   { date: "2024-12-31", holdings: 540, sharesOutstanding: 92_190_761, holdingsPerShare: 0.00000586, source: "FY2024 Annual Report Note 10: 480 direct + 60 in DeFi funds", sourceType: "regulatory-filing", sourceUrl: "https://cdn.prod.website-files.com/660cd1216e255a8a370aa5ac/685d308f24fa70f5ffd193c2_SAG-Consolidated-2024-Signed%20financial%20statements_compressed.pdf" },
-  { date: "2025-09-30", holdings: 2_051, sharesOutstanding: 92_190_761, holdingsPerShare: 0.00002225, totalDebt: 39_100_000, source: "EST: Q3 2025 balance sheet €199.8M intangibles ÷ €97,441/BTC (CoinGecko Sep 30). Intangibles may include non-BTC digital assets.", sourceType: "company-website", sourceUrl: "https://cdn.prod.website-files.com/687df2df76e1c946ba38115c/6953b14e79c15dbc18d6c7b0_2025.12_SAG%20Corporate%20Presentation_compressed.pdf" },
+  // 2025-09-30: Prior value of 2,051 BTC was a DERIVATION ERROR. €199.8M "intangible assets" includes XPL tokens, stablecoins, DeFi — not just BTC.
+  // Q3 2025 Corporate Presentation BTC Treasury chart shows ~€3-4M BTC (~40 BTC at €97k). Using 525 from Mar 2026 press release as best available.
+  { date: "2025-09-30", holdings: 525, sharesOutstanding: 92_190_761, holdingsPerShare: 0.00000570, totalDebt: 55_100_000, source: "Q3 2025 Corporate Presentation (unaudited). BTC count estimated — no exact figure disclosed. €51M total debt (€32.1M non-current + €18.9M current). Prior 2,051 BTC was derivation error.", sourceType: "company-website", sourceUrl: "https://cdn.prod.website-files.com/687df2df76e1c946ba38115c/6953b14e79c15dbc18d6c7b0_2025.12_SAG%20Corporate%20Presentation_compressed.pdf" },
 ];
 
 // SWC (The Smarter Web Company) - UK BTC Treasury

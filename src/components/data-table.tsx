@@ -993,6 +993,7 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                                 jurisdiction={company.jurisdiction}
                                 legacy={company.holdingsBasis === "static_fallback"}
                                 sourceQuote={company.sourceQuote}
+                                searchTerm={company.sourceSearchTerm}
                               >
                                 <VerificationBadge
                                   status={getVerificationStatus(
@@ -1053,6 +1054,7 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                                   jurisdiction={company.jurisdiction}
                                   legacy={company.holdingsBasis === "static_fallback"}
                                   sourceQuote={company.sourceQuote}
+                                searchTerm={company.sourceSearchTerm}
                                 >
                                   <FlashingLargeNumber
                                     value={company.holdingsValue}
