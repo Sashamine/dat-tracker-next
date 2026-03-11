@@ -49,7 +49,10 @@ async function fetchTdnet(): Promise<ForeignFetcherResult[]> {
 
     const endDate = new Date();
     const startDate = new Date();
-    startDate.setDate(startDate.getDate() - 45); // TDnet only has ~45 days of listings
+    // TDnet has ~45 days of listings, but scraping is slow (2s rate limit per day).
+    // Use 14 days for cron to stay within Vercel timeout. For broader scans, use
+    // the TDnet ingestByDateRange directly with a longer window.
+    startDate.setDate(startDate.getDate() - 14);
 
     const extraction = await ingestByDateRange({ startDate, endDate });
 
@@ -152,16 +155,20 @@ async function fetchHkex(): Promise<ForeignFetcherResult[]> {
         continue;
       }
 
-      // Extract text from PDF
+      // Extract text from PDF using same approach as tdnet/metaplanet.ts
       let text: string;
       try {
         const { createRequire } = await import('node:module');
-        const _require = createRequire(import.meta.url);
-        const pdfParse = _require('pdf-parse');
+        const req = createRequire(import.meta.url);
+        const mod = req('pdf-parse');
+        const pdfParse: (buf: Buffer) => Promise<{ text: string }> =
+          typeof mod === 'function' ? mod
+            : mod?.default && typeof mod.default === 'function' ? mod.default
+            : (() => { throw new Error('pdf-parse export shape not recognized'); })();
         const result = await pdfParse(Buffer.from(pdfBuf));
         text = result.text;
-      } catch {
-        skipped.push({ id: filing.docId, reason: 'pdf-parse not available or failed' });
+      } catch (e) {
+        skipped.push({ id: filing.docId, reason: `pdf-parse failed: ${e instanceof Error ? e.message : String(e)}` });
         continue;
       }
 
