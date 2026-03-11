@@ -279,6 +279,119 @@ Separate page (`/analytics`) with four sector-level charts.
 **DoD:**
 - New filings and dashboard updates are detected within 24 hours
 
+### 4.3 Foreign Filing Pipeline Automation
+
+**Goal:** Bring foreign companies to the same citation quality as SEC-covered companies — automated document fetch, data extraction, and D1 ingestion with full provenance.
+
+**Current state:**
+- 13 foreign companies across 7 filing systems
+- Tier 2 (document-only fetchers): EDINET, HKEX — download filings to R2 but no data extraction
+- Tier 3 (manual only): SEDAR+, LSE RNS, ASX, CVM/B3, MFN — no automation at all
+- AMF fetcher is the only one with full extraction (ALTBG/ALCPB)
+- TDnet/Metaplanet fetcher does dashboard scraping (not regulatory filings)
+- All foreign holdings currently come from `companies.ts` backfill with synthetic accessions
+
+**Company inventory by filing system:**
+
+| System | Companies | Existing Code | Status |
+|--------|-----------|---------------|--------|
+| **EDINET/TDnet** (Japan) | 3350.T, 3825.T, 3189.T | `edinet.ts`, `tdnet/metaplanet.ts`, `edinet-fetch` cron | Fetch-only, no extraction |
+| **HKEX** (Hong Kong) | 0434.HK | `hkex.ts`, `hkex-search.ts`, `hkex-pdf-extractor.ts`, `hkex-fetch` cron | Fetch-only, PDF text exists |
+| **AMF** (France) | ALCPB | `amf.ts` | **Full pipeline** (model for others) |
+| **SEDAR+** (Canada) | ETHM, BTCT.V, XTAIF, LUXFF | `sedar-check` cron (metadata only) | Calendar check only, no download |
+| **MFN** (Sweden) | H100.ST | None | No automation |
+| **LSE RNS** (UK) | SWC | None | No automation |
+| **ASX** (Australia) | DCC.AX | None | No automation |
+| **CVM/B3** (Brazil) | OBTC3 | None | No automation |
+| **BaFin/DGAP** (Germany) | SRAG.DU | None | No automation |
+
+#### 4.3a Extraction Layer for Existing Fetchers (Quick wins)
+
+Extend fetchers that already download documents to also extract holdings data.
+
+**Deliverables:**
+- [ ] **EDINET extraction**: Parse XBRL inline docs for BTC holdings (3350.T, 3825.T, 3189.T)
+  - EDINET returns XBRL — similar structure to SEC, adapt existing XBRL parser
+  - JP-GAAP taxonomy differs from US-GAAP; map relevant tags
+- [ ] **HKEX extraction**: Extract holdings from downloaded PDFs (0434.HK)
+  - `hkex-pdf-extractor.ts` already does text extraction
+  - Add regex/LLM layer to pull BTC count from extracted text
+- [ ] **TDnet structured extraction**: Replace Metaplanet dashboard scrape with TDnet filing parse
+  - TDnet disclosures are the regulatory source; dashboard is derivative
+  - Parse "適時開示" (timely disclosure) PDFs for holdings figures
+- [ ] **Unified foreign extraction interface**: Standard output format matching D1 datapoint schema
+  - `{ ticker, metric, value, asOf, accession, sourceUrl, sourceType, quote, searchTerm }`
+  - Reuse `batch-holdings-update.ts` pattern for D1 ingestion
+
+**DoD:**
+- Japan (3) and Hong Kong (1) companies have automated extraction with real accessions
+
+#### 4.3b SEDAR+ Download + Extraction (Canada)
+
+Build document fetcher for Canadian companies (4 tickers).
+
+**Deliverables:**
+- [ ] **SEDAR+ document fetcher**: Download financial statements from SEDAR+ profiles
+  - Existing `sedar-check` cron knows filing calendar; extend to download PDFs
+  - SEDAR+ profile IDs already known (e.g., LUXFF = 000044736)
+- [ ] **SEDAR+ extraction**: Parse Canadian GAAP/IFRS financial statements for crypto holdings
+  - Note disclosures (e.g., "Note 5 Digital Assets") contain holdings counts
+  - PDF text extraction → regex for holdings figures
+- [ ] Upload extracted documents to R2 under `external-sources/{ticker}/`
+
+**DoD:**
+- ETHM, BTCT.V, XTAIF, LUXFF have automated document fetch and extraction
+
+#### 4.3c European Filing Systems (AMF, MFN, BaFin)
+
+Extend AMF model to Swedish and German regulators.
+
+**Deliverables:**
+- [ ] **MFN fetcher** (Sweden, H100.ST): Monitor Modular Finance news feed for Hashdex filings
+  - MFN provides structured press releases; parse for NAV/holdings data
+- [ ] **BaFin/DGAP fetcher** (Germany, SRAG.DU): Monitor DGAP ad-hoc disclosures
+  - DGAP (Deutsche Gesellschaft für Ad-hoc-Publizität) publishes via EQS newswire
+  - Parse for BTC holdings from annual/quarterly reports
+- [ ] AMF pipeline already complete — use as reference implementation
+
+**DoD:**
+- H100.ST and SRAG.DU have automated filing detection and extraction
+
+#### 4.3d Remaining Markets (UK, Australia, Brazil)
+
+**Deliverables:**
+- [ ] **LSE RNS fetcher** (UK, SWC): Monitor Regulatory News Service for Samara Alpha filings
+  - RNS has structured API; parse for portfolio disclosures
+- [ ] **ASX fetcher** (Australia, DCC.AX): Monitor ASX announcements for DigitalX
+  - ASX has public announcement API
+- [ ] **CVM/B3 fetcher** (Brazil, OBTC3): Monitor CVM for Méliuz filings
+  - CVM (Comissão de Valores Mobiliários) has online filing system
+
+**DoD:**
+- All 13 foreign companies have automated document fetch and extraction
+- No company relies solely on `companies.ts` backfill for holdings data
+
+#### 4.3e Foreign Cron Orchestration
+
+**Deliverables:**
+- [ ] **Unified foreign cron**: Single `/api/cron/foreign-filings` endpoint that dispatches to all fetchers
+  - Run daily (foreign filings are less frequent than SEC)
+  - Each fetcher checks for new documents since last run
+  - Extracted data flows into D1 as `candidate` datapoints (same as XBRL cron)
+- [ ] **Citation parity**: Foreign datapoints have same citation quality as SEC
+  - Real accession numbers (regulatory filing IDs, not synthetic `REG-` prefixes)
+  - Source documents in R2
+  - Search term highlighting works on cached documents
+- [ ] **Staleness integration**: Foreign tickers included in 4.1 staleness monitoring with correct cadences
+  - Japan: quarterly (TDnet) + monthly (Metaplanet dashboard)
+  - Canada: quarterly (SEDAR+)
+  - Europe: semi-annual or ad-hoc (AMF/MFN/BaFin)
+
+**DoD:**
+- Foreign pipeline runs on same schedule as SEC pipeline
+- All foreign companies show real regulatory accessions in citation chain
+- Synthetic `REG-` accessions eliminated
+
 ---
 
 ## Phase 5 — Adoption Monitoring
