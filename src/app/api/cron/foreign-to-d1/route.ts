@@ -155,18 +155,31 @@ async function fetchHkex(): Promise<ForeignFetcherResult[]> {
         continue;
       }
 
-      // Extract text from PDF using same approach as tdnet/metaplanet.ts
+      // Extract text from PDF — handles both pdf-parse v1 (function) and v2 (class)
       let text: string;
       try {
         const { createRequire } = await import('node:module');
         const req = createRequire(import.meta.url);
         const mod = req('pdf-parse');
-        const pdfParse: (buf: Buffer) => Promise<{ text: string }> =
-          typeof mod === 'function' ? mod
-            : mod?.default && typeof mod.default === 'function' ? mod.default
-            : (() => { throw new Error('pdf-parse export shape not recognized'); })();
-        const result = await pdfParse(Buffer.from(pdfBuf));
-        text = result.text;
+        const buf = Buffer.from(pdfBuf);
+
+        if (typeof mod === 'function') {
+          // v1: direct function call
+          const result = await mod(buf);
+          text = result.text;
+        } else if (mod?.default && typeof mod.default === 'function') {
+          // v1 ESM wrapper
+          const result = await mod.default(buf);
+          text = result.text;
+        } else if (mod?.PDFParse && typeof mod.PDFParse === 'function') {
+          // v2: class-based API
+          const parser = new mod.PDFParse(new Uint8Array(buf));
+          await parser.load();
+          const out = await parser.getText();
+          text = typeof out === 'string' ? out : (out?.text ?? '');
+        } else {
+          throw new Error(`pdf-parse export shape not recognized: ${Object.keys(mod).join(',')}`);
+        }
       } catch (e) {
         skipped.push({ id: filing.docId, reason: `pdf-parse failed: ${e instanceof Error ? e.message : String(e)}` });
         continue;
