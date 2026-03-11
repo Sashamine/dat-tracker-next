@@ -17,7 +17,6 @@ export interface MfnRelease {
   title: string;
   date: string;       // YYYY-MM-DD
   url: string;        // Full URL to the release
-  pdfUrl?: string;    // PDF download URL if available
 }
 
 /** Known MFN company slugs */
@@ -49,45 +48,48 @@ export async function getMfnReleases(ticker: string, limit = 20): Promise<MfnRel
 
 /**
  * Parse MFN HTML feed into structured releases.
- * MFN renders press releases as <a> links with dates in the surrounding text.
+ *
+ * MFN renders each release as a `.short-item` div with:
+ * - onclick="goToNewsItem(event, '/a/{slug}/{title-slug}')"
+ * - <span class="compressed-date">2026-02-06</span>
+ * - Title text inside <a href="/a/...">Title</a>
  */
 export function parseMfnHtml(html: string, slug: string): MfnRelease[] {
   const releases: MfnRelease[] = [];
 
-  // MFN links follow pattern: /a/{slug}/{title-slug}
-  // Each release has a date (YYYY-MM-DD) and title
-  const RELEASE_RE = /<a[^>]*href="(\/a\/[^"]*)"[^>]*>([^<]+)<\/a>/gi;
-  const DATE_RE = /(\d{4}-\d{2}-\d{2})\s+\d{2}:\d{2}/;
+  // Match each short-item block that links to this company
+  const ITEM_RE = /goToNewsItem\(event,\s*'(\/a\/[^']+)'\)/g;
+  let match: RegExpExecArray | null;
 
-  // Split into chunks around each release link
-  const chunks = html.split(/<a[^>]*href="\/a\//);
-
-  for (const chunk of chunks.slice(1)) { // Skip first chunk (before any links)
-    // Extract the URL
-    const urlMatch = chunk.match(/^([^"]*)"[^>]*>([^<]*)</);
-    if (!urlMatch) continue;
-
-    const path = `/a/${urlMatch[1]}`;
-    const title = urlMatch[2].trim();
-
-    // Skip non-content links (navigation, etc.)
+  while ((match = ITEM_RE.exec(html)) !== null) {
+    const path = match[1];
     if (!path.includes(slug)) continue;
-    if (title.length < 10) continue;
 
-    // Find the date near this link
-    const dateMatch = chunk.match(DATE_RE) || html.slice(0, html.indexOf(chunk)).slice(-200).match(DATE_RE);
+    // Extract surrounding context — title-link appears AFTER goToNewsItem
+    const start = Math.max(0, match.index - 300);
+    const end = Math.min(html.length, match.index + 1000);
+    const context = html.slice(start, end);
+
+    // Extract date from compressed-date span
+    const dateMatch = context.match(/compressed-date[^>]*>(\d{4}-\d{2}-\d{2})/);
     const date = dateMatch ? dateMatch[1] : '';
 
-    if (!date || !title) continue;
+    // Extract title from <a class="title-link item-link" ...>Title</a>
+    const titleMatch = context.match(/title-link\s+item-link[^>]*>([^<]+)/);
+    let title = titleMatch ? titleMatch[1].trim() : '';
 
-    // Check for PDF link
-    const pdfMatch = chunk.match(/href="([^"]*\.pdf[^"]*)"/i);
+    // Fallback: derive title from URL slug
+    if (!title) {
+      const slugPart = path.split('/').pop() || '';
+      title = slugPart.replace(/-/g, ' ');
+    }
+
+    if (!date || title.length < 5) continue;
 
     releases.push({
       title,
       date,
       url: `https://mfn.se${path}`,
-      pdfUrl: pdfMatch ? pdfMatch[1] : undefined,
     });
   }
 
