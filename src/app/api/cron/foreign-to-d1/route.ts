@@ -156,12 +156,14 @@ async function fetchHkex(): Promise<ForeignFetcherResult[]> {
       }
 
       // Extract text from PDF (pdf-parse v1 — pinned in package.json)
-      // Dynamic import avoids module-level side effect (test PDF read).
-      // pdf-parse is externalized via next.config.ts serverExternalPackages
-      // to preserve CJS→ESM interop.
+      // Import the inner lib directly to skip index.js which has a module-level
+      // side effect that reads a test PDF file (fails on Vercel where the file
+      // doesn't exist). pdf-parse is externalized via serverExternalPackages
+      // in next.config.ts to preserve CJS→ESM interop.
       let text: string;
       try {
-        const pdfParse = (await import('pdf-parse')).default;
+        // @ts-expect-error - pdf-parse/lib/pdf-parse has no type declarations
+        const pdfParse = (await import('pdf-parse/lib/pdf-parse')).default;
         const result = await pdfParse(Buffer.from(pdfBuf));
         text = result.text;
       } catch (e) {
