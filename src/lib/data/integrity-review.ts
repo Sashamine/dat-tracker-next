@@ -34,6 +34,55 @@ export const FOREIGN_REVIEW_STALE_DAYS = 60;
 /** Convertibles maturing within this window are flagged. */
 export const MATURITY_ALERT_DAYS = 90;
 
+// ── Cadence-Aware Staleness ─────────────────────────────────────────
+
+/**
+ * Expected update cadence by holdings source type.
+ * Used to suppress false-positive staleness alerts for companies
+ * that update on known schedules (e.g., quarterly SEC filers).
+ *
+ * Values represent the number of days after which data is "overdue"
+ * (expected cadence + reasonable buffer).
+ */
+export const CADENCE_DAYS: Record<string, number> = {
+  'sec-filing':         120,  // Quarterly + 30d filing deadline
+  'regulatory-filing':  120,  // Foreign quarterly filings
+  'company-dashboard':  45,   // Real-time dashboards (Metaplanet, SBET)
+  'company-website':    60,   // Company websites updated periodically
+  'press-release':      90,   // Ad-hoc, no fixed schedule
+  'company-reported':   90,
+  'on-chain':           30,   // Should always be fresh
+  'aggregator':         60,
+  'manual':             90,
+  'interpolated':       90,
+};
+
+/**
+ * Per-ticker overrides when the source type alone isn't enough.
+ * e.g., MSTR updates weekly via 8-K, not just quarterly.
+ */
+export const TICKER_CADENCE_OVERRIDES: Record<string, number> = {
+  'MSTR':    30,   // Weekly 8-K BTC updates
+  '3350.T':  30,   // StrategyTracker updates every 15 min
+};
+
+/**
+ * Get the expected staleness threshold for a company's holdings.
+ * Returns the number of days after which the data should be considered overdue.
+ */
+export function getHoldingsCadenceDays(company: Company): number {
+  // Ticker-specific override first
+  if (company.ticker in TICKER_CADENCE_OVERRIDES) {
+    return TICKER_CADENCE_OVERRIDES[company.ticker];
+  }
+  // Source-type based cadence
+  if (company.holdingsSource && company.holdingsSource in CADENCE_DAYS) {
+    return CADENCE_DAYS[company.holdingsSource];
+  }
+  // Default
+  return STALE_HOLDINGS_DAYS;
+}
+
 // ── Types ───────────────────────────────────────────────────────────
 
 export type Confidence = 'high' | 'medium' | 'low';
@@ -63,6 +112,10 @@ export interface CompanyReviewResult {
   sharesAgeDays: number | null;
   debtAgeDays: number | null;
   cashAgeDays: number | null;
+  /** Expected update cadence for this company's holdings (days). */
+  holdingsCadenceDays: number;
+  /** True if holdings are older than expected cadence (actually overdue, not just stale). */
+  holdingsOverdue: boolean;
 }
 
 // ── Helpers ─────────────────────────────────────────────────────────
@@ -256,6 +309,10 @@ export function getCompanyReview(company: Company): CompanyReviewResult {
     });
   }
 
+  // ── Cadence ───────────────────────────────────────────────────────
+  const cadenceDays = getHoldingsCadenceDays(company);
+  const holdingsOverdue = holdingsAge !== null && holdingsAge > cadenceDays;
+
   return {
     ticker,
     confidence,
@@ -269,6 +326,8 @@ export function getCompanyReview(company: Company): CompanyReviewResult {
     sharesAgeDays: sharesAge,
     debtAgeDays: debtAge,
     cashAgeDays: cashAge,
+    holdingsCadenceDays: cadenceDays,
+    holdingsOverdue,
   };
 }
 
