@@ -268,15 +268,18 @@ Separate page (`/analytics`) with four sector-level charts.
 
 **Goal:** Detect when source pages change (new filings, updated dashboards).
 
-**Current state:**
+**Current state (2026-03-11):**
 - SEC EDGAR monitoring exists (hourly cron checks for new filings)
-- Company dashboards not monitored
-- Press releases not monitored
+- `/api/cron/source-monitor` runs every 6 hours — monitors 10 dashboards + 18 IR pages
+- Content-hash based: strips dynamic elements (prices/timestamps), hashes remaining content
+- D1 `source_hashes` table stores per-URL hash, last_checked, last_changed
+- Discord alert on change; dashboard changes trigger @mention
 
 **Deliverables:**
-- [ ] Monitor company IR pages for new press releases
-- [ ] Monitor dashboard URLs for content changes (hash-based)
+- [x] Monitor dashboard URLs for content changes (hash-based)
+- [x] Monitor company IR pages for new press releases
 - [ ] When change detected: create verification task with diff
+- [ ] Smart content extraction: extract holdings/shares numbers from changed pages
 
 **DoD:**
 - New filings and dashboard updates are detected within 24 hours
@@ -476,6 +479,8 @@ Update this section when starting/stopping work so other agents see what's in-fl
 - Phase 3.2 Filing viewer quote highlighting
 
 ### Done (recent)
+- Source monitor cron: dashboard + IR page change detection (Phase 4.2, PR #425) — 2026-03-11
+- Foreign filing R2 upload for citation permanence (Phase 4.3e, PR #423) — 2026-03-11
 - Staleness monitor cron + cadence-aware thresholds (Phase 4.1, PR #422) — 2026-03-11
 - StrategyTracker API: real-time Metaplanet BTC + capital structure (Phase 4.3, PRs #420-421) — 2026-03-11
 - QA bug fixes: B-1/2 (ABTC sync), B-3/7 (earnings/HPS data), B-6 (admin page), B-10/11 (asset aggregates), B-13/22 (mNAV formula) — 2026-03-07
