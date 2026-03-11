@@ -156,11 +156,11 @@ async function fetchHkex(): Promise<ForeignFetcherResult[]> {
       }
 
       // Extract text from PDF (pdf-parse v1 — pinned in package.json)
+      // Dynamic import to avoid pdf-parse's module-level side effect that tries
+      // to open ./test/data/05-versions-space.pdf at import time
       let text: string;
       try {
-        const { createRequire } = await import('node:module');
-        const req = createRequire(import.meta.url);
-        const pdfParse = req('pdf-parse') as (buf: Buffer) => Promise<{ text: string }>;
+        const pdfParse = (await import('pdf-parse')).default;
         const result = await pdfParse(Buffer.from(pdfBuf));
         text = result.text;
       } catch (e) {
