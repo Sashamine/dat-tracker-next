@@ -161,12 +161,12 @@ export const ethCompanies: Company[] = [
     sharesSourceQuote: "SEC 10-Q (filed 2025-11-12): EntityCommonStockSharesOutstanding = 196,693,191 as of 2025-11-12",
     sharesSourceUrl: "/filings/sbet/0001493152-25-021970",
     sharesAsOf: "2025-11-12",
-    cashReserves: 11_100_000,  // $11.1M cash (Q3 2025)
-    restrictedCash: 11_100_000,  // Operating capital - not excess
-    cashSource: "SEC 10-Q Q3 2025",
-    cashSourceQuote: "SEC 10-Q Q3 2025",
-    cashSourceUrl: "/filings/sbet/0001493152-25-021970",
-    cashAsOf: "2025-09-30",
+    cashReserves: 28_539_000,  // $28.5M cash (10-K FY2025, us-gaap:Cash)
+    restrictedCash: 0,
+    cashSource: "SEC 10-K FY2025 XBRL: us-gaap:Cash = $28,539,000",
+    cashSourceQuote: "SEC 10-K FY2025 XBRL: us-gaap:Cash = $28,539,000",
+    cashSourceUrl: "/filings/sbet/0001493152-26-009214",
+    cashAsOf: "2025-12-31",
     totalDebt: 0,
     preferredEquity: 3936,
     preferredAsOf: "2025-09-30",
@@ -346,11 +346,11 @@ export const ethCompanies: Company[] = [
     capitalRaisedAtmSourceUrl: "https://efts.sec.gov/LATEST/search-index?q=%22BTCS%22&forms=S-3",
     avgDailyVolume: 15_000_000,
     hasOptions: true,
-    sharesForMnav: 47_149_138,  // BASIC: 46,838,532 (XBRL Nov 10) + 310,606 (Jan 5 8-K grants). Dilutives in dilutive-instruments.ts
-    sharesSourceUrl: "/filings/btcs/0001493152-25-022359",
-    sharesSource: "SEC XBRL Nov 10, 2025 + 8-K Jan 5, 2026",
-    sharesSourceQuote: "SEC XBRL Nov 10, 2025 + 8-K Jan 5, 2026",
-    sharesAsOf: "2026-01-05",
+    sharesForMnav: 50_000_000,  // D1 XBRL Feb 5, 2026: CommonStockSharesOutstanding = 50M. Matches holdings-history.
+    sharesSourceUrl: "/filings/btcs/0001493152-26-003924",
+    sharesSource: "SEC XBRL Feb 5, 2026",
+    sharesSourceQuote: "SEC XBRL Feb 5, 2026: CommonStockSharesOutstanding = 50,000,000",
+    sharesAsOf: "2026-02-05",
     leader: "Charles Allen",
     totalDebt: 61_660_526,  // $7,810,526 May convert + $10,050,000 Jul convert + $43,800,000 Aave DeFi
     debtSource: "SEC 8-K Feb 6, 2026: $43.8M Aave DeFi debt + Q3 10-Q: $17.86M convertible notes face value",
@@ -418,9 +418,9 @@ export const ethCompanies: Company[] = [
     // Plus 5M shares Series A-2 issued for TubeBuddy (Feb 2026)
     preferredEquity: 10_150_000, 
     totalDebt: 1250000,
-    debtAsOf: "2025-06-30",
+    debtAsOf: "2025-09-30",
     debtSourceQuote: "Convertible debt fully converted to equity; remaining $1.25M non-convertible (10-Q Q3 2025)",
-    debtSourceUrl: "/filings/game/0001641172-25-023972",
+    debtSourceUrl: "/filings/game/0001493152-25-023589",
     preferredSource: "SEC 10-Q Q3 2025 + Feb 23, 2026 TubeBuddy 8-K",
     preferredSourceQuote: "SEC 10-Q Q3 2025 + Feb 23, 2026 TubeBuddy 8-K",
     preferredSourceUrl: "/filings/game/0001493152-25-023589",
@@ -499,6 +499,7 @@ export const ethCompanies: Company[] = [
     debtSourceUrl: "/filings/fgnx/0001493152-26-003101",
     debtAsOf: "2026-01-20",
     preferredEquity: 21_040_000,  // ~841,580 Series A preferred × $25 par (894,580 issued - ~53K repurchased)
+    preferredAsOf: "2025-09-30",
     preferredSource: "SEC 10-Q Q3 2025 + 8-K Jan 21, 2026 (buyback ~53K shares)",
     preferredSourceQuote: "SEC 10-Q Q3 2025 + 8-K Jan 21, 2026 (buyback ~53K shares)",
     preferredSourceUrl: "/filings/fgnx/0001493152-25-023550",
@@ -789,8 +790,8 @@ export const btcCompanies: Company[] = [
     holdings: MARA_PROVENANCE.holdings?.value || 53_822,
     holdingsLastUpdated: MARA_PROVENANCE_DEBUG.holdingsDate,
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "/filings/mara/0001507605-26-000014",
-    accessionNumber: "0001507605-26-000014",
+    holdingsSourceUrl: "/filings/mara/0001507605-26-000007",
+    accessionNumber: "0001507605-26-000007",
     sourceType: "sec-filing",
     sourceQuote: "Total bitcoin holdings of 53,822 BTC as of December 31, 2025",
     datStartDate: "2021-01-25", // First major BTC purchase ($150M)
@@ -813,30 +814,30 @@ export const btcCompanies: Company[] = [
     marketCap: 3_600_000_000,
     // SHARES: from provenance (basic shares, dilutives in dilutive-instruments.ts)
     sharesForMnav: MARA_PROVENANCE_DEBUG.sharesBasic,
-    sharesSource: "SEC-verified (provenance): 10-Q Q3 2025 cover page",
-    sharesSourceQuote: "SEC-verified (provenance): 10-Q Q3 2025 cover page",
-    sharesSourceUrl: "/filings/mara/0001507605-25-000028",
+    sharesSource: "SEC-verified (provenance): 10-K FY2025 cover page (Feb 19, 2026)",
+    sharesSourceQuote: "SEC-verified (provenance): 10-K FY2025 cover page (Feb 19, 2026)",
+    sharesSourceUrl: "/filings/mara/0001507605-26-000007",
     sharesAsOf: MARA_PROVENANCE_DEBUG.sharesDate,
-    // CASH: from provenance (10-Q)
-    cashReserves: MARA_PROVENANCE.cashReserves?.value || 826_392_000,
-    cashAsOf: "2025-09-30",
-    restrictedCash: 34_400_000,  // XBRL us-gaap:RestrictedCash (Q3 2025 balance sheet, matches provenance)
-    cashSource: "SEC-verified (provenance): 10-Q Q3 2025",
-    cashSourceQuote: "SEC-verified (provenance): 10-Q Q3 2025",
-    cashSourceUrl: "/filings/mara/0001507605-25-000028",
+    // CASH: Updated to 10-K FY2025 ($547M vs Q3 $826M — MARA spent ~$279M on BTC in Q4)
+    cashReserves: 547_132_000,
+    cashAsOf: "2025-12-31",
+    restrictedCash: 12_000_000,  // XBRL us-gaap:RestrictedCashAndCashEquivalentsAtCarryingValue (10-K FY2025)
+    cashSource: "SEC 10-K FY2025 XBRL: CashAndCashEquivalentsAtCarryingValue = $547,132,000",
+    cashSourceQuote: "SEC 10-K FY2025 XBRL: CashAndCashEquivalentsAtCarryingValue = $547,132,000",
+    cashSourceUrl: "/filings/mara/0001507605-26-000007",
     leader: "Fred Thiel (CEO)",
-    strategy: "HODL miner - keeps all mined BTC. 50 EH/s.",
+    strategy: "Miner pivoting to AI/HPC infrastructure. No longer full HODL — began selling BTC in H2 2025 to fund operations. 66.4 EH/s.",
     // DEBT: from provenance (~$3.25B in convertible notes)
     totalDebt: MARA_PROVENANCE.totalDebt?.value || 3_597_561_000,
     preferredEquity: 0,
-    preferredAsOf: "2025-09-30",
-    preferredSourceUrl: "/filings/mara/0001507605-25-000028",
-    preferredSourceQuote: "No preferred stock outstanding (10-Q Q3 2025: preferred stock authorized 5,000,000 shares, none issued)",
-    debtAsOf: "2025-09-30",
-    debtSource: "SEC-verified (provenance): 10-Q Q3 2025 XBRL (LongTermDebt + LinesOfCreditCurrent)",
-    debtSourceQuote: "SEC-verified (provenance): 10-Q Q3 2025 XBRL (LongTermDebt + LinesOfCreditCurrent)",
-    debtSourceUrl: "/filings/mara/0001507605-25-000028",
-    notes: "Largest US public miner. Core financials from provenance/mara.ts. 5 convertible note tranches ($3.298B face) per 10-Q Note 14 + $350M line of credit. Dilutives (~132M from converts + RSUs) in dilutive-instruments.ts.",
+    preferredAsOf: "2025-12-31",
+    preferredSourceUrl: "/filings/mara/0001507605-26-000007",
+    preferredSourceQuote: "No preferred stock outstanding (10-K FY2025)",
+    debtAsOf: "2025-12-31",
+    debtSource: "SEC-verified (provenance): 10-K FY2025 XBRL (LongTermDebt = $3,599,927K, line of credit repaid)",
+    debtSourceQuote: "SEC-verified (provenance): 10-K FY2025 XBRL (LongTermDebt = $3,599,927K)",
+    debtSourceUrl: "/filings/mara/0001507605-26-000007",
+    notes: "Largest US public miner. Core financials from provenance/mara.ts. 5 convertible note tranches ($3.298B face) per 10-K. Line of credit repaid ($0 at Dec 31). Dilutives (~132M from converts + RSUs) in dilutive-instruments.ts. Pivoting to AI/HPC.",
   },
   {
     id: "asst",
@@ -1300,7 +1301,6 @@ export const btcCompanies: Company[] = [
     datStartDate: "2024-01-01",
     website: "https://bitfufu.com",
     secCik: "0001921158",
-    isMiner: true,
     quarterlyBurnUsd: 0,  // FUFU is profitable — Q3 2025 net income $11.6M, EBITDA $22.1M. 2025 Net Income ~$41.8M (prelim).
     burnSource: "SEC 6-K Q3 2025 + 2025 Prelim Results: Company is cash-flow positive from mining operations.",
     burnSourceUrl: "/filings/fufu/0001213900-25-108472",
@@ -1812,10 +1812,10 @@ export const btcCompanies: Company[] = [
     debtSourceUrl: "/filings/djt/0001140361-26-007174",
     debtAsOf: "2025-12-31",
     // CASH: from provenance (XBRL - unrestricted only)
-    cashReserves: DJT_PROVENANCE.cashReserves?.value ?? 166_072_700,
+    cashReserves: DJT_PROVENANCE.cashReserves?.value ?? 134_557_600,
     cashAsOf: "2025-12-31",
-    cashSource: "SEC 10-K FY2025 XBRL: CashAndCashEquivalentsAtCarryingValue $166,072,700 (excl $336M restricted)",
-    cashSourceQuote: "SEC 10-K FY2025 XBRL: CashAndCashEquivalentsAtCarryingValue $166,072,700 (excl $336M restricted)",
+    cashSource: "SEC 10-K FY2025 XBRL: CashAndCashEquivalentsAtCarryingValue $134,557,600 (excl $336M restricted)",
+    cashSourceQuote: "SEC 10-K FY2025 XBRL: CashAndCashEquivalentsAtCarryingValue $134,557,600 (excl $336M restricted)",
     cashSourceUrl: "/filings/djt/0001140361-26-007174",
     leader: "Devin Nunes (CEO)",
     strategy: "High-leverage BTC treasury strategy + fintech pivot. Uses covered-put yield generation.",
@@ -1900,7 +1900,6 @@ export const btcCompanies: Company[] = [
     sourceType: "press-release",
     sourceQuote: "American Bitcoin's reserves have surpassed 6,500 BTC",
     datStartDate: "2025-09-03",
-    isMiner: true,
     quarterlyBurnUsd: 8_052_000, 
     burnSource: "SEC 10-Q Q3 2025 XBRL: GeneralAndAdministrativeExpense",
     burnSourceUrl: "/filings/abtc/0001193125-25-281390",
@@ -2981,12 +2980,12 @@ export const ltcCompanies: Company[] = [
     capitalRaisedPipe: 3_286_080,  // $2.5M Jul 2025 + $786K Dec 2025
     avgDailyVolume: 500_000,
     sedarProfile: "000044736",
-    // Dec 9, 2025: 26,930,164 (Aug 31) + 4,624,000 (Dec placement) = 31,554,164
-    sharesForMnav: 31_554_164,  // SEDAR+ FY2025 + Dec 9, 2025 private placement
-    sharesAsOf: "2025-12-09",
-    sharesSource: "SEDAR+ audited annual + Note 12 subsequent events (Dec 9 placement)",
-    sharesSourceQuote: "SEDAR+ audited annual + Note 12 subsequent events (Dec 9 placement)",
-    sharesSourceUrl: "https://www.sedarplus.ca/csa-party/records/record.html?id=000044736",
+    // Feb 11, 2026 press release: 33,167,164 outstanding (31.55M + warrant exercises)
+    sharesForMnav: 33_167_164,  // Luxxfolio press release Feb 11, 2026
+    sharesAsOf: "2026-02-11",
+    sharesSource: "Luxxfolio press release Feb 11, 2026",
+    sharesSourceQuote: "33,167,164 outstanding shares",
+    sharesSourceUrl: "https://luxxfolio.com/press-releases",
     leader: "Tomek Antoniak (CEO)",
     website: "https://www.luxxfolio.com",
     twitter: "https://x.com/luxxfolio",

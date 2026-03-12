@@ -24,11 +24,12 @@ type PricesSnapshot = {
   crypto?: Record<string, { price?: number }>;
 };
 
-// Get unique assets and count companies
+// Get unique assets and count companies (DAT treasury strategies only — excludes miners)
 function getAssetStats(companies: Company[], prices?: PricesSnapshot | null) {
   const assetCounts: Record<string, { count: number; totalHoldings: number; totalValue: number }> = {};
-  
+
   for (const c of companies) {
+    if (c.isMiner) continue; // Miners excluded from DAT sector stats
     if (c.multiHoldings) {
       for (const [asset, amount] of Object.entries(c.multiHoldings)) {
         if (!assetCounts[asset]) assetCounts[asset] = { count: 0, totalHoldings: 0, totalValue: 0 };
@@ -103,7 +104,7 @@ function HomeContent() {
 
   const assetStats = getAssetStats(d1Companies, prices);
   const totalValue = assetStats.reduce((sum, a) => sum + a.totalValue, 0);
-  const totalCompanies = d1Companies.length;
+  const totalCompanies = d1Companies.filter(c => !c.isMiner).length;
   const isFiltered = activeFilterCount > 0;
   const visibleCount = visibleSummary?.visibleCount ?? totalCompanies;
   const overviewSummaryText = isLoadingCompanies

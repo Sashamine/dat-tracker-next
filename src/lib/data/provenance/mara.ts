@@ -24,32 +24,32 @@ const secDocUrl = (cik: string, accession: string, doc: string) =>
   `/filings/mara/${accession}`;
 
 // =========================================================================
-// FY2025 10-K DATA (filed March 2026, as of Dec 31, 2025)
+// FY2025 10-K DATA (filed March 2, 2026, as of Dec 31, 2025)
 // =========================================================================
-const FY2025_10K_ACCESSION = "0001507605-26-000014"; // Estimated from sequence
+const FY2025_10K_ACCESSION = "0001507605-26-000007";
 const FY2025_10K_FILED = "2026-03-02";
 const FY2025_PERIOD_END = "2025-12-31";
+const FY2025_COVER_DATE = "2026-02-19"; // Cover page date
 
 // Latest holdings data points
 const LATEST_HOLDINGS = 53_822;
 const LATEST_HOLDINGS_DATE = "2025-12-31";
 
-// Financial data (Updated per 10-K)
-const CASH_RESERVES = 826_392_000; // Q3 baseline, needs Q4 update in next turn
-const COST_BASIS_AVG = 75_985; // Weighted average per 10-K
+// Financial data from FY2025 10-K XBRL
+const CASH_RESERVES = 547_132_000;       // us-gaap:CashAndCashEquivalentsAtCarryingValue
+const COST_BASIS_AVG = 75_985;           // Weighted average per 10-K
+const SHARES_OUTSTANDING = 380_234_635;  // dei:EntityCommonStockSharesOutstanding (Feb 19, 2026 cover page)
+const DILUTED_SHARES = 510_000_000;      // Approximate (basic + convert dilution from dilutive-instruments.ts)
+const TOTAL_DEBT = 3_599_927_000;        // us-gaap:LongTermDebt (10-K) — line of credit repaid ($0 at Dec 31)
+const RESTRICTED_CASH = 12_000_000;      // us-gaap:RestrictedCashAndCashEquivalentsAtCarryingValue
 
-// Q3 2025 10-Q (filed Nov 4, 2025, period ending Sep 30, 2025)
+// Q3 2025 10-Q (filed Nov 4, 2025, period ending Sep 30, 2025) — used for cost basis detail
 const Q3_2025_10Q_ACCESSION = "0001507605-25-000028";
 const Q3_2025_10Q_FILED = "2025-11-04";
 const Q3_2025_PERIOD_END = "2025-09-30";
-const Q3_2025_COVER_DATE = "2025-11-03"; // Cover page date (day before filing)
 
-// Balance sheet values from Q3 2025 10-Q
+// Balance sheet values from Q3 2025 10-Q (retained for cost basis provenance)
 const COST_BASIS_TOTAL = 4_637_673_000; // "Total bitcoin holdings 52,850 $4,637,673" (Note 5)
-const SHARES_OUTSTANDING = 378_184_353; // dei:EntityCommonStockSharesOutstanding
-const DILUTED_SHARES = 510_000_000;     // Approximate (basic + convert dilution from dilutive-instruments.ts)
-const TOTAL_DEBT = 3_597_561_000;       // $3,247,561K LongTermDebt + $350,000K line of credit
-const RESTRICTED_CASH = 34_400_000;     // us-gaap:RestrictedCash (Q3 2025 balance sheet)
 
 /**
  * MARA Financial Data with Full Provenance
@@ -139,25 +139,25 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
   ),
 
   // =========================================================================
-  // SHARES OUTSTANDING - from Q3 2025 10-Q
+  // SHARES OUTSTANDING - from FY2025 10-K cover page (Feb 19, 2026)
   // Using basic shares for sharesForMnav; dilutives tracked separately
   // =========================================================================
   sharesOutstanding: pv(
     SHARES_OUTSTANDING,
     xbrlSource({
       fact: "dei:EntityCommonStockSharesOutstanding",
-      searchTerm: "378,184,353",
+      searchTerm: "380,234,635",
       rawValue: SHARES_OUTSTANDING,
       unit: "shares",
       periodType: "instant",
-      periodEnd: Q3_2025_COVER_DATE,
+      periodEnd: FY2025_COVER_DATE,
       cik: MARA_CIK,
-      accession: Q3_2025_10Q_ACCESSION,
-      filingType: "10-Q",
-      filingDate: Q3_2025_10Q_FILED,
+      accession: FY2025_10K_ACCESSION,
+      filingType: "10-K",
+      filingDate: FY2025_10K_FILED,
       documentAnchor: "shares of common stock outstanding",
     }),
-    "Basic shares. Dilutives (~132M from converts + ~324K warrants at $25.00, expiring ~Jan 2026) tracked in dilutive-instruments.ts."
+    "Basic shares. Dilutives (~132M from converts) tracked in dilutive-instruments.ts."
   ),
 
   // =========================================================================
@@ -184,64 +184,47 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
   ),
 
   // =========================================================================
-  // TOTAL DEBT - from Q3 2025 10-Q XBRL
+  // TOTAL DEBT - from FY2025 10-K XBRL
   // Multiple convertible note tranches: 2026, 2030, 2031, 2032
+  // Line of credit repaid (was $350M in Q3, now $0)
   // =========================================================================
   totalDebt: pv(
     TOTAL_DEBT,
-    derivedSource({
-      derivation: "Long-term convertible notes (book value) + line of credit (current)",
-      formula: "$3,247,561K (LongTermDebt XBRL) + $350,000K (LinesOfCreditCurrent XBRL) = $3,597,561K",
-      inputs: {
-        longTermDebt: pv(3_247_561_000, xbrlSource({
-          fact: "us-gaap:LongTermDebt",
-          searchTerm: "3,247,561",
-          rawValue: 3_247_561_000,
-          unit: "USD",
-          periodType: "instant",
-          periodEnd: Q3_2025_PERIOD_END,
-          cik: MARA_CIK,
-          accession: Q3_2025_10Q_ACCESSION,
-          filingType: "10-Q",
-          filingDate: Q3_2025_10Q_FILED,
-          documentAnchor: "Long-term debt",
-        })),
-        lineOfCredit: pv(350_000_000, docSource({
-          type: "sec-document",
-          searchTerm: "Line of credit, current portion 350,000",
-          url: `/filings/mara/${Q3_2025_10Q_ACCESSION}`,
-          quote: "Line of credit - current portion $350,000",
-          anchor: "Line of credit",
-          cik: MARA_CIK,
-          accession: Q3_2025_10Q_ACCESSION,
-          filingType: "10-Q",
-          filingDate: Q3_2025_10Q_FILED,
-          documentDate: Q3_2025_PERIOD_END,
-        })),
-      },
+    xbrlSource({
+      fact: "us-gaap:LongTermDebt",
+      searchTerm: "3,599,927",
+      rawValue: TOTAL_DEBT,
+      unit: "USD",
+      periodType: "instant",
+      periodEnd: FY2025_PERIOD_END,
+      cik: MARA_CIK,
+      accession: FY2025_10K_ACCESSION,
+      filingType: "10-K",
+      filingDate: FY2025_10K_FILED,
+      documentAnchor: "Long-term debt",
     }),
-    "5 convertible note tranches ($3.298B face) + $350M line of credit. Converts: Dec 2026 1% ($48M), Sep 2031 2.125% ($300M), Mar 2030 0% ($1B), Jun 2031 0% ($925M), Aug 2032 0% ($1.025B). Per 10-Q Q3 2025 Note 14."
+    "5 convertible note tranches ($3.298B face). Line of credit repaid ($0 at Dec 31). Converts: Dec 2026 1% ($48M), Sep 2031 2.125% ($300M), Mar 2030 0% ($1B), Jun 2031 0% ($925M), Aug 2032 0% ($1.025B)."
   ),
 
   // =========================================================================
-  // CASH RESERVES - from Q3 2025 10-Q XBRL
+  // CASH RESERVES - from FY2025 10-K XBRL
   // =========================================================================
   cashReserves: pv(
     CASH_RESERVES,
     xbrlSource({
       fact: "us-gaap:CashAndCashEquivalentsAtCarryingValue",
-      searchTerm: "826,392",
+      searchTerm: "547,132",
       rawValue: CASH_RESERVES,
       unit: "USD",
       periodType: "instant",
-      periodEnd: Q3_2025_PERIOD_END,
+      periodEnd: FY2025_PERIOD_END,
       cik: MARA_CIK,
-      accession: Q3_2025_10Q_ACCESSION,
-      filingType: "10-Q",
-      filingDate: Q3_2025_10Q_FILED,
+      accession: FY2025_10K_ACCESSION,
+      filingType: "10-K",
+      filingDate: FY2025_10K_FILED,
       documentAnchor: "Cash and cash equivalents",
     }),
-    `Plus $${(RESTRICTED_CASH / 1e6).toFixed(0)}M restricted cash.`
+    `Plus $${(RESTRICTED_CASH / 1e6).toFixed(0)}M restricted cash. Cash decreased ~$279M from Q3 as MARA deployed capital for BTC acquisitions and AI/HPC expansion.`
   ),
 
   // =========================================================================
@@ -251,15 +234,14 @@ export const MARA_PROVENANCE: ProvenanceFinancials = {
     0,
     xbrlSource({
       fact: "us-gaap:PreferredStockValue",
-      // No searchTerm for zero values
       rawValue: 0,
       unit: "USD",
       periodType: "instant",
-      periodEnd: Q3_2025_PERIOD_END,
+      periodEnd: FY2025_PERIOD_END,
       cik: MARA_CIK,
-      accession: Q3_2025_10Q_ACCESSION,
-      filingType: "10-Q",
-      filingDate: Q3_2025_10Q_FILED,
+      accession: FY2025_10K_ACCESSION,
+      filingType: "10-K",
+      filingDate: FY2025_10K_FILED,
       documentAnchor: "Preferred stock",
     }),
     "No preferred equity issued."
@@ -376,9 +358,9 @@ export function getMARATotalDilutiveFromConverts(): number {
 
 export const MARA_PROVENANCE_DEBUG = {
   holdingsDate: LATEST_HOLDINGS_DATE,
-  sharesDate: Q3_2025_COVER_DATE,
-  balanceSheetDate: Q3_2025_PERIOD_END,
-  lastFilingChecked: Q3_2025_10Q_FILED,
+  sharesDate: FY2025_COVER_DATE,
+  balanceSheetDate: FY2025_PERIOD_END,
+  lastFilingChecked: FY2025_10K_FILED,
   holdings: LATEST_HOLDINGS,
   sharesBasic: SHARES_OUTSTANDING,
   sharesDiluted: DILUTED_SHARES,
@@ -386,7 +368,7 @@ export const MARA_PROVENANCE_DEBUG = {
   totalConvertibles: getMARATotalConvertibleDebt(),
   totalDilutiveFromConverts: getMARATotalDilutiveFromConverts(),
   notes:
-    "MARA is a BTC miner, not pure treasury. Holdings include receivable from hosted mining. Complex cap structure with multiple convert tranches.",
+    "MARA is a BTC miner, not pure treasury. Holdings include receivable from hosted mining. Complex cap structure with multiple convert tranches. FY2025 10-K filed 2026-03-02. MARA pivoting to AI/HPC — authorized to sell BTC to fund data center growth.",
 };
 
 // =========================================================================
@@ -402,7 +384,7 @@ export function getMARAProvenance() {
     holdingsDate: LATEST_HOLDINGS_DATE,
     sharesBasic: SHARES_OUTSTANDING,
     sharesDiluted: DILUTED_SHARES,
-    sharesDate: Q3_2025_COVER_DATE,
+    sharesDate: FY2025_COVER_DATE,
     costBasisAvg: MARA_PROVENANCE.costBasisAvg?.value,
     totalCostBasis: MARA_PROVENANCE.totalCostBasis?.value,
     cashReserves: MARA_PROVENANCE.cashReserves?.value,
