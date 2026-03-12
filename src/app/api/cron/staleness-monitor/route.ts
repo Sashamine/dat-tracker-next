@@ -21,10 +21,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { allCompanies } from '@/lib/data/companies';
 import {
   getAllCompanyReviews,
+  getHoldingsCadenceDays,
   STALE_BALANCE_SHEET_DAYS,
   CRITICAL_STALE_DAYS,
   type CompanyReviewResult,
 } from '@/lib/data/integrity-review';
+import { D1Client } from '@/lib/d1';
 import { sendDiscordEmbed, type Severity } from '@/lib/discord';
 
 function verifyCronSecret(request: NextRequest): boolean {
@@ -56,8 +58,67 @@ interface StalenessReport {
   foreignCovered: number;
 }
 
-function buildReport(): StalenessReport {
+/**
+ * Fetch the latest as_of dates from D1 for each metric per ticker.
+ * D1 often has fresher data than companies.ts (via automated pipelines).
+ */
+async function getD1FreshestDates(): Promise<Map<string, {
+  holdings?: string;
+  shares?: string;
+  debt?: string;
+  cash?: string;
+}>> {
+  const map = new Map<string, { holdings?: string; shares?: string; debt?: string; cash?: string }>();
+
+  try {
+    const d1 = D1Client.fromEnv();
+    const result = await d1.query<{ entity_id: string; metric: string; max_as_of: string }>(
+      `SELECT entity_id, metric, MAX(as_of) as max_as_of
+       FROM datapoints
+       WHERE metric IN ('holdings_native', 'basic_shares', 'debt_usd', 'cash_usd')
+         AND status IN ('candidate', 'accepted', 'verified')
+       GROUP BY entity_id, metric`
+    );
+
+    for (const row of result.results) {
+      if (!map.has(row.entity_id)) map.set(row.entity_id, {});
+      const entry = map.get(row.entity_id)!;
+      switch (row.metric) {
+        case 'holdings_native': entry.holdings = row.max_as_of; break;
+        case 'basic_shares': entry.shares = row.max_as_of; break;
+        case 'debt_usd': entry.debt = row.max_as_of; break;
+        case 'cash_usd': entry.cash = row.max_as_of; break;
+      }
+    }
+  } catch {
+    // If D1 is unavailable, fall back to companies.ts only
+    console.error('[staleness-monitor] D1 unavailable, using companies.ts dates only');
+  }
+
+  return map;
+}
+
+function daysSinceDate(isoDate: string | undefined | null): number | null {
+  if (!isoDate) return null;
+  const d = new Date(isoDate);
+  if (isNaN(d.getTime())) return null;
+  return Math.floor((Date.now() - d.getTime()) / (1000 * 60 * 60 * 24));
+}
+
+/** Pick the fresher of two ISO date strings. */
+function fresher(a: string | undefined | null, b: string | undefined): string | null {
+  if (!a && !b) return null;
+  if (!a) return b || null;
+  if (!b) return a;
+  return a > b ? a : b;
+}
+
+async function buildReport(): Promise<StalenessReport> {
   const reviews = getAllCompanyReviews(allCompanies);
+  const d1Dates = await getD1FreshestDates();
+
+  // Build a lookup from ticker to company for cadence info
+  const companyByTicker = new Map(allCompanies.map(c => [c.ticker, c]));
 
   const confidence = { high: 0, medium: 0, low: 0 };
   const overdueItems: OverdueItem[] = [];
@@ -67,24 +128,37 @@ function buildReport(): StalenessReport {
   for (const r of reviews) {
     confidence[r.confidence]++;
 
-    // Holdings: use cadence-aware threshold
-    if (r.holdingsOverdue && r.holdingsAgeDays !== null) {
+    const d1 = d1Dates.get(r.ticker);
+    const company = companyByTicker.get(r.ticker);
+
+    // Holdings: use the fresher of companies.ts and D1 dates
+    const holdingsDate = fresher(company?.holdingsLastUpdated, d1?.holdings);
+    const holdingsAge = daysSinceDate(holdingsDate);
+    const cadenceDays = company ? getHoldingsCadenceDays(company) : r.holdingsCadenceDays;
+    const holdingsOverdue = holdingsAge !== null && holdingsAge > cadenceDays;
+
+    if (holdingsOverdue && holdingsAge !== null) {
       const item: OverdueItem = {
         ticker: r.ticker,
         field: 'holdings',
-        ageDays: r.holdingsAgeDays,
-        cadenceDays: r.holdingsCadenceDays,
+        ageDays: holdingsAge,
+        cadenceDays,
       };
       overdueItems.push(item);
-      if (r.holdingsAgeDays > CRITICAL_STALE_DAYS) criticalItems.push(item);
+      if (holdingsAge > CRITICAL_STALE_DAYS) criticalItems.push(item);
     }
 
-    // Balance sheet fields: flat threshold (no per-company cadence yet)
-    for (const [field, age] of [
-      ['shares', r.sharesAgeDays],
-      ['debt', r.debtAgeDays],
-      ['cash', r.cashAgeDays],
+    // Balance sheet fields: use fresher of companies.ts and D1
+    const sharesDate = fresher(company?.sharesAsOf, d1?.shares);
+    const debtDate = fresher(company?.debtAsOf, d1?.debt);
+    const cashDate = fresher(company?.cashAsOf, d1?.cash);
+
+    for (const [field, date] of [
+      ['shares', sharesDate],
+      ['debt', debtDate],
+      ['cash', cashDate],
     ] as const) {
+      const age = daysSinceDate(date);
       if (age !== null && age > STALE_BALANCE_SHEET_DAYS) {
         staleBalanceSheet.push({ ticker: r.ticker, field, ageDays: age, cadenceDays: STALE_BALANCE_SHEET_DAYS });
       }
@@ -208,7 +282,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
   }
 
-  const report = buildReport();
+  const report = await buildReport();
   const { embed, severity, shouldMention } = formatDiscordEmbed(report);
 
   let discordSent = false;
