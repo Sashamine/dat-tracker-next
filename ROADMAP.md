@@ -253,6 +253,7 @@ Separate page (`/analytics`) with four sector-level charts.
 - Cadence-aware thresholds: SEC quarterly (120d), dashboards (45d), websites (60d), press releases (90d)
 - Per-ticker overrides: MSTR (30d, weekly 8-K), 3350.T (30d, StrategyTracker)
 - Currently 7 companies overdue, 5 on-schedule (correctly suppressed by cadence)
+- Cross-check: 0 FAIL, 10 WARN (all staleness, no newer sources exist) — ratchet baseline: 10
 - Cross-check script flags staleness (>90d warn, >180d fail for tier 1)
 
 **Deliverables:**
@@ -480,6 +481,10 @@ Update this section when starting/stopping work so other agents see what's in-fl
 - Phase 3.2 Filing viewer quote highlighting
 
 ### Done (recent)
+- ZONE holdings update: -70M DOGE (asset mgmt termination, 8-K Mar 10) (PR #430) — 2026-03-11
+- D1-aware staleness monitor: queries D1 for fresher as_of dates (PR #427) — 2026-03-11
+- BTOG source upgrade to SEC 20-F + accession fix (PRs #428, #429) — 2026-03-11
+- Warning ratchet: 15 → 10 (ZONE freshened, D1-aware staleness eliminates false positives) — 2026-03-11
 - Source monitor cron: dashboard + IR page change detection (Phase 4.2, PR #425) — 2026-03-11
 - Foreign filing R2 upload for citation permanence (Phase 4.3e, PR #423) — 2026-03-11
 - Staleness monitor cron + cadence-aware thresholds (Phase 4.1, PR #422) — 2026-03-11
