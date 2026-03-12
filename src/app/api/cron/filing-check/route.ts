@@ -149,7 +149,7 @@ export async function GET(request: NextRequest) {
           if (proposalWriteStats?.written) {
             proposalLine += ` (${proposalWriteStats.written} written to D1)`;
           }
-          proposalLine += `\n[Review proposals](${baseUrl}/api/proposals)`;
+          proposalLine += `\n[Review proposals](${baseUrl}/admin/proposals)`;
         }
 
         await sendDiscordAlert(
