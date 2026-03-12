@@ -84,6 +84,7 @@ const MARA_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-03-31", holdings: 47531, sharesOutstanding: 351_927_748, holdingsPerShare: 0.0001351, stockPrice: 11.50, totalDebt: 2_598_549_000, cash: 196_215_000, source: "Q1 2025 10-Q (33,263 + 14,269 receivable)", sourceUrl: "/filings/mara/0001507605-25-000009", sourceType: "sec-filing" }, // totalDebt = $2,298,549K LTD + $300,000K LoC (XBRL), cash from XBRL
   { date: "2025-06-30", holdings: 49951, sharesOutstanding: 370_457_880, holdingsPerShare: 0.0001348, stockPrice: 15.68, totalDebt: 2_600_546_000, cash: 109_475_000, source: "Q2 2025 10-Q (34,401 + 15,550 receivable)", sourceUrl: "/filings/mara/0001507605-25-000018", sourceType: "sec-filing" }, // totalDebt = $2,250,546K LTD + $350,000K LoC (XBRL), cash from XBRL
   { date: "2025-09-30", holdings: 52850, sharesOutstanding: 378_184_353, holdingsPerShare: 0.0001397, stockPrice: 18.26, totalDebt: 3_597_561_000, cash: 826_392_000, source: "Q3 2025 10-Q (35,493 + 17,357 receivable)", sourceUrl: "/filings/mara/0001507605-25-000028", sourceType: "sec-filing" }, // totalDebt = $3,247,561K LTD + $350,000K LoC (XBRL)
+  { date: "2025-12-31", holdings: 53822, sharesOutstanding: 380_234_635, holdingsPerShare: 0.0001416, stockPrice: 16.20, totalDebt: 3_599_927_000, cash: 547_132_000, source: "FY2025 10-K (53,822 BTC)", sourceUrl: "/filings/mara/0001507605-26-000007", sourceType: "sec-filing" }, // totalDebt = $3,599,927K LTD (line of credit repaid), restrictedCash $12M
 ];
 
 // Metaplanet (3350.T) - Japan's first Bitcoin treasury company

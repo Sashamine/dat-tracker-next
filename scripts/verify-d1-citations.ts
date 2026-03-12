@@ -46,7 +46,7 @@ const TICKER_BATCHES: Record<string, number> = {
   taox: 5, tbh: 5, tron: 5, twav: 5, upxi: 5, xrpn: 5, xxi: 5,
   zone: 6, zooz: 1,
 };
-const R2_PREFIXES = ['new-uploads', 'batch1', 'batch2', 'batch3', 'batch4', 'batch5', 'batch6'];
+const R2_PREFIXES = ['new-uploads', 'batch1', 'batch2', 'batch3', 'batch4', 'batch5', 'batch6', 'foreign-filings', 'external-sources'];
 
 async function fetchR2Document(ticker: string, accession: string): Promise<string | null> {
   const tickerLower = ticker.toLowerCase();
@@ -58,12 +58,20 @@ async function fetchR2Document(ticker: string, accession: string): Promise<strin
   ];
 
   for (const prefix of orderedPrefixes) {
-    const url = `${R2_BASE_URL}/${prefix}/${tickerLower}/${accession}.txt`;
-    try {
-      const res = await fetch(url);
-      if (res.ok) return await res.text();
-    } catch {
-      continue;
+    // Try .txt first, then without extension (some foreign docs)
+    for (const suffix of ['.txt', '']) {
+      const url = `${R2_BASE_URL}/${prefix}/${tickerLower}/${accession}${suffix}`;
+      try {
+        const res = await fetch(url);
+        if (res.ok) {
+          const contentType = res.headers.get('content-type') || '';
+          // Skip PDFs — can't search text in them
+          if (contentType.includes('pdf')) continue;
+          return await res.text();
+        }
+      } catch {
+        continue;
+      }
     }
   }
   return null;

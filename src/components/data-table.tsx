@@ -393,11 +393,14 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
     );
   }
 
-  // Company type filter
+  // Company type filter — miners hidden by default, shown only when explicitly selected
   if (companyTypes.length > 0) {
     filteredCompanies = filteredCompanies.filter((c) =>
       companyTypes.includes(c.companyType)
     );
+  } else {
+    // Default: hide miners (they're not DAT strategists)
+    filteredCompanies = filteredCompanies.filter((c) => c.companyType !== "Miner");
   }
 
   // Leverage filter
