@@ -793,9 +793,9 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
             company.leverageRatio >= 1 ? "text-amber-600" : "text-gray-900 dark:text-gray-100"
           )}>
             {company.cashStale && company.estimatedLeverage !== null ? (
-              <span className="inline-flex items-center gap-1 border-b border-dashed border-amber-400/60"
-                title={`Estimated: cash (${company._staticCashAsOf || company.cashAsOf}) adjusted for crypto purchases since`}>
-                <span className="text-amber-400/70">~</span>
+              <span className="inline-flex items-center gap-1 border-b border-dashed border-red-400/60 cursor-help"
+                title={`Approximate — cash balance is from ${company._staticCashAsOf || company.cashAsOf} (over 90 days old). Leverage estimated using crypto purchases since then.`}>
+                <span className="text-red-500 font-bold">~</span>
                 <span className={cn(company.estimatedLeverage >= 1 ? "text-amber-600" : "text-gray-500")}>
                   {company.estimatedLeverage.toFixed(2)}x
                 </span>
@@ -803,9 +803,10 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
             ) : company.leverageRatio > 0 ? (
               <span className={cn(
                 "inline-flex items-center gap-1",
-                company.cashStale && "border-b border-dashed border-amber-400/60"
-              )}>
-                {company.cashStale && <span className="text-amber-400/70">~</span>}
+                company.cashStale && "border-b border-dashed border-red-400/60 cursor-help"
+              )}
+                title={company.cashStale ? `Approximate — cash balance is from ${company._staticCashAsOf || company.cashAsOf} (over 90 days old). Actual leverage may differ.` : undefined}>
+                {company.cashStale && <span className="text-red-500 font-bold">~</span>}
                 {company.leverageRatio >= 1 && <span>⚠️</span>}
                 {company.leverageRatio.toFixed(2)}x
               </span>
@@ -1120,10 +1121,10 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                           <TableCell className="text-right font-mono text-sm">
                             {company.cashStale && company.estimatedLeverage !== null ? (
                               <span className={cn(
-                                "border-b border-dashed border-amber-400/60",
+                                "border-b border-dashed border-red-400/60 cursor-help",
                                 company.estimatedLeverage >= 1 ? "text-amber-600 font-medium" : "text-gray-500",
-                              )} title={`Estimated: cash (${company._staticCashAsOf || company.cashAsOf}) adjusted for crypto purchases since`}>
-                                <span className="text-amber-400/70">~</span>
+                              )} title={`Approximate — cash balance is from ${company._staticCashAsOf || company.cashAsOf} (over 90 days old). Leverage estimated using crypto purchases since then.`}>
+                                <span className="text-red-500 font-bold">~</span>
                                 {company.estimatedLeverage >= 1 ? "⚠️ " : ""}
                                 {company.estimatedLeverage.toFixed(2)}x
                               </span>
@@ -1149,10 +1150,10 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                           <TableCell className="text-right font-mono text-sm">
                             {company.cashStale && company.estimatedLeverage !== null ? (
                               <span className={cn(
-                                "border-b border-dashed border-amber-400/60",
+                                "border-b border-dashed border-red-400/60 cursor-help",
                                 company.estimatedLeverage >= 1 ? "text-amber-600 font-medium" : "text-gray-500",
-                              )} title={`Estimated: cash (${company._staticCashAsOf || company.cashAsOf}) adjusted for crypto purchases since`}>
-                                <span className="text-amber-400/70">~</span>
+                              )} title={`Approximate — cash balance is from ${company._staticCashAsOf || company.cashAsOf} (over 90 days old). Leverage estimated using crypto purchases since then.`}>
+                                <span className="text-red-500 font-bold">~</span>
                                 {company.estimatedLeverage >= 1 ? "⚠️ " : ""}
                                 {company.estimatedLeverage.toFixed(2)}x
                               </span>
