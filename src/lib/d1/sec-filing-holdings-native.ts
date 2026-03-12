@@ -15,6 +15,8 @@ export type SecFilingHoldingsNativeWriteInput = {
   runId: string;
   flags: Record<string, unknown> | null;
   dryRun?: boolean;
+  /** Datapoint status. Defaults to 'candidate' (needs review). Use 'approved' for trusted sources. */
+  status?: 'candidate' | 'approved';
 };
 
 export type SecFilingHoldingsNativeWriteResult = {
@@ -403,11 +405,11 @@ export async function writeSecFilingHoldingsNativeDatapoint(
       const seed = await d1.query(
         `UPDATE datapoints
          SET proposal_key = ?,
-             status = 'candidate'
+             status = ?
          WHERE datapoint_id = ?
            AND proposal_key IS NULL
            AND NOT EXISTS (SELECT 1 FROM datapoints WHERE proposal_key = ?);`,
-        [proposalKey, legacy.datapoint_id, proposalKey]
+        [proposalKey, input.status || 'candidate', legacy.datapoint_id, proposalKey]
       );
 
       if (Number(seed.meta?.changes || 0) > 0) {
@@ -429,7 +431,7 @@ export async function writeSecFilingHoldingsNativeDatapoint(
       confidence: input.confidence,
       flags_json: flagsJson,
       confidence_details_json: null as string | null,
-      status: 'candidate',
+      status: input.status || 'candidate',
     };
 
     const cite = generateSecFilingCitation({

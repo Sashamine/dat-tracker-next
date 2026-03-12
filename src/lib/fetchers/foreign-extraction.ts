@@ -254,7 +254,7 @@ export async function ingestForeignDataPoints(
            as_of, reported_at, artifact_id, run_id,
            method, confidence, status, proposal_key, created_at,
            citation_quote, citation_search_term
-         ) VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?, 'candidate', ?, ?, ?, ?);`,
+         ) VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?, 'approved', ?, ?, ?, ?);`,
         [
           dpId,
           dp.entityId,

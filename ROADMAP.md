@@ -419,7 +419,7 @@ Extend AMF model to Swedish and German regulators.
 - [x] Wire regex extractor into filing-check cron: auto-extract when new Tier 1 8-K detected (PR #439)
 - [x] LLM fallback: when regex confidence < 0.5, pass to `llm-extractor.ts` for ambiguous cases (PR #439)
 - [x] Test suite hardening: dynamic dates, mock isolation, data fixes (PR #438)
-- [ ] Auto-update proposals: high-confidence extraction → D1 proposal with human approval gate
+- [x] Auto-update proposals: ≥90% confidence auto-approved, 80-89% for human review, D1 proposals + Discord alerts (PRs #440, #441)
 
 **DoD:**
 - New 8-K filings trigger automated extraction; high-confidence results auto-proposed for review
@@ -505,6 +505,7 @@ Update this section when starting/stopping work so other agents see what's in-fl
 - Phase 3.2 Filing viewer quote highlighting
 
 ### Done (recent)
+- **Phase 4.4 COMPLETE**: D1 proposal system + auto-approve ≥90% + proposals UI (PRs #440, #441) — 2026-03-12
 - LLM fallback extraction: regex → LLM cascade in auto-extract pipeline (Phase 4.4, PR #439) — 2026-03-12
 - Test suite hardening: dynamic dates, mock isolation, 5 data fixes (Phase 4.4, PR #438) — 2026-03-12
 - XRPN holdings-history cleanup: removed unverified 520M entry, fixed share counts — 2026-03-12
