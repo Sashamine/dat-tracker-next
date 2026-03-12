@@ -400,6 +400,27 @@ Extend AMF model to Swedish and German regulators.
 - All foreign companies show real regulatory accessions in citation chain
 - Synthetic `REG-` accessions eliminated
 
+### 4.4 SEC 8-K Extraction Pipeline
+
+**Goal:** Automatically extract crypto holdings from SEC 8-K filings using deterministic regex patterns.
+
+**Current state (2026-03-11):**
+- `holdings-regex-extractor.ts`: 15 asset types, pattern families for total/purchase/sale + table format (MSTR weekly 8-K)
+- `scan-8k-holdings.ts`: CLI scanner for all companies — fetches recent 8-Ks, applies item-filter tiers, runs regex extraction
+- Validated: 6 extractions from 48 filings across 43 companies
+- 23 tests covering narrative + table patterns, date extraction, dedup, edge cases
+
+**Deliverables:**
+- [x] Deterministic regex extractor for common SEC filing language patterns (PR #435)
+- [x] Table-format extraction for MSTR-style weekly BTC Update 8-Ks (PR #436)
+- [x] Scanner CLI tool for batch extraction across all companies (PR #436)
+- [ ] Wire regex extractor into filing-check cron: auto-extract when new Tier 1 8-K detected
+- [ ] LLM fallback: when regex confidence < 0.7, pass to `llm-extractor.ts` for ambiguous cases
+- [ ] Auto-update proposals: regex extraction → D1 proposal with human approval gate
+
+**DoD:**
+- New 8-K filings trigger automated extraction; high-confidence results auto-proposed for review
+
 ---
 
 ## Phase 5 — Adoption Monitoring
@@ -481,6 +502,9 @@ Update this section when starting/stopping work so other agents see what's in-fl
 - Phase 3.2 Filing viewer quote highlighting
 
 ### Done (recent)
+- 8-K table-format extraction + scanner script (Phase 4.4, PR #436) — 2026-03-11
+- Deterministic 8-K holdings regex extractor (Phase 4.4, PR #435) — 2026-03-11
+- Dilutive instruments test fixes for BTCS/ALCPB/UPXI (PR #434) — 2026-03-11
 - ZONE holdings update: -70M DOGE (asset mgmt termination, 8-K Mar 10) (PR #430) — 2026-03-11
 - D1-aware staleness monitor: queries D1 for fresher as_of dates (PR #427) — 2026-03-11
 - BTOG source upgrade to SEC 20-F + accession fix (PRs #428, #429) — 2026-03-11

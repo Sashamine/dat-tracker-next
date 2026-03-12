@@ -17,6 +17,8 @@ import { checkAllCompanyFilings } from '@/lib/verification/filing-checker';
 import { getTickersNeedingReview } from '@/lib/verification/repository';
 import { sendDiscordAlert } from '@/lib/discord';
 import { notifyNewFilings } from '@/lib/clawdbot';
+import { autoExtractBatch, formatExtractionForDiscord, getProposedUpdates, type AutoExtractionResult } from '@/lib/sec/auto-extract-8k';
+import { getCompanyByTicker } from '@/lib/data/companies';
 
 // Verify cron secret for scheduled runs
 function verifyCronSecret(request: NextRequest): boolean {
@@ -64,6 +66,33 @@ export async function GET(request: NextRequest) {
       rateLimit: 250, // 250ms between requests to be polite to SEC
     });
 
+    // Auto-extract from Tier 1 8-K filings
+    let extractionResults: AutoExtractionResult[] = [];
+    const tier1_8Ks = result.results
+      .filter(r => r.newFilings.length > 0)
+      .flatMap(r => r.newFilings
+        .filter(f => f.formType.startsWith('8-K') && f.itemFilter?.tier === 1)
+        .map(f => ({
+          ticker: r.ticker,
+          cik: r.cik,
+          accessionNumber: f.accessionNumber,
+          formType: f.formType,
+          filedDate: f.filedDate,
+          primaryDocument: f.primaryDocument,
+        }))
+      );
+
+    if (!dryRun && tier1_8Ks.length > 0) {
+      try {
+        console.log(`[Filing Check] Auto-extracting from ${tier1_8Ks.length} Tier 1 8-K(s)...`);
+        extractionResults = await autoExtractBatch(tier1_8Ks);
+        const extracted = extractionResults.filter(r => r.extracted);
+        console.log(`[Filing Check] Extracted holdings from ${extracted.length}/${tier1_8Ks.length} filings`);
+      } catch (extractError) {
+        console.error('[Filing Check] Auto-extraction failed:', extractError);
+      }
+    }
+
     const duration = Date.now() - startTime;
 
     // Send Discord notification if new filings found
@@ -88,10 +117,17 @@ export async function GET(request: NextRequest) {
           ? `\n\n_Item filtering: ${filterStats.tier1Processed} high-priority, ${filterStats.tier2Processed} need keyword check_`
           : '';
 
+        // Include auto-extraction results in Discord message
+        const extractionSummary = formatExtractionForDiscord(extractionResults);
+        const proposedUpdates = getProposedUpdates(extractionResults);
+        const proposalLine = proposedUpdates.length > 0
+          ? `\n\n⚠️ **${proposedUpdates.length} proposed data update(s)** — review needed`
+          : '';
+
         await sendDiscordAlert(
           'New SEC Filings Detected',
-          `Found ${result.totalNewFilings} new filing(s) from ${result.withNewFilings} company(ies):\n\n${companiesWithFilings.join('\n')}${statsLine}\n\nRun /api/cron/filing-check?manual=true to see details.`,
-          'info',
+          `Found ${result.totalNewFilings} new filing(s) from ${result.withNewFilings} company(ies):\n\n${companiesWithFilings.join('\n')}${statsLine}${extractionSummary ? `\n\n${extractionSummary}` : ''}${proposalLine}\n\nRun /api/cron/filing-check?manual=true to see details.`,
+          proposedUpdates.length > 0 ? 'warning' : 'info',
           true  // Mention Clawdbot
         );
 
@@ -147,6 +183,31 @@ export async function GET(request: NextRequest) {
         latestFiling: c.latestFilingAccession,
         latestDate: c.latestFilingDate,
       })),
+      autoExtraction: extractionResults.length > 0 ? {
+        attempted: extractionResults.length,
+        extracted: extractionResults.filter(r => r.extracted).length,
+        proposedUpdates: getProposedUpdates(extractionResults).map(r => ({
+          ticker: r.ticker,
+          accession: r.accessionNumber,
+          holdings: r.holdings,
+          currentHoldings: r.currentHoldings,
+          delta: r.holdingsDelta,
+          confidence: r.confidence,
+          pattern: r.patternName,
+          asOfDate: r.asOfDate,
+        })),
+        results: extractionResults.map(r => ({
+          ticker: r.ticker,
+          accession: r.accessionNumber,
+          extracted: r.extracted,
+          type: r.type,
+          holdings: r.holdings,
+          transactionAmount: r.transactionAmount,
+          confidence: r.confidence,
+          pattern: r.patternName,
+          error: r.error,
+        })),
+      } : undefined,
       errors: result.errors.length > 0 ? result.errors : undefined,
     });
 
