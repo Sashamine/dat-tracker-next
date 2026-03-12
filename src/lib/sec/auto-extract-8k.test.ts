@@ -22,6 +22,7 @@ const makeResult = (overrides: Partial<AutoExtractionResult>): AutoExtractionRes
   sharesOutstanding: null,
   currentHoldings: 712_647,
   holdingsDelta: 26_084,
+  extractionMethod: 'regex',
   ...overrides,
 });
 
@@ -75,6 +76,40 @@ describe('Auto-Extract 8-K', () => {
       const results = [makeResult({ holdingsDelta: 0, holdings: 712_647, currentHoldings: 712_647 })];
       const proposals = getProposedUpdates(results);
       expect(proposals).toHaveLength(0);
+    });
+
+    it('should propose LLM results when high confidence', () => {
+      const results = [makeResult({
+        extractionMethod: 'llm',
+        patternName: 'LLM',
+        confidence: 0.9,
+        holdings: 750_000,
+        holdingsDelta: 37_353,
+      })];
+      const proposals = getProposedUpdates(results);
+      expect(proposals).toHaveLength(1);
+    });
+  });
+
+  describe('extractionMethod tracking', () => {
+    it('should include extractionMethod in results', () => {
+      const regexResult = makeResult({ extractionMethod: 'regex' });
+      expect(regexResult.extractionMethod).toBe('regex');
+
+      const llmResult = makeResult({ extractionMethod: 'llm', patternName: 'LLM' });
+      expect(llmResult.extractionMethod).toBe('llm');
+    });
+
+    it('should show LLM tag in Discord formatting', () => {
+      const results = [makeResult({ extractionMethod: 'llm', patternName: 'LLM' })];
+      const formatted = formatExtractionForDiscord(results);
+      expect(formatted).toContain('🤖');
+    });
+
+    it('should NOT show LLM tag for regex results', () => {
+      const results = [makeResult({ extractionMethod: 'regex' })];
+      const formatted = formatExtractionForDiscord(results);
+      expect(formatted).not.toContain('🤖');
     });
   });
 });

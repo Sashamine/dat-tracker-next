@@ -12,6 +12,8 @@
  */
 
 import { extractHoldingsRegex, getBestResult, type RegexExtractionResult } from './holdings-regex-extractor';
+import { extractHoldingsFromText, createLLMConfigFromEnv, validateExtraction } from './llm-extractor';
+import type { ExtractionContext } from './types';
 import { getCompanyByTicker } from '../data/companies';
 
 const SEC_USER_AGENT = 'DAT-Tracker/1.0 (https://dattracker.com; admin@dattracker.com)';
@@ -41,6 +43,9 @@ export interface AutoExtractionResult {
   // Current value for comparison
   currentHoldings: number | null;
   holdingsDelta: number | null;
+
+  // Extraction method
+  extractionMethod: 'regex' | 'llm' | null;
 
   // Status
   error?: string;
@@ -116,15 +121,47 @@ export async function autoExtractFromFiling(params: {
       sharesOutstanding: null,
       currentHoldings,
       holdingsDelta: null,
+      extractionMethod: null,
       error: 'Failed to fetch filing HTML',
     };
   }
 
-  // Run regex extraction
+  // STEP 1: Try regex extraction (fast, deterministic)
   const results = extractHoldingsRegex(html, expectedAsset);
   const best = getBestResult(results, expectedAsset);
 
-  if (!best || best.confidence < 0.5) {
+  if (best && best.confidence >= 0.5) {
+    // Regex succeeded — use it
+    const holdings = best.holdings;
+    const holdingsDelta = holdings != null && currentHoldings != null
+      ? holdings - currentHoldings
+      : null;
+
+    return {
+      ticker,
+      accessionNumber,
+      formType,
+      filedDate,
+      extracted: true,
+      holdings,
+      transactionAmount: best.transactionAmount,
+      type: best.type,
+      asset: best.asset,
+      asOfDate: best.asOfDate,
+      costUsd: best.costUsd,
+      confidence: best.confidence,
+      patternName: best.patternName,
+      sharesOutstanding: best.sharesOutstanding,
+      currentHoldings,
+      holdingsDelta,
+      extractionMethod: 'regex',
+    };
+  }
+
+  // STEP 2: Regex failed or low confidence — try LLM fallback
+  const llmConfig = createLLMConfigFromEnv();
+  if (!llmConfig) {
+    // No LLM available — return regex failure
     return {
       ticker,
       accessionNumber,
@@ -142,32 +179,121 @@ export async function autoExtractFromFiling(params: {
       sharesOutstanding: null,
       currentHoldings,
       holdingsDelta: null,
+      extractionMethod: null,
     };
   }
 
-  const holdings = best.holdings;
-  const holdingsDelta = holdings != null && currentHoldings != null
-    ? holdings - currentHoldings
-    : null;
+  console.log(`[AutoExtract] ${ticker}: Regex ${best ? `low confidence (${(best.confidence * 100).toFixed(0)}%)` : 'no match'} — trying LLM fallback`);
 
-  return {
-    ticker,
-    accessionNumber,
-    formType,
-    filedDate,
-    extracted: true,
-    holdings,
-    transactionAmount: best.transactionAmount,
-    type: best.type,
-    asset: best.asset,
-    asOfDate: best.asOfDate,
-    costUsd: best.costUsd,
-    confidence: best.confidence,
-    patternName: best.patternName,
-    sharesOutstanding: best.sharesOutstanding,
-    currentHoldings,
-    holdingsDelta,
-  };
+  try {
+    const context: ExtractionContext = {
+      companyName: company?.name || ticker,
+      ticker,
+      asset: expectedAsset,
+      currentHoldings: currentHoldings ?? 0,
+    };
+
+    const llmResult = await extractHoldingsFromText(html, context, llmConfig);
+
+    if (llmResult.holdings === null || llmResult.confidence < 0.5) {
+      // LLM also failed
+      return {
+        ticker,
+        accessionNumber,
+        formType,
+        filedDate,
+        extracted: false,
+        holdings: null,
+        transactionAmount: null,
+        type: null,
+        asset: null,
+        asOfDate: null,
+        costUsd: null,
+        confidence: llmResult.confidence,
+        patternName: null,
+        sharesOutstanding: null,
+        currentHoldings,
+        holdingsDelta: null,
+        extractionMethod: 'llm',
+      };
+    }
+
+    // Validate LLM result
+    const validation = validateExtraction(llmResult, context);
+    if (!validation.valid) {
+      console.log(`[AutoExtract] ${ticker}: LLM extraction failed validation: ${validation.issues.join(', ')}`);
+      return {
+        ticker,
+        accessionNumber,
+        formType,
+        filedDate,
+        extracted: false,
+        holdings: llmResult.holdings,
+        transactionAmount: llmResult.transactionAmount,
+        type: llmResult.transactionType as 'total' | 'purchase' | 'sale' | null,
+        asset: expectedAsset,
+        asOfDate: llmResult.asOfDate,
+        costUsd: llmResult.costBasis,
+        confidence: Math.min(llmResult.confidence, 0.4), // Cap at 0.4 if validation fails
+        patternName: `LLM (${validation.issues[0]})`,
+        sharesOutstanding: llmResult.sharesOutstanding,
+        currentHoldings,
+        holdingsDelta: null,
+        extractionMethod: 'llm',
+      };
+    }
+
+    // LLM succeeded
+    const holdings = llmResult.holdings!;
+    const holdingsDelta = currentHoldings != null ? holdings - currentHoldings : null;
+    const type: 'total' | 'purchase' | 'sale' | null = llmResult.holdingsExplicitlyStated
+      ? 'total'
+      : (llmResult.transactionType as 'purchase' | 'sale' | null);
+
+    console.log(`[AutoExtract] ${ticker}: LLM extracted ${holdings.toLocaleString()} ${expectedAsset} (${(llmResult.confidence * 100).toFixed(0)}% conf)`);
+
+    return {
+      ticker,
+      accessionNumber,
+      formType,
+      filedDate,
+      extracted: true,
+      holdings,
+      transactionAmount: llmResult.transactionAmount,
+      type,
+      asset: expectedAsset,
+      asOfDate: llmResult.asOfDate,
+      costUsd: llmResult.costBasis,
+      confidence: llmResult.confidence,
+      patternName: 'LLM',
+      sharesOutstanding: llmResult.sharesOutstanding,
+      currentHoldings,
+      holdingsDelta,
+      extractionMethod: 'llm',
+    };
+  } catch (error) {
+    console.error(`[AutoExtract] ${ticker}: LLM fallback error:`, error);
+    return {
+      ticker,
+      accessionNumber,
+      formType,
+      filedDate,
+      extracted: false,
+      holdings: null,
+      transactionAmount: null,
+      type: null,
+      asset: null,
+      asOfDate: null,
+      costUsd: null,
+      confidence: 0,
+      patternName: null,
+      sharesOutstanding: null,
+      currentHoldings,
+      holdingsDelta: null,
+      extractionMethod: 'llm',
+      error: `LLM fallback failed: ${error instanceof Error ? error.message : String(error)}`,
+    };
+  }
 }
 
 /**
@@ -223,7 +349,8 @@ export function formatExtractionForDiscord(results: AutoExtractionResult[]): str
     const confPct = Math.round(r.confidence * 100);
     const confEmoji = r.confidence >= 0.8 ? '🟢' : r.confidence >= 0.6 ? '🟡' : '🔴';
 
-    let line = `${confEmoji} **${r.ticker}** [${label}] ${value?.toLocaleString()} ${r.asset} (${confPct}% conf, \`${r.patternName}\`)`;
+    const methodTag = r.extractionMethod === 'llm' ? ' 🤖' : '';
+    let line = `${confEmoji} **${r.ticker}** [${label}] ${value?.toLocaleString()} ${r.asset} (${confPct}% conf, \`${r.patternName}\`${methodTag})`;
 
     if (r.holdingsDelta != null && r.holdingsDelta !== 0 && r.type === 'total') {
       const sign = r.holdingsDelta > 0 ? '+' : '';
