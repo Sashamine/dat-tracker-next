@@ -3160,7 +3160,7 @@ export const dogeCompanies: Company[] = [
     sharesAsOf: "2025-11-12",
     leader: "Alex Spiro (Chairman post-merger), Marco Margiotta (HOD CEO)",
     strategy: "Official Dogecoin treasury partner. Payments ecosystem.",
-    notes: "TBH is gaming company merging with House of Doge. HOD holds 730M DOGE via CleanCore (ZONE) agreement. $1.09B post-merger valuation. Jan 2026: Nasdaq compliance notice (stock <$1). Audit note 2026-03-05: holdings and shares anchors normalized to Dec 18, 2025 8-K checkpoint (0 DOGE and 10.8M TBH-share baseline) to match canonical D1 history. Data quality classification: LEGAL_MATCH (lock mirrors filing-anchored D1 latest).",
+    notes: "TBH is gaming company merging with House of Doge. HOD holds 730M DOGE (Dec 2025). Mar 9, 2026: ZONE terminated asset mgmt agreement with DCV (HOD subsidiary) — DCV received 61.25M DOGE termination payment, potentially increasing HOD's total DOGE. S-4/A filed Feb 3. $1.09B post-merger valuation. Jan 2026: Nasdaq compliance notice (stock <$1). Audit note 2026-03-05: holdings/shares anchors normalized to Dec 18, 2025 8-K checkpoint.",
   },
   {
     id: "btog",
