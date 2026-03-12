@@ -431,20 +431,10 @@ export const ethCompanies: Company[] = [
     twitter: "https://x.com/GSQHoldings",
     investorRelationsUrl: "https://www.gamesquare.com/#investors",
     strategy: "Ethereum-native treasury managed via Dialectic Medici platform (target 8-14% yield).",
-    notes: "Total holdings: 15,630 ETH + 8 CryptoPunks (incl. #5577 Cowboy Ape). Acquired TubeBuddy Feb 2023 for 5M Series A-2 Pref. Feb 2026 buyback: 1.5M shares.",
-    // Indirect crypto exposure via fund investment
-    cryptoInvestments: [
-      {
-        name: "Dialectic Medici ETH Fund",
-        type: "fund",
-        underlyingAsset: "ETH",
-        fairValue: 32_530_000,  // March 2026 estimated value
-        sourceDate: "2026-03-01",
-        source: "March 2026 Investor Update",
-        sourceUrl: "https://www.gamesquare.com/#investors",
-        note: "Primary ETH exposure. Strategy targets 8-14% yield via automated on-chain optimization.",
-      },
-    ],
+    notes: "Total holdings: 15,630 ETH (direct + Dialectic Medici fund) + 8 CryptoPunks (incl. #5577 Cowboy Ape). Acquired TubeBuddy Feb 2023 for 5M Series A-2 Pref. Feb 2026 buyback: 1.5M shares. Nasdaq compliance notice Mar 2026 (bid price <$1).",
+    // NOTE: cryptoInvestments removed — the 15,630 ETH announced total already includes
+    // the Dialectic Medici fund position. Adding fund separately caused double-counting.
+    // SEC 10-Q Sep 2025 breakdown: $4.02M direct + $64.54M fund = $68.5M total.
   },
   {
     id: "fgnx",
@@ -3233,11 +3223,13 @@ export const avaxCompanies: Company[] = [
     sourceType: "company-dashboard",
     sourceQuote: "13,889,000 AVAX held",
     secReferenced: true,  // Dashboard referenced in SEC 8-K filings
-    totalDebt: 1_841_100,  // SEC 10-Q Sep 30 XBRL/D1 canonical debt datapoint
-    debtSource: "SEC 10-Q Q3 2025: Debentures + LongTermDebt + LoanPayable",
-    debtSourceQuote: "SEC 10-Q Q3 2025: Debentures + LongTermDebt + LoanPayable",
-    debtSourceUrl: "/filings/avx/0001493152-25-023464",
-    debtAsOf: "2025-09-30",
+    // Debt: $1.84M (Q3 10-Q) + $7.7M convertible (Oct 24, 2025) + $7.0M convertible (Jan 2, 2026)
+    // Both convertibles: 10% OID, $2.41 strike, OTM at ~$0.66 stock price
+    totalDebt: 16_541_100,
+    debtSource: "SEC 10-Q Q3 2025 + 424B5 Jan 26, 2026 (two convertible notes post-Q3)",
+    debtSourceQuote: "$1.84M existing + $7.7M Oct 2025 convertible + $7.0M Jan 2026 convertible (both 10% OID, $2.41 strike)",
+    debtSourceUrl: "/filings/avx/0001493152-26-003637",
+    debtAsOf: "2026-01-02",
     cashReserves: 894_701,  // ⚠️ Pre-PIPE figure from 10-Q Sep 30, 2025. $145M+ PIPE cash received Nov 5, 2025. Actual balance pending 10-K (~March 2026).
     cashAsOf: "2025-09-30",
     cashSource: "SEC 10-Q Q3 2025 XBRL: CashAndCashEquivalentsAtCarryingValue",
@@ -3266,7 +3258,7 @@ export const avaxCompanies: Company[] = [
     website: "https://www.avax-one.com",
     twitter: "avax_one",
     strategy: "First publicly traded AVAX treasury. Staking + validator infra + fintech M&A.",
-    notes: "Nasdaq listed. 13.8M AVAX held. Projects ~180,000 AVAX in Q1 2026 staking rewards. $40M buyback (2.4M shares executed). Hivemind Capital asset manager. Anthony Scaramucci as advisor.",
+    notes: "Nasdaq listed. 13.8M AVAX held. Projects ~180,000 AVAX in Q1 2026 staking rewards. $40M buyback (2.4M shares executed). Hivemind Capital asset manager. Anthony Scaramucci as advisor. $14.7M in convertible notes ($2.41 strike, OTM). $2B S-3 shelf filed Feb 2026. 6.1M pre-funded warrants from PIPE.",
   },
 ];
 
