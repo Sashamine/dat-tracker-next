@@ -3165,12 +3165,12 @@ export const dogeCompanies: Company[] = [
     website: "https://www.bitorigin.io",
     twitter: "https://x.com/BitOriginLtd",
     investorRelationsUrl: "https://www.bitorigin.io/investors",
-    holdings: 70_543_745,  // Aug 2025 - was 40.5M (missed PIPE)
-    holdingsLastUpdated: "2025-08-11",
-    holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.globenewswire.com/news-release/2025/08/12/3131772/0/en/Bit-Origin-Surpasses-70-Million-Dogecoin-DOGE-Holdings-Following-Private-Placement.html",
-    sourceType: "press-release",
-    sourceQuote: "Holdings: 70,543,745 DOGE",
+    holdings: 70_543_745,  // Confirmed: 20-F Oct 2025 states "70,543,745 Dogecoin" as of annual report
+    holdingsLastUpdated: "2025-10-31",  // SEC 20-F annual report (filed Oct 31, 2025)
+    holdingsSource: "sec-filing",
+    holdingsSourceUrl: "/filings/btog/0001104659-25-105009",
+    sourceType: "sec-filing",
+    sourceQuote: "As of this annual report, we have 70,543,745 Dogecoin (20-F FY2025)",
     datStartDate: "2025-07-17",  // DOGE strategy announced
     quarterlyBurnUsd: 771_000,
     burnSource: "SEC 20-F FY2025 (Jun 30, 2025)",

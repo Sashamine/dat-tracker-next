@@ -258,6 +258,7 @@ Separate page (`/analytics`) with four sector-level charts.
 **Deliverables:**
 - [x] Scheduled staleness report (daily cron → Discord webhook embed)
 - [x] Per-company expected update cadence (quarterly filers vs. monthly dashboards)
+- [x] D1-aware freshness: staleness monitor checks D1 as_of dates, not just companies.ts
 - [ ] Priority queue: tier 1 stale companies surfaced first
 - [ ] Track "days since last verification attempt" separately from "days since data updated"
 
