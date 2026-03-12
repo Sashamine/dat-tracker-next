@@ -3169,6 +3169,7 @@ export const dogeCompanies: Company[] = [
     holdingsLastUpdated: "2025-10-31",  // SEC 20-F annual report (filed Oct 31, 2025)
     holdingsSource: "sec-filing",
     holdingsSourceUrl: "/filings/btog/0001104659-25-105009",
+    accessionNumber: "0001104659-25-105009",
     sourceType: "sec-filing",
     sourceQuote: "As of this annual report, we have 70,543,745 Dogecoin (20-F FY2025)",
     datStartDate: "2025-07-17",  // DOGE strategy announced
