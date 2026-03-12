@@ -746,6 +746,9 @@ const ZONE_HISTORY: HoldingsSnapshot[] = [
   // Q2 FY2026 (Dec 31, 2025): DOGE holdings confirmed via 10-Q XBRL
   // No purchases Jan 1-Feb 10, 2026 per subsequent events disclosure
   { date: "2025-12-31", holdings: 733_060_893, sharesOutstanding: 210_556_229, holdingsPerShare: 3.482, source: "SEC 10-Q Q2 FY2026 (filed Feb 11, 2026) — XBRL-verified DOGE count", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390026015016/ea0276195-10q_cleancore.htm", sourceType: "sec-filing" },
+  // Mar 9, 2026: Terminated asset mgmt agreement with Dogecoin Ventures + 21Shares
+  // Paid 70M DOGE (61.25M to DCV, 8.75M to 21Shares) per 8-K filed Mar 10, 2026
+  { date: "2026-03-09", holdings: 663_060_893, sharesOutstanding: 210_556_229, holdingsPerShare: 3.149, source: "8-K Mar 10, 2026: AMA termination — 70M DOGE transferred", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956741/000121390026025719/ea0280523-8k_clean.htm", sourceType: "sec-filing" },
 ];
 
 // Brag House (TBH) - pending merger with House of Doge
