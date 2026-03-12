@@ -1617,14 +1617,21 @@ export const btcCompanies: Company[] = [
     sharesSourceQuote: "EQS Buyback Update Mar 2, 2026: 406,021 shares repurchased total",
     sharesSourceUrl: "https://www.samara-ag.com/news",
     sharesAsOf: "2026-02-27",
-    // DEBT: €51M total as of Q3 2025 (unaudited) → ~$55.1M USD at 1.08 EUR/USD
-    totalDebt: 55_100_000,  // €51M × 1.08 EUR/USD (Q3 2025 corporate presentation, unaudited)
-    debtSource: "Q3 2025 Corporate Presentation (unaudited): €32.1M non-current (€15.9M loans + net bond) + €18.9M current (€12.7M loans + €4.4M overdraft + €0.7M financial) = €51M total",
-    debtSourceQuote: "Q3 2025 Corporate Presentation condensed balance sheet: non-current liabilities €32,078k + current liabilities €18,954k = €51,032k",
+    // DEBT: H1 2025 reviewed balance sheet (Jun 30): €15.3M loans + €17.7M bonds = €33.0M
+    // Q3 2025 corporate presentation: net debt €38.3M, cash ~€4.1M → gross debt ~€42.4M
+    // Using Q3 gross debt estimate: €42.4M × 1.08 EUR/USD = $45.8M
+    totalDebt: 45_800_000,
+    debtSource: "Q3 2025 Corporate Presentation: net debt €38.3M + cash €4.1M = ~€42.4M gross debt. H1 2025 reviewed: €15.3M loans + €17.7M bonds = €33.0M.",
+    debtSourceQuote: "Net Debt of EUR 38.3M (Q3 2025 slide 14). H1 2025 interest-bearing loans €15,343k + bonds €17,671k = €33,015k.",
     debtSourceUrl: "https://cdn.prod.website-files.com/687df2df76e1c946ba38115c/6953b14e79c15dbc18d6c7b0_2025.12_SAG%20Corporate%20Presentation_compressed.pdf",
     debtAsOf: "2025-09-30",
+    cashReserves: 4_400_000,  // ~€4.1M × 1.08 EUR/USD (Q3 2025 corporate presentation)
+    cashAsOf: "2025-09-30",
+    cashSource: "Q3 2025 Corporate Presentation: cash ~€4.1M (GAV pie chart)",
+    cashSourceQuote: "Cash ~1% of €415.8M GAV ≈ €4.1M",
+    cashSourceUrl: "https://cdn.prod.website-files.com/687df2df76e1c946ba38115c/6953b14e79c15dbc18d6c7b0_2025.12_SAG%20Corporate%20Presentation_compressed.pdf",
     strategy: "BTC as primary treasury reserve. Uses Samara Alpha Market-Neutral BTC+ Fund for management.",
-    notes: "Frankfurt/XETRA listed. Corrected holdings to 525 BTC (Mar 2026). Previous 2k+ estimate included non-BTC fund assets incorrectly labeled as intangibles. Active share buyback (406k shares). Issued Europe's first Bitcoin Bond (€20M, late 2024).",
+    notes: "Frankfurt/XETRA listed. Investment holding company — BTC/crypto is ~13% of €415.8M GAV (Q3 2025). Most value is LP stakes in funds, not direct BTC. Corrected holdings to 525 BTC (Mar 2026). Active share buyback (406k shares). Bitcoin Bond €20M (Nov 2024, 5yr, 3mE+7.50%).",
   },
   // PHX.AD (Phoenix Group PLC) removed 2026-02-03: Can't verify holdings
   // 514 BTC from BitcoinTreasuries.net only - no primary source
@@ -2677,20 +2684,26 @@ export const linkCompanies: Company[] = [
     burnSource: "SEC 10-Q (filed 2025-05-15): NetCashUsedInOperatingActivities $1,738,000 (2025-01-01 to 2025-03-31)",
     burnSourceUrl: "/filings/cwd/0001627282-25-000059",
     burnAsOf: "2025-03-31",
-    preferredEquity: 0,
+    totalDebt: 48_678_000,  // Company-level notes payable net: corporate $30.6M + convertible $0.9M + RE loans $16.9M + other $0.9M - deferred costs
+    debtAsOf: "2025-09-30",
+    debtSource: "SEC 10-Q Q3 2025 balance sheet",
+    debtSourceQuote: "Company notes payable net $48,678 (corporate $30,586 + convertible $920 + RE loans $16,936 + other $937 less deferred financing). Weighted avg rate 11.05%.",
+    debtSourceUrl: "/filings/cwd/0001627282-25-000157",
+    preferredEquity: 3_200_000,  // Series AA redeemable preferred stock
     preferredAsOf: "2025-09-30",
     preferredSource: "SEC 10-Q Q3 2025 balance sheet",
     preferredSourceUrl: "/filings/cwd/0001627282-25-000157",
-    preferredSourceQuote: "No preferred stock outstanding (10-Q Q3 2025 balance sheet)",
-    cashReserves: 10927000,
+    preferredSourceQuote: "Series AA redeemable preferred stock: $3,200,000",
+    cashReserves: 10_927_000,
+    restrictedCash: 2_461_000,  // Restricted cash and cash equivalents per 10-Q Q3 2025
     cashAsOf: "2025-09-30",
     cashSource: "SEC 10-Q Q3 2025",
-    cashSourceQuote: "Cash and cash equivalents: $10,927,000 (10-Q Sep 30, 2025 balance sheet)",
+    cashSourceQuote: "Cash and cash equivalents $10,927 + restricted cash $2,461 = total $13,388",
     cashSourceUrl: "/filings/cwd/0001627282-25-000157",
     dataWarnings: [
       {
         type: "stale-data",
-        message: "Balance sheet data may be stale (cash as-of 2025-09-30).",
+        message: "Balance sheet data from Q3 2025 (Sep 30). CWD is a real estate company with $48.7M legacy debt at 11% avg rate.",
         severity: "warning",
       },
     ],
