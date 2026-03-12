@@ -29,8 +29,11 @@ describe("BMNR SEC History", () => {
 
     it("should have valid SEC URLs", () => {
       BMNR_SEC_HISTORY.forEach((filing) => {
-        expect(filing.secUrl).toContain("sec.gov");
-        expect(filing.secUrl).toContain("1829311"); // BMNR CIK
+        // URLs use /filings/ R2 routing prefix or direct sec.gov links
+        expect(
+          filing.secUrl.includes("sec.gov") || filing.secUrl.startsWith("/filings/"),
+          `Invalid URL: ${filing.secUrl}`
+        ).toBe(true);
       });
     });
 

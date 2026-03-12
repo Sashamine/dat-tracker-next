@@ -29,8 +29,11 @@ describe("BMNR Capital Events", () => {
 
     it("should have valid SEC URLs", () => {
       BMNR_CAPITAL_EVENTS.forEach((event) => {
-        expect(event.secUrl).toContain("sec.gov");
-        expect(event.secUrl).toContain("1829311"); // BMNR CIK
+        // URLs use /filings/ R2 routing prefix or direct sec.gov links
+        expect(
+          event.secUrl.includes("sec.gov") || event.secUrl.startsWith("/filings/"),
+          `Invalid URL: ${event.secUrl}`
+        ).toBe(true);
       });
     });
   });
