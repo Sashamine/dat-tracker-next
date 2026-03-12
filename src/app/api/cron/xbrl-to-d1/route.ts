@@ -322,7 +322,7 @@ export async function GET(request: NextRequest) {
           const seed = await d1.query(
             `UPDATE datapoints
              SET proposal_key = ?,
-                 status = 'candidate'
+                 status = 'approved'
              WHERE datapoint_id = ?
                AND proposal_key IS NULL
                AND NOT EXISTS (SELECT 1 FROM datapoints WHERE proposal_key = ?);`,
@@ -347,7 +347,7 @@ export async function GET(request: NextRequest) {
           confidence: 1.0,
           flags_json: r.flags_json || null,
           confidence_details_json: null as string | null,
-          status: 'candidate',
+          status: 'approved',
         };
 
         await d1.query(
