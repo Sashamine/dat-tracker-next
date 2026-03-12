@@ -352,8 +352,6 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
       currentAhps: ahpsMetrics.currentAhps,
       ahpsGrowth90d: ahpsMetrics.ahpsGrowth90d,
       ahpsMethod: ahpsMetrics.method,
-      isPipeDeployment: !!(company.capitalRaisedPipe && company.datStartDate &&
-        (Date.now() - new Date(company.datStartDate).getTime()) < 365 * 24 * 60 * 60 * 1000),
     };
   });
 
@@ -722,9 +720,6 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
               <p className={cn("font-semibold", getGrowthColor(company.ahpsGrowth90d))}>
                 {formatGrowthPct(company.ahpsGrowth90d)}
               </p>
-              {company.isPipeDeployment && company.ahpsGrowth90d !== null && (
-                <span className="text-[10px] text-amber-500 font-medium" title={`Includes PIPE capital deployment ($${((company.capitalRaisedPipe || 0) / 1e6).toFixed(0)}M, ${company.datStartDate})`}>PIPE</span>
-              )}
             </div>
           )}
         </div>
@@ -1150,9 +1145,6 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                             <span className={cn("font-semibold", getGrowthColor(company.ahpsGrowth90d))}>
                               {formatGrowthPct(company.ahpsGrowth90d)}
                             </span>
-                            {company.isPipeDeployment && company.ahpsGrowth90d !== null && (
-                              <span className="ml-1 text-[10px] text-amber-500 font-medium" title={`Includes PIPE capital deployment ($${((company.capitalRaisedPipe || 0) / 1e6).toFixed(0)}M, ${company.datStartDate})`}>PIPE</span>
-                            )}
                           </TableCell>
                           <TableCell className="text-right font-mono text-sm">
                             {company.cashStale && company.estimatedLeverage !== null ? (
