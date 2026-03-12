@@ -2466,13 +2466,16 @@ export const bnbCompanies: Company[] = [
     burnSource: "SEC 6-K H1 2025",
     burnSourceUrl: "/filings/na/0001213900-25-088368",
     burnAsOf: "2025-06-30",
-    // 20-F FY2024: RMB170.7M + RMB18M = ~$26.2M operating debt
-    // + $500M 0% convertible notes (Jul 2025, 424B3) = ~$526.2M total
-    totalDebt: 526_200_000,
-    debtSource: "SEC 20-F FY2024 ($26.2M operating) + SEC 424B3 Jul 2025 ($500M converts)",
-    debtSourceQuote: "$500M 0% convertible notes @ $20/share (360-day term, Jul 2025) + $26.2M operating debt from 20-F FY2024",
-    debtSourceUrl: "/filings/na/0001213900-25-031065",
-    debtAsOf: "2025-07-01",
+    // H1 2025 6-K balance sheet (Jun 30): short-term $4.6M + long-term $24.2M + convertibles $65.8M = ~$95.5M
+    // NOTE: Previous $526.2M was wrong — $500M was the 424B3 shelf maximum, not actual issuance.
+    // Actual convertible notes outstanding: RMB 470.9M = ~$65.8M (not $500M).
+    // Nov 2025: NA announced early repayment of ALL convertible bonds in BTC (300 BTC/holder + 4.5 BTC compensation, 90 days).
+    // Current debt likely ~$29M (ex-convertibles) once repayment completes.
+    totalDebt: 95_500_000,  // H1 2025 total interest-bearing debt
+    debtSource: "SEC 6-K H1 2025: short-term RMB 33M + long-term RMB 173.5M + convertible notes RMB 470.9M",
+    debtSourceQuote: "Short-term debts RMB 33,000,000 + convertible notes RMB 470,948,166 + long-term debts RMB 173,479,763 = RMB 677.4M (~$95.5M)",
+    debtSourceUrl: "/filings/na/0001213900-25-088368",
+    debtAsOf: "2025-06-30",
     // VERIFIED via XBRL: CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents
     cashReserves: 50_800_000,
     cashSource: "SEC XBRL 6-K Q2 2025",
@@ -2488,13 +2491,13 @@ export const bnbCompanies: Company[] = [
     sharesAsOf: "2025-10-07",
     leader: "Jianping Kong (CEO)",
     strategy: "BNB treasury - target $1B, 5-10% of BNB supply. First US-listed BNB anchor.",
-    notes: "$25M buyback commenced Dec 2025. Shares verified from 20-F (15.67M as of Dec 2024) - 2025 offerings may have increased count. Press releases mention BTC but no amount.",
+    notes: "$25M buyback commenced Dec 2025. Nov 2025: announced early repayment of ALL convertible bonds in BTC (~$65.8M, 90 days). Shares verified from 424B3 Oct 2025 (23.6M) but ATM program ($45M, Aug 2025) may have increased count. Also holds 1,000 BTC (H1 2025 balance sheet, RMB 770M fair value).",
     website: "https://www.nano.cn",
     twitter: "https://x.com/nano_labs_NA",
     investorRelationsUrl: "https://www.nano.cn/investor-relations",
-    // FPI data quality flags - shares verified from 20-F but excludes 2025 offerings
-    // dataFlags removed - debt now verified from 20-F
-    // REMOVED: secondaryCryptoHoldings BTC - 6-K mentions "BNB and BTC" but no amount disclosed
+    secondaryCryptoHoldings: [
+      { asset: "BTC" as const, amount: 1_000, note: "H1 2025 6-K: 1,000 BTC at cost RMB 740.4M. Being used to repay convertible bonds (Nov 2025)." },
+    ],
   },
 ];
 
