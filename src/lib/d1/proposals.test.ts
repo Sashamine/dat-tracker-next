@@ -22,14 +22,20 @@ vi.mock('../data/companies', () => ({
   }),
 }));
 
+vi.mock('../discord', () => ({
+  sendDiscordEmbed: vi.fn().mockResolvedValue(true),
+}));
+
 import { writeExtractionProposal, writeExtractionProposals } from './proposals';
 import { writeSecFilingHoldingsNativeDatapoint } from './sec-filing-holdings-native';
+import { sendDiscordEmbed } from '../discord';
 
 const mockD1 = {
-  query: vi.fn(),
+  query: vi.fn().mockResolvedValue({ results: [{ status: 'candidate' }], meta: { changes: 1 } }),
 } as any;
 
 const mockWrite = vi.mocked(writeSecFilingHoldingsNativeDatapoint);
+const mockDiscord = vi.mocked(sendDiscordEmbed);
 
 const makeExtractionResult = (overrides: Partial<AutoExtractionResult> = {}): AutoExtractionResult => ({
   ticker: 'MSTR',
@@ -56,6 +62,7 @@ describe('D1 Proposals', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockWrite.mockResolvedValue({ status: 'inserted', proposalKey: 'test-key', artifactId: 'test-artifact', runId: 'test-run' });
+    mockD1.query.mockResolvedValue({ results: [{ status: 'candidate' }], meta: { changes: 1 } });
   });
 
   describe('writeExtractionProposal', () => {
@@ -119,22 +126,48 @@ describe('D1 Proposals', () => {
   });
 
   describe('writeExtractionProposals', () => {
-    it('should write multiple proposals and count results', async () => {
+    it('should auto-approve high-confidence results (>=90%)', async () => {
+      const results = [makeExtractionResult({ confidence: 0.95 })];
+      const stats = await writeExtractionProposals(mockD1, results, 'run-456');
+
+      expect(stats.written).toBe(1);
+      expect(stats.autoApproved).toBe(1);
+      expect(stats.needsReview).toBe(0);
+      // Should have called D1 to update status to approved
+      expect(mockD1.query).toHaveBeenCalled();
+      // Should have sent Discord notification
+      expect(mockDiscord).toHaveBeenCalledWith(
+        expect.objectContaining({ title: 'Auto-Approved: MSTR' }),
+        false
+      );
+    });
+
+    it('should flag 80-89% confidence as needs review', async () => {
+      const results = [makeExtractionResult({ confidence: 0.85 })];
+      const stats = await writeExtractionProposals(mockD1, results, 'run-456');
+
+      expect(stats.written).toBe(1);
+      expect(stats.autoApproved).toBe(0);
+      expect(stats.needsReview).toBe(1);
+      // Should NOT send Discord auto-approve notification
+      expect(mockDiscord).not.toHaveBeenCalled();
+    });
+
+    it('should handle mixed confidence levels', async () => {
       mockWrite
-        .mockResolvedValueOnce({ status: 'inserted', proposalKey: 'key-1' })
-        .mockResolvedValueOnce({ status: 'noop', proposalKey: 'key-2', reason: 'dedupe' });
+        .mockResolvedValueOnce({ status: 'inserted', proposalKey: 'key-high' })
+        .mockResolvedValueOnce({ status: 'inserted', proposalKey: 'key-medium' });
 
       const results = [
-        makeExtractionResult({ ticker: 'MSTR' }),
-        makeExtractionResult({ ticker: 'RIOT', holdings: 19_500, currentHoldings: 19_287, holdingsDelta: 213 }),
+        makeExtractionResult({ ticker: 'MSTR', confidence: 0.95 }),
+        makeExtractionResult({ ticker: 'RIOT', confidence: 0.82, holdings: 19_500, currentHoldings: 19_287, holdingsDelta: 213 }),
       ];
 
       const stats = await writeExtractionProposals(mockD1, results, 'run-456');
 
-      expect(stats.written).toBe(1);
-      expect(stats.skipped).toBe(1);
-      expect(stats.errors).toBe(0);
-      expect(stats.details).toHaveLength(2);
+      expect(stats.written).toBe(2);
+      expect(stats.autoApproved).toBe(1);
+      expect(stats.needsReview).toBe(1);
     });
 
     it('should count errors separately', async () => {
@@ -145,6 +178,7 @@ describe('D1 Proposals', () => {
 
       expect(stats.errors).toBe(1);
       expect(stats.written).toBe(0);
+      expect(stats.autoApproved).toBe(0);
     });
   });
 });

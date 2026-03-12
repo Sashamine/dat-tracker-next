@@ -3,10 +3,15 @@
  *
  * Handles the lifecycle of extraction proposals:
  * - Write proposals from auto-extraction results
+ * - Auto-approve high-confidence results (≥90%)
+ * - Surface edge cases (80-89%) for human review
  * - List pending proposals for review
  * - Approve/reject proposals
  *
- * Proposals flow: extraction → D1 candidate → human review → approved/rejected
+ * Confidence tiers:
+ * - ≥90%: Auto-approved, written to D1 as 'approved'
+ * - 80-89%: Written as 'candidate', needs human review
+ * - <80%: Already filtered out by getProposedUpdates()
  */
 
 import crypto from 'node:crypto';
@@ -14,6 +19,10 @@ import { D1Client } from '../d1';
 import { writeSecFilingHoldingsNativeDatapoint, type SecFilingHoldingsNativeWriteResult } from './sec-filing-holdings-native';
 import type { AutoExtractionResult } from '../sec/auto-extract-8k';
 import { getCompanyByTicker } from '../data/companies';
+import { sendDiscordEmbed } from '../discord';
+
+// Auto-approve threshold: ≥90% confidence results are approved without human review
+const AUTO_APPROVE_THRESHOLD = 0.9;
 
 // ============================================
 // TYPES
@@ -116,17 +125,31 @@ export async function writeExtractionProposal(
   });
 }
 
+export interface ProposalWriteStats {
+  written: number;
+  autoApproved: number;
+  needsReview: number;
+  skipped: number;
+  errors: number;
+  details: SecFilingHoldingsNativeWriteResult[];
+}
+
 /**
- * Write multiple extraction results to D1 as proposals.
- * Returns summary of write operations.
+ * Write extraction results to D1 and auto-approve high-confidence ones.
+ *
+ * - ≥90% confidence: Written to D1 then immediately auto-approved
+ * - 80-89% confidence: Written as 'candidate' for human review
+ * - Discord notification sent for each auto-approved result
  */
 export async function writeExtractionProposals(
   d1: D1Client,
   results: AutoExtractionResult[],
   runId: string,
-): Promise<{ written: number; skipped: number; errors: number; details: SecFilingHoldingsNativeWriteResult[] }> {
+): Promise<ProposalWriteStats> {
   const details: SecFilingHoldingsNativeWriteResult[] = [];
   let written = 0;
+  let autoApproved = 0;
+  let needsReview = 0;
   let skipped = 0;
   let errors = 0;
 
@@ -136,6 +159,30 @@ export async function writeExtractionProposals(
 
     if (writeResult.status === 'inserted' || writeResult.status === 'updated') {
       written++;
+
+      // Auto-approve high-confidence results
+      if (result.confidence >= AUTO_APPROVE_THRESHOLD && writeResult.proposalKey) {
+        const approveResult = await approveProposal(d1, writeResult.proposalKey);
+        if (approveResult.success) {
+          autoApproved++;
+          // Notify Discord
+          const delta = result.holdingsDelta;
+          const deltaStr = delta != null ? ` (${delta > 0 ? '+' : ''}${delta.toLocaleString()})` : '';
+          const method = result.extractionMethod === 'llm' ? 'LLM' : 'Regex';
+          await sendDiscordEmbed({
+            title: `Auto-Approved: ${result.ticker}`,
+            description: [
+              `**${result.holdings?.toLocaleString()}** ${result.asset}${deltaStr}`,
+              `Confidence: ${Math.round(result.confidence * 100)}% | Method: ${method} (\`${result.patternName}\`)`,
+              result.asOfDate ? `As-of: ${result.asOfDate}` : null,
+              `Filing: ${result.formType} ${result.accessionNumber}`,
+            ].filter(Boolean).join('\n'),
+            color: 0x2ecc71, // Green
+          }, false);
+        }
+      } else {
+        needsReview++;
+      }
     } else if (writeResult.status === 'error') {
       errors++;
     } else {
@@ -143,7 +190,7 @@ export async function writeExtractionProposals(
     }
   }
 
-  return { written, skipped, errors, details };
+  return { written, autoApproved, needsReview, skipped, errors, details };
 }
 
 // ============================================
@@ -151,7 +198,8 @@ export async function writeExtractionProposals(
 // ============================================
 
 /**
- * Get all pending proposals (status = 'candidate') from D1.
+ * Get pending proposals from auto-extraction only (not legacy D1 candidates).
+ * Filters by flags_json containing 'auto-extract-8k' source marker.
  */
 export async function getPendingProposals(d1: D1Client): Promise<ProposalSummary[]> {
   const rows = await d1.query<ProposalRow>(
@@ -162,6 +210,7 @@ export async function getPendingProposals(d1: D1Client): Promise<ProposalSummary
      FROM datapoints
      WHERE status = 'candidate'
        AND metric = 'holdings_native'
+       AND flags_json LIKE '%auto-extract-8k%'
      ORDER BY created_at DESC
      LIMIT 100;`
   );

@@ -85,7 +85,7 @@ export async function GET(request: NextRequest) {
         }))
       );
 
-    let proposalWriteStats: { written: number; skipped: number; errors: number } | null = null;
+    let proposalWriteStats: { written: number; autoApproved: number; needsReview: number; skipped: number; errors: number } | null = null;
 
     if (!dryRun && tier1_8Ks.length > 0) {
       try {
@@ -101,7 +101,7 @@ export async function GET(request: NextRequest) {
             const d1 = D1Client.fromEnv();
             const runId = crypto.randomUUID();
             proposalWriteStats = await writeExtractionProposals(d1, proposedUpdates, runId);
-            console.log(`[Filing Check] D1 proposals: ${proposalWriteStats.written} written, ${proposalWriteStats.skipped} skipped, ${proposalWriteStats.errors} errors`);
+            console.log(`[Filing Check] D1 proposals: ${proposalWriteStats.autoApproved} auto-approved, ${proposalWriteStats.needsReview} needs review, ${proposalWriteStats.skipped} skipped, ${proposalWriteStats.errors} errors`);
           } catch (d1Error) {
             console.error('[Filing Check] D1 proposal write failed:', d1Error);
           }
@@ -144,12 +144,18 @@ export async function GET(request: NextRequest) {
           : 'https://dat-tracker-next.vercel.app';
 
         let proposalLine = '';
-        if (proposedUpdates.length > 0) {
-          proposalLine = `\n\n⚠️ **${proposedUpdates.length} proposed data update(s)**`;
-          if (proposalWriteStats?.written) {
-            proposalLine += ` (${proposalWriteStats.written} written to D1)`;
+        if (proposedUpdates.length > 0 && proposalWriteStats) {
+          const parts: string[] = [];
+          if (proposalWriteStats.autoApproved > 0) {
+            parts.push(`✅ ${proposalWriteStats.autoApproved} auto-approved (≥90% conf)`);
           }
-          proposalLine += `\n[Review proposals](${baseUrl}/admin/proposals)`;
+          if (proposalWriteStats.needsReview > 0) {
+            parts.push(`⚠️ ${proposalWriteStats.needsReview} needs review (80-89% conf)`);
+            parts.push(`[Review proposals](${baseUrl}/admin/proposals)`);
+          }
+          if (parts.length > 0) {
+            proposalLine = '\n\n' + parts.join('\n');
+          }
         }
 
         await sendDiscordAlert(

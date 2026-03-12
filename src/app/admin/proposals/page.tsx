@@ -112,7 +112,8 @@ export default function ProposalsPage() {
     <div style={{ padding: 24, maxWidth: 1100, margin: '0 auto' }}>
       <h1 style={{ fontSize: 22, fontWeight: 700, marginBottom: 6 }}>Extraction Proposals</h1>
       <div style={{ color: '#666', marginBottom: 10, fontSize: 14 }}>
-        Review auto-extracted holdings from SEC 8-K filings. Approve to update D1, reject to discard.
+        Auto-extracted holdings from SEC 8-K filings. Results with {'>'}90% confidence are auto-approved.
+        Only 80-89% confidence results appear here for manual review.
       </div>
 
       <div style={{ display: 'flex', gap: 10, marginBottom: 16, fontSize: 13 }}>
