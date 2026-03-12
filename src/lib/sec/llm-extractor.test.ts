@@ -199,7 +199,7 @@ describe('LLM Extractor', () => {
       } as Response);
 
       const result = await extractHoldingsFromText(
-        'As of the filing date, the company has Class A: 180M shares outstanding. Class B: 20M shares outstanding.',
+        'As of the filing date, the company holds 550,000 Bitcoin and has Class A: 180M shares outstanding. Class B: 20M shares outstanding.',
         dualClassContext,
         { provider: 'anthropic', apiKey: 'test-key' }
       );
@@ -227,7 +227,7 @@ describe('LLM Extractor', () => {
       } as Response);
 
       const result = await extractHoldingsFromText(
-        'According to the quarterly report, Class A: 180M shares and Class B: 20M shares are outstanding.',
+        'According to the quarterly report on Bitcoin holdings, Class A: 180M shares and Class B: 20M shares are outstanding. The company holds 550,000 BTC.',
         standardContext,
         { provider: 'anthropic', apiKey: 'test-key' }
       );
@@ -258,7 +258,7 @@ describe('LLM Extractor', () => {
       } as Response);
 
       const result = await extractHoldingsFromText(
-        'This is a long enough text to trigger the API call and test error handling.',
+        'The company reported holding 550,000 BTC as of the filing date. This Bitcoin treasury position represents a significant corporate asset.',
         standardContext,
         { provider: 'anthropic', apiKey: 'test-key' }
       );
@@ -279,7 +279,7 @@ describe('LLM Extractor', () => {
       } as Response);
 
       const result = await extractHoldingsFromText(
-        'This is a long enough text to trigger the API call and test error handling.',
+        'The company reported holding 550,000 BTC as of the filing date. This Bitcoin treasury position represents a significant corporate asset.',
         standardContext,
         { provider: 'anthropic', apiKey: 'test-key' }
       );
@@ -301,7 +301,7 @@ describe('LLM Extractor', () => {
       } as Response);
 
       const result = await extractHoldingsFromText(
-        'This is a long enough text to trigger the API call and test markdown handling.',
+        'The company reported holding 550,000 BTC as of the filing date. This Bitcoin treasury position represents a significant corporate asset.',
         standardContext,
         { provider: 'anthropic', apiKey: 'test-key' }
       );
@@ -489,7 +489,7 @@ describe('LLM Extractor', () => {
       } as Response);
 
       const result = await extractHoldingsFromText(
-        'This is a long enough text to trigger the API call for Grok testing.',
+        'The company reported holding 550,000 BTC as of the filing date. This Bitcoin treasury position represents a significant corporate asset.',
         standardContext,
         { provider: 'grok', apiKey: 'test-grok-key' }
       );

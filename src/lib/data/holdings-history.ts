@@ -317,9 +317,9 @@ const KULR_HISTORY: HoldingsSnapshot[] = [
 const SQNS_HISTORY: HoldingsSnapshot[] = [
   // Pre-split: ordinary shares (not comparable to post-split ADS entries)
   { date: "2025-06-23", holdings: 0, sharesOutstanding: 251_408_922, holdingsPerShare: 0, totalDebt: 0, cash: 10_000_000, source: "DAT strategy announced", sourceType: "press-release", sourceUrl: "https://sequans.com/bitcoin-treasury/" },
-  { date: "2025-07-08", holdings: 1_500, sharesOutstanding: 251_408_922, holdingsPerShare: 0.00000597, totalDebt: 189_000_000, cash: 20_000_000, source: "$189M convertible closed, initial BTC purchase (estimated)", sourceType: "sec-filing", sourceUrl: "https://sequans.com/bitcoin-treasury/" },
+  { date: "2025-07-08", holdings: 1_500, sharesOutstanding: 251_408_922, holdingsPerShare: 0.00000597, totalDebt: 189_000_000, cash: 20_000_000, source: "$189M convertible closed, initial BTC purchase (estimated)", sourceType: "company-website", sourceUrl: "https://sequans.com/bitcoin-treasury/" },
   // Post-split: ADS (1 ADS = 100 ordinary shares)
-  { date: "2025-09-17", holdings: 3_234, sharesOutstanding: 25_140_892, holdingsPerShare: 0.0001287, totalDebt: 189_000_000, cash: 25_000_000, source: "1:10 reverse split + peak holdings (shares = post-split ordinary, not ADS)", sourceType: "sec-filing", sourceUrl: "https://sequans.com/bitcoin-treasury/" },
+  { date: "2025-09-17", holdings: 3_234, sharesOutstanding: 25_140_892, holdingsPerShare: 0.0001287, totalDebt: 189_000_000, cash: 25_000_000, source: "1:10 reverse split + peak holdings (shares = post-split ordinary, not ADS)", sourceType: "company-website", sourceUrl: "https://sequans.com/bitcoin-treasury/" },
   { date: "2025-11-04", holdings: 2_264, sharesOutstanding: 13_933_963, holdingsPerShare: 0.0001625, totalDebt: 94_500_000, cash: 15_000_000, source: "Company treasury update: sold 970 BTC to repay ~$94.5M of $189M convertible", sourceUrl: "https://sequans.com/bitcoin-treasury/", sourceType: "company-website" },  // $189M - ~$94.5M repaid = $94.5M remaining (confirmed by Q4 6-K)
   { date: "2025-12-31", holdings: 2_139, sharesOutstanding: 15_504_809, holdingsPerShare: 0.0001379, totalDebt: 94_500_000, cash: 13_400_000, source: "6-K Q4 2025: 2,139 BTC ($187.1M), 1,617 pledged. $94.5M convertible. Cash $13.4M.", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000013/q42025earningspressrelease.htm" },
 ];
@@ -1026,7 +1026,7 @@ const IHLDF_HISTORY: HoldingsSnapshot[] = [
 const DDC_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-05-23", holdings: 100, sharesOutstanding: 800_000, holdingsPerShare: 0.000125, source: "First BTC purchase (100 BTC). ~800K shares post 1:25 reverse split Apr 8, 2025.", sourceType: "company-website", sourceUrl: "https://treasury.ddc.xyz" },
   { date: "2025-06-30", holdings: 138, sharesOutstanding: 6_500_000, holdingsPerShare: 0.0000212, source: "Q2 2025 end: 138 BTC, shares increased via ATM/ELOC", sourceType: "company-website", sourceUrl: "https://treasury.ddc.xyz" },
-  { date: "2025-09-30", holdings: 1_058, sharesOutstanding: 8_307_583, holdingsPerShare: 0.0001274, source: "Q3 2025 end: 1,058 BTC", sourceType: "sec-filing", sourceUrl: "https://treasury.ddc.xyz" },
+  { date: "2025-09-30", holdings: 1_058, sharesOutstanding: 8_307_583, holdingsPerShare: 0.0001274, source: "Q3 2025 end: 1,058 BTC", sourceType: "company-website", sourceUrl: "https://treasury.ddc.xyz" },
   { date: "2025-12-31", holdings: 1_183, sharesOutstanding: 23_309_005, holdingsPerShare: 0.0000508, source: "Q4 2025 end: 1,183 BTC", sourceType: "company-website", sourceUrl: "https://treasury.ddc.xyz" },
   { date: "2026-01-29", holdings: 1_783, sharesOutstanding: 23_310_000, holdingsPerShare: 0.0000765, source: "treasury.ddc.xyz Jan 2026", sourceType: "company-website", sourceUrl: "https://treasury.ddc.xyz" },
   { date: "2026-02-11", holdings: 1_988, sharesOutstanding: 28_723_005, holdingsPerShare: 0.0000692, source: "treasury.ddc.xyz Feb 11, 2026. Shares per 6-K Feb 6.", sourceType: "company-website", sourceUrl: "https://treasury.ddc.xyz" },

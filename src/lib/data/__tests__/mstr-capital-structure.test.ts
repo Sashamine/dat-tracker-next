@@ -18,7 +18,8 @@ describe("MSTR Capital Structure Timeline", () => {
       // Verify key metrics from XBRL
       expect(q3_2025!.cashAndEquivalents).toBe(54_285_000);
       expect(q3_2025!.commonSharesOutstanding).toBe(267_468_000);
-      expect(q3_2025!.preferredEquity).toBe(1_091_342_000);
+      // Total mezzanine preferred = STRK + STRF + STRC + STRD
+      expect(q3_2025!.preferredEquity).toBe(5_786_330_000);
     });
 
     it("should return null for non-quarter-end dates", () => {

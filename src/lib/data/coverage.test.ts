@@ -37,6 +37,18 @@ const KNOWN_COVERAGE_GAPS = [
   'BNC',    // BNB Network Company - needs SEC CIK lookup
   'STKE',   // Canadian (TSX Venture) - no SEC filings
   'XTAIF',  // Canadian (TSX Venture) - no SEC filings
+  'OBTC3',  // Brazilian (B3) - covered by CVM fetcher, not SEC
+  'SWC',    // UK (LSE) - covered by LSE RNS fetcher, not SEC
+  'SQNS',   // French (Euronext Paris) - no SEC filings
+  'DDC',    // Hong Kong company, SEC filer but CIK not in TICKER_TO_CIK
+  '3825.T', // Japanese (TSE) - covered by TDnet/website fetcher
+  '3189.T', // Japanese (TSE) - covered by TDnet fetcher
+  'ZOOZ',   // Israeli (TASE) - no SEC filings
+  'BTCT.V', // Canadian (TSX-V) - covered by website fetcher
+  'SRAG.DU', // German (Xetra) - no SEC filings
+  'DCC.AX', // Australian (ASX) - covered by ASX fetcher
+  'IHLDF',  // Canadian (CBOE CA) - SEDAR+ filer
+  'ETHM',   // Canadian (TSX) - SEDAR+ filer with SEC cross-listing
 ];
 
 describe('Source Coverage', () => {

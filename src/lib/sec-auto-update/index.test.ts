@@ -26,6 +26,15 @@ vi.mock('../sec/llm-extractor', () => ({
   createLLMConfigFromEnv: vi.fn(),
 }));
 
+// Mock companies module so getCompanyInfo returns controlled values
+vi.mock('@/lib/data/companies', () => ({
+  allCompanies: [
+    { ticker: 'MSTR', asset: 'BTC', holdings: 500_000 },
+    { ticker: 'RIOT', asset: 'BTC', holdings: 19_287 },
+    { ticker: 'TEST', asset: 'BTC', holdings: 1_000 },
+  ],
+}));
+
 // Mock XBRL extractor - return no holdings so tests fall back to LLM
 vi.mock('../sec/xbrl-extractor', () => ({
   extractXBRLData: vi.fn().mockResolvedValue({
@@ -76,12 +85,20 @@ export const companies = [
 ];
 `;
 
-// Mock SEC submissions response
+// Mock SEC submissions response - dates must be within sinceDays window
+// Use dynamic dates relative to "today" so tests don't rot
+const today = new Date();
+const daysAgo = (n: number) => {
+  const d = new Date(today);
+  d.setDate(d.getDate() - n);
+  return d.toISOString().split('T')[0];
+};
+
 const mockSECSubmissions = {
   filings: {
     recent: {
       form: ['8-K', '10-Q', '8-K', '10-K'],
-      filingDate: ['2026-01-20', '2026-01-15', '2026-01-10', '2025-12-15'],
+      filingDate: [daysAgo(3), daysAgo(10), daysAgo(20), daysAgo(60)],
       accessionNumber: ['0001193125-26-016002', '0001193125-26-015000', '0001193125-26-010000', '0001193125-25-100000'],
     },
   },
