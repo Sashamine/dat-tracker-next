@@ -74,6 +74,8 @@ export default async function AdminDataHealthPage() {
         <Link href="/admin/corporate-actions">Corporate Actions</Link>
         <span style={{ color: '#bbb' }}>•</span>
         <Link href="/admin/sedar-filings">SEDAR Filings</Link>
+        <span style={{ color: '#bbb' }}>•</span>
+        <Link href="/admin/analytics">Analytics</Link>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 16 }}>

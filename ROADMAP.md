@@ -434,19 +434,27 @@ Extend AMF model to Swedish and German regulators.
 
 **Goal:** Measure real usage patterns.
 
+**Current state (2026-03-12):**
+- D1 `adoption_events` table with 4 indexes (event, ticker, metric, session)
+- Client-side tracking: 38 files instrumented with sendBeacon transport
+- Events: page_view, company_view, history_view, citation_modal_open, citation_source_click, api_call
+- 90-day retention cron (daily at 7:50 UTC)
+- 1,662 events from 36 sessions collected since launch
+
 **Deliverables:**
-- [ ] D1 `events` table + `POST /api/events`
-- [ ] Server-side: API call events for key endpoints
-- [ ] Client-side: citation opens, source clicks, history views, company page views
-- [ ] Retention + rate limiting
+- [x] D1 `events` table + `POST /api/events`
+- [x] Server-side: API call events for key endpoints
+- [x] Client-side: citation opens, source clicks, history views, company page views
+- [x] Retention + rate limiting (2s debounce, 90-day cleanup cron)
 
 ### 5.2 Adoption Dashboard
 
 **Goal:** Weekly canonical readout of usage.
 
 **Deliverables:**
-- [ ] Track: unique users, returning users, API calls by endpoint/caller type
-- [ ] Track: citation open rate, click-through to source, most viewed companies
+- [x] Track: unique sessions, event breakdown, citation click-through rate
+- [x] Track: top companies by views, top routes, session duration
+- [x] Admin dashboard: `/admin/analytics` with summary cards, daily chart, live feed
 - [ ] Weekly markdown snapshot under `ops/`
 - [ ] Decision gate: after 7 days of data, evaluate if PostHog needed
 
