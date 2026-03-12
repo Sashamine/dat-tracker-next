@@ -2805,24 +2805,34 @@ export const xrpCompanies: Company[] = [
     datStartDate: "2025-11-01",
     preferredEquity: 0,
     preferredAsOf: "2025-12-31",
-    preferredSourceUrl: "https://www.sec.gov/Archives/edgar/data/2044009/000119312526051286/",
-    dataWarnings: [
-      {
-        type: "stale-data",
-        message: "Balance sheet data may be stale (preferred as-of 2025-12-31).",
-        severity: "warning",
-      },
-    ],
-    quarterlyBurnUsd: 0,
-    burnSource: "SPAC - minimal operating expenses pre-merger",
-    burnSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1991453&type=10-Q",
-    burnAsOf: "2025-09-30",
+    preferredSource: "SEC 10-Q Q1 FY2026 (Dec 31, 2025)",
+    preferredSourceQuote: "No preferred stock outstanding (10-Q Q1 FY2026 balance sheet)",
+    preferredSourceUrl: "/filings/xrpn/0001193125-26-051286",
+    sharesForMnav: 31_590_000,  // 23,710,000 Class A + 7,880,000 Class B (10-Q cover page)
+    sharesSource: "SEC 10-Q Q1 FY2026 cover page (Dec 31, 2025)",
+    sharesSourceQuote: "23,710,000 Class A + 7,880,000 Class B = 31,590,000 shares (10-Q cover page)",
+    sharesSourceUrl: "/filings/xrpn/0001193125-26-051286",
+    sharesAsOf: "2025-12-31",
+    cashReserves: 287_074,  // Operating cash outside trust ($287K)
+    cashSource: "SEC 10-Q Q1 FY2026 XBRL: CashAndCashEquivalentsAtCarryingValue",
+    cashSourceQuote: "Cash: $287,074 (outside trust). Trust: $236.9M held in money market funds (10-Q Dec 31, 2025)",
+    cashSourceUrl: "/filings/xrpn/0001193125-26-051286",
+    cashAsOf: "2025-12-31",
+    totalDebt: 0,
+    debtSource: "SEC 10-Q Q1 FY2026: no debt outstanding",
+    debtSourceQuote: "No promissory notes or working capital loans outstanding (10-Q Q1 FY2026)",
+    debtSourceUrl: "/filings/xrpn/0001193125-26-051286",
+    debtAsOf: "2025-12-31",
+    quarterlyBurnUsd: 2_906_000,  // G&A $2.9M (Oct-Dec 2025, first full quarter of operations)
+    burnSource: "SEC 10-Q Q1 FY2026 XBRL: GeneralAndAdministrativeExpense $2,905,649 (Oct-Dec 2025)",
+    burnSourceUrl: "/filings/xrpn/0001193125-26-051286",
+    burnAsOf: "2025-12-31",
     capitalRaisedPipe: 1_000_000_000,
-    pendingMerger: true,  // SPAC merger with Armada Acquisition Corp. II
+    pendingMerger: true,  // SPAC merger with Armada Acquisition Corp. II — NOT yet closed
     expectedHoldings: 473_276_430,
     leader: "Asheesh Birla (CEO, ex-Ripple)",
     strategy: "Institutional-scale XRP adoption via SPAC. Yield through XRP loans/market making.",
-    notes: "SPAC merger pending Q1 2026. 0.47% of XRP supply. SBI $200M anchor. Ripple, Pantera backed. Holdings per SEC 8-K Nov 4, 2025 press release (EX-99.1).",
+    notes: "SPAC (Armada Acquisition Corp. II), merger pending. 0 XRP on balance sheet until close. Post-merger: ~262M XRP from PIPE (Ripple 50M, Arrington 211M) + trust proceeds for more. 0.47% of XRP supply target. $236.9M in trust. SBI $200M anchor. Merger deadline Nov 22, 2026. Deferred underwriting: $9.2M.",
   },
   // WKSP (Worksport) removed - Auto tech company, not beta to XRP
 ];
