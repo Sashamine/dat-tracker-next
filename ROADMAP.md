@@ -404,19 +404,22 @@ Extend AMF model to Swedish and German regulators.
 
 **Goal:** Automatically extract crypto holdings from SEC 8-K filings using deterministic regex patterns.
 
-**Current state (2026-03-11):**
+**Current state (2026-03-12):**
 - `holdings-regex-extractor.ts`: 15 asset types, pattern families for total/purchase/sale + table format (MSTR weekly 8-K)
 - `scan-8k-holdings.ts`: CLI scanner for all companies — fetches recent 8-Ks, applies item-filter tiers, runs regex extraction
+- `auto-extract-8k.ts`: Full pipeline: regex → LLM fallback → human review proposals
+- `llm-extractor.ts`: Anthropic/Grok LLM with structured extraction, validation, dual-class support
 - Validated: 6 extractions from 48 filings across 43 companies
-- 23 tests covering narrative + table patterns, date extraction, dedup, edge cases
+- 502 tests passing, cross-check: 0 FAIL, 10 WARN (all staleness)
 
 **Deliverables:**
 - [x] Deterministic regex extractor for common SEC filing language patterns (PR #435)
 - [x] Table-format extraction for MSTR-style weekly BTC Update 8-Ks (PR #436)
 - [x] Scanner CLI tool for batch extraction across all companies (PR #436)
-- [ ] Wire regex extractor into filing-check cron: auto-extract when new Tier 1 8-K detected
-- [ ] LLM fallback: when regex confidence < 0.7, pass to `llm-extractor.ts` for ambiguous cases
-- [ ] Auto-update proposals: regex extraction → D1 proposal with human approval gate
+- [x] Wire regex extractor into filing-check cron: auto-extract when new Tier 1 8-K detected (PR #439)
+- [x] LLM fallback: when regex confidence < 0.5, pass to `llm-extractor.ts` for ambiguous cases (PR #439)
+- [x] Test suite hardening: dynamic dates, mock isolation, data fixes (PR #438)
+- [ ] Auto-update proposals: high-confidence extraction → D1 proposal with human approval gate
 
 **DoD:**
 - New 8-K filings trigger automated extraction; high-confidence results auto-proposed for review
@@ -502,6 +505,10 @@ Update this section when starting/stopping work so other agents see what's in-fl
 - Phase 3.2 Filing viewer quote highlighting
 
 ### Done (recent)
+- LLM fallback extraction: regex → LLM cascade in auto-extract pipeline (Phase 4.4, PR #439) — 2026-03-12
+- Test suite hardening: dynamic dates, mock isolation, 5 data fixes (Phase 4.4, PR #438) — 2026-03-12
+- XRPN holdings-history cleanup: removed unverified 520M entry, fixed share counts — 2026-03-12
+- Data freshness audit: all 10 stale warnings verified as "no newer source exists" — 2026-03-12
 - 8-K table-format extraction + scanner script (Phase 4.4, PR #436) — 2026-03-11
 - Deterministic 8-K holdings regex extractor (Phase 4.4, PR #435) — 2026-03-11
 - Dilutive instruments test fixes for BTCS/ALCPB/UPXI (PR #434) — 2026-03-11

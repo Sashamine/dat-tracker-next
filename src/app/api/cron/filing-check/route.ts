@@ -13,12 +13,15 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import crypto from 'node:crypto';
 import { checkAllCompanyFilings } from '@/lib/verification/filing-checker';
 import { getTickersNeedingReview } from '@/lib/verification/repository';
-import { sendDiscordAlert } from '@/lib/discord';
+import { sendDiscordAlert, sendDiscordEmbed } from '@/lib/discord';
 import { notifyNewFilings } from '@/lib/clawdbot';
 import { autoExtractBatch, formatExtractionForDiscord, getProposedUpdates, type AutoExtractionResult } from '@/lib/sec/auto-extract-8k';
 import { getCompanyByTicker } from '@/lib/data/companies';
+import { D1Client } from '@/lib/d1';
+import { writeExtractionProposals } from '@/lib/d1/proposals';
 
 // Verify cron secret for scheduled runs
 function verifyCronSecret(request: NextRequest): boolean {
@@ -82,12 +85,27 @@ export async function GET(request: NextRequest) {
         }))
       );
 
+    let proposalWriteStats: { written: number; skipped: number; errors: number } | null = null;
+
     if (!dryRun && tier1_8Ks.length > 0) {
       try {
         console.log(`[Filing Check] Auto-extracting from ${tier1_8Ks.length} Tier 1 8-K(s)...`);
         extractionResults = await autoExtractBatch(tier1_8Ks);
         const extracted = extractionResults.filter(r => r.extracted);
         console.log(`[Filing Check] Extracted holdings from ${extracted.length}/${tier1_8Ks.length} filings`);
+
+        // Write high-confidence proposals to D1
+        const proposedUpdates = getProposedUpdates(extractionResults);
+        if (proposedUpdates.length > 0) {
+          try {
+            const d1 = D1Client.fromEnv();
+            const runId = crypto.randomUUID();
+            proposalWriteStats = await writeExtractionProposals(d1, proposedUpdates, runId);
+            console.log(`[Filing Check] D1 proposals: ${proposalWriteStats.written} written, ${proposalWriteStats.skipped} skipped, ${proposalWriteStats.errors} errors`);
+          } catch (d1Error) {
+            console.error('[Filing Check] D1 proposal write failed:', d1Error);
+          }
+        }
       } catch (extractError) {
         console.error('[Filing Check] Auto-extraction failed:', extractError);
       }
@@ -120,13 +138,23 @@ export async function GET(request: NextRequest) {
         // Include auto-extraction results in Discord message
         const extractionSummary = formatExtractionForDiscord(extractionResults);
         const proposedUpdates = getProposedUpdates(extractionResults);
-        const proposalLine = proposedUpdates.length > 0
-          ? `\n\n⚠️ **${proposedUpdates.length} proposed data update(s)** — review needed`
-          : '';
+
+        const baseUrl = process.env.VERCEL_URL
+          ? `https://${process.env.VERCEL_URL}`
+          : 'https://dat-tracker-next.vercel.app';
+
+        let proposalLine = '';
+        if (proposedUpdates.length > 0) {
+          proposalLine = `\n\n⚠️ **${proposedUpdates.length} proposed data update(s)**`;
+          if (proposalWriteStats?.written) {
+            proposalLine += ` (${proposalWriteStats.written} written to D1)`;
+          }
+          proposalLine += `\n[Review proposals](${baseUrl}/api/proposals)`;
+        }
 
         await sendDiscordAlert(
           'New SEC Filings Detected',
-          `Found ${result.totalNewFilings} new filing(s) from ${result.withNewFilings} company(ies):\n\n${companiesWithFilings.join('\n')}${statsLine}${extractionSummary ? `\n\n${extractionSummary}` : ''}${proposalLine}\n\nRun /api/cron/filing-check?manual=true to see details.`,
+          `Found ${result.totalNewFilings} new filing(s) from ${result.withNewFilings} company(ies):\n\n${companiesWithFilings.join('\n')}${statsLine}${extractionSummary ? `\n\n${extractionSummary}` : ''}${proposalLine}`,
           proposedUpdates.length > 0 ? 'warning' : 'info',
           true  // Mention Clawdbot
         );
@@ -186,6 +214,7 @@ export async function GET(request: NextRequest) {
       autoExtraction: extractionResults.length > 0 ? {
         attempted: extractionResults.length,
         extracted: extractionResults.filter(r => r.extracted).length,
+        d1Proposals: proposalWriteStats,
         proposedUpdates: getProposedUpdates(extractionResults).map(r => ({
           ticker: r.ticker,
           accession: r.accessionNumber,
