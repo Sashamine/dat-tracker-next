@@ -261,6 +261,110 @@ function parseDate(dateStr: string): string | null {
 }
 
 // ============================================
+// TABLE-FORMAT EXTRACTION
+// ============================================
+
+/**
+ * Extract holdings from table-format filings (e.g., MSTR weekly BTC Update).
+ *
+ * In these filings, after HTML cleaning, the format is:
+ *   "Aggregate BTC Holdings ... 17,994 $1.28 $70,946 738,731 $56.04 $75,862"
+ *
+ * The table has headers (BTC Acquired, Aggregate BTC Holdings) followed by values.
+ * We find "Aggregate ASSET Holdings" and then collect all non-dollar numbers
+ * in the vicinity, picking the largest as the total holdings.
+ */
+function extractFromTable(
+  text: string,
+  expectedAsset?: string
+): RegexExtractionResult[] {
+  const results: RegexExtractionResult[] = [];
+  const A = ASSET_PATTERN;
+
+  // Look for "Aggregate ASSET Holdings" pattern
+  const headerRegex = new RegExp(`[Aa]ggregate\\s+(${A})\\s+[Hh]oldings`, 'gi');
+  let headerMatch: RegExpExecArray | null;
+
+  while ((headerMatch = headerRegex.exec(text)) !== null) {
+    const asset = normalizeAsset(headerMatch[1]);
+    if (!asset) continue;
+    if (expectedAsset && asset !== expectedAsset) continue;
+
+    // Get text window after the header (where values appear)
+    const afterHeader = text.substring(headerMatch.index, Math.min(text.length, headerMatch.index + 500));
+
+    // Find all plain numbers (not preceded by $) in the window
+    const numberRegex = /(?<!\$)([\d,]{4,})(?!\.\d{2}\b)/g;
+    let numMatch: RegExpExecArray | null;
+    const plainNumbers: number[] = [];
+
+    while ((numMatch = numberRegex.exec(afterHeader)) !== null) {
+      const num = parseFloat(numMatch[1].replace(/,/g, ''));
+      if (!isNaN(num) && num >= 100) { // Min threshold to avoid noise
+        plainNumbers.push(num);
+      }
+    }
+
+    if (plainNumbers.length === 0) continue;
+
+    // The largest plain number is most likely the total holdings
+    // (Aggregate BTC Holdings > BTC Acquired in any filing)
+    const maxNum = Math.max(...plainNumbers);
+
+    // Also look for acquired amount (typically second-largest plain number)
+    const sortedNums = [...new Set(plainNumbers)].sort((a, b) => b - a);
+    const acquiredNum = sortedNums.length > 1 ? sortedNums[1] : null;
+
+    // Try to find as-of date
+    let asOfDate: string | null = null;
+    const nearbyText = text.substring(
+      Math.max(0, headerMatch.index - 300),
+      Math.min(text.length, headerMatch.index + 500)
+    );
+    for (const datePattern of DATE_PATTERNS) {
+      datePattern.lastIndex = 0;
+      const dateMatch = datePattern.exec(nearbyText);
+      if (dateMatch) {
+        asOfDate = parseDate(dateMatch[1]);
+        if (asOfDate) break;
+      }
+    }
+
+    // Add total holdings
+    results.push({
+      holdings: maxNum,
+      asset,
+      type: 'total',
+      transactionAmount: null,
+      costUsd: null,
+      asOfDate,
+      sharesOutstanding: null,
+      confidence: 0.85,
+      matchedText: afterHeader.substring(0, 200).trim(),
+      patternName: 'aggregate_table',
+    });
+
+    // Add acquired amount if found
+    if (acquiredNum && acquiredNum !== maxNum) {
+      results.push({
+        holdings: null,
+        asset,
+        type: 'purchase',
+        transactionAmount: acquiredNum,
+        costUsd: null,
+        asOfDate,
+        sharesOutstanding: null,
+        confidence: 0.75,
+        matchedText: afterHeader.substring(0, 200).trim(),
+        patternName: 'acquired_table',
+      });
+    }
+  }
+
+  return results;
+}
+
+// ============================================
 // MAIN EXTRACTION FUNCTION
 // ============================================
 
@@ -345,6 +449,10 @@ export function extractHoldingsRegex(
       });
     }
   }
+
+  // Try table-format extraction (MSTR weekly 8-K style)
+  const tableResults = extractFromTable(text, expectedAsset);
+  results.push(...tableResults);
 
   // Deduplicate: if same holdings number appears multiple times, keep highest confidence
   const deduped = deduplicateResults(results);

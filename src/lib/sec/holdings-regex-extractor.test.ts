@@ -172,6 +172,26 @@ describe('Holdings Regex Extractor', () => {
     });
   });
 
+  describe('table format (MSTR weekly 8-K)', () => {
+    it('should extract from MSTR-style table format', () => {
+      const text = `BTC Update On March 9, 2026, Strategy announced updates with respect to its bitcoin holdings: During Period March 2, 2026 to March 8, 2026 As of March 8, 2026 BTC Acquired (1) Aggregate Purchase Price (in billions) (2) Average Purchase Price (2) Aggregate BTC Holdings Aggregate Purchase Price (in billions) (2) Average Purchase Price (2) 17,994 $1.28 $70,946 738,731 $56.04 $75,862`;
+      const results = extractHoldingsRegex(text, 'BTC');
+      const best = getBestResult(results, 'BTC');
+      expect(best).not.toBeNull();
+      expect(best!.holdings).toBe(738_731);
+      expect(best!.type).toBe('total');
+      expect(best!.asOfDate).toBe('2026-03-08');
+    });
+
+    it('should also extract acquired amount from table', () => {
+      const text = `Aggregate BTC Holdings Aggregate Purchase Price 17,994 $1.28 $70,946 738,731 $56.04`;
+      const results = extractHoldingsRegex(text, 'BTC');
+      const purchases = results.filter(r => r.type === 'purchase');
+      expect(purchases.length).toBeGreaterThanOrEqual(1);
+      expect(purchases[0].transactionAmount).toBe(17_994);
+    });
+  });
+
   describe('edge cases', () => {
     it('should return empty for irrelevant text', () => {
       const text = 'The Board of Directors appointed John Smith as Chief Executive Officer effective immediately.';
