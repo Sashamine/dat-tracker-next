@@ -805,12 +805,12 @@ const TRON_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-01-23", holdings: 677_000_000, sharesOutstanding: 274_382_064, holdingsPerShare: 2.468, source: "8-K: Confirmed 677M+ TRX total", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956744/000149315226003321/", sourceType: "sec-filing" },
 ];
 
-// Evernorth (XRPN) - XRP treasury
+// Evernorth (XRPN) - XRP treasury (SPAC - pendingMerger)
+// Note: XRP is "purchased and committed" by Evernorth (merger target), NOT held on SPAC balance sheet.
+// SPAC holds only cash in trust ($236.9M). Shares are SPAC shares (Class A + Class B).
 const XRPN_HISTORY: HoldingsSnapshot[] = [
-  { date: "2024-09-01", holdings: 200000000, sharesOutstanding: 42_000_000, holdingsPerShare: 4.762, source: "Initial XRP treasury", sourceType: "press-release", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002044009&type=8-K" },
-  { date: "2024-12-31", holdings: 388000000, sharesOutstanding: 55_000_000, holdingsPerShare: 7.055, stockPrice: 302.96, source: "Q4 2024 filing", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002044009&type=10-K" },
-  { date: "2025-06-30", holdings: 473000000, sharesOutstanding: 68_000_000, holdingsPerShare: 6.956, stockPrice: 404.23, source: "Q2 2025 filing", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002044009&type=10-Q" },
-  { date: "2025-09-30", holdings: 520000000, sharesOutstanding: 75_000_000, holdingsPerShare: 6.933, stockPrice: 326.42, source: "Q3 2025 10-Q", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002044009", sourceType: "sec-filing" },
+  { date: "2025-09-18", holdings: 388_910_554, sharesOutstanding: 31_590_000, holdingsPerShare: 12.31, source: "8-K Sep 18, 2025 press release: 'total XRP purchased and committed to approximately 388,910,554'", sourceType: "press-release", sourceUrl: "/filings/xrpn/0001193125-25-210483" },
+  { date: "2025-11-04", holdings: 473_276_430, sharesOutstanding: 31_590_000, holdingsPerShare: 14.98, source: "8-K Nov 4, 2025 press release (Exhibit 99.1): 'total XRP purchased and committed to over 473,276,430'", sourceType: "press-release", sourceUrl: "/filings/xrpn/0001193125-25-263628" },
 ];
 
 // ==================== OTHER ASSETS ====================
