@@ -3066,13 +3066,13 @@ export const dogeCompanies: Company[] = [
     website: "https://www.cleancoresol.com",
     twitter: "https://twitter.com/CleanCoreSol",
     secCik: "0001956741",
-    holdings: 733_060_893,  // Q2 FY2026 10-Q (Dec 31, 2025) — filing-verified (no XBRL crypto tag). No purchases Jan 1-Feb 10, 2026.
-    holdingsLastUpdated: "2025-12-31",
+    holdings: 663_060_893,  // 733,060,893 (Dec 31 10-Q) - 70,000,000 (Mar 9 termination payment to DCV + 21Shares per 8-K Mar 10)
+    holdingsLastUpdated: "2026-03-09",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "/filings/zone/0001213900-26-015016",
-    accessionNumber: "0001213900-26-015016",
+    holdingsSourceUrl: "/filings/zone/0001213900-26-025719",
+    accessionNumber: "0001213900-26-025719",
     sourceType: "sec-filing",
-    sourceQuote: "Number of Dogecoin held 733,060,893",
+    sourceQuote: "733,060,893 DOGE (10-Q Dec 31) minus 70,000,000 termination payment (8-K Mar 10) = 663,060,893 DOGE remaining",
     datStartDate: "2025-09-05",
     quarterlyBurnUsd: 3_600_000,  // Q2 FY2026 XBRL: NetCashUsedInOperatingActivities $7.17M for 6 months = ~$3.6M/qtr
     burnSource: "SEC 10-Q Q2 FY2026 XBRL: NetCashProvidedByUsedInOperatingActivities -$7,167,396 (Jul-Dec 2025)",
@@ -3110,7 +3110,7 @@ export const dogeCompanies: Company[] = [
     sharesAsOf: "2026-02-10",
     leader: "Clayton Adams (CEO)",
     strategy: "Official Dogecoin Treasury. Target 1B DOGE (5% circulating supply).",
-    notes: "NYSE American. Q2 FY2026: 733M DOGE (Dec 31, 2025). No purchases Jan 1-Feb 10, 2026 per subsequent events. Partnership with House of Doge, 21Shares, Robinhood. Audit note 2026-03-05: lock values and citation anchors reconciled to D1 latest (DOGE/cash/debt at 2025-12-31; shares at 2026-02-10).",
+    notes: "NYSE American. Mar 9, 2026: Terminated asset mgmt agreement with Dogecoin Ventures (HOD) + 21Shares — paid 70M DOGE (61.25M to DCV, 8.75M to 21Shares). CIO Marco Margiotta resigned + $500K cash severance. Holdings: 733M (Dec 31 10-Q) → 663M post-termination. Audit note 2026-03-05: lock values and citation anchors reconciled to D1 latest (DOGE/cash/debt at 2025-12-31; shares at 2026-02-10).",
   },
   {
     id: "tbh",
