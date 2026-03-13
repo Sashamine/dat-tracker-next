@@ -2,9 +2,10 @@
 
 import type { Company } from "@/lib/types";
 import type { ProvenanceValue } from "@/lib/data/types/provenance";
-import { pv, derivedSource, docSource } from "@/lib/data/types/provenance";
+import { pv, derivedSource } from "@/lib/data/types/provenance";
 import { formatLargeNumber } from "@/lib/calculations";
 import { calculateTotalCryptoNAV } from "@/lib/math/mnav-engine";
+import { buildCompanyProvenance } from "@/lib/utils/company-provenance";
 
 import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
 
@@ -14,83 +15,18 @@ interface Props {
 }
 
 /**
- * Generic company view for companies without hand-crafted provenance files.
+ * Generic company view for companies without hand-crafted custom views.
  * Synthesizes ProvenanceData from Company citation fields and wraps CompanyViewBase.
  */
 export function GenericCompanyView({ company, className = "" }: Props) {
-  // Synthesize ProvenanceValue wrappers from company.* citation fields
-  const holdingsPv = pv(
-    company.holdings ?? 0,
-    docSource({
-      url: company.holdingsSourceUrl || "",
-      quote: company.sourceQuote || `${company.holdings?.toLocaleString()} ${company.asset}`,
-      documentDate: company.holdingsLastUpdated || "",
-      searchTerm: company.sourceSearchTerm,
-      accession: company.accessionNumber,
-      filingType: company.holdingsSource === "sec-filing" ? "8-K" : undefined,
-      filingDate: company.holdingsLastUpdated,
-    }),
-    `As of ${company.holdingsLastUpdated}`
-  );
-
-  const debtPv = pv(
-    company.totalDebt ?? 0,
-    docSource({
-      url: company.debtSourceUrl || "",
-      quote: company.debtSourceQuote || `Total debt: $${(company.totalDebt ?? 0).toLocaleString()}`,
-      documentDate: company.debtAsOf || "",
-      searchTerm: company.debtSearchTerm,
-    }),
-    company.debtAsOf ? `As of ${company.debtAsOf}` : undefined
-  );
-
-  const cashPv = pv(
-    company.cashReserves ?? 0,
-    docSource({
-      url: company.cashSourceUrl || "",
-      quote: company.cashSourceQuote || `Cash: $${(company.cashReserves ?? 0).toLocaleString()}`,
-      documentDate: company.cashAsOf || "",
-      searchTerm: company.cashSearchTerm,
-    }),
-    company.cashAsOf ? `As of ${company.cashAsOf}` : undefined
-  );
-
-  const sharesPv = pv(
-    company.sharesForMnav ?? 0,
-    docSource({
-      url: company.sharesSourceUrl || "",
-      quote: company.sharesSourceQuote || `${(company.sharesForMnav ?? 0).toLocaleString()} shares`,
-      documentDate: company.sharesAsOf || "",
-      searchTerm: company.sharesSearchTerm,
-    }),
-    company.sharesAsOf ? `As of ${company.sharesAsOf}` : undefined
-  );
-
-  const preferredPv = company.preferredEquity
-    ? pv(
-        company.preferredEquity,
-        docSource({
-          url: company.preferredSourceUrl || "",
-          quote: company.preferredSourceQuote || `Preferred: $${company.preferredEquity.toLocaleString()}`,
-          documentDate: company.preferredAsOf || "",
-          searchTerm: company.preferredSearchTerm,
-        }),
-        company.preferredAsOf ? `As of ${company.preferredAsOf}` : undefined
-      )
-    : undefined;
+  const cp = buildCompanyProvenance(company);
 
   const config: CompanyViewBaseConfig = {
     ticker: company.ticker,
     asset: company.asset === "MULTI" ? "BTC" : company.asset,
     cik: company.secCik,
 
-    provenance: {
-      holdings: holdingsPv,
-      totalDebt: debtPv,
-      cashReserves: cashPv,
-      sharesOutstanding: sharesPv,
-      preferredEquity: preferredPv,
-    },
+    provenance: cp,
 
     scheduledEventsProps: ({ ticker, stockPrice }) => ({ ticker, stockPrice }),
 
@@ -124,7 +60,7 @@ export function GenericCompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: `${co.asset} Holdings × ${co.asset} Price` + (secondaryCryptoValue > 0 ? " + secondary crypto" : ""),
           formula: "holdings × price",
-          inputs: { holdings: holdingsPv },
+          inputs: { holdings: cp.holdings },
         }),
         `Live ${co.asset} price`
       );
@@ -136,7 +72,7 @@ export function GenericCompanyView({ company, className = "" }: Props) {
               derivedSource({
                 derivation: "Enterprise Value / Crypto NAV",
                 formula: "(marketCap + debt + preferred - freeCash) / cryptoNav",
-                inputs: { holdings: holdingsPv, debt: debtPv, cash: cashPv },
+                inputs: { holdings: cp.holdings, debt: cp.totalDebt, cash: cp.cashReserves },
               }),
               `EV: ${formatLargeNumber(ev)}`
             )
@@ -147,7 +83,7 @@ export function GenericCompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "Net Debt / Crypto NAV",
           formula: "max(0, debt - cash) / cryptoNav",
-          inputs: { debt: debtPv, cash: cashPv, holdings: holdingsPv },
+          inputs: { debt: cp.totalDebt, cash: cp.cashReserves, holdings: cp.holdings },
         }),
         `Net Debt: ${formatLargeNumber(netDebt)}`
       );
@@ -157,7 +93,7 @@ export function GenericCompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "Crypto NAV + Cash - Debt - Preferred",
           formula: "cryptoNav + cash - debt - preferred",
-          inputs: { holdings: holdingsPv, cash: cashPv, debt: debtPv },
+          inputs: { holdings: cp.holdings, cash: cp.cashReserves, debt: cp.totalDebt },
         })
       );
 
@@ -166,7 +102,7 @@ export function GenericCompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "Equity NAV / Shares Outstanding",
           formula: "equityNav / shares",
-          inputs: { holdings: holdingsPv, shares: sharesPv, debt: debtPv, cash: cashPv },
+          inputs: { holdings: cp.holdings, shares: cp.sharesOutstanding, debt: cp.totalDebt, cash: cp.cashReserves },
         }),
         `${(sharesOutstanding / 1e6).toFixed(1)}M shares`
       );
@@ -187,7 +123,7 @@ export function GenericCompanyView({ company, className = "" }: Props) {
         cryptoNavPv,
         mNavPv,
         leveragePv,
-        equityNavPv: equityNavPv,
+        equityNavPv,
         equityNavPerSharePv,
       } satisfies CompanyViewBaseMetrics;
     },

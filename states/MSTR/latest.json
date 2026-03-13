@@ -2,8 +2,8 @@
   "schemaVersion": "0.1",
   "ticker": "MSTR",
   "secCik": "0001050446",
-  "asOf": "2026-03-01",
-  "generatedAt": "2026-03-07T00:36:04.386Z",
+  "asOf": "2026-03-08",
+  "generatedAt": "2026-03-13T21:28:44.190Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -11,17 +11,17 @@
   },
   "holdings": {
     "asset": "BTC",
-    "amount": 720737,
+    "amount": 738731,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "/filings/mstr/0001193125-26-084264",
+      "holdingsSourceUrl": "/filings/mstr/0001193125-26-097598",
       "holdingsAccession": null
     }
   },
   "shares": {
     "sharesForMnav": 333752250,
     "sharesOutstandingFD": null,
-    "asOf": "2026-03-01",
+    "asOf": "2026-03-08",
     "source": {
       "sharesSource": "10-K FY2025 cover page DEI (314,112,458 Class A + 19,640,250 Class B). Cross-checked against strategy.com.",
       "sharesSourceUrl": "/filings/mstr/0001050446-26-000020"

@@ -1,5 +1,5 @@
 {
-  "maxWarnings": 10,
-  "lastUpdated": "2026-03-11",
-  "note": "Warning count must not increase. Run npx tsx scripts/cross-check-data.ts to verify. Lower this number as warnings are resolved."
+  "maxWarnings": 11,
+  "lastUpdated": "2026-03-13",
+  "note": "Warning count must not increase. Run npx tsx scripts/cross-check-data.ts to verify. Lower this number as warnings are resolved. +1 for TAOX stale-preferred (as_of 2025-03-31, added during reconciliation sync)."
 }

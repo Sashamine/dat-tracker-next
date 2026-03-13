@@ -1,23 +1,12 @@
 "use client";
 
-import { DJT_PROVENANCE, DJT_CIK, DJT_CAPITAL_RAISE, DJT_BALANCE_SHEET } from "@/lib/data/provenance/djt";
-import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
+import { DJT_CAPITAL_RAISE, DJT_BALANCE_SHEET } from "@/lib/data/provenance/djt";
+import { buildCompanyProvenance, standardProvenanceHelpers } from "@/lib/utils/company-provenance";
+import { pv, derivedSource } from "@/lib/data/types/provenance";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
+import type { ProvenanceValue } from "@/lib/data/types/provenance";
 
 import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
-
-type PvParam = ProvenanceValue<number> | undefined;
-type AnySource = XBRLSource | DocumentSource | DerivedSource;
-
-type ConfigWithHelpers = CompanyViewBaseConfig & {
-  provenanceHelpers: {
-    sourceUrl: (p: PvParam) => string | undefined;
-    sourceType: (p: PvParam) => string | undefined;
-    sourceDate: (p: PvParam) => string | undefined;
-    searchTerm: (p: PvParam) => string | undefined;
-  };
-};
 
 interface DJTMetrics extends CompanyViewBaseMetrics {
   leverage: number;
@@ -25,39 +14,26 @@ interface DJTMetrics extends CompanyViewBaseMetrics {
   itmDebtAdjustment: number;
 }
 
-function su(p: PvParam) { return p?.source ? getSourceUrl(p.source) : undefined; }
-function st(p: PvParam) { return p?.source?.type; }
-function sd(p: PvParam) { return p?.source ? getSourceDate(p.source) : undefined; }
-function ss(p: PvParam) {
-  const src: AnySource | undefined = p?.source;
-  if (src && "searchTerm" in src) return src.searchTerm;
-  return undefined;
-}
-
 interface Props { company: Company; className?: string; }
 
 export function DJTCompanyView({ company, className = "" }: Props) {
-  const config: ConfigWithHelpers = {
+  const cp = buildCompanyProvenance(company);
+
+  const config: CompanyViewBaseConfig = {
     ticker: "DJT",
     asset: "BTC",
-    cik: DJT_CIK,
-    provenance: DJT_PROVENANCE,
-    // DJT uses getSourceUrl/getSourceDate helpers
-    provenanceHelpers: {
-      sourceUrl: su,
-      sourceType: st,
-      sourceDate: sd,
-      searchTerm: ss,
-    },
-    buildMetrics: ({ prices, marketCap, effectiveShares }) => {
-      if (!DJT_PROVENANCE.holdings || !DJT_PROVENANCE.totalDebt || !DJT_PROVENANCE.cashReserves) return null;
+    cik: company.secCik,
+    provenance: cp,
+    provenanceHelpers: standardProvenanceHelpers,
+    buildMetrics: ({ company, prices, marketCap, effectiveShares }) => {
+      if (!company.holdings) return null;
       const btcP = prices?.crypto.BTC?.price || 0;
 
-      const h = DJT_PROVENANCE.holdings.value;
-      const d = DJT_PROVENANCE.totalDebt.value;
-      const c = DJT_PROVENANCE.cashReserves.value;
-      const pf = DJT_PROVENANCE.preferredEquity?.value ?? 0;
-      const sh = DJT_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
+      const h = company.holdings ?? 0;
+      const d = company.totalDebt ?? 0;
+      const c = company.cashReserves ?? 0;
+      const pf = company.preferredEquity ?? 0;
+      const sh = company.sharesForMnav ?? 0;
 
       const itm = effectiveShares?.inTheMoneyDebtValue || 0;
       const adjustedDebt = Math.max(0, d - itm);
@@ -73,7 +49,7 @@ export function DJTCompanyView({ company, className = "" }: Props) {
 
       const cryptoNavPv: ProvenanceValue<number> = pv(
         cryptoNav,
-        derivedSource({ derivation: "BTC*Price", formula: "holdings * btcPrice", inputs: { holdings: DJT_PROVENANCE.holdings } }),
+        derivedSource({ derivation: "BTC*Price", formula: "holdings * btcPrice", inputs: { holdings: cp.holdings } }),
         `Live BTC: $${btcP.toLocaleString()}`
       );
 
@@ -83,7 +59,7 @@ export function DJTCompanyView({ company, className = "" }: Props) {
             derivedSource({
               derivation: "EV/CryptoNAV",
               formula: "(marketCap + adjustedDebt + preferred - cash) / cryptoNav",
-              inputs: { debt: DJT_PROVENANCE.totalDebt, cash: DJT_PROVENANCE.cashReserves, holdings: DJT_PROVENANCE.holdings },
+              inputs: { debt: cp.totalDebt, cash: cp.cashReserves, holdings: cp.holdings },
             }),
             `AdjDebt: ${adjustedDebt}`
           )
@@ -94,7 +70,7 @@ export function DJTCompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "NetDebt/CryptoNAV",
           formula: "(adjustedDebt - cash) / cryptoNav",
-          inputs: { debt: DJT_PROVENANCE.totalDebt, cash: DJT_PROVENANCE.cashReserves, holdings: DJT_PROVENANCE.holdings },
+          inputs: { debt: cp.totalDebt, cash: cp.cashReserves, holdings: cp.holdings },
         }),
         `NetDebt: ${netDebt}`
       );
@@ -104,7 +80,7 @@ export function DJTCompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "CryptoNAV + Cash - Debt - Preferred",
           formula: "cryptoNav + cash - adjustedDebt - preferred",
-          inputs: { holdings: DJT_PROVENANCE.holdings, cash: DJT_PROVENANCE.cashReserves, debt: DJT_PROVENANCE.totalDebt },
+          inputs: { holdings: cp.holdings, cash: cp.cashReserves, debt: cp.totalDebt },
         }),
         `AdjDebt: ${adjustedDebt}`
       );
@@ -114,7 +90,7 @@ export function DJTCompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "EquityNAV/Shares",
           formula: "equityNav / shares",
-          inputs: { holdings: DJT_PROVENANCE.holdings, shares: DJT_PROVENANCE.sharesOutstanding!, debt: DJT_PROVENANCE.totalDebt, cash: DJT_PROVENANCE.cashReserves },
+          inputs: { holdings: cp.holdings, shares: cp.sharesOutstanding, debt: cp.totalDebt, cash: cp.cashReserves },
         }),
         `Adj debt for ITM`
       );

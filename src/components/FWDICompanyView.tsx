@@ -1,38 +1,20 @@
 "use client";
 
 import {
-  FWDI_PROVENANCE,
-  FWDI_CIK,
   FWDI_BALANCE_SHEET,
   FWDI_INCOME_STATEMENT,
   FWDI_STAKING,
   FWDI_CAPITAL,
+  FWDI_CIK,
 } from "@/lib/data/provenance/fwdi";
-import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
+import { buildCompanyProvenance, standardProvenanceHelpers } from "@/lib/utils/company-provenance";
+import { pv, derivedSource } from "@/lib/data/types/provenance";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
+import type { ProvenanceValue } from "@/lib/data/types/provenance";
 import { formatLargeNumber } from "@/lib/calculations";
 import { trackCitationSourceClick } from "@/lib/client-events";
 
 import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
-
-type PvParam = ProvenanceValue<number> | undefined;
-type AnySource = XBRLSource | DocumentSource | DerivedSource;
-
-function su(p: PvParam) {
-  return p?.source ? getSourceUrl(p.source) : undefined;
-}
-function st(p: PvParam) {
-  return p?.source?.type;
-}
-function sd(p: PvParam) {
-  return p?.source ? getSourceDate(p.source) : undefined;
-}
-function ss(p: PvParam) {
-  const src: AnySource | undefined = p?.source;
-  if (src && 'searchTerm' in src) return src.searchTerm;
-  return undefined;
-}
 
 interface FWDIMetrics extends CompanyViewBaseMetrics {
   leverage: number;
@@ -44,30 +26,27 @@ interface Props {
 }
 
 export function FWDICompanyView({ company, className = "" }: Props) {
+  const cp = buildCompanyProvenance(company);
+
   const config: CompanyViewBaseConfig = {
     ticker: "FWDI",
     asset: "SOL",
-    cik: FWDI_CIK,
-    provenance: FWDI_PROVENANCE,
-    provenanceHelpers: {
-      sourceUrl: su,
-      sourceType: st,
-      sourceDate: sd,
-      searchTerm: ss,
-    },
+    cik: company.secCik || FWDI_CIK,
+    provenance: cp,
+    provenanceHelpers: standardProvenanceHelpers,
 
     scheduledEventsProps: ({ ticker, stockPrice }) => ({ ticker, stockPrice }),
 
     buildMetrics: ({ company, prices, marketCap }) => {
-      if (!FWDI_PROVENANCE.holdings || !FWDI_PROVENANCE.totalDebt || !FWDI_PROVENANCE.cashReserves) return null;
+      if (!company.holdings) return null;
 
       const solPrice = prices?.crypto?.SOL?.price || 0;
 
-      const holdings = FWDI_PROVENANCE.holdings.value;
-      const totalDebt = FWDI_PROVENANCE.totalDebt.value;
-      const cashReserves = FWDI_PROVENANCE.cashReserves.value;
-      const preferredEquity = FWDI_PROVENANCE.preferredEquity?.value ?? 0;
-      const sharesOutstanding = FWDI_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
+      const holdings = company.holdings ?? 0;
+      const totalDebt = company.totalDebt ?? 0;
+      const cashReserves = company.cashReserves ?? 0;
+      const preferredEquity = company.preferredEquity ?? 0;
+      const sharesOutstanding = company.sharesForMnav ?? 0;
 
       const cryptoNav = holdings * solPrice;
       const netDebt = Math.max(0, totalDebt - cashReserves);
@@ -83,7 +62,7 @@ export function FWDICompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "SOL Holdings × SOL Price",
           formula: "holdings × solPrice",
-          inputs: { holdings: FWDI_PROVENANCE.holdings },
+          inputs: { holdings: cp.holdings },
         }),
         `Using live SOL price: $${solPrice.toLocaleString()}`
       );
@@ -96,9 +75,9 @@ export function FWDICompanyView({ company, className = "" }: Props) {
                 derivation: "Enterprise Value ÷ Crypto NAV",
                 formula: "(marketCap + debt + preferred - cash) / cryptoNav",
                 inputs: {
-                  debt: FWDI_PROVENANCE.totalDebt,
-                  cash: FWDI_PROVENANCE.cashReserves,
-                  holdings: FWDI_PROVENANCE.holdings,
+                  debt: cp.totalDebt,
+                  cash: cp.cashReserves,
+                  holdings: cp.holdings,
                 },
               }),
               `Debt: ${formatLargeNumber(totalDebt)}`
@@ -111,9 +90,9 @@ export function FWDICompanyView({ company, className = "" }: Props) {
           derivation: "Net Debt ÷ Crypto NAV",
           formula: "max(0, debt - cash) / cryptoNav",
           inputs: {
-            debt: FWDI_PROVENANCE.totalDebt,
-            cash: FWDI_PROVENANCE.cashReserves,
-            holdings: FWDI_PROVENANCE.holdings,
+            debt: cp.totalDebt,
+            cash: cp.cashReserves,
+            holdings: cp.holdings,
           },
         }),
         `Net Debt: ${formatLargeNumber(netDebt)}`
@@ -125,9 +104,9 @@ export function FWDICompanyView({ company, className = "" }: Props) {
           derivation: "Crypto NAV + Cash − Debt − Preferred",
           formula: "cryptoNav + cash - debt - preferred",
           inputs: {
-            holdings: FWDI_PROVENANCE.holdings,
-            cash: FWDI_PROVENANCE.cashReserves,
-            debt: FWDI_PROVENANCE.totalDebt,
+            holdings: cp.holdings,
+            cash: cp.cashReserves,
+            debt: cp.totalDebt,
           },
         }),
         `Debt-free company`
@@ -139,10 +118,10 @@ export function FWDICompanyView({ company, className = "" }: Props) {
           derivation: "Equity NAV ÷ Shares Outstanding",
           formula: "equityNav / shares",
           inputs: {
-            holdings: FWDI_PROVENANCE.holdings,
-            shares: FWDI_PROVENANCE.sharesOutstanding!,
-            debt: FWDI_PROVENANCE.totalDebt,
-            cash: FWDI_PROVENANCE.cashReserves,
+            holdings: cp.holdings,
+            shares: cp.sharesOutstanding,
+            debt: cp.totalDebt,
+            cash: cp.cashReserves,
           },
         }),
         `${(sharesOutstanding / 1e6).toFixed(1)}M shares`
@@ -172,7 +151,7 @@ export function FWDICompanyView({ company, className = "" }: Props) {
     stalenessDates: ({ company }) => [company.holdingsLastUpdated, company.debtAsOf, company.cashAsOf, company.sharesAsOf],
 
     renderStrategyAndOverview: () => {
-      const holdings = FWDI_PROVENANCE.holdings?.value || 0;
+      const holdings = company.holdings || 0;
       return (
         <details className="bg-gray-50 dark:bg-gray-900 rounded-lg mb-6 group">
           <summary className="p-6 cursor-pointer flex items-center justify-between">

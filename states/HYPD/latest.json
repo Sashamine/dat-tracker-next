@@ -3,7 +3,7 @@
   "ticker": "HYPD",
   "secCik": "0001682639",
   "asOf": "2025-12-04",
-  "generatedAt": "2026-03-07T00:36:04.389Z",
+  "generatedAt": "2026-03-13T21:28:44.193Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -21,10 +21,10 @@
   "shares": {
     "sharesForMnav": 24400000,
     "sharesOutstandingFD": null,
-    "asOf": "2025-11-10",
+    "asOf": "2026-01-05",
     "source": {
-      "sharesSource": "SEC 10-Q Nov 14, 2025 (8.1M common + 16.3M from preferred conversion)",
-      "sharesSourceUrl": "/filings/hypd/0001104659-25-111671"
+      "sharesSource": "SEC 8-K Jan 5, 2026 (8.4M common + 16.0M from remaining preferred conversion)",
+      "sharesSourceUrl": "/filings/hypd/0001104659-26-000748"
     }
   },
   "balanceSheet": {

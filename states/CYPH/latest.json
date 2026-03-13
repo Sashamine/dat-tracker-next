@@ -3,7 +3,7 @@
   "ticker": "CYPH",
   "secCik": "0001509745",
   "asOf": "2025-12-30",
-  "generatedAt": "2026-03-07T00:36:04.390Z",
+  "generatedAt": "2026-03-13T21:28:44.194Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -30,13 +30,13 @@
   "balanceSheet": {
     "cashReserves": 9686000,
     "restrictedCash": null,
-    "totalDebt": null,
-    "preferredEquity": null,
+    "totalDebt": 0,
+    "preferredEquity": 0,
     "asOf": "2025-09-30",
     "source": {
       "cashSourceUrl": "/filings/cyph/0001104659-25-109827",
-      "debtSourceUrl": null,
-      "preferredSourceUrl": null
+      "debtSourceUrl": "/filings/cyph/0001104659-25-109827",
+      "preferredSourceUrl": "/filings/cyph/0001104659-25-109827"
     }
   },
   "verification": {

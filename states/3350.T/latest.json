@@ -3,7 +3,7 @@
   "ticker": "3350.T",
   "secCik": null,
   "asOf": "2025-12-30",
-  "generatedAt": "2026-03-07T00:36:04.386Z",
+  "generatedAt": "2026-03-13T21:28:44.190Z",
   "listing": {
     "country": "JP",
     "exchangeMic": "XTKS",
@@ -28,14 +28,14 @@
     }
   },
   "balanceSheet": {
-    "cashReserves": 97000000,
+    "cashReserves": 17000000,
     "restrictedCash": 0,
-    "totalDebt": 355000000,
+    "totalDebt": 362000000,
     "preferredEquity": 155000000,
-    "asOf": "2026-02-14",
+    "asOf": "2025-12-31",
     "source": {
-      "cashSourceUrl": "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20251114/20251112598935.pdf",
-      "debtSourceUrl": "https://metaplanet.jp/en/analytics",
+      "cashSourceUrl": "https://stockanalysis.com/quote/tyo/3350/financials/balance-sheet/",
+      "debtSourceUrl": "https://stockanalysis.com/quote/tyo/3350/financials/balance-sheet/",
       "preferredSourceUrl": "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20251114/20251112598935.pdf"
     }
   },

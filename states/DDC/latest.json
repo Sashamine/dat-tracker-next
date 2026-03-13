@@ -3,7 +3,7 @@
   "ticker": "DDC",
   "secCik": "0001808110",
   "asOf": "2026-03-04",
-  "generatedAt": "2026-03-07T00:36:04.387Z",
+  "generatedAt": "2026-03-13T21:28:44.191Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -28,13 +28,13 @@
     }
   },
   "balanceSheet": {
-    "cashReserves": 8351096,
+    "cashReserves": 6752917,
     "restrictedCash": null,
     "totalDebt": 27000000,
     "preferredEquity": null,
-    "asOf": "2024-12-31",
+    "asOf": "2025-06-30",
     "source": {
-      "cashSourceUrl": "/filings/ddc/0001213900-25-043916",
+      "cashSourceUrl": "/filings/ddc/0001213900-26-007465",
       "debtSourceUrl": "https://treasury.ddc.xyz",
       "preferredSourceUrl": null
     }

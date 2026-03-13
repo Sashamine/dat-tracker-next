@@ -1,35 +1,18 @@
 "use client";
 
-import { MARA_PROVENANCE, MARA_CIK } from "@/lib/data/provenance/mara";
-import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
+import { MARA_PROVENANCE } from "@/lib/data/provenance/mara";
+import { buildCompanyProvenance, standardProvenanceHelpers } from "@/lib/utils/company-provenance";
+import { pv, derivedSource } from "@/lib/data/types/provenance";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
+import type { ProvenanceValue } from "@/lib/data/types/provenance";
 import { formatLargeNumber } from "@/lib/calculations";
 
 import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
-
-type PvParam = ProvenanceValue<number> | undefined;
-type AnySource = XBRLSource | DocumentSource | DerivedSource;
 
 interface MARAMetrics extends CompanyViewBaseMetrics {
   leverage: number;
   adjustedDebt: number;
   itmDebtAdjustment: number;
-}
-
-function su(p: PvParam) {
-  return p?.source ? getSourceUrl(p.source) : undefined;
-}
-function st(p: PvParam) {
-  return p?.source?.type;
-}
-function sd(p: PvParam) {
-  return p?.source ? getSourceDate(p.source) : undefined;
-}
-function ss(p: PvParam) {
-  const src: AnySource | undefined = p?.source;
-  if (src && 'searchTerm' in src) return src.searchTerm;
-  return undefined;
 }
 
 interface Props {
@@ -38,28 +21,25 @@ interface Props {
 }
 
 export function MARACompanyView({ company, className = "" }: Props) {
+  const cp = buildCompanyProvenance(company);
+
   const config: CompanyViewBaseConfig = {
     ticker: "MARA",
     asset: "BTC",
-    cik: MARA_CIK,
-    provenance: MARA_PROVENANCE,
-    provenanceHelpers: {
-      sourceUrl: su,
-      sourceType: st,
-      sourceDate: sd,
-      searchTerm: ss,
-    },
+    cik: company.secCik,
+    provenance: cp,
+    provenanceHelpers: standardProvenanceHelpers,
 
     buildMetrics: ({ company, prices, marketCap, effectiveShares }) => {
-      if (!MARA_PROVENANCE.holdings || !MARA_PROVENANCE.totalDebt || !MARA_PROVENANCE.cashReserves) return null;
+      if (!company.holdings) return null;
 
       const btcPrice = prices?.crypto?.BTC?.price || 0;
 
-      const holdings = MARA_PROVENANCE.holdings.value;
-      const totalDebt = MARA_PROVENANCE.totalDebt.value;
-      const cashReserves = MARA_PROVENANCE.cashReserves.value;
-      const preferredEquity = MARA_PROVENANCE.preferredEquity?.value ?? 0;
-      const sharesOutstanding = MARA_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
+      const holdings = company.holdings ?? 0;
+      const totalDebt = company.totalDebt ?? 0;
+      const cashReserves = company.cashReserves ?? 0;
+      const preferredEquity = company.preferredEquity ?? 0;
+      const sharesOutstanding = company.sharesForMnav ?? 0;
 
       const inTheMoneyDebtValue = effectiveShares?.inTheMoneyDebtValue || 0;
       const adjustedDebt = Math.max(0, totalDebt - inTheMoneyDebtValue);
@@ -78,7 +58,7 @@ export function MARACompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "BTC Holdings × BTC Price",
           formula: "holdings × btcPrice",
-          inputs: { holdings: MARA_PROVENANCE.holdings },
+          inputs: { holdings: cp.holdings },
         }),
         `Using live BTC price: $${btcPrice.toLocaleString()}`
       );
@@ -91,9 +71,9 @@ export function MARACompanyView({ company, className = "" }: Props) {
                 derivation: "Enterprise Value ÷ Crypto NAV (adjusted for ITM converts)",
                 formula: "(marketCap + adjustedDebt + preferred - cash) / cryptoNav",
                 inputs: {
-                  debt: MARA_PROVENANCE.totalDebt,
-                  cash: MARA_PROVENANCE.cashReserves,
-                  holdings: MARA_PROVENANCE.holdings,
+                  debt: cp.totalDebt,
+                  cash: cp.cashReserves,
+                  holdings: cp.holdings,
                 },
               }),
               `Adjusted Debt: ${formatLargeNumber(adjustedDebt)} (raw ${formatLargeNumber(totalDebt)} - ITM converts ${formatLargeNumber(inTheMoneyDebtValue)})`
@@ -106,9 +86,9 @@ export function MARACompanyView({ company, className = "" }: Props) {
           derivation: "Net Debt ÷ Crypto NAV (adjusted for ITM converts)",
           formula: "(adjustedDebt - cash) / cryptoNav",
           inputs: {
-            debt: MARA_PROVENANCE.totalDebt,
-            cash: MARA_PROVENANCE.cashReserves,
-            holdings: MARA_PROVENANCE.holdings,
+            debt: cp.totalDebt,
+            cash: cp.cashReserves,
+            holdings: cp.holdings,
           },
         }),
         `Net Debt: ${formatLargeNumber(netDebt)} (${formatLargeNumber(adjustedDebt)} debt - ${formatLargeNumber(cashReserves)} cash)`
@@ -120,9 +100,9 @@ export function MARACompanyView({ company, className = "" }: Props) {
           derivation: "Crypto NAV + Cash − Adjusted Debt − Preferred",
           formula: "(holdings × btcPrice) + cash - adjustedDebt - preferred",
           inputs: {
-            holdings: MARA_PROVENANCE.holdings,
-            cash: MARA_PROVENANCE.cashReserves,
-            debt: MARA_PROVENANCE.totalDebt,
+            holdings: cp.holdings,
+            cash: cp.cashReserves,
+            debt: cp.totalDebt,
           },
         }),
         `Debt adjusted for ITM converts: ${formatLargeNumber(adjustedDebt)}`
@@ -134,10 +114,10 @@ export function MARACompanyView({ company, className = "" }: Props) {
           derivation: "Equity NAV ÷ Shares Outstanding",
           formula: "equityNav / shares",
           inputs: {
-            holdings: MARA_PROVENANCE.holdings,
-            shares: MARA_PROVENANCE.sharesOutstanding!,
-            debt: MARA_PROVENANCE.totalDebt,
-            cash: MARA_PROVENANCE.cashReserves,
+            holdings: cp.holdings,
+            shares: cp.sharesOutstanding,
+            debt: cp.totalDebt,
+            cash: cp.cashReserves,
           },
         }),
         `Uses adjusted debt (ITM converts treated as equity)`

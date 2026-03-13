@@ -3,7 +3,7 @@
   "ticker": "BTBT",
   "secCik": "0001710350",
   "asOf": "2026-01-31",
-  "generatedAt": "2026-03-07T00:36:04.385Z",
+  "generatedAt": "2026-03-13T21:28:44.189Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -29,7 +29,7 @@
   },
   "balanceSheet": {
     "cashReserves": 179118182,
-    "restrictedCash": 179118182,
+    "restrictedCash": 0,
     "totalDebt": 150000000,
     "preferredEquity": 9050000,
     "asOf": "2025-09-30",

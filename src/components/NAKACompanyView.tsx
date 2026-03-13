@@ -1,44 +1,17 @@
 "use client";
 
-import { NAKA_PROVENANCE, NAKA_CIK } from "@/lib/data/provenance/naka";
-import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
+import { buildCompanyProvenance, standardProvenanceHelpers } from "@/lib/utils/company-provenance";
+import { pv, derivedSource } from "@/lib/data/types/provenance";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
+import type { ProvenanceValue } from "@/lib/data/types/provenance";
 import { formatLargeNumber } from "@/lib/calculations";
 
 import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
-
-type PvParam = ProvenanceValue<number> | undefined;
-type AnySource = XBRLSource | DocumentSource | DerivedSource;
-
-type ConfigWithHelpers = CompanyViewBaseConfig & {
-  provenanceHelpers: {
-    sourceUrl: (p: PvParam) => string | undefined;
-    sourceType: (p: PvParam) => string | undefined;
-    sourceDate: (p: PvParam) => string | undefined;
-    searchTerm: (p: PvParam) => string | undefined;
-  };
-};
 
 interface NAKAMetrics extends CompanyViewBaseMetrics {
   leverage: number;
   adjustedDebt: number;
   itmDebtAdjustment: number;
-}
-
-function su(p: PvParam) {
-  return p?.source ? getSourceUrl(p.source) : undefined;
-}
-function st(p: PvParam) {
-  return p?.source?.type;
-}
-function sd(p: PvParam) {
-  return p?.source ? getSourceDate(p.source) : undefined;
-}
-function ss(p: PvParam) {
-  const src: AnySource | undefined = p?.source;
-  if (src && "searchTerm" in src) return src.searchTerm;
-  return undefined;
 }
 
 interface Props {
@@ -47,28 +20,25 @@ interface Props {
 }
 
 export function NAKACompanyView({ company, className = "" }: Props) {
-  const config: ConfigWithHelpers = {
+  const cp = buildCompanyProvenance(company);
+
+  const config: CompanyViewBaseConfig = {
     ticker: "NAKA",
     asset: "BTC",
-    cik: NAKA_CIK,
-    provenance: NAKA_PROVENANCE,
-    provenanceHelpers: {
-      sourceUrl: su,
-      sourceType: st,
-      sourceDate: sd,
-      searchTerm: ss,
-    },
+    cik: company.secCik,
+    provenance: cp,
+    provenanceHelpers: standardProvenanceHelpers,
 
     buildMetrics: ({ company, prices, marketCap, effectiveShares }) => {
-      if (!NAKA_PROVENANCE.holdings || !NAKA_PROVENANCE.totalDebt || !NAKA_PROVENANCE.cashReserves) return null;
+      if (!company.holdings) return null;
 
       const btcPrice = prices?.crypto?.BTC?.price || 0;
 
-      const holdings = NAKA_PROVENANCE.holdings.value;
-      const totalDebt = NAKA_PROVENANCE.totalDebt.value;
-      const cashReserves = NAKA_PROVENANCE.cashReserves.value;
-      const preferredEquity = NAKA_PROVENANCE.preferredEquity?.value ?? 0;
-      const sharesOutstanding = NAKA_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
+      const holdings = company.holdings ?? 0;
+      const totalDebt = company.totalDebt ?? 0;
+      const cashReserves = company.cashReserves ?? 0;
+      const preferredEquity = company.preferredEquity ?? 0;
+      const sharesOutstanding = company.sharesForMnav ?? 0;
 
       const inTheMoneyDebtValue = effectiveShares?.inTheMoneyDebtValue || 0;
       const adjustedDebt = Math.max(0, totalDebt - inTheMoneyDebtValue);
@@ -84,7 +54,7 @@ export function NAKACompanyView({ company, className = "" }: Props) {
 
       const cryptoNavPv: ProvenanceValue<number> = pv(
         cryptoNav,
-        derivedSource({ derivation: "BTC Holdings × BTC Price", formula: "holdings × btcPrice", inputs: { holdings: NAKA_PROVENANCE.holdings } }),
+        derivedSource({ derivation: "BTC Holdings × BTC Price", formula: "holdings × btcPrice", inputs: { holdings: cp.holdings } }),
         `Using live BTC price: $${btcPrice.toLocaleString()}`
       );
 
@@ -95,7 +65,7 @@ export function NAKACompanyView({ company, className = "" }: Props) {
               derivedSource({
                 derivation: "Enterprise Value ÷ Crypto NAV",
                 formula: "(marketCap + adjustedDebt + preferred - cash) / cryptoNav",
-                inputs: { debt: NAKA_PROVENANCE.totalDebt, cash: NAKA_PROVENANCE.cashReserves, holdings: NAKA_PROVENANCE.holdings },
+                inputs: { debt: cp.totalDebt, cash: cp.cashReserves, holdings: cp.holdings },
               }),
               `AdjDebt: ${formatLargeNumber(adjustedDebt)}`
             )
@@ -106,7 +76,7 @@ export function NAKACompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "Net Debt ÷ Crypto NAV",
           formula: "(adjustedDebt - cash) / cryptoNav",
-          inputs: { debt: NAKA_PROVENANCE.totalDebt, cash: NAKA_PROVENANCE.cashReserves, holdings: NAKA_PROVENANCE.holdings },
+          inputs: { debt: cp.totalDebt, cash: cp.cashReserves, holdings: cp.holdings },
         }),
         `NetDebt: ${formatLargeNumber(netDebt)}`
       );
@@ -116,7 +86,7 @@ export function NAKACompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "Crypto NAV + Cash − Adjusted Debt − Preferred",
           formula: "cryptoNav + cash - adjustedDebt - preferred",
-          inputs: { holdings: NAKA_PROVENANCE.holdings, cash: NAKA_PROVENANCE.cashReserves, debt: NAKA_PROVENANCE.totalDebt },
+          inputs: { holdings: cp.holdings, cash: cp.cashReserves, debt: cp.totalDebt },
         }),
         `AdjDebt: ${formatLargeNumber(adjustedDebt)}`
       );
@@ -126,7 +96,7 @@ export function NAKACompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "Equity NAV ÷ Shares Outstanding",
           formula: "equityNav / shares",
-          inputs: { holdings: NAKA_PROVENANCE.holdings, shares: NAKA_PROVENANCE.sharesOutstanding!, debt: NAKA_PROVENANCE.totalDebt, cash: NAKA_PROVENANCE.cashReserves },
+          inputs: { holdings: cp.holdings, shares: cp.sharesOutstanding, debt: cp.totalDebt, cash: cp.cashReserves },
         }),
         `Adj debt for ITM`
       );

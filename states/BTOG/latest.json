@@ -2,8 +2,8 @@
   "schemaVersion": "0.1",
   "ticker": "BTOG",
   "secCik": "0001735556",
-  "asOf": "2025-08-11",
-  "generatedAt": "2026-03-07T00:36:04.390Z",
+  "asOf": "2025-10-31",
+  "generatedAt": "2026-03-13T21:28:44.194Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -13,8 +13,8 @@
     "asset": "DOGE",
     "amount": 70543745,
     "source": {
-      "holdingsSource": "press-release",
-      "holdingsSourceUrl": "https://www.globenewswire.com/news-release/2025/08/12/3131772/0/en/Bit-Origin-Surpasses-70-Million-Dogecoin-DOGE-Holdings-Following-Private-Placement.html",
+      "holdingsSource": "sec-filing",
+      "holdingsSourceUrl": "/filings/btog/0001104659-25-105009",
       "holdingsAccession": null
     }
   },
@@ -23,8 +23,8 @@
     "sharesOutstandingFD": null,
     "asOf": "2026-01-20",
     "source": {
-      "sharesSource": "SEC 6-K Jan 20, 2026 (1:60 reverse split)",
-      "sharesSourceUrl": "/filings/btog/0001104659-25-105009"
+      "sharesSource": "SEC 6-K Jan 20, 2026 (1:60 reverse split: 88.6M → ~1.5M Class A, 768K → 12.8K Class B)",
+      "sharesSourceUrl": "/filings/btog/0001104659-26-005086"
     }
   },
   "balanceSheet": {

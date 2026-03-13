@@ -1,51 +1,17 @@
 "use client";
 
 import { AVX_PROVENANCE, AVX_CIK, AVX_PIPE, AVX_STAKING, AVX_CAPITAL_PROGRAMS } from "@/lib/data/provenance/avx";
-import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
+import { buildCompanyProvenance, standardProvenanceHelpers } from "@/lib/utils/company-provenance";
+import { pv, derivedSource } from "@/lib/data/types/provenance";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
+import type { ProvenanceValue } from "@/lib/data/types/provenance";
 
 import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
-
-type PvParam = ProvenanceValue<number> | undefined;
-type AnySource = XBRLSource | DocumentSource | DerivedSource;
-
-/** provenanceHelpers is read by CompanyViewBase at runtime but not yet in the exported type */
-type ConfigWithHelpers = {
-  ticker: string;
-  asset: "AVAX";
-  cik?: string;
-  provenance: CompanyViewBaseConfig["provenance"];
-  buildMetrics: CompanyViewBaseConfig["buildMetrics"];
-  scheduledEventsProps: CompanyViewBaseConfig["scheduledEventsProps"];
-  renderBalanceSheetExtras: CompanyViewBaseConfig["renderBalanceSheetExtras"];
-  provenanceHelpers: {
-    sourceUrl: (p: PvParam) => string | undefined;
-    sourceType: (p: PvParam) => string | undefined;
-    sourceDate: (p: PvParam) => string | undefined;
-    searchTerm: (p: PvParam) => string | undefined;
-  };
-};
 
 interface AVXMetrics extends CompanyViewBaseMetrics {
   leverage: number;
   adjustedDebt: number;
   itmDebtAdjustment: number;
-}
-
-function su(p: PvParam) {
-  return p?.source ? getSourceUrl(p.source) : undefined;
-}
-function st(p: PvParam) {
-  return p?.source?.type;
-}
-function sd(p: PvParam) {
-  return p?.source ? getSourceDate(p.source) : undefined;
-}
-function ss(p: PvParam) {
-  const src: AnySource | undefined = p?.source;
-  if (src && "searchTerm" in src) return src.searchTerm;
-  return undefined;
 }
 
 interface Props {
@@ -54,28 +20,25 @@ interface Props {
 }
 
 export function AVXCompanyView({ company, className = "" }: Props) {
-  const config: ConfigWithHelpers = {
+  const cp = buildCompanyProvenance(company);
+
+  const config: CompanyViewBaseConfig = {
     ticker: "AVX",
     asset: "AVAX",
     cik: AVX_CIK,
-    provenance: AVX_PROVENANCE,
-    provenanceHelpers: {
-      sourceUrl: su,
-      sourceType: st,
-      sourceDate: sd,
-      searchTerm: ss,
-    },
+    provenance: cp,
+    provenanceHelpers: standardProvenanceHelpers,
 
     buildMetrics: ({ company, prices, marketCap, effectiveShares }) => {
-      if (!AVX_PROVENANCE.holdings || !AVX_PROVENANCE.totalDebt || !AVX_PROVENANCE.cashReserves) return null;
+      if (!company.holdings) return null;
 
       const avaxPrice = prices?.crypto?.AVAX?.price || 0;
 
-      const holdings = AVX_PROVENANCE.holdings.value;
-      const totalDebt = AVX_PROVENANCE.totalDebt.value;
-      const cashReserves = AVX_PROVENANCE.cashReserves.value;
-      const preferredEquity = AVX_PROVENANCE.preferredEquity?.value ?? 0;
-      const sharesOutstanding = AVX_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
+      const holdings = company.holdings ?? 0;
+      const totalDebt = company.totalDebt ?? 0;
+      const cashReserves = company.cashReserves ?? 0;
+      const preferredEquity = company.preferredEquity ?? 0;
+      const sharesOutstanding = company.sharesForMnav ?? 0;
 
       const inTheMoneyDebtValue = effectiveShares?.inTheMoneyDebtValue || 0;
       const adjustedDebt = Math.max(0, totalDebt - inTheMoneyDebtValue);
@@ -91,7 +54,7 @@ export function AVXCompanyView({ company, className = "" }: Props) {
 
       const cryptoNavPv: ProvenanceValue<number> = pv(
         cryptoNav,
-        derivedSource({ derivation: "AVAX Holdings × AVAX Price", formula: "holdings × avaxPrice", inputs: { holdings: AVX_PROVENANCE.holdings } }),
+        derivedSource({ derivation: "AVAX Holdings × AVAX Price", formula: "holdings × avaxPrice", inputs: { holdings: cp.holdings } }),
         `Using live AVAX price: $${avaxPrice.toLocaleString()}`
       );
 
@@ -102,7 +65,7 @@ export function AVXCompanyView({ company, className = "" }: Props) {
               derivedSource({
                 derivation: "Enterprise Value ÷ Crypto NAV",
                 formula: "(marketCap + adjustedDebt + preferred - cash) / cryptoNav",
-                inputs: { debt: AVX_PROVENANCE.totalDebt, cash: AVX_PROVENANCE.cashReserves, holdings: AVX_PROVENANCE.holdings },
+                inputs: { debt: cp.totalDebt, cash: cp.cashReserves, holdings: cp.holdings },
               }),
               `Adjusted Debt: ${adjustedDebt} (raw ${totalDebt} - ITM ${inTheMoneyDebtValue})`
             )
@@ -113,7 +76,7 @@ export function AVXCompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "Net Debt ÷ Crypto NAV",
           formula: "(adjustedDebt - cash) / cryptoNav",
-          inputs: { debt: AVX_PROVENANCE.totalDebt, cash: AVX_PROVENANCE.cashReserves, holdings: AVX_PROVENANCE.holdings },
+          inputs: { debt: cp.totalDebt, cash: cp.cashReserves, holdings: cp.holdings },
         }),
         `Net Debt: ${netDebt} (${adjustedDebt} debt - ${cashReserves} cash)`
       );
@@ -123,7 +86,7 @@ export function AVXCompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "Crypto NAV + Cash − Adjusted Debt − Preferred",
           formula: "(holdings × avaxPrice) + cash - adjustedDebt - preferred",
-          inputs: { holdings: AVX_PROVENANCE.holdings, cash: AVX_PROVENANCE.cashReserves, debt: AVX_PROVENANCE.totalDebt },
+          inputs: { holdings: cp.holdings, cash: cp.cashReserves, debt: cp.totalDebt },
         }),
         `Debt adjusted for ITM instruments: ${adjustedDebt}`
       );
@@ -133,7 +96,7 @@ export function AVXCompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "Equity NAV ÷ Shares Outstanding",
           formula: "equityNav / shares",
-          inputs: { holdings: AVX_PROVENANCE.holdings, shares: AVX_PROVENANCE.sharesOutstanding!, debt: AVX_PROVENANCE.totalDebt, cash: AVX_PROVENANCE.cashReserves },
+          inputs: { holdings: cp.holdings, shares: cp.sharesOutstanding, debt: cp.totalDebt, cash: cp.cashReserves },
         }),
         `Uses adjusted debt (ITM instruments treated as equity)`
       );
@@ -201,5 +164,5 @@ export function AVXCompanyView({ company, className = "" }: Props) {
     ),
   };
 
-  return <CompanyViewBase company={company} className={className} config={config as unknown as CompanyViewBaseConfig} />;
+  return <CompanyViewBase company={company} className={className} config={config} />;
 }

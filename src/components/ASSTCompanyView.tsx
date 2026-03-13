@@ -1,40 +1,12 @@
 "use client";
 
-import { STRV_PROVENANCE, STRV_CIK } from "@/lib/data/provenance/strv";
-import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
+import { buildCompanyProvenance, standardProvenanceHelpers } from "@/lib/utils/company-provenance";
+import { pv, derivedSource } from "@/lib/data/types/provenance";
 import { getCompanyMNAV } from "@/lib/hooks/use-mnav-stats";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
+import type { ProvenanceValue } from "@/lib/data/types/provenance";
 
 import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
-
-type PvParam = ProvenanceValue<number> | undefined;
-type AnySource = XBRLSource | DocumentSource | DerivedSource;
-
-/** provenanceHelpers is read by CompanyViewBase at runtime but not yet in the exported type */
-type ConfigWithHelpers = CompanyViewBaseConfig & {
-  provenanceHelpers: {
-    sourceUrl: (p: PvParam) => string | undefined;
-    sourceType: (p: PvParam) => string | undefined;
-    sourceDate: (p: PvParam) => string | undefined;
-    searchTerm: (p: PvParam) => string | undefined;
-  };
-};
-
-function su(p: PvParam) {
-  return p?.source ? getSourceUrl(p.source) : undefined;
-}
-function st(p: PvParam) {
-  return p?.source?.type;
-}
-function sd(p: PvParam) {
-  return p?.source ? getSourceDate(p.source) : undefined;
-}
-function ss(p: PvParam) {
-  const src: AnySource | undefined = p?.source;
-  if (src && 'searchTerm' in src) return src.searchTerm;
-  return undefined;
-}
 
 interface ASSTMetrics extends CompanyViewBaseMetrics {
   leverage: number;
@@ -47,29 +19,26 @@ interface Props {
 }
 
 export function ASSTCompanyView({ company, className = "" }: Props) {
-  const config: ConfigWithHelpers = {
+  const cp = buildCompanyProvenance(company);
+
+  const config: CompanyViewBaseConfig = {
     ticker: "ASST",
     asset: "BTC",
-    cik: STRV_CIK,
-    provenance: STRV_PROVENANCE,
-    provenanceHelpers: {
-      sourceUrl: su,
-      sourceType: st,
-      sourceDate: sd,
-      searchTerm: ss,
-    },
+    cik: company.secCik,
+    provenance: cp,
+    provenanceHelpers: standardProvenanceHelpers,
 
     buildMetrics: ({ company, prices }) => {
-      if (!STRV_PROVENANCE.holdings || !STRV_PROVENANCE.totalDebt || !STRV_PROVENANCE.cashReserves) return null;
+      if (!company.holdings || !company.totalDebt === undefined || !company.cashReserves === undefined) return null;
 
       const btcPrice = prices?.crypto?.BTC?.price || 0;
 
-      const holdings = STRV_PROVENANCE.holdings.value ?? company.holdings ?? 0;
-      const sharesOutstanding = STRV_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
-      const cashReserves = STRV_PROVENANCE.cashReserves.value ?? company.cashReserves ?? 0;
+      const holdings = company.holdings ?? 0;
+      const sharesOutstanding = company.sharesForMnav ?? 0;
+      const cashReserves = company.cashReserves ?? 0;
       const restrictedCash = company.restrictedCash ?? 0;
-      const totalDebt = STRV_PROVENANCE.totalDebt.value ?? company.totalDebt ?? 0;
-      const preferredEquity = STRV_PROVENANCE.preferredEquity?.value ?? company.preferredEquity ?? 0;
+      const totalDebt = company.totalDebt ?? 0;
+      const preferredEquity = company.preferredEquity ?? 0;
 
       // ASST: uses shared getCompanyMNAV for consistency (includes restricted cash rules)
       const mNav = getCompanyMNAV(company, prices);
@@ -85,7 +54,7 @@ export function ASSTCompanyView({ company, className = "" }: Props) {
 
       const cryptoNavPv: ProvenanceValue<number> = pv(
         cryptoNav,
-        derivedSource({ derivation: "BTC Holdings × BTC Price", formula: "holdings × btcPrice", inputs: { holdings: STRV_PROVENANCE.holdings } }),
+        derivedSource({ derivation: "BTC Holdings × BTC Price", formula: "holdings × btcPrice", inputs: { holdings: cp.holdings } }),
         `Using live BTC price: $${btcPrice.toLocaleString()}`
       );
 
@@ -97,10 +66,10 @@ export function ASSTCompanyView({ company, className = "" }: Props) {
                 derivation: "Enterprise Value ÷ Crypto NAV",
                 formula: "(marketCap + debt + preferred - cash) / cryptoNav",
                 inputs: {
-                  holdings: STRV_PROVENANCE.holdings,
-                  cash: STRV_PROVENANCE.cashReserves,
-                  debt: STRV_PROVENANCE.totalDebt,
-                  ...(STRV_PROVENANCE.preferredEquity ? { preferred: STRV_PROVENANCE.preferredEquity } : {}),
+                  holdings: cp.holdings,
+                  cash: cp.cashReserves,
+                  debt: cp.totalDebt,
+                  ...(cp.preferredEquity ? { preferred: cp.preferredEquity } : {}),
                 },
               }),
               `mNAV uses shared calculator (restricted cash treated as pre-crypto)`
@@ -113,9 +82,9 @@ export function ASSTCompanyView({ company, className = "" }: Props) {
           derivation: "Net Debt ÷ Crypto NAV",
           formula: "(debt - freeCash) / cryptoNav",
           inputs: {
-            debt: STRV_PROVENANCE.totalDebt,
-            cash: STRV_PROVENANCE.cashReserves,
-            holdings: STRV_PROVENANCE.holdings,
+            debt: cp.totalDebt,
+            cash: cp.cashReserves,
+            holdings: cp.holdings,
           },
         }),
         `ASST has no debt; leverage driven by preferred equity (SATA)`
@@ -127,10 +96,10 @@ export function ASSTCompanyView({ company, className = "" }: Props) {
           derivation: "Crypto NAV + Free Cash − Debt − Preferred",
           formula: "(holdings × btcPrice) + freeCash - debt - preferred",
           inputs: {
-            holdings: STRV_PROVENANCE.holdings,
-            cash: STRV_PROVENANCE.cashReserves,
-            debt: STRV_PROVENANCE.totalDebt,
-            ...(STRV_PROVENANCE.preferredEquity ? { preferred: STRV_PROVENANCE.preferredEquity } : {}),
+            holdings: cp.holdings,
+            cash: cp.cashReserves,
+            debt: cp.totalDebt,
+            ...(cp.preferredEquity ? { preferred: cp.preferredEquity } : {}),
           },
         }),
         `Free cash excludes restricted cash earmarked for crypto purchases`
@@ -142,11 +111,11 @@ export function ASSTCompanyView({ company, className = "" }: Props) {
           derivation: "Equity NAV ÷ Shares Outstanding",
           formula: "equityNav / shares",
           inputs: {
-            holdings: STRV_PROVENANCE.holdings,
-            shares: STRV_PROVENANCE.sharesOutstanding!,
-            cash: STRV_PROVENANCE.cashReserves,
-            debt: STRV_PROVENANCE.totalDebt,
-            ...(STRV_PROVENANCE.preferredEquity ? { preferred: STRV_PROVENANCE.preferredEquity } : {}),
+            holdings: cp.holdings,
+            shares: cp.sharesOutstanding,
+            cash: cp.cashReserves,
+            debt: cp.totalDebt,
+            ...(cp.preferredEquity ? { preferred: cp.preferredEquity } : {}),
           },
         }),
         `Using ${(sharesOutstanding / 1_000_000).toFixed(1)}M shares`

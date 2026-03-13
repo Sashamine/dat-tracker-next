@@ -1,39 +1,11 @@
 "use client";
 
-import { ALCPB_PROVENANCE } from "@/lib/data/provenance/alcpb";
-import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
+import { buildCompanyProvenance, standardProvenanceHelpers } from "@/lib/utils/company-provenance";
+import { pv, derivedSource } from "@/lib/data/types/provenance";
 import type { Company, DataWarning } from "@/lib/types";
-import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
+import type { ProvenanceValue } from "@/lib/data/types/provenance";
 
 import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
-
-type PvParam = ProvenanceValue<number> | undefined;
-type AnySource = XBRLSource | DocumentSource | DerivedSource;
-
-/** provenanceHelpers is read by CompanyViewBase at runtime but not yet in the exported type */
-type ConfigWithHelpers = CompanyViewBaseConfig & {
-  provenanceHelpers: {
-    sourceUrl: (p: PvParam) => string | undefined;
-    sourceType: (p: PvParam) => string | undefined;
-    sourceDate: (p: PvParam) => string | undefined;
-    searchTerm: (p: PvParam) => string | undefined;
-  };
-};
-
-function su(p: PvParam) {
-  return p?.source ? getSourceUrl(p.source) : undefined;
-}
-function st(p: PvParam) {
-  return p?.source?.type;
-}
-function sd(p: PvParam) {
-  return p?.source ? getSourceDate(p.source) : undefined;
-}
-function ss(p: PvParam) {
-  const src: AnySource | undefined = p?.source;
-  if (src && 'searchTerm' in src) return src.searchTerm;
-  return undefined;
-}
 
 interface ALCPBMetrics extends CompanyViewBaseMetrics {
   leverage: number;
@@ -45,27 +17,24 @@ interface Props {
 }
 
 export function ALCPBCompanyView({ company, className = "" }: Props) {
-  const config: ConfigWithHelpers = {
+  const cp = buildCompanyProvenance(company);
+
+  const config: CompanyViewBaseConfig = {
     ticker: "ALCPB",
     asset: "BTC",
-    provenance: ALCPB_PROVENANCE,
-    provenanceHelpers: {
-      sourceUrl: su,
-      sourceType: st,
-      sourceDate: sd,
-      searchTerm: ss,
-    },
+    provenance: cp,
+    provenanceHelpers: standardProvenanceHelpers,
 
     buildMetrics: ({ company, prices, marketCap }) => {
-      if (!ALCPB_PROVENANCE.holdings || !ALCPB_PROVENANCE.totalDebt || !ALCPB_PROVENANCE.cashReserves) return null;
+      if (!company.holdings) return null;
 
       const btcPrice = prices?.crypto?.BTC?.price || 0;
 
-      const holdings = ALCPB_PROVENANCE.holdings.value;
-      const totalDebt = ALCPB_PROVENANCE.totalDebt.value;
-      const cashReserves = ALCPB_PROVENANCE.cashReserves.value;
-      const preferredEquity = ALCPB_PROVENANCE.preferredEquity?.value ?? 0;
-      const sharesOutstanding = ALCPB_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
+      const holdings = company.holdings ?? 0;
+      const totalDebt = company.totalDebt ?? 0;
+      const cashReserves = company.cashReserves ?? 0;
+      const preferredEquity = company.preferredEquity ?? 0;
+      const sharesOutstanding = company.sharesForMnav ?? 0;
 
       const cryptoNav = holdings * btcPrice;
       const netDebt = Math.max(0, totalDebt - cashReserves);
@@ -78,7 +47,7 @@ export function ALCPBCompanyView({ company, className = "" }: Props) {
 
       const cryptoNavPv: ProvenanceValue<number> = pv(
         cryptoNav,
-        derivedSource({ derivation: "BTC Holdings × BTC Price", formula: "holdings × btcPrice", inputs: { holdings: ALCPB_PROVENANCE.holdings } }),
+        derivedSource({ derivation: "BTC Holdings × BTC Price", formula: "holdings × btcPrice", inputs: { holdings: cp.holdings } }),
         `Using live BTC price: $${btcPrice.toLocaleString()}`
       );
 
@@ -86,26 +55,26 @@ export function ALCPBCompanyView({ company, className = "" }: Props) {
         mNav !== null
           ? pv(
               mNav,
-              derivedSource({ derivation: "Enterprise Value ÷ Crypto NAV", formula: "(marketCap + debt + preferred - cash) / cryptoNav", inputs: { debt: ALCPB_PROVENANCE.totalDebt, cash: ALCPB_PROVENANCE.cashReserves, holdings: ALCPB_PROVENANCE.holdings } }),
+              derivedSource({ derivation: "Enterprise Value ÷ Crypto NAV", formula: "(marketCap + debt + preferred - cash) / cryptoNav", inputs: { debt: cp.totalDebt, cash: cp.cashReserves, holdings: cp.holdings } }),
               `Debt: ${totalDebt}`
             )
           : null;
 
       const leveragePv: ProvenanceValue<number> = pv(
         leverage,
-        derivedSource({ derivation: "Net Debt ÷ Crypto NAV", formula: "(debt - cash) / cryptoNav", inputs: { debt: ALCPB_PROVENANCE.totalDebt, cash: ALCPB_PROVENANCE.cashReserves, holdings: ALCPB_PROVENANCE.holdings } }),
+        derivedSource({ derivation: "Net Debt ÷ Crypto NAV", formula: "(debt - cash) / cryptoNav", inputs: { debt: cp.totalDebt, cash: cp.cashReserves, holdings: cp.holdings } }),
         `NetDebt: ${netDebt}`
       );
 
       const equityNavPv: ProvenanceValue<number> = pv(
         equityNav,
-        derivedSource({ derivation: "Crypto NAV + Cash − Debt − Preferred", formula: "cryptoNav + cash - debt - preferred", inputs: { holdings: ALCPB_PROVENANCE.holdings, cash: ALCPB_PROVENANCE.cashReserves, debt: ALCPB_PROVENANCE.totalDebt } }),
+        derivedSource({ derivation: "Crypto NAV + Cash − Debt − Preferred", formula: "cryptoNav + cash - debt - preferred", inputs: { holdings: cp.holdings, cash: cp.cashReserves, debt: cp.totalDebt } }),
         `After debt`
       );
 
       const equityNavPerSharePv: ProvenanceValue<number> = pv(
         equityNavPerShare,
-        derivedSource({ derivation: "Equity NAV ÷ Shares Outstanding", formula: "equityNav / shares", inputs: { holdings: ALCPB_PROVENANCE.holdings, shares: ALCPB_PROVENANCE.sharesOutstanding!, debt: ALCPB_PROVENANCE.totalDebt, cash: ALCPB_PROVENANCE.cashReserves } }),
+        derivedSource({ derivation: "Equity NAV ÷ Shares Outstanding", formula: "equityNav / shares", inputs: { holdings: cp.holdings, shares: cp.sharesOutstanding, debt: cp.totalDebt, cash: cp.cashReserves } }),
         `${(sharesOutstanding / 1e6).toFixed(1)}M shares`
       );
 

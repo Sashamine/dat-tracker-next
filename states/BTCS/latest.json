@@ -3,7 +3,7 @@
   "ticker": "BTCS",
   "secCik": "0001436229",
   "asOf": "2026-02-05",
-  "generatedAt": "2026-03-07T00:36:04.385Z",
+  "generatedAt": "2026-03-13T21:28:44.189Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -19,11 +19,11 @@
     }
   },
   "shares": {
-    "sharesForMnav": 47149138,
+    "sharesForMnav": 46838532,
     "sharesOutstandingFD": null,
-    "asOf": "2026-01-05",
+    "asOf": "2025-11-10",
     "source": {
-      "sharesSource": "SEC XBRL Nov 10, 2025 + 8-K Jan 5, 2026",
+      "sharesSource": "SEC 10-Q Q3 2025",
       "sharesSourceUrl": "/filings/btcs/0001493152-25-022359"
     }
   },
@@ -31,12 +31,12 @@
     "cashReserves": 4486051,
     "restrictedCash": null,
     "totalDebt": 61660526,
-    "preferredEquity": null,
+    "preferredEquity": 2000000,
     "asOf": "2025-09-30",
     "source": {
       "cashSourceUrl": "/filings/btcs/0001493152-25-022359",
       "debtSourceUrl": "/filings/btcs/0001493152-26-005565",
-      "preferredSourceUrl": null
+      "preferredSourceUrl": "/filings/btcs/0001493152-25-022359"
     }
   },
   "verification": {

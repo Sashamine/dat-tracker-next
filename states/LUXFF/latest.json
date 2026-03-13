@@ -3,7 +3,7 @@
   "ticker": "LUXFF",
   "secCik": null,
   "asOf": "2026-02-11",
-  "generatedAt": "2026-03-07T00:36:04.390Z",
+  "generatedAt": "2026-03-13T21:28:44.194Z",
   "listing": {
     "country": "CA",
     "exchangeMic": "XTSE",
@@ -19,12 +19,12 @@
     }
   },
   "shares": {
-    "sharesForMnav": 31554164,
+    "sharesForMnav": 33167164,
     "sharesOutstandingFD": null,
-    "asOf": "2025-12-09",
+    "asOf": "2026-02-11",
     "source": {
-      "sharesSource": "SEDAR+ audited annual + Note 12 subsequent events (Dec 9 placement)",
-      "sharesSourceUrl": "https://www.sedarplus.ca/csa-party/records/record.html?id=000044736"
+      "sharesSource": "Luxxfolio press release Feb 11, 2026",
+      "sharesSourceUrl": "https://luxxfolio.com/press-releases"
     }
   },
   "balanceSheet": {

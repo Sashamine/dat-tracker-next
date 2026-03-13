@@ -1,44 +1,18 @@
 "use client";
 
-import { MSTR_PROVENANCE, MSTR_CIK } from "@/lib/data/provenance/mstr";
-import { pv, derivedSource, docSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
+import { MSTR_CIK } from "@/lib/data/provenance/mstr";
+import { pv, derivedSource, docSource } from "@/lib/data/types/provenance";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
+import type { ProvenanceValue } from "@/lib/data/types/provenance";
 import { formatLargeNumber } from "@/lib/calculations";
+import { buildCompanyProvenance, standardProvenanceHelpers } from "@/lib/utils/company-provenance";
 
 import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
-
-type PvParam = ProvenanceValue<number> | undefined;
-type AnySource = XBRLSource | DocumentSource | DerivedSource;
-
-type ConfigWithHelpers = CompanyViewBaseConfig & {
-  provenanceHelpers: {
-    sourceUrl: (p: PvParam) => string | undefined;
-    sourceType: (p: PvParam) => string | undefined;
-    sourceDate: (p: PvParam) => string | undefined;
-    searchTerm: (p: PvParam) => string | undefined;
-  };
-};
 
 interface MSTRMetrics extends CompanyViewBaseMetrics {
   leverage: number;
   adjustedDebt: number;
   itmDebtAdjustment: number;
-}
-
-function su(p: PvParam) {
-  return p?.source ? getSourceUrl(p.source) : undefined;
-}
-function st(p: PvParam) {
-  return p?.source?.type;
-}
-function sd(p: PvParam) {
-  return p?.source ? getSourceDate(p.source) : undefined;
-}
-function ss(p: PvParam) {
-  const src: AnySource | undefined = p?.source;
-  if (src && "searchTerm" in src) return src.searchTerm;
-  return undefined;
 }
 
 interface Props {
@@ -47,29 +21,26 @@ interface Props {
 }
 
 export function MSTRCompanyView({ company, className = "" }: Props) {
-  const config: ConfigWithHelpers = {
+  const cp = buildCompanyProvenance(company);
+
+  const config: CompanyViewBaseConfig = {
     ticker: "MSTR",
     asset: "BTC",
     cik: MSTR_CIK,
-    provenance: MSTR_PROVENANCE,
-    provenanceHelpers: {
-      sourceUrl: su,
-      sourceType: st,
-      sourceDate: sd,
-      searchTerm: ss,
-    },
+    provenance: cp,
+    provenanceHelpers: standardProvenanceHelpers,
 
     // MSTR has ITM converts and uses basic shares from company.sharesForMnav
     buildMetrics: ({ company, prices, marketCap, effectiveShares }) => {
-      if (!MSTR_PROVENANCE.holdings || !MSTR_PROVENANCE.totalDebt || !MSTR_PROVENANCE.cashReserves) return null;
+      if (!company.holdings) return null;
 
       const btcPrice = prices?.crypto?.BTC?.price || 0;
 
-      const holdings = MSTR_PROVENANCE.holdings.value;
-      const totalDebt = MSTR_PROVENANCE.totalDebt.value;
-      const cashReserves = MSTR_PROVENANCE.cashReserves.value;
-      const preferredEquity = MSTR_PROVENANCE.preferredEquity?.value ?? 0;
-      const sharesOutstanding = MSTR_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
+      const holdings = company.holdings ?? 0;
+      const totalDebt = company.totalDebt ?? 0;
+      const cashReserves = company.cashReserves ?? 0;
+      const preferredEquity = company.preferredEquity ?? 0;
+      const sharesOutstanding = company.sharesForMnav ?? 0;
 
       // ITM convertible adjustment: subtract face value of ITM converts from debt
       const inTheMoneyDebtValue = effectiveShares?.inTheMoneyDebtValue || 0;
@@ -91,14 +62,14 @@ export function MSTRCompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "BTC Holdings × BTC Price",
           formula: "holdings × btcPrice",
-          inputs: { holdings: MSTR_PROVENANCE.holdings },
+          inputs: { holdings: cp.holdings },
         }),
         `Using live BTC price: $${btcPrice.toLocaleString()}`
       );
 
       // MSTR preferred uses explicit doc source if provenance missing (but keep existing provenance if present)
       const preferredPv =
-        MSTR_PROVENANCE.preferredEquity ||
+        cp.preferredEquity ||
         pv(
           preferredEquity,
           docSource({
@@ -119,10 +90,10 @@ export function MSTRCompanyView({ company, className = "" }: Props) {
                 derivation: "Enterprise Value ÷ Crypto NAV (adjusted for ITM converts)",
                 formula: "(marketCap + adjustedDebt + preferred - cash) / cryptoNav",
                 inputs: {
-                  debt: MSTR_PROVENANCE.totalDebt,
+                  debt: cp.totalDebt,
                   preferred: preferredPv,
-                  cash: MSTR_PROVENANCE.cashReserves,
-                  holdings: MSTR_PROVENANCE.holdings,
+                  cash: cp.cashReserves,
+                  holdings: cp.holdings,
                 },
               }),
               `Adjusted Debt: ${formatLargeNumber(adjustedDebt)} (raw ${formatLargeNumber(totalDebt)} - ITM converts ${formatLargeNumber(inTheMoneyDebtValue)})`
@@ -135,9 +106,9 @@ export function MSTRCompanyView({ company, className = "" }: Props) {
           derivation: "Net Debt ÷ Crypto NAV (adjusted for ITM converts)",
           formula: "(adjustedDebt - cash) / cryptoNav",
           inputs: {
-            debt: MSTR_PROVENANCE.totalDebt,
-            cash: MSTR_PROVENANCE.cashReserves,
-            holdings: MSTR_PROVENANCE.holdings,
+            debt: cp.totalDebt,
+            cash: cp.cashReserves,
+            holdings: cp.holdings,
           },
         }),
         `Net Debt: ${formatLargeNumber(netDebt)} (adjusted)`
@@ -149,9 +120,9 @@ export function MSTRCompanyView({ company, className = "" }: Props) {
           derivation: "Crypto NAV + Cash − Adjusted Debt − Preferred",
           formula: "(holdings × btcPrice) + cash - adjustedDebt - preferred",
           inputs: {
-            holdings: MSTR_PROVENANCE.holdings,
-            cash: MSTR_PROVENANCE.cashReserves,
-            debt: MSTR_PROVENANCE.totalDebt,
+            holdings: cp.holdings,
+            cash: cp.cashReserves,
+            debt: cp.totalDebt,
             preferred: preferredPv,
           },
         }),
@@ -164,10 +135,10 @@ export function MSTRCompanyView({ company, className = "" }: Props) {
           derivation: "Equity NAV ÷ Shares Outstanding",
           formula: "equityNav / shares",
           inputs: {
-            holdings: MSTR_PROVENANCE.holdings,
-            shares: MSTR_PROVENANCE.sharesOutstanding!,
-            debt: MSTR_PROVENANCE.totalDebt,
-            cash: MSTR_PROVENANCE.cashReserves,
+            holdings: cp.holdings,
+            shares: cp.sharesOutstanding,
+            debt: cp.totalDebt,
+            cash: cp.cashReserves,
             preferred: preferredPv,
           },
         }),

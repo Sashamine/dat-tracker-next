@@ -1,32 +1,15 @@
 "use client";
 
-import { UPXI_PROVENANCE, UPXI_CIK } from "@/lib/data/provenance/upxi";
-import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
+import { UPXI_CIK } from "@/lib/data/provenance/upxi";
+import { pv, derivedSource } from "@/lib/data/types/provenance";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
+import type { ProvenanceValue } from "@/lib/data/types/provenance";
+import { buildCompanyProvenance, standardProvenanceHelpers } from "@/lib/utils/company-provenance";
 
 import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
 
-type PvParam = ProvenanceValue<number> | undefined;
-type AnySource = XBRLSource | DocumentSource | DerivedSource;
-
 interface UPXIMetrics extends CompanyViewBaseMetrics {
   leverage: number;
-}
-
-function su(p: PvParam) {
-  return p?.source ? getSourceUrl(p.source) : undefined;
-}
-function st(p: PvParam) {
-  return p?.source?.type;
-}
-function sd(p: PvParam) {
-  return p?.source ? getSourceDate(p.source) : undefined;
-}
-function ss(p: PvParam) {
-  const src: AnySource | undefined = p?.source;
-  if (src && 'searchTerm' in src) return src.searchTerm;
-  return undefined;
 }
 
 interface Props {
@@ -35,28 +18,25 @@ interface Props {
 }
 
 export function UPXICompanyView({ company, className = "" }: Props) {
+  const cp = buildCompanyProvenance(company);
+
   const config: CompanyViewBaseConfig = {
     ticker: "UPXI",
     asset: "SOL",
     cik: UPXI_CIK,
-    provenance: UPXI_PROVENANCE,
-    provenanceHelpers: {
-      sourceUrl: su,
-      sourceType: st,
-      sourceDate: sd,
-      searchTerm: ss,
-    },
+    provenance: cp,
+    provenanceHelpers: standardProvenanceHelpers,
 
     buildMetrics: ({ company, prices, marketCap }) => {
-      if (!UPXI_PROVENANCE.holdings || !UPXI_PROVENANCE.totalDebt || !UPXI_PROVENANCE.cashReserves) return null;
+      if (!company.holdings) return null;
 
       const solPrice = prices?.crypto?.SOL?.price || 0;
 
-      const holdings = UPXI_PROVENANCE.holdings.value;
-      const totalDebt = UPXI_PROVENANCE.totalDebt.value;
-      const cashReserves = UPXI_PROVENANCE.cashReserves.value;
-      const preferredEquity = UPXI_PROVENANCE.preferredEquity?.value ?? 0;
-      const sharesOutstanding = UPXI_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
+      const holdings = company.holdings ?? 0;
+      const totalDebt = company.totalDebt ?? 0;
+      const cashReserves = company.cashReserves ?? 0;
+      const preferredEquity = company.preferredEquity ?? 0;
+      const sharesOutstanding = company.sharesForMnav ?? 0;
 
       const cryptoNav = holdings * solPrice;
       const netDebt = Math.max(0, totalDebt - cashReserves);
@@ -69,7 +49,7 @@ export function UPXICompanyView({ company, className = "" }: Props) {
 
       const cryptoNavPv: ProvenanceValue<number> = pv(
         cryptoNav,
-        derivedSource({ derivation: "SOL Holdings × SOL Price", formula: "holdings × solPrice", inputs: { holdings: UPXI_PROVENANCE.holdings } }),
+        derivedSource({ derivation: "SOL Holdings × SOL Price", formula: "holdings × solPrice", inputs: { holdings: cp.holdings } }),
         `Using live SOL price: $${solPrice.toLocaleString()}`
       );
 
@@ -77,26 +57,26 @@ export function UPXICompanyView({ company, className = "" }: Props) {
         mNav !== null
           ? pv(
               mNav,
-              derivedSource({ derivation: "Enterprise Value ÷ Crypto NAV", formula: "(marketCap + debt + preferred - cash) / cryptoNav", inputs: { debt: UPXI_PROVENANCE.totalDebt, cash: UPXI_PROVENANCE.cashReserves, holdings: UPXI_PROVENANCE.holdings } }),
+              derivedSource({ derivation: "Enterprise Value ÷ Crypto NAV", formula: "(marketCap + debt + preferred - cash) / cryptoNav", inputs: { debt: cp.totalDebt, cash: cp.cashReserves, holdings: cp.holdings } }),
               `Debt: ${totalDebt}`
             )
           : null;
 
       const leveragePv: ProvenanceValue<number> = pv(
         leverage,
-        derivedSource({ derivation: "Net Debt ÷ Crypto NAV", formula: "(debt - cash) / cryptoNav", inputs: { debt: UPXI_PROVENANCE.totalDebt, cash: UPXI_PROVENANCE.cashReserves, holdings: UPXI_PROVENANCE.holdings } }),
+        derivedSource({ derivation: "Net Debt ÷ Crypto NAV", formula: "(debt - cash) / cryptoNav", inputs: { debt: cp.totalDebt, cash: cp.cashReserves, holdings: cp.holdings } }),
         `NetDebt: ${netDebt}`
       );
 
       const equityNavPv: ProvenanceValue<number> = pv(
         equityNav,
-        derivedSource({ derivation: "Crypto NAV + Cash − Debt − Preferred", formula: "cryptoNav + cash - debt - preferred", inputs: { holdings: UPXI_PROVENANCE.holdings, cash: UPXI_PROVENANCE.cashReserves, debt: UPXI_PROVENANCE.totalDebt } }),
+        derivedSource({ derivation: "Crypto NAV + Cash − Debt − Preferred", formula: "cryptoNav + cash - debt - preferred", inputs: { holdings: cp.holdings, cash: cp.cashReserves, debt: cp.totalDebt } }),
         `After debt`
       );
 
       const equityNavPerSharePv: ProvenanceValue<number> = pv(
         equityNavPerShare,
-        derivedSource({ derivation: "Equity NAV ÷ Shares Outstanding", formula: "equityNav / shares", inputs: { holdings: UPXI_PROVENANCE.holdings, shares: UPXI_PROVENANCE.sharesOutstanding!, debt: UPXI_PROVENANCE.totalDebt, cash: UPXI_PROVENANCE.cashReserves } }),
+        derivedSource({ derivation: "Equity NAV ÷ Shares Outstanding", formula: "equityNav / shares", inputs: { holdings: cp.holdings, shares: cp.sharesOutstanding, debt: cp.totalDebt, cash: cp.cashReserves } }),
         `${(sharesOutstanding / 1e6).toFixed(1)}M shares`
       );
 

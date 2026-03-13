@@ -1,43 +1,17 @@
 "use client";
 
-import { XXI_PROVENANCE, XXI_CIK } from "@/lib/data/provenance/xxi";
-import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
+import { XXI_CIK } from "@/lib/data/provenance/xxi";
+import { pv, derivedSource } from "@/lib/data/types/provenance";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
+import type { ProvenanceValue } from "@/lib/data/types/provenance";
+import { buildCompanyProvenance, standardProvenanceHelpers } from "@/lib/utils/company-provenance";
 
 import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
-
-type PvParam = ProvenanceValue<number> | undefined;
-type AnySource = XBRLSource | DocumentSource | DerivedSource;
-
-type ConfigWithHelpers = CompanyViewBaseConfig & {
-  provenanceHelpers: {
-    sourceUrl: (p: PvParam) => string | undefined;
-    sourceType: (p: PvParam) => string | undefined;
-    sourceDate: (p: PvParam) => string | undefined;
-    searchTerm: (p: PvParam) => string | undefined;
-  };
-};
 
 interface XXIMetrics extends CompanyViewBaseMetrics {
   leverage: number;
   adjustedDebt: number;
   itmDebtAdjustment: number;
-}
-
-function su(p: PvParam) {
-  return p?.source ? getSourceUrl(p.source) : undefined;
-}
-function st(p: PvParam) {
-  return p?.source?.type;
-}
-function sd(p: PvParam) {
-  return p?.source ? getSourceDate(p.source) : undefined;
-}
-function ss(p: PvParam) {
-  const src: AnySource | undefined = p?.source;
-  if (src && "searchTerm" in src) return src.searchTerm;
-  return undefined;
 }
 
 interface Props {
@@ -46,17 +20,14 @@ interface Props {
 }
 
 export function XXICompanyView({ company, className = "" }: Props) {
-  const config: ConfigWithHelpers = {
+  const cp = buildCompanyProvenance(company);
+
+  const config: CompanyViewBaseConfig = {
     ticker: "XXI",
     asset: "BTC",
     cik: XXI_CIK,
-    provenance: XXI_PROVENANCE,
-    provenanceHelpers: {
-      sourceUrl: su,
-      sourceType: st,
-      sourceDate: sd,
-      searchTerm: ss,
-    },
+    provenance: cp,
+    provenanceHelpers: standardProvenanceHelpers,
 
     // XXI: dual-class share structure. Class B has zero economic rights.
     // Keep the economic share count override used by market cap + dilution.
@@ -70,15 +41,15 @@ export function XXICompanyView({ company, className = "" }: Props) {
     },
 
     buildMetrics: ({ company, prices, marketCap, effectiveShares }) => {
-      if (!XXI_PROVENANCE.holdings || !XXI_PROVENANCE.totalDebt || !XXI_PROVENANCE.cashReserves) return null;
+      if (!company.holdings) return null;
 
       const btcPrice = prices?.crypto?.BTC?.price || 0;
 
-      const holdings = XXI_PROVENANCE.holdings.value;
-      const totalDebt = XXI_PROVENANCE.totalDebt.value;
-      const cashReserves = XXI_PROVENANCE.cashReserves.value;
-      const preferredEquity = XXI_PROVENANCE.preferredEquity?.value ?? 0;
-      const sharesOutstanding = XXI_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
+      const holdings = company.holdings ?? 0;
+      const totalDebt = company.totalDebt ?? 0;
+      const cashReserves = company.cashReserves ?? 0;
+      const preferredEquity = company.preferredEquity ?? 0;
+      const sharesOutstanding = company.sharesForMnav ?? 0;
 
       const inTheMoneyDebtValue = effectiveShares?.inTheMoneyDebtValue || 0;
       const adjustedDebt = Math.max(0, totalDebt - inTheMoneyDebtValue);
@@ -97,7 +68,7 @@ export function XXICompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "BTC Holdings × BTC Price",
           formula: "holdings × btcPrice",
-          inputs: { holdings: XXI_PROVENANCE.holdings },
+          inputs: { holdings: cp.holdings },
         }),
         `Using live BTC price: $${btcPrice.toLocaleString()}`
       );
@@ -110,9 +81,9 @@ export function XXICompanyView({ company, className = "" }: Props) {
                 derivation: "Enterprise Value ÷ Crypto NAV (adjusted for ITM converts)",
                 formula: "(marketCap + adjustedDebt + preferred - cash) / cryptoNav",
                 inputs: {
-                  debt: XXI_PROVENANCE.totalDebt,
-                  cash: XXI_PROVENANCE.cashReserves,
-                  holdings: XXI_PROVENANCE.holdings,
+                  debt: cp.totalDebt,
+                  cash: cp.cashReserves,
+                  holdings: cp.holdings,
                 },
               }),
               `Adjusted Debt: ${adjustedDebt} (raw ${totalDebt} - ITM converts ${inTheMoneyDebtValue})`
@@ -125,9 +96,9 @@ export function XXICompanyView({ company, className = "" }: Props) {
           derivation: "Net Debt ÷ Crypto NAV (adjusted for ITM converts)",
           formula: "(adjustedDebt - cash) / cryptoNav",
           inputs: {
-            debt: XXI_PROVENANCE.totalDebt,
-            cash: XXI_PROVENANCE.cashReserves,
-            holdings: XXI_PROVENANCE.holdings,
+            debt: cp.totalDebt,
+            cash: cp.cashReserves,
+            holdings: cp.holdings,
           },
         }),
         `Net Debt: ${netDebt}`
@@ -139,9 +110,9 @@ export function XXICompanyView({ company, className = "" }: Props) {
           derivation: "Crypto NAV + Cash − Adjusted Debt − Preferred",
           formula: "(holdings × btcPrice) + cash - adjustedDebt - preferred",
           inputs: {
-            holdings: XXI_PROVENANCE.holdings,
-            cash: XXI_PROVENANCE.cashReserves,
-            debt: XXI_PROVENANCE.totalDebt,
+            holdings: cp.holdings,
+            cash: cp.cashReserves,
+            debt: cp.totalDebt,
           },
         }),
         `Debt adjusted for ITM converts: ${adjustedDebt}`
@@ -153,10 +124,10 @@ export function XXICompanyView({ company, className = "" }: Props) {
           derivation: "Equity NAV ÷ Shares Outstanding",
           formula: "equityNav / shares",
           inputs: {
-            holdings: XXI_PROVENANCE.holdings,
-            shares: XXI_PROVENANCE.sharesOutstanding!,
-            debt: XXI_PROVENANCE.totalDebt,
-            cash: XXI_PROVENANCE.cashReserves,
+            holdings: cp.holdings,
+            shares: cp.sharesOutstanding,
+            debt: cp.totalDebt,
+            cash: cp.cashReserves,
           },
         }),
         `Uses adjusted debt (ITM converts treated as equity)`

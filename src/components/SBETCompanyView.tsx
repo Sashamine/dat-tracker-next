@@ -1,32 +1,15 @@
 "use client";
 
 import { SBET_PROVENANCE, SBET_CIK } from "@/lib/data/provenance/sbet";
-import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
+import { pv, derivedSource } from "@/lib/data/types/provenance";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
+import type { ProvenanceValue } from "@/lib/data/types/provenance";
+import { buildCompanyProvenance, standardProvenanceHelpers } from "@/lib/utils/company-provenance";
 
 import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
 
-type PvParam = ProvenanceValue<number> | undefined;
-type AnySource = XBRLSource | DocumentSource | DerivedSource;
-
 interface SBETMetrics extends CompanyViewBaseMetrics {
   leverage: number;
-}
-
-function su(p: PvParam) {
-  return p?.source ? getSourceUrl(p.source) : undefined;
-}
-function st(p: PvParam) {
-  return p?.source?.type;
-}
-function sd(p: PvParam) {
-  return p?.source ? getSourceDate(p.source) : undefined;
-}
-function ss(p: PvParam) {
-  const src: AnySource | undefined = p?.source;
-  if (src && 'searchTerm' in src) return src.searchTerm;
-  return undefined;
 }
 
 interface Props {
@@ -35,28 +18,25 @@ interface Props {
 }
 
 export function SBETCompanyView({ company, className = "" }: Props) {
+  const cp = buildCompanyProvenance(company);
+
   const config: CompanyViewBaseConfig = {
     ticker: "SBET",
     asset: "ETH",
     cik: SBET_CIK,
-    provenance: SBET_PROVENANCE,
-    provenanceHelpers: {
-      sourceUrl: su,
-      sourceType: st,
-      sourceDate: sd,
-      searchTerm: ss,
-    },
+    provenance: cp,
+    provenanceHelpers: standardProvenanceHelpers,
 
     buildMetrics: ({ company, prices, marketCap }) => {
-      if (!SBET_PROVENANCE.holdings || !SBET_PROVENANCE.totalDebt || !SBET_PROVENANCE.cashReserves) return null;
+      if (!company.holdings) return null;
 
       const ethPrice = prices?.crypto?.ETH?.price || 0;
 
-      const holdings = SBET_PROVENANCE.holdings.value;
-      const totalDebt = SBET_PROVENANCE.totalDebt.value;
-      const cashReserves = SBET_PROVENANCE.cashReserves.value;
+      const holdings = company.holdings ?? 0;
+      const totalDebt = company.totalDebt ?? 0;
+      const cashReserves = company.cashReserves ?? 0;
       const preferredEquity = 0;
-      const sharesOutstanding = SBET_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
+      const sharesOutstanding = company.sharesForMnav ?? 0;
 
       const cryptoNav = holdings * ethPrice;
       const netDebt = Math.max(0, totalDebt - cashReserves);
@@ -72,7 +52,7 @@ export function SBETCompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "ETH Holdings × ETH Price",
           formula: "holdings × ethPrice",
-          inputs: { holdings: SBET_PROVENANCE.holdings },
+          inputs: { holdings: cp.holdings },
         }),
         `Using live ETH price: $${ethPrice.toLocaleString()}`
       );
@@ -85,12 +65,12 @@ export function SBETCompanyView({ company, className = "" }: Props) {
                 derivation: "Enterprise Value ÷ Crypto NAV",
                 formula: "(marketCap + debt - cash) / cryptoNav",
                 inputs: {
-                  debt: SBET_PROVENANCE.totalDebt,
-                  cash: SBET_PROVENANCE.cashReserves,
-                  holdings: SBET_PROVENANCE.holdings,
+                  debt: cp.totalDebt,
+                  cash: cp.cashReserves,
+                  holdings: cp.holdings,
                 },
               }),
-              `Debt-free` 
+              `Debt-free`
             )
           : null;
 
@@ -100,9 +80,9 @@ export function SBETCompanyView({ company, className = "" }: Props) {
           derivation: "Net Debt ÷ Crypto NAV",
           formula: "(debt - cash) / cryptoNav",
           inputs: {
-            debt: SBET_PROVENANCE.totalDebt,
-            cash: SBET_PROVENANCE.cashReserves,
-            holdings: SBET_PROVENANCE.holdings,
+            debt: cp.totalDebt,
+            cash: cp.cashReserves,
+            holdings: cp.holdings,
           },
         }),
         `SBET is debt-free`
@@ -114,9 +94,9 @@ export function SBETCompanyView({ company, className = "" }: Props) {
           derivation: "Crypto NAV + Cash − Debt",
           formula: "(holdings × ethPrice) + cash - debt",
           inputs: {
-            holdings: SBET_PROVENANCE.holdings,
-            cash: SBET_PROVENANCE.cashReserves,
-            debt: SBET_PROVENANCE.totalDebt,
+            holdings: cp.holdings,
+            cash: cp.cashReserves,
+            debt: cp.totalDebt,
           },
         }),
         `No preferred equity`
@@ -128,10 +108,10 @@ export function SBETCompanyView({ company, className = "" }: Props) {
           derivation: "Equity NAV ÷ Shares Outstanding",
           formula: "equityNav / shares",
           inputs: {
-            holdings: SBET_PROVENANCE.holdings,
-            shares: SBET_PROVENANCE.sharesOutstanding!,
-            debt: SBET_PROVENANCE.totalDebt,
-            cash: SBET_PROVENANCE.cashReserves,
+            holdings: cp.holdings,
+            shares: cp.sharesOutstanding,
+            debt: cp.totalDebt,
+            cash: cp.cashReserves,
           },
         }),
         `Using ${(sharesOutstanding / 1_000_000).toFixed(0)}M shares`

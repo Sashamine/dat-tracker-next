@@ -352,6 +352,10 @@ export const ethCompanies: Company[] = [
     sharesSourceQuote: "As of November 10, 2025, there were 46,838,532 shares of Common Stock outstanding",
     sharesAsOf: "2025-11-10",
     leader: "Charles Allen",
+    preferredEquity: 2_000_000,  // 15.7M Series V Preferred shares outstanding (non-convertible, no dilutive impact per 10-K FY2024)
+    preferredSource: "SEC 10-K FY2024: 15,700,000 Series V Preferred shares outstanding",
+    preferredSourceUrl: "/filings/btcs/0001493152-25-022359",
+    preferredAsOf: "2025-09-30",
     totalDebt: 61_660_526,  // $7,810,526 May convert + $10,050,000 Jul convert + $43,800,000 Aave DeFi
     debtSource: "SEC 8-K Feb 6, 2026: $43.8M Aave DeFi debt + Q3 10-Q: $17.86M convertible notes face value",
     debtSourceQuote: "SEC 8-K Feb 6, 2026: $43.8M Aave DeFi debt + Q3 10-Q: $17.86M convertible notes face value",
@@ -1174,6 +1178,10 @@ export const btcCompanies: Company[] = [
     sharesSourceQuote: "6-K Q4 2025 weighted avg basic ADS",
     sharesSourceUrl: "/filings/sqns/0001383395-26-000013",
     sharesAsOf: "2025-12-31",
+    cashReserves: 13_400_000,  // Q4 6-K: cash and cash equivalents
+    cashSource: "6-K Q4 2025",
+    cashSourceUrl: "/filings/sqns/0001383395-26-000013",
+    cashAsOf: "2025-12-31",
     totalDebt: 94_500_000,  // Q4 6-K: $94.5M convertible outstanding. Feb 13 6-K: full redemption via BTC sale by Jun 2026.
     debtAsOf: "2025-12-31",
     debtSource: "6-K Q4 2025 + Feb 13, 2026 debt restructuring 6-K",
@@ -2499,6 +2507,10 @@ export const taoCompanies: Company[] = [
     secCik: "0001571934",
     leader: "Joshua Silverman (Executive Chairman)",
     strategy: "First pure-play Bittensor treasury company",
+    preferredEquity: 1_278_855,  // SEC 10-Q Q1 2025 XBRL: Series E Preferred (convertible at $8)
+    preferredSource: "SEC 10-Q Q1 2025 XBRL",
+    preferredSourceUrl: "/filings/taox/0001410578-25-001327",
+    preferredAsOf: "2025-03-31",
     notes: "Formerly Synaptogenix. DCG is investor. Series E Preferred convertible at $8 (out of money at ~$4.80).",
   },
   {
@@ -2702,6 +2714,14 @@ export const trxCompanies: Company[] = [
     twitter: "https://x.com/tron_inc",
     investorRelationsUrl: "https://srmentertainment.com/investor-relations",
     secCik: "0001956744",
+    totalDebt: 1_500_000,  // SEC 10-Q Q3 FY2026 XBRL: total long-term debt
+    debtSource: "SEC 10-Q Q3 FY2026 XBRL",
+    debtSourceUrl: "/filings/tron/0001493152-25-021526",
+    debtAsOf: "2025-09-30",
+    cashReserves: 10_600_000,  // SEC 10-Q Q3 FY2026: cash and cash equivalents
+    cashSource: "SEC 10-Q Q3 FY2026",
+    cashSourceUrl: "/filings/tron/0001493152-25-021526",
+    cashAsOf: "2025-09-30",
     preferredEquity: 10,
     preferredAsOf: "2025-09-30",
     preferredSource: "SEC 10-Q Q3 FY2026 balance sheet",
