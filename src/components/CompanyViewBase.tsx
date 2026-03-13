@@ -5,7 +5,9 @@ import Link from "next/link";
 
 import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import type { PricesData } from "@/lib/hooks/use-prices-stream";
+import { useYesterdayMnav } from "@/lib/hooks/use-yesterday-mnav";
 import { getCompanyIntel } from "@/lib/data/company-intel";
+import { getCompanyMNAV } from "@/lib/math/mnav-engine";
 import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
 import type { EffectiveSharesResult } from "@/lib/data/dilutive-instruments";
 import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
@@ -131,6 +133,7 @@ export type CompanyViewBaseConfig = {
 
 export function CompanyViewBase({ company, className = "", config }: { company: Company; className?: string; config: CompanyViewBaseConfig }) {
   const { data: prices } = usePricesStream();
+  const { data: yesterdayMnavData } = useYesterdayMnav();
 
   const [timeRange, setTimeRange] = useState<TimeRange>("1y");
   const [interval, setInterval] = useState<ChartInterval>(DEFAULT_INTERVAL["1y"]);
@@ -160,6 +163,21 @@ export function CompanyViewBase({ company, className = "", config }: { company: 
   const metrics = useMemo(() => {
     return config.buildMetrics({ company, prices, marketCap, effectiveShares });
   }, [company, prices, marketCap, effectiveShares, config]);
+
+  // mNAV 24hr change: compare current mNAV against yesterday's prices
+  const mnavChange = useMemo(() => {
+    if (!metrics?.mNav || !prices) return null;
+    const yday = yesterdayMnavData?.[config.ticker];
+    if (!yday?.stockPrice || !yday?.cryptoPrice) return null;
+    const ydayPrices = {
+      ...prices,
+      crypto: { ...prices.crypto, [config.asset]: { ...prices.crypto[config.asset], price: yday.cryptoPrice } },
+      stocks: { ...prices.stocks, [config.ticker]: { ...prices.stocks[config.ticker], price: yday.stockPrice } },
+    };
+    const ydayMnav = getCompanyMNAV(company, ydayPrices);
+    if (!ydayMnav || ydayMnav === 0) return null;
+    return ((metrics.mNav / ydayMnav) - 1) * 100;
+  }, [metrics?.mNav, prices, yesterdayMnavData, config.ticker, config.asset, company]);
 
   const handleTimeRangeChange = (newRange: TimeRange) => {
     setTimeRange(newRange);
@@ -200,14 +218,40 @@ export function CompanyViewBase({ company, className = "", config }: { company: 
         secCik={company.secCik}
       />
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-4">
+        {/* Market Cap */}
+        <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+          <p className="text-sm text-gray-500 dark:text-gray-400">Market Cap</p>
+          <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{formatLargeNumber(marketCap)}</p>
+          <p className="text-xs text-gray-400">
+            {effectiveShares
+              ? `${(effectiveShares.diluted / 1e6).toFixed(1)}M shares × $${stockPrice.toFixed(2)}`
+              : `${((company.sharesForMnav ?? 0) / 1e6).toFixed(1)}M shares`}
+          </p>
+        </div>
+
         {metrics.mNavPv && (
           <div className={cn("cursor-pointer transition-all rounded-lg", expandedCard === "mnav" && "ring-2 ring-indigo-500")} onClick={() => toggleCard("mnav")}>
             <ProvenanceMetric
               label="mNAV"
               data={metrics.mNavPv}
               format="mnav"
-              subLabel={<span className="flex items-center gap-1">EV / Crypto NAV <span className="text-indigo-500">{expandedCard === "mnav" ? "▼" : "▶"}</span></span>}
+              subLabel={
+                <span className="flex items-center gap-1">
+                  EV / Crypto NAV
+                  {mnavChange !== null && (
+                    <span className={cn(
+                      "text-xs font-medium px-1.5 py-0.5 rounded ml-1",
+                      mnavChange > 0 ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400" :
+                      mnavChange < 0 ? "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400" :
+                      "bg-gray-100 dark:bg-gray-800 text-gray-500"
+                    )}>
+                      {mnavChange > 0 ? "+" : ""}{mnavChange.toFixed(1)}%
+                    </span>
+                  )}
+                  <span className="text-indigo-500">{expandedCard === "mnav" ? "▼" : "▶"}</span>
+                </span>
+              }
               tooltip="How much you pay per dollar of crypto exposure. mNAV > 1 = premium, < 1 = discount"
               ticker={config.ticker.toLowerCase()}
             />
