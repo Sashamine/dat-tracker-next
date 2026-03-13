@@ -2,8 +2,8 @@
   "schemaVersion": "0.1",
   "ticker": "STKE",
   "secCik": "0001846839",
-  "asOf": "2026-02-03",
-  "generatedAt": "2026-03-07T00:36:04.389Z",
+  "asOf": "2026-03-04",
+  "generatedAt": "2026-03-13T21:28:44.193Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -11,10 +11,10 @@
   },
   "holdings": {
     "asset": "SOL",
-    "amount": 530251,
+    "amount": 518139,
     "source": {
       "holdingsSource": "company-website",
-      "holdingsSourceUrl": "https://solstrategies.io/press-releases/sol-strategies-january-2026-monthly-business-update",
+      "holdingsSourceUrl": "https://solstrategies.io/sol-strategies-february-2026-monthly-business-update/",
       "holdingsAccession": null
     }
   },

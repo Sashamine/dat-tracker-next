@@ -3,7 +3,7 @@
   "ticker": "MARA",
   "secCik": "0001507605",
   "asOf": "2025-12-31",
-  "generatedAt": "2026-03-07T00:36:04.386Z",
+  "generatedAt": "2026-03-13T21:28:44.190Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -14,29 +14,29 @@
     "amount": 53822,
     "source": {
       "holdingsSource": "sec-filing",
-      "holdingsSourceUrl": "/filings/mara/0001507605-25-000028",
+      "holdingsSourceUrl": "/filings/mara/0001507605-26-000007",
       "holdingsAccession": null
     }
   },
   "shares": {
-    "sharesForMnav": 378184353,
+    "sharesForMnav": 380234635,
     "sharesOutstandingFD": null,
-    "asOf": "2025-11-03",
+    "asOf": "2026-02-19",
     "source": {
-      "sharesSource": "SEC-verified (provenance): 10-Q Q3 2025 cover page",
-      "sharesSourceUrl": "/filings/mara/0001507605-25-000028"
+      "sharesSource": "SEC-verified (provenance): 10-K FY2025 cover page (Feb 19, 2026)",
+      "sharesSourceUrl": "/filings/mara/0001507605-26-000007"
     }
   },
   "balanceSheet": {
-    "cashReserves": 826392000,
+    "cashReserves": 547132000,
     "restrictedCash": 12000000,
-    "totalDebt": 3597561000,
+    "totalDebt": 3599927000,
     "preferredEquity": 0,
-    "asOf": "2025-09-30",
+    "asOf": "2025-12-31",
     "source": {
-      "cashSourceUrl": "/filings/mara/0001507605-25-000028",
-      "debtSourceUrl": "/filings/mara/0001507605-25-000028",
-      "preferredSourceUrl": "/filings/mara/0001507605-25-000028"
+      "cashSourceUrl": "/filings/mara/0001507605-26-000007",
+      "debtSourceUrl": "/filings/mara/0001507605-26-000007",
+      "preferredSourceUrl": "/filings/mara/0001507605-26-000007"
     }
   },
   "verification": {

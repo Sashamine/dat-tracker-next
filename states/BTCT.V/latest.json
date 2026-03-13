@@ -2,8 +2,8 @@
   "schemaVersion": "0.1",
   "ticker": "BTCT.V",
   "secCik": null,
-  "asOf": "2026-02-17",
-  "generatedAt": "2026-03-07T00:36:04.388Z",
+  "asOf": "2026-02-28",
+  "generatedAt": "2026-03-13T21:28:44.192Z",
   "listing": {
     "country": "CA",
     "exchangeMic": "XTSE",
@@ -11,15 +11,15 @@
   },
   "holdings": {
     "asset": "BTC",
-    "amount": 769.05,
+    "amount": 761.63,
     "source": {
       "holdingsSource": "company-website",
-      "holdingsSourceUrl": "https://btctcorp.com",
+      "holdingsSourceUrl": "https://btctcorp.com/bitcoin-treasury-corporation-provides-february-update-on-normal-course-issuer-bid/",
       "holdingsAccession": null
     }
   },
   "shares": {
-    "sharesForMnav": 10027880,
+    "sharesForMnav": 9893980,
     "sharesOutstandingFD": null,
     "asOf": "2026-02-17",
     "source": {
@@ -30,7 +30,7 @@
   "balanceSheet": {
     "cashReserves": null,
     "restrictedCash": null,
-    "totalDebt": 25000000,
+    "totalDebt": 18120000,
     "preferredEquity": null,
     "asOf": "2025-12-31",
     "source": {

@@ -3,7 +3,7 @@
   "ticker": "GAME",
   "secCik": "0001714562",
   "asOf": "2026-03-01",
-  "generatedAt": "2026-03-07T00:36:04.385Z",
+  "generatedAt": "2026-03-13T21:28:44.189Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -35,7 +35,7 @@
     "asOf": "2025-09-30",
     "source": {
       "cashSourceUrl": "/filings/game/0001493152-25-023589",
-      "debtSourceUrl": "/filings/game/0001641172-25-023972",
+      "debtSourceUrl": "/filings/game/0001493152-25-023589",
       "preferredSourceUrl": "/filings/game/0001493152-25-023589"
     }
   },

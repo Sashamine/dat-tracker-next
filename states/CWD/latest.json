@@ -3,7 +3,7 @@
   "ticker": "CWD",
   "secCik": "0001627282",
   "asOf": "2025-10-16",
-  "generatedAt": "2026-03-07T00:36:04.389Z",
+  "generatedAt": "2026-03-13T21:28:44.193Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -29,14 +29,14 @@
   },
   "balanceSheet": {
     "cashReserves": 10927000,
-    "restrictedCash": null,
-    "totalDebt": null,
-    "preferredEquity": 0,
+    "restrictedCash": 2461000,
+    "totalDebt": 48678000,
+    "preferredEquity": 3200000,
     "asOf": "2025-09-30",
     "source": {
       "cashSourceUrl": "/filings/cwd/0001627282-25-000157",
-      "debtSourceUrl": null,
-      "preferredSourceUrl": "/filings/cwd/0001627282-23-000059"
+      "debtSourceUrl": "/filings/cwd/0001627282-25-000157",
+      "preferredSourceUrl": "/filings/cwd/0001627282-25-000157"
     }
   },
   "verification": {

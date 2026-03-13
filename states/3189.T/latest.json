@@ -3,7 +3,7 @@
   "ticker": "3189.T",
   "secCik": null,
   "asOf": "2026-01-21",
-  "generatedAt": "2026-03-07T00:36:04.387Z",
+  "generatedAt": "2026-03-13T21:28:44.191Z",
   "listing": {
     "country": "JP",
     "exchangeMic": "XTKS",
@@ -11,10 +11,10 @@
   },
   "holdings": {
     "asset": "BTC",
-    "amount": 1181.47,
+    "amount": 1417.03,
     "source": {
       "holdingsSource": "regulatory-filing",
-      "holdingsSourceUrl": "https://www.release.tdnet.info/inbs/140120260121550142.pdf",
+      "holdingsSourceUrl": "https://www.release.tdnet.info/inbs/140120260121536720.pdf",
       "holdingsAccession": null
     }
   },

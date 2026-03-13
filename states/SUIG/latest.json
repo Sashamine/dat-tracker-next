@@ -3,7 +3,7 @@
   "ticker": "SUIG",
   "secCik": "0001425355",
   "asOf": "2026-02-23",
-  "generatedAt": "2026-03-07T00:36:04.390Z",
+  "generatedAt": "2026-03-13T21:28:44.194Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -19,22 +19,22 @@
     }
   },
   "shares": {
-    "sharesForMnav": 80900000,
+    "sharesForMnav": 80896554,
     "sharesOutstandingFD": null,
-    "asOf": "2026-01-07",
+    "asOf": "2026-02-23",
     "source": {
-      "sharesSource": "SEC 8-K Jan 8, 2026",
-      "sharesSourceUrl": "/filings/suig/0001654954-26-000201"
+      "sharesSource": "SEC 10-K FY2025 (filed Feb 27, 2026) MD&A",
+      "sharesSourceUrl": "/filings/suig/0001654954-26-001672"
     }
   },
   "balanceSheet": {
-    "cashReserves": 1497009,
+    "cashReserves": 21936274,
     "restrictedCash": null,
-    "totalDebt": null,
+    "totalDebt": 277778,
     "preferredEquity": null,
-    "asOf": "2025-06-30",
+    "asOf": "2025-12-31",
     "source": {
-      "cashSourceUrl": "/filings/suig/0001654954-25-009666",
+      "cashSourceUrl": "/filings/suig/0001654954-26-001672",
       "debtSourceUrl": null,
       "preferredSourceUrl": null
     }

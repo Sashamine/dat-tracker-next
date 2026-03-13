@@ -3,7 +3,7 @@
   "ticker": "AVX",
   "secCik": "0001826397",
   "asOf": "2026-02-12",
-  "generatedAt": "2026-03-07T00:36:04.390Z",
+  "generatedAt": "2026-03-13T21:28:44.194Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -30,12 +30,12 @@
   "balanceSheet": {
     "cashReserves": 894701,
     "restrictedCash": null,
-    "totalDebt": 1841100,
+    "totalDebt": 16541100,
     "preferredEquity": null,
     "asOf": "2025-09-30",
     "source": {
       "cashSourceUrl": "/filings/avx/0001493152-25-023464",
-      "debtSourceUrl": "/filings/avx/0001493152-25-023464",
+      "debtSourceUrl": "/filings/avx/0001493152-26-003637",
       "preferredSourceUrl": null
     }
   },
