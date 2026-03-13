@@ -2199,6 +2199,16 @@ export const dilutiveInstruments: Record<string, DilutiveInstrument[]> = {
   // At ~$3.45 stock (Jan 8, 2026): $3.25 warrants are ITM, $4.00 warrants are OTM
   HYPD: [
     {
+      type: "preferred",
+      strikePrice: 0,
+      potentialShares: 16_307_691,  // 5,435,897 preferred × 3:1 conversion ratio
+      source: "SEC 10-Q Q3 2025 (Series A Preferred)",
+      sourceUrl: "/filings/hypd/0001104659-25-120439",
+      issuedDate: "2025-06-20",
+      notes: "Series A Preferred shares at 3:1 conversion. Included in sharesForMnav (24.4M total).",
+      includedInBase: true,
+    },
+    {
       type: "warrant",
       strikePrice: 3.25,
       potentialShares: 30_769_230,

@@ -65,9 +65,9 @@ const CONVERTIBLE_NOTES_PAYABLE = 945_645_500; // XBRL carrying value (< $1B par
 const LONG_TERM_DEBT = 950_769_100; // XBRL LongTermDebt (includes converts + other)
 const LONG_TERM_DEBT_NONCURRENT = 946_079_700; // XBRL LongTermDebtNoncurrent
 
-// Cash
-const CASH_UNRESTRICTED = 166_072_700;
-const CASH_TOTAL_INCL_RESTRICTED = 501_911_500;
+// Cash (updated to 10-K FY2025 values — prior values were from Q3 10-Q)
+const CASH_UNRESTRICTED = 134_557_600;  // 10-K FY2025: CashAndCashEquivalentsAtCarryingValue
+const CASH_TOTAL_INCL_RESTRICTED = 470_396_400;  // 10-K FY2025: CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents
 const RESTRICTED_CASH = CASH_TOTAL_INCL_RESTRICTED - CASH_UNRESTRICTED; // $335,838,800
 
 // Revenue & Profit/Loss (XBRL)
