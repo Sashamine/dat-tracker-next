@@ -16,7 +16,7 @@ const TICKERS = [
   "SLNH", "DJT", "XXI", "ABTC", "CEPO", "EXOD", "BTOG", "NAKA",
   "ASST", "AVX", "STKE", "BNC", "BMNR", "SQNS", "ETHM", "CORZ",
   "BTDR", "MNMD", "BITO",
-  "3350.T", "0434.HK", "DCC.AX", "BTCT.V", "SRAG.DU"
+  "3350.T", "0434.HK", "DCC.AX", "BTCT.V"
 ];
 
 // Simple in-memory store for prices (will persist to KV/DB in production)

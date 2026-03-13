@@ -40,7 +40,6 @@ const FMP_ONLY_STOCKS = [
   "0434.HK",   // Boyaa Interactive (Hong Kong)
   // SWC removed - FMP has wrong ticker. Using FALLBACK_STOCKS instead.
   // SOL treasury companies - Alpaca IEX often has no data (low volume)
-  "SRAG.DU",   // Samara Asset Group (Frankfurt/XETRA) - Alpaca/IEX has no Frankfurt coverage
   "DFDV",      // DeFi Development
   "UPXI",      // Upexi
   "STKE",      // Sol Strategies

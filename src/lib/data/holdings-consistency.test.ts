@@ -95,7 +95,7 @@ describe('Holdings Consistency Check', () => {
     }
 
     // Soft fail for now — log but don't break build.
-    // Known pre-existing discrepancies: GAME (fund vs direct), SRAG.DU (stale static),
+    // Known pre-existing discrepancies: GAME (fund vs direct),
     // FGNX, XRPN (out of sync). Uncomment once these are resolved.
     // expect(failures).toHaveLength(0);
   });

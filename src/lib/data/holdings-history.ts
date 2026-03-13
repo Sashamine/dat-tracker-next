@@ -272,8 +272,8 @@ const STKE_HISTORY: HoldingsSnapshot[] = [
   // Jan 2026: 530,251 SOL total (402,004 direct + 46,474 jitoSOL + 81,640 STKESOL).
   // Shares updated to 31,735,660 per 6-K Q1 FY2026 (filed Feb 18, 2026)
   { date: "2026-02-03", holdings: 530_251, sharesOutstanding: 31_735_660, holdingsPerShare: 0.01671, source: "Jan 2026 monthly business update (Feb 5, 2026)", sharesSource: "SEC 6-K Q1 FY2026 (filed Feb 18, 2026): 31,735,660 shares as of Feb 17", sourceUrl: "https://solstrategies.io/press-releases/sol-strategies-january-2026-monthly-business-update", sourceType: "company-website" },
-  // Feb 2026 monthly update (published Mar 4): 518,139 treasury SOL.
-  { date: "2026-03-04", holdings: 518_139, sharesOutstanding: 31_735_660, holdingsPerShare: 0.01633, source: "Feb 2026 monthly business update (Mar 4, 2026)", sharesSource: "SEC 6-K Q1 FY2026: 31,735,660 shares (active $50M ATM may have increased since)", sourceUrl: "https://solstrategies.io/sol-strategies-february-2026-monthly-business-update/", sourceType: "company-website" },
+  // Feb 2026 monthly update (published Mar 4): 518,139 treasury SOL (down from 530,251 Jan — validator/staking fluctuations)
+  { date: "2026-03-04", holdings: 518_139, sharesOutstanding: 31_735_660, holdingsPerShare: 0.01633, source: "Feb 2026 monthly business update (Mar 4, 2026): 518,139 treasury SOL", sharesSource: "SEC 6-K Q1 FY2026: 31,735,660 shares", sourceUrl: "https://solstrategies.io/sol-strategies-february-2026-monthly-business-update/", sourceType: "company-website" },
 ];
 
 // DeFi Development Corp (DFDV) - SOL treasury, launched April 2025
@@ -304,6 +304,8 @@ const KULR_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-07-10", holdings: 1021, sharesOutstanding: 42_500_000, holdingsPerShare: 0.0000240, source: "8-K BTC update", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925066854/0001104659-25-066854-index.htm" },
   // Q3 2025: 10-Q shows 1,056.7 BTC held + 70 BTC as collateral = 1,127 total. Using 1,057 (excludes collateral).
   { date: "2025-09-30", holdings: 1057, sharesOutstanding: 45_674_420, holdingsPerShare: 0.0000231, source: "SEC 10-Q Q3 2025", sharesSource: "XBRL EntityCommonStockSharesOutstanding", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1662684/000110465925113662/tmb-20250930x10q.htm", sourceType: "sec-filing" },
+  // Dec 22, 2025: ATM paused, 1,021 BTC (Dec 30, 2025 holdings update)
+  { date: "2025-12-30", holdings: 1_021, sharesOutstanding: 45_674_420, holdingsPerShare: 0.0000224, source: "KULR Dec 30, 2025 holdings update: 1,021 BTC", sharesSource: "Carried from Q3 10-Q (ATM paused Dec 22)", sourceType: "company-website" },
 ];
 
 // Sequans Communications (SQNS) - IoT semiconductor with BTC treasury
@@ -559,6 +561,8 @@ const GAME_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-09-30", holdings: 1608, sharesOutstanding: 98_380_767, holdingsPerShare: 0.0000163, stockPrice: 326.42, source: "SEC 10-Q Q3 2025 (direct holdings only)", sharesSource: "SEC 10-Q cover page Nov 11, 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1714562/000149315225023589/form10-q.htm", sourceType: "sec-filing" },
   // Jan 2026: After 3.54M share buybacks (Oct-Jan), holdings unchanged (no Q4 filing yet)
   { date: "2026-01-06", holdings: 1608, sharesOutstanding: 94_845_193, holdingsPerShare: 0.0000170, source: "Holdings from Q3 10-Q (no update since)", sharesSource: "98,380,767 (Sep 30) - 3,535,574 buybacks through Jan 6", sourceUrl: "https://www.nasdaq.com/press-release/gamesquare-announces-543057-shares-repurchase-2026-01-06", sourceType: "press-release" },
+  // Mar 1, 2026: Announced total 15,630 ETH (direct + Dialectic fund combined). Feb buyback: -1.5M shares.
+  { date: "2026-03-01", holdings: 15_630, sharesOutstanding: 93_345_193, holdingsPerShare: 0.0001675, source: "PR Mar 1, 2026: 'increasing treasury holdings to 15,630.07 ETH'", sharesSource: "94,845,193 (Jan 6) - 1,500,000 (Feb buyback)", sourceType: "press-release", methodology: "Holdings = announced total (direct + Dialectic Medici fund). Prior entries used direct holdings only per SEC 10-Q." },
 ];
 
 // FG Nexus (FGNX) - ETH treasury company (formerly Fundamental Global)
@@ -574,8 +578,10 @@ const FGNX_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-11-12", holdings: 50_770, sharesOutstanding: 7_914_870, holdingsPerShare: 0.006414, source: "10-Q Q3 2025 cover", sharesSource: "10-Q cover page Nov 12 (split-adjusted: 39,574,350 / 5)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315225023550/form10-q.htm" },
   // Sold ETH for buybacks - repurchased 9.9M pre-split shares
   { date: "2026-01-21", holdings: 37_594, sharesOutstanding: 6_720_000, holdingsPerShare: 0.005594, source: "Press release Jan 21, 2026", sharesSource: "Press release (after 9.9M buybacks, split-adjusted: 33,600,000 / 5)", sourceUrl: "https://www.globenewswire.com/news-release/2026/01/21/3222681/0/en/FG-Nexus-Provides-Update-on-Common-and-Preferred-Share-Buyback-Programs-and-ETH-Holdings.html", sourceType: "press-release" },
-  // Post 1:5 reverse split (effective Feb 13, 2026) - shares already adjusted above
-  { date: "2026-02-13", holdings: 37_594, sharesOutstanding: 6_720_000, holdingsPerShare: 0.005594, source: "1:5 reverse split effective Feb 13, 2026", sharesSource: "SEC 8-K Feb 13, 2026 (33.6M pre-split / 5)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315226006729/form8-k.htm", sourceType: "sec-filing", methodology: "Holdings carried from Jan 21 PR. Shares adjusted for 1:5 reverse split." },
+  // Post 1:5 reverse split (effective Feb 13, 2026) — SEC 8-K says ~6.56M post-split
+  { date: "2026-02-13", holdings: 37_594, sharesOutstanding: 6_560_000, holdingsPerShare: 0.005731, source: "1:5 reverse split effective Feb 13, 2026", sharesSource: "SEC 8-K Feb 10, 2026: 32,776,218 pre-split / 5 ≈ 6,555,243 → rounded to 6,560,000", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1591890/000149315226006729/form8-k.htm", sourceType: "sec-filing", methodology: "Holdings carried from Jan 21 PR. Shares from SEC 8-K pre-split count." },
+  // Feb 24-25: Additional ETH sales (7,550 ETH sold)
+  { date: "2026-02-25", holdings: 30_044, sharesOutstanding: 6_560_000, holdingsPerShare: 0.004580, source: "PR Feb 25, 2026: 50,778 - 13,184 (Oct-Jan) - 7,550 (Feb 24-25) = 30,044", sharesSource: "SEC 8-K Feb 13 post-split count", sourceType: "press-release" },
 ];
 
 // ==================== ADDITIONAL SOL COMPANIES ====================
@@ -606,7 +612,10 @@ const HSDT_HISTORY: HoldingsSnapshot[] = [
   // Q3 2025: XBRL CryptoAssetNumberOfUnits = 1,739,355 SOL at Sep 30
   { date: "2025-09-30", holdings: 1_739_355, sharesOutstanding: 75_926_867, holdingsPerShare: 0.02291, totalDebt: 0, cash: 124_051_000, source: "Q3 2025 10-Q XBRL", sharesSource: "Q3 press release: 75.9M common + PFWs (40,299,228 basic + 35,627,639 PFWs)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm" },
   // Oct 29 8-K: ~2.3M SOL. Nov 18 10-Q Note 10: 2,340,757 SOL
-  { date: "2025-11-18", holdings: 2_340_757, sharesOutstanding: 75_926_867, holdingsPerShare: 0.03083, totalDebt: 0, cash: 15_000_000, source: "10-Q Note 10 (Subsequent Events): 2,340,757 SOL as of Nov 18", sharesSource: "10-Q: 40,299,228 basic (Sep 30) + 35,627,639 PFWs @ $0.001 (consistent date)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm" },
+  // Shares: No new share count between Sep 30 and Feb 20 — carry forward Sep 30 count
+  { date: "2025-11-18", holdings: 2_340_757, sharesOutstanding: 75_926_867, holdingsPerShare: 0.03083, totalDebt: 0, cash: 15_000_000, source: "10-Q Note 10 (Subsequent Events): 2,340,757 SOL as of Nov 18", sharesSource: "Carried forward from Sep 30 10-Q (no intervening share count)", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465925113714/hsdt-20250930x10q.htm" },
+  // Feb 20, 2026 8-K: Updated share count after PFW exercises + ATM
+  { date: "2026-02-20", holdings: 2_340_757, sharesOutstanding: 76_732_785, holdingsPerShare: 0.03050, totalDebt: 0, cash: 15_000_000, source: "Holdings carried from Nov 18 (no newer report)", sharesSource: "8-K Feb 20, 2026: 52,802,604 basic + 23,930,181 PFWs @ $0.001 = 76,732,785", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1610853/000110465926018212/0001104659-26-018212-index.htm" },
 ];
 
 // Upexi (UPXI) - SOL treasury company, launched April 2025
@@ -804,6 +813,8 @@ const TRON_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-09-30", holdings: 677_596_945, sharesOutstanding: 257_115_400, holdingsPerShare: 2.636, stockPrice: 326.42, source: "10-Q Q3 2025", sharesSource: "10-Q balance sheet", sourceType: "sec-filing", sourceUrl: "/filings/tron/10Q-2025-09-30#trx-holdings" },
   { date: "2025-12-29", holdings: 677_000_000, sharesOutstanding: 274_382_064, holdingsPerShare: 2.468, source: "8-K: $18M Justin Sun investment", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956744/000149315225029225/", sourceType: "sec-filing" },
   { date: "2026-01-23", holdings: 677_000_000, sharesOutstanding: 274_382_064, holdingsPerShare: 2.468, source: "8-K: Confirmed 677M+ TRX total", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1956744/000149315226003321/", sourceType: "sec-filing" },
+  // Feb 12, 2026: 8-K announces "over 681.2 million TRX"
+  { date: "2026-02-12", holdings: 681_200_000, sharesOutstanding: 274_382_064, holdingsPerShare: 2.483, source: "8-K Feb 12, 2026: 'TRX Treasury to Over 681.2 Million TRX Tokens'", sharesSource: "Dec 29, 2025 8-K share count (no newer filing)", sourceType: "sec-filing" },
 ];
 
 // Evernorth (XRPN) - XRP treasury (SPAC - pendingMerger)
@@ -872,6 +883,8 @@ const FLD_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-03-31", holdings: 1000, sharesOutstanding: 44_000_000, holdingsPerShare: 0.0000227, stockPrice: 12.0, totalDebt: 66_300_000, cash: 25_000_000, source: "Q1 2025 10-Q", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001889123&type=10-Q&count=40" },
   { date: "2025-06-30", holdings: 1200, sharesOutstanding: 46_000_000, holdingsPerShare: 0.0000261, stockPrice: 15.0, totalDebt: 66_300_000, cash: 30_000_000, source: "Q2 2025 10-Q", sourceType: "sec-filing", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001889123&type=10-Q&count=40" },
   { date: "2025-09-30", holdings: 1575, sharesOutstanding: 48_307_642, holdingsPerShare: 0.0000326, stockPrice: 12.0, totalDebt: 66_300_000, cash: 35_000_000, source: "Q3 2025 10-Q (1,494 investment treasury + 81 rewards treasury)", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1889123/000119312525274317/fld-20250930.htm", sourceType: "sec-filing" },
+  // Feb 27, 2026: Convertible debt retired, 521 BTC unlocked from collateral
+  { date: "2026-02-27", holdings: 1_526, sharesOutstanding: 48_307_642, holdingsPerShare: 0.0000316, totalDebt: 0, source: "PR Feb 27, 2026: 1,526 BTC total (521 unlocked from collateral)", sharesSource: "SEC 10-Q Q3 2025 (no new filing)", sourceUrl: "https://investor.foldapp.com/news-releases/news-release-details/fold-announces-retirement-663-million-convertible-debt", sourceType: "press-release" },
 ];
 
 // BTDR (Bitdeer) removed - primarily a miner/ASIC manufacturer, not a DAT company
@@ -984,7 +997,8 @@ const TWAV_HISTORY: HoldingsSnapshot[] = [
   // Nov 12, 2025: 21,943 TAO (press release in Q3 8-K: includes staking rewards earned Oct-Nov)
   { date: "2025-11-12", holdings: 21_943, sharesOutstanding: 3_207_210, holdingsPerShare: 0.006841, source: "SEC 8-K Nov 13, 2025 Ex99.1: 'As of November 12, 2025, Oblong holds 21,943 TAO tokens'", sharesSource: "SEC 10-Q Q3 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/000143774925034619/ex_855994.htm", sourceType: "sec-filing" },
   // Dec 10, 2025: 24,382 TAO (8-K Dec 11: increased from 21,943 over last 30 days)
-  { date: "2025-12-10", holdings: 24_382, sharesOutstanding: 3_207_210, holdingsPerShare: 0.007602, source: "SEC 8-K Dec 11, 2025: 'increased its TAO holdings to 24,382 tokens'", sharesSource: "SEC 10-Q Q3 2025", sourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/000143774925037490/twav20251210_8k.htm", sourceType: "sec-filing" },
+  // Shares: 3,207,210 common + 706,261 pre-funded warrants @ $0.0001 = 3,913,471 FD
+  { date: "2025-12-10", holdings: 24_382, sharesOutstanding: 3_913_471, holdingsPerShare: 0.006230, source: "SEC 8-K Dec 11, 2025: 'increased its TAO holdings to 24,382 tokens'", sharesSource: "SEC 10-Q Q3 2025: 3,207,210 common + 706,261 PFWs @ $0.0001", sourceUrl: "https://www.sec.gov/Archives/edgar/data/746210/000143774925037490/twav20251210_8k.htm", sourceType: "sec-filing" },
 ];
 
 // ==================== ADDITIONAL LTC ====================
@@ -1008,7 +1022,7 @@ const LUXFF_HISTORY: HoldingsSnapshot[] = [
   { date: "2025-08-31", holdings: 20_226, sharesOutstanding: 26_930_164, holdingsPerShare: 0.000751, source: "SEDAR+ FY2025 audited annual - Note 5: 20,226 LTC", sharesSource: "SEDAR+ FY2025 Note 8 (26,930,164 shares)", sourceUrl: "https://www.sedarplus.ca/csa-party/records/record.html?id=000044736", sourceType: "regulatory-filing" },
   // Dec 9, 2025: Private placement - 4.624M units @ $0.17 CAD (1 share + 1 warrant)
   { date: "2025-12-09", holdings: 20_226, sharesOutstanding: 31_554_164, holdingsPerShare: 0.000641, source: "SEDAR+ FY2025 Note 12: Dec 9 placement", sharesSource: "SEDAR+ Note 12: +4,624,000 shares", sourceType: "regulatory-filing", sourceUrl: "https://www.sedarplus.ca/csa-party/records/record.html?id=000044736" },
-  { date: "2026-02-11", holdings: 24_439, sharesOutstanding: 31_554_164, holdingsPerShare: 0.000774, source: "Press release Feb 11, 2026: 24,439 LTC", sharesSource: "Unchanged from Dec 9 placement", sourceType: "press-release" },
+  { date: "2026-02-11", holdings: 24_439, sharesOutstanding: 33_167_164, holdingsPerShare: 0.000737, source: "Press release Feb 11, 2026: 24,439 LTC", sharesSource: "31,554,164 (Dec 9) + 1,613,000 (warrant exercises/options per Feb 2026 PR)", sourceType: "press-release" },
 ];
 
 // ==================== HBAR COMPANIES ====================
@@ -1089,19 +1103,8 @@ const BTCT_HISTORY: HoldingsSnapshot[] = [
   { date: "2026-02-28", holdings: 761.63, sharesOutstanding: 9_893_980, holdingsPerShare: 0.0000764, source: "BTCT Feb 28, 2026 update: 761.63 BTC; 9,893,980 basic shares; 11,977,313 diluted shares", sharesSource: "BTCT press release (NCIB update)", sourceType: "company-reported", sourceUrl: "https://btctcorp.com/bitcoin-treasury-corporation-provides-february-update-on-normal-course-issuer-bid/" },
 ];
 
-// Samara Asset Group (SRAG.DU) - Malta HQ, Frankfurt/XETRA listed BTC treasury
-// Sources: FY2024 Annual Report (Note 10), H1 2025 Interim, Q3 2025 Corporate Presentation
-// CIK: N/A (no SEC filings — IFRS reporting, Malta-incorporated)
-// Shares: 92,190,761 (H1 2025 Note 15, €0.05 nominal, reviewed by Grant Thornton Malta)
-const SRAG_HISTORY: HoldingsSnapshot[] = [
-  // 2024-01-01: 300 BTC estimate removed — UNV, no traceable source. First verifiable snapshot is Oct 2024.
-  { date: "2024-10-16", holdings: 421, sharesOutstanding: 92_190_761, holdingsPerShare: 0.00000457, source: "Company monthly commentary (Oct 2024): 'we hold 421 BTC on our balance sheet'", sourceType: "company-website", sourceUrl: "https://www.samara-ag.com/market-insights/bitcoin-rallies-past-72500" },
-  { date: "2024-11-30", holdings: 525, sharesOutstanding: 92_190_761, holdingsPerShare: 0.00000570, source: "CEO Patrick Lowry X post (Nov 30, 2024): 421+104=525 BTC", sourceType: "company-reported", sourceUrl: "https://x.com/Patrick_Lowry_/status/1863071308914864387" },
-  { date: "2024-12-31", holdings: 540, sharesOutstanding: 92_190_761, holdingsPerShare: 0.00000586, source: "FY2024 Annual Report Note 10: 480 direct + 60 in DeFi funds", sourceType: "regulatory-filing", sourceUrl: "https://cdn.prod.website-files.com/660cd1216e255a8a370aa5ac/685d308f24fa70f5ffd193c2_SAG-Consolidated-2024-Signed%20financial%20statements_compressed.pdf" },
-  // 2025-09-30: Prior value of 2,051 BTC was a DERIVATION ERROR. €199.8M "intangible assets" includes XPL tokens, stablecoins, DeFi — not just BTC.
-  // Q3 2025 Corporate Presentation BTC Treasury chart shows ~€3-4M BTC (~40 BTC at €97k). Using 525 from Mar 2026 press release as best available.
-  { date: "2025-09-30", holdings: 525, sharesOutstanding: 92_190_761, holdingsPerShare: 0.00000570, totalDebt: 55_100_000, source: "Q3 2025 Corporate Presentation (unaudited). BTC count estimated — no exact figure disclosed. €51M total debt (€32.1M non-current + €18.9M current). Prior 2,051 BTC was derivation error.", sourceType: "company-website", sourceUrl: "https://cdn.prod.website-files.com/687df2df76e1c946ba38115c/6953b14e79c15dbc18d6c7b0_2025.12_SAG%20Corporate%20Presentation_compressed.pdf" },
-];
+// SRAG.DU (Samara Asset Group) removed 2026-03-12: Not a DAT
+// BTC/crypto is only ~13% of €415.8M GAV — investment holding company, not a treasury strategy
 
 // SWC (The Smarter Web Company) - UK BTC Treasury
 // Source: UK regulatory announcements + company analytics
@@ -1167,7 +1170,7 @@ export const HOLDINGS_HISTORY: Record<string, CompanyHoldingsHistory> = {
   "3189.T": { ticker: "3189.T", asset: "BTC", history: ANAP_HISTORY },
   ZOOZ: { ticker: "ZOOZ", asset: "BTC", history: ZOOZ_HISTORY },
   "BTCT.V": { ticker: "BTCT.V", asset: "BTC", history: BTCT_HISTORY },
-  "SRAG.DU": { ticker: "SRAG.DU", asset: "BTC", history: SRAG_HISTORY },
+  // SRAG.DU removed - not a DAT (BTC is ~13% of diversified holding company)
 
   // ETH Companies
   BTCS: { ticker: "BTCS", asset: "ETH", history: BTCS_HISTORY },

@@ -1528,13 +1528,13 @@ export const btcCompanies: Company[] = [
     sedarProfile: "000044786",
     asset: "BTC",
     tier: 2,
-    holdings: 769.05,  // btctcorp.com homepage: 769.05 BTC (Feb 17, 2026)
-    holdingsLastUpdated: "2026-02-17",
+    holdings: 761.63,  // btctcorp.com Feb 28, 2026 update: 761.63 BTC
+    holdingsLastUpdated: "2026-02-28",
     holdingsSource: "company-website",
-    holdingsSourceUrl: "https://btctcorp.com",
-    accessionNumber: "BTCT-WEB-20260217",
-    sourceType: "company-website",
-    sourceQuote: "Current Bitcoin holdings: 769.05 BTC",
+    holdingsSourceUrl: "https://btctcorp.com/bitcoin-treasury-corporation-provides-february-update-on-normal-course-issuer-bid/",
+    accessionNumber: "BTCT-WEB-20260228",
+    sourceType: "company-reported",
+    sourceQuote: "761.63 BTC; 9,893,980 basic shares",
     datStartDate: "2025-06-30",  // TSX Venture listing date
     isMiner: false,
     totalDebt: 18_120_000, // USD (~CAD $25M / 1.38) - convertible debentures (CAD $25M face, CAD $12 implied conversion)
@@ -1549,7 +1549,7 @@ export const btcCompanies: Company[] = [
     burnEstimated: true,
     avgDailyVolume: 1_000_000,
     website: "https://btctcorp.com",
-    sharesForMnav: 10_027_880,  // BASIC shares per btctcorp.com — dilutives in dilutive-instruments.ts
+    sharesForMnav: 9_893_980,  // Feb 28, 2026 NCIB update: 9,893,980 basic (post-buybacks)
     sharesSource: "Company Website (Investor Relations)",
     sharesSourceQuote: "Basic shares outstanding: 10,027,880 (btctcorp.com investor relations)",
     sharesSourceUrl: "https://btctcorp.com",
@@ -1581,58 +1581,9 @@ export const btcCompanies: Company[] = [
   // Coal company (~$3-4B) that mines BTC as side venture using excess power
   // 541 BTC ($42M) is ~1% of company value - not a treasury strategy
   // 75x mNAV misleading - you're buying coal, not BTC exposure
-  {
-    id: "srag",
-    name: "Samara Asset Group",
-    ticker: "SRAG.DU",
-    country: "DE",
-    jurisdiction: "EU",
-    authoritativeSource: "EU Regulatory",
-    exchangeMic: "XETR",
-    currency: "EUR",
-    asset: "BTC",
-    tier: 2,
-    // HOLDINGS: Verified via corporate update Mar 2026
-    // Previous EST of 2,051 BTC was a derivation error (included non-BTC fund assets in intangibles)
-    holdings: 525,
-    holdingsLastUpdated: "2026-03-01",
-    holdingsSource: "press-release",
-    holdingsSourceUrl: "https://www.samara-ag.com/news",
-    accessionNumber: "SRAG-20260301",
-    sourceType: "press-release",
-    sourceQuote: "Corrected holdings to 525 BTC (Mar 2026)",
-    datStartDate: "2024-01-01",
-    website: "https://www.samara-ag.com",
-    twitter: "https://x.com/Patrick_Lowry_",
-    isMiner: false,
-    quarterlyBurnUsd: 2_700_000,  // €2.3M/qtr (€6M admin + €3.2M interest ÷ 4) × 1.185 EUR/USD
-    burnSource: "FY2024 audited P&L: €6M admin + €3.2M finance costs (estimate per quarter)",
-    burnSourceUrl: "https://www.samara-ag.com/investor-relations",
-    burnAsOf: "2024-12-31",
-    burnEstimated: true,
-    avgDailyVolume: 1_000_000,
-    // SHARES: 92,190,761 issued - 406,021 treasury (buyback program through Feb 27, 2026)
-    sharesForMnav: 91_784_740,
-    sharesSource: "EQS Buyback Update Mar 2, 2026: 406,021 shares repurchased total",
-    sharesSourceQuote: "EQS Buyback Update Mar 2, 2026: 406,021 shares repurchased total",
-    sharesSourceUrl: "https://www.samara-ag.com/news",
-    sharesAsOf: "2026-02-27",
-    // DEBT: H1 2025 reviewed balance sheet (Jun 30): €15.3M loans + €17.7M bonds = €33.0M
-    // Q3 2025 corporate presentation: net debt €38.3M, cash ~€4.1M → gross debt ~€42.4M
-    // Using Q3 gross debt estimate: €42.4M × 1.08 EUR/USD = $45.8M
-    totalDebt: 45_800_000,
-    debtSource: "Q3 2025 Corporate Presentation: net debt €38.3M + cash €4.1M = ~€42.4M gross debt. H1 2025 reviewed: €15.3M loans + €17.7M bonds = €33.0M.",
-    debtSourceQuote: "Net Debt of EUR 38.3M (Q3 2025 slide 14). H1 2025 interest-bearing loans €15,343k + bonds €17,671k = €33,015k.",
-    debtSourceUrl: "https://cdn.prod.website-files.com/687df2df76e1c946ba38115c/6953b14e79c15dbc18d6c7b0_2025.12_SAG%20Corporate%20Presentation_compressed.pdf",
-    debtAsOf: "2025-09-30",
-    cashReserves: 4_400_000,  // ~€4.1M × 1.08 EUR/USD (Q3 2025 corporate presentation)
-    cashAsOf: "2025-09-30",
-    cashSource: "Q3 2025 Corporate Presentation: cash ~€4.1M (GAV pie chart)",
-    cashSourceQuote: "Cash ~1% of €415.8M GAV ≈ €4.1M",
-    cashSourceUrl: "https://cdn.prod.website-files.com/687df2df76e1c946ba38115c/6953b14e79c15dbc18d6c7b0_2025.12_SAG%20Corporate%20Presentation_compressed.pdf",
-    strategy: "BTC as primary treasury reserve. Uses Samara Alpha Market-Neutral BTC+ Fund for management.",
-    notes: "Frankfurt/XETRA listed. Investment holding company — BTC/crypto is ~13% of €415.8M GAV (Q3 2025). Most value is LP stakes in funds, not direct BTC. Corrected holdings to 525 BTC (Mar 2026). Active share buyback (406k shares). Bitcoin Bond €20M (Nov 2024, 5yr, 3mE+7.50%).",
-  },
+  // SRAG.DU (Samara Asset Group) removed 2026-03-12: Not a DAT
+  // Investment holding company — BTC/crypto is only ~13% of €415.8M GAV (Q3 2025)
+  // Most value is LP stakes in PE/venture funds, not direct BTC. 525 BTC is a side allocation.
   // PHX.AD (Phoenix Group PLC) removed 2026-02-03: Can't verify holdings
   // 514 BTC from BitcoinTreasuries.net only - no primary source
   // UAE company (ADX) - no IR website found, no SEC filings
@@ -2200,14 +2151,13 @@ export const solCompanies: Company[] = [
     tier: 2,
     stakingPct: 1.0,
     secCik: "0001846839",
-    holdings: 530_251,  // 402,004 direct + 46,474 jitoSOL + 81,640 STKESOL (Jan 2026 monthly update)
-    holdingsLastUpdated: "2026-02-03",
+    holdings: 518_139,  // Feb 2026 monthly update (Mar 4, 2026): 518,139 treasury SOL
+    holdingsLastUpdated: "2026-03-04",
     holdingsSource: "company-website",
-    holdingsSourceUrl: "https://solstrategies.io/press-releases/sol-strategies-january-2026-monthly-business-update",
+    holdingsSourceUrl: "https://solstrategies.io/sol-strategies-february-2026-monthly-business-update/",
     sourceType: "company-website",
-    sourceQuote: "SOL Holdings: 402,004 SOL",  // Direct SOL only; total 530,251 includes 46,474 jitoSOL + 81,640 STKESOL + staking rewards
-    holdingsDerived: true,
-    holdingsCalculation: "402,004 direct + 46,474 jitoSOL + 81,640 STKESOL + staking = 530,251",
+    sourceQuote: "518,139 treasury SOL (Feb 2026 monthly update)",
+    holdingsDerived: false,
     datStartDate: "2024-06-01",
     // costBasisAvg removed - needs verification
     // stakingPct: 0.85 removed - needs verification
