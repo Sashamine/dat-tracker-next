@@ -52,7 +52,6 @@ export const STOCK_TICKERS = [
   // "SWC" removed - Alpaca returns wrong US stock, use FALLBACK_STOCKS for UK AQUIS
   "CASH3.SA",  // Méliuz (Brazil B3) - Added 2026-02-02
   "377030.KQ", // bitmax (South Korea) - Added 2026-02-02
-  "SRAG.DU",   // Samara Asset Group (Germany) - Added 2026-02-02
   "PHX.AD",    // Phoenix Group (UAE) - Added 2026-02-02
   // "DCC.AX" removed - fetched via Yahoo Finance (FMP doesn't support ASX)
   // BTC - Canada

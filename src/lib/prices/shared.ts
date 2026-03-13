@@ -16,7 +16,6 @@ export const TICKER_CURRENCY: Record<string, string> = {
   "H100.ST": "SEK",
   "0434.HK": "HKD",
   "ALCPB": "EUR",
-  "SRAG.DU": "EUR", // Samara Asset Group (Frankfurt/XETRA)
   "ETHM": "CAD",
   "SWC": "GBP", // Smarter Web Company (AQUIS UK)
   "TSWCF": "GBP", // SWC OTC ticker

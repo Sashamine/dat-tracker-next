@@ -11,7 +11,7 @@
  *   Formula: shares_issued = (ETH_acquired × ETH_price) / stock_price
  *   See: clawd/bmnr-audit/METHODOLOGY.md
  * 
- * Last updated: 2026-02-09
+ * Last updated: 2026-03-12
  */
 
 import type { HoldingsSnapshot } from './holdings-history';
@@ -338,10 +338,34 @@ export const BMNR_HISTORY: HoldingsSnapshot[] = [
     sharesOutstanding: 476_782_451,
     holdingsPerShare: 0.009169,
     cash: 670_000_000,
-    source: '8-K Holdings update - Latest',
+    source: '8-K Holdings update',
     sourceUrl: 'https://www.sec.gov/Archives/edgar/data/1829311/000149315226006953/ex99-2.htm',
     sourceType: 'sec-filing',
     methodology: 'Shares: 454.9M anchor + 21.9M cash-adjusted ATM through Feb 16 (from estimateBMNRShares)',
+    confidence: 'medium',
+  },
+  {
+    date: '2026-02-23',
+    holdings: 4_422_659,
+    sharesOutstanding: 482_352_451,
+    holdingsPerShare: 0.009169,
+    cash: 670_000_000,
+    source: '8-K Holdings update: +51,162 ETH @ $1,958',
+    sourceUrl: '/filings/bmnr/0001493152-26-007694',
+    sourceType: 'sec-filing',
+    methodology: 'Shares: 454.9M anchor + ~27.5M ATM est. through Feb 23 (~5.57M new @ ~$18)',
+    confidence: 'medium',
+  },
+  {
+    date: '2026-03-01',
+    holdings: 4_473_587,
+    sharesOutstanding: 487_942_451,
+    holdingsPerShare: 0.009168,
+    cash: 670_000_000,
+    source: '8-K Holdings update: +50,928 ETH @ $1,976 - Latest',
+    sourceUrl: '/filings/bmnr/0001493152-26-008462',
+    sourceType: 'sec-filing',
+    methodology: 'Shares: 454.9M anchor + ~33.1M ATM est. through Mar 1 (~5.59M new @ ~$18)',
     confidence: 'medium',
   },
 ];
@@ -355,6 +379,8 @@ export const BMNR_STAKED_ETH: { date: string; stakedEth: number; percentStaked: 
   { date: '2026-02-01', stakedEth: 2_897_459, percentStaked: 67.6 },
   { date: '2026-02-08', stakedEth: 2_897_459, percentStaked: 67.0 },
   { date: '2026-02-16', stakedEth: 3_040_483, percentStaked: 69.6 },
+  { date: '2026-02-23', stakedEth: 3_040_483, percentStaked: 68.7 },
+  { date: '2026-03-01', stakedEth: 3_040_483, percentStaked: 67.9 },
 ];
 
 // EarningsSource type for compatibility with earnings-data.ts

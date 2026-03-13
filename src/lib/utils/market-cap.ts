@@ -38,7 +38,6 @@ const TICKER_CURRENCIES: Record<string, string> = {
   "0434.HK": "HKD",
   "H100.ST": "SEK",
   "ALCPB": "EUR",
-  "SRAG.DU": "EUR",  // Samara Asset Group (Frankfurt/XETRA)
   "DCC.AX": "AUD",
   "NDA.V": "CAD",
   "DMGI.V": "CAD",

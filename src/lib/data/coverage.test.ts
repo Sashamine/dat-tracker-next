@@ -45,7 +45,6 @@ const KNOWN_COVERAGE_GAPS = [
   '3189.T', // Japanese (TSE) - covered by TDnet fetcher
   'ZOOZ',   // Israeli (TASE) - no SEC filings
   'BTCT.V', // Canadian (TSX-V) - covered by website fetcher
-  'SRAG.DU', // German (Xetra) - no SEC filings
   'DCC.AX', // Australian (ASX) - covered by ASX fetcher
   'IHLDF',  // Canadian (CBOE CA) - SEDAR+ filer
   'ETHM',   // Canadian (TSX) - SEDAR+ filer with SEC cross-listing
