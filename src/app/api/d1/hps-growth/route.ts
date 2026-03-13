@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { D1Client } from '@/lib/d1';
 import { allCompanies } from '@/lib/data/companies';
 import { findSnapshotOnOrBefore } from '@/lib/utils/growth-snapshots';
+import { getHoldingsHistory } from '@/lib/data/holdings-history';
 
 /**
  * GET /api/d1/hps-growth
@@ -67,7 +68,8 @@ export async function GET() {
     }
 
     // Get all holdings_native and basic_shares datapoints in one query.
-    // Returns all rows — dedup and unit filtering happen in JS.
+    // Only use approved datapoints — rejected/candidate rows may contain
+    // incorrect values (e.g. wrong share counts from automated scrapers).
     const sql = `
       SELECT
         h.entity_id,
@@ -83,9 +85,9 @@ export async function GET() {
         SELECT entity_id, as_of, value AS shares,
                ROW_NUMBER() OVER (PARTITION BY entity_id, as_of ORDER BY created_at DESC) AS rn
         FROM datapoints
-        WHERE metric = 'basic_shares' AND as_of IS NOT NULL AND value > 0
+        WHERE metric = 'basic_shares' AND status = 'approved' AND as_of IS NOT NULL AND value > 0
       ) s ON h.entity_id = s.entity_id AND h.as_of = s.as_of AND s.rn = 1
-      WHERE h.metric = 'holdings_native' AND h.as_of IS NOT NULL AND h.value > 0
+      WHERE h.metric = 'holdings_native' AND status = 'approved' AND h.as_of IS NOT NULL AND h.value > 0
       ORDER BY h.entity_id ASC, h.as_of ASC
     `;
 
@@ -145,6 +147,9 @@ export async function GET() {
     const d90 = new Date(now.getTime() - 90 * 86400000).toISOString().split('T')[0];
     const d1y = new Date(now.getTime() - 365 * 86400000).toISOString().split('T')[0];
 
+    const growth = (current: number, past: number | null): number | null =>
+      past && past > 0 ? ((current - past) / past) * 100 : null;
+
     const results: HpsGrowthResult[] = [];
 
     for (const [ticker, snapshotsByDate] of byTicker) {
@@ -170,9 +175,6 @@ export async function GET() {
       const hps30dAgo = snapshot30d ? snapshot30d.holdings / snapshot30d.shares : null;
       const hps90dAgo = snapshot90d ? snapshot90d.holdings / snapshot90d.shares : null;
       const hps1yAgo = snapshot1y ? snapshot1y.holdings / snapshot1y.shares : null;
-
-      const growth = (current: number, past: number | null): number | null =>
-        past && past > 0 ? ((current - past) / past) * 100 : null;
 
       const toSnapshot = (row: HpsGrowthRow): HpsSnapshot => ({
         date: row.as_of,
@@ -201,6 +203,77 @@ export async function GET() {
       });
     }
 
+    // Cross-validate D1 results against holdings-history.ts (static source of truth).
+    // If a company's latest D1 HPS diverges >50% from static, D1 data is likely corrupt
+    // (e.g. pre-split share counts, bad scraper values). Replace with static data.
+    const warnings: string[] = [];
+    for (let i = 0; i < results.length; i++) {
+      const r = results[i];
+      const staticHistory = getHoldingsHistory(r.ticker);
+      if (!staticHistory?.history?.length) continue;
+
+      const staticSnapshots = staticHistory.history;
+      const latestStatic = staticSnapshots[staticSnapshots.length - 1];
+      if (!latestStatic.sharesOutstanding || latestStatic.sharesOutstanding <= 0) continue;
+
+      const staticHps = latestStatic.holdings / latestStatic.sharesOutstanding;
+      if (staticHps <= 0) continue;
+
+      const divergence = Math.abs(r.currentHps - staticHps) / staticHps;
+      if (divergence > 0.50) {
+        warnings.push(
+          `${r.ticker}: D1 HPS ${r.currentHps.toFixed(8)} diverges ${(divergence * 100).toFixed(0)}% from static ${staticHps.toFixed(8)} ` +
+          `(D1: ${r.currentHoldings}/${r.currentShares}, static: ${latestStatic.holdings}/${latestStatic.sharesOutstanding})`
+        );
+
+        // Replace D1 result with static holdings-history.ts data
+        const staticHpsSnapshots: HpsSnapshot[] = staticSnapshots
+          .filter(s => s.holdings > 0 && s.sharesOutstanding && s.sharesOutstanding > 0)
+          .map(s => ({
+            date: s.date,
+            holdings: s.holdings,
+            sharesOutstanding: s.sharesOutstanding!,
+            holdingsPerShare: s.holdings / s.sharesOutstanding!,
+          }));
+
+        if (staticHpsSnapshots.length === 0) continue;
+
+        const latestSnap = staticHpsSnapshots[staticHpsSnapshots.length - 1];
+        const snap30d = findSnapshotOnOrBefore(staticHpsSnapshots.slice(0, -1), new Date(`${d30}T00:00:00Z`), {
+          getDate: (s) => s.date,
+        });
+        const snap90d = findSnapshotOnOrBefore(staticHpsSnapshots.slice(0, -1), new Date(`${d90}T00:00:00Z`), {
+          getDate: (s) => s.date,
+        });
+        const snap1y = findSnapshotOnOrBefore(staticHpsSnapshots.slice(0, -1), new Date(`${d1y}T00:00:00Z`), {
+          getDate: (s) => s.date,
+        });
+
+        results[i] = {
+          ticker: r.ticker,
+          currentHps: latestSnap.holdingsPerShare,
+          hps30dAgo: snap30d ? snap30d.holdingsPerShare : null,
+          hps90dAgo: snap90d ? snap90d.holdingsPerShare : null,
+          hps1yAgo: snap1y ? snap1y.holdingsPerShare : null,
+          growth30d: growth(latestSnap.holdingsPerShare, snap30d?.holdingsPerShare ?? null),
+          growth90d: growth(latestSnap.holdingsPerShare, snap90d?.holdingsPerShare ?? null),
+          growth1y: growth(latestSnap.holdingsPerShare, snap1y?.holdingsPerShare ?? null),
+          currentHoldings: latestSnap.holdings,
+          currentShares: latestSnap.sharesOutstanding,
+          latestDate: latestSnap.date,
+          currentSnapshot: latestSnap,
+          snapshot30d: snap30d,
+          snapshot90d: snap90d,
+          snapshot1y: snap1y,
+          history: staticHpsSnapshots,
+        };
+      }
+    }
+
+    if (warnings.length > 0) {
+      console.warn('[hps-growth] Cross-validation warnings (replaced with static data):', warnings);
+    }
+
     // Sort by 90d growth descending (nulls last)
     results.sort((a, b) => (b.growth90d ?? -Infinity) - (a.growth90d ?? -Infinity));
 
@@ -208,6 +281,7 @@ export async function GET() {
       success: true,
       count: results.length,
       results,
+      ...(warnings.length > 0 ? { warnings } : {}),
     });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Unknown error';
