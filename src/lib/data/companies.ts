@@ -3252,11 +3252,11 @@ export const hbarCompanies: Company[] = [
     website: "https://www.immutableholdings.com",
     twitter: "https://x.com/ImmutableHold",
     investorRelationsUrl: "https://www.immutableholdings.com/investors",
-    holdings: 48_000_000,
+    holdings: 48_715_727,  // Q4 2025 SEDAR+ filing (exact, was 48M rounded)
     holdingsLastUpdated: "2025-12-31",
     holdingsSource: "regulatory-filing",
     holdingsSourceUrl: "https://www.sedarplus.ca/csa-party/records/recordsForIssuerProfile.html?profileNo=000044016",
-    sourceQuote: "Q4 2025 SEDAR+ filing: 48,000,000 HBAR",
+    sourceQuote: "Q4 2025 SEDAR+ filing: 48,715,727 HBAR",
     sourceType: "regulatory-filing",
     datStartDate: "2025-07-01",
     // stakingPct: 0.50 removed - needs verification
