@@ -149,6 +149,14 @@ export async function ingestForeignDataPoints(
   let noop = 0;
   const errors: Array<{ entityId: string; metric: string; error: string }> = [];
 
+  // Load entity-metric config for auto-approve gating
+  const configRows = await d1.query<{ entity_id: string; metric: string }>(
+    `SELECT entity_id, metric FROM entity_metric_config WHERE auto_approve = 0`
+  ).catch(() => ({ results: [] as { entity_id: string; metric: string }[] }));
+  const noAutoApprove = new Set(
+    (configRows.results || []).map(r => `${r.entity_id}|${r.metric}`)
+  );
+
   for (const dp of dataPoints) {
     try {
       // 1. Resolve artifact
@@ -248,13 +256,14 @@ export async function ingestForeignDataPoints(
 
       // 4. Insert new datapoint
       const dpId = crypto.randomUUID();
+      const dpStatus = noAutoApprove.has(`${dp.entityId}|${dp.metric}`) ? 'candidate' : 'approved';
       await d1.query(
         `INSERT INTO datapoints (
            datapoint_id, entity_id, metric, value, unit, scale,
            as_of, reported_at, artifact_id, run_id,
            method, confidence, status, proposal_key, created_at,
            citation_quote, citation_search_term
-         ) VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?, 'approved', ?, ?, ?, ?);`,
+         ) VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
         [
           dpId,
           dp.entityId,
@@ -267,6 +276,7 @@ export async function ingestForeignDataPoints(
           runId,
           dp.method,
           dp.confidence,
+          dpStatus,
           proposalKey,
           new Date().toISOString(),
           dp.citationQuote,
