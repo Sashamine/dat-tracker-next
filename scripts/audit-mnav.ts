@@ -9,7 +9,8 @@
  *   2. STALENESS — how old are the balance sheet inputs?
  *   3. COMPLEXITY — how many error-prone features does this company have?
  *
- * Output: Ranked list of companies by audit priority (highest risk first).
+ * Uses the SAME mNAV engine + D1 overlay as the live site, so computed mNAV
+ * matches what users actually see.
  *
  * Usage:
  *   npx tsx scripts/audit-mnav.ts                  # Full audit with live prices
@@ -17,55 +18,19 @@
  *   npx tsx scripts/audit-mnav.ts --json           # Machine-readable output
  *   npx tsx scripts/audit-mnav.ts --verbose        # Show component breakdown
  *   npx tsx scripts/audit-mnav.ts --offline        # Skip live price fetch
+ *   npx tsx scripts/audit-mnav.ts --no-d1          # Skip D1 overlay (static only)
  */
 
-import path from "node:path";
-import fs from "node:fs";
-import { fileURLToPath } from "node:url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const companiesPath = path.join(__dirname, "..", "src", "lib", "data", "companies.ts");
+import { allCompanies } from "../src/lib/data/companies";
+import { applyD1Overlay, type D1MetricMap, type D1MetricDateMap, type D1MetricSourceMap, type D1MetricQuoteMap, type D1MetricSearchTermMap, type D1MetricAccessionMap } from "../src/lib/d1-overlay";
+import { getLatestMetrics } from "../src/lib/d1";
+import { CORE_D1_METRICS } from "../src/lib/metrics";
+import { getCompanyMNAVDetailed, type PricesData } from "../src/lib/math/mnav-engine";
+import type { Company } from "../src/lib/types";
 
 const PROD_URL = "https://dat-tracker-next.vercel.app";
 
 // ── Types ───────────────────────────────────────────────────────────
-
-interface CompanyAudit {
-  ticker: string;
-  name: string;
-  asset: string;
-  isMiner: boolean;
-
-  // Holdings
-  holdings: number;
-  holdingsLastUpdated: string | null;
-  hasDynamicHoldings: boolean;
-
-  // Balance sheet
-  sharesForMnav: number | null;
-  hasDynamicShares: boolean;
-  sharesAsOf: string | null;
-  totalDebt: number;
-  debtAsOf: string | null;
-  cashReserves: number;
-  cashAsOf: string | null;
-  preferredEquity: number;
-  preferredAsOf: string | null;
-  restrictedCash: number;
-
-  // Complexity flags
-  hasSecondaryHoldings: boolean;
-  hasCryptoInvestments: boolean;
-  hasMultiHoldings: boolean;
-  hasPreferredEquity: boolean;
-  hasRestrictedCash: boolean;
-  isForeignStock: boolean;
-  pendingMerger: boolean;
-
-  // Computed
-  tier: number;
-}
 
 interface AuditResult {
   ticker: string;
@@ -82,9 +47,17 @@ interface AuditResult {
   // Details
   flags: AuditFlag[];
 
-  // Live mNAV (if prices available)
+  // Live mNAV (computed via real engine)
   liveMnav: number | null;
-  mnavSource: string | null;
+  mnavWarnings: string[];
+
+  // D1 overlay info
+  d1Fields: string[];
+
+  // Balance sheet (for display)
+  totalDebt: number;
+  cashReserves: number;
+  preferredEquity: number;
 }
 
 interface AuditFlag {
@@ -93,176 +66,113 @@ interface AuditFlag {
   message: string;
 }
 
-interface LivePrices {
-  crypto: Record<string, { price: number }>;
-  stocks: Record<string, { price: number; marketCap: number }>;
-}
-
-// ── Extract companies from source ───────────────────────────────────
-
-function extractCompanies(): CompanyAudit[] {
-  const content = fs.readFileSync(companiesPath, "utf-8");
-  const companies: CompanyAudit[] = [];
-
-  const blocks = content.split(/\n  \{/).slice(1);
-
-  for (const block of blocks) {
-    const get = (key: string): string | null => {
-      const m = block.match(new RegExp(`${key}:\\s*["'\`]([^"'\`]*)["'\`]`));
-      return m?.[1] ?? null;
-    };
-
-    // Check if a field uses a dynamic reference (variable, function call, PROVENANCE)
-    const isDynamic = (key: string): boolean => {
-      const m = block.match(new RegExp(`${key}:\\s*([^,\\n]+)`));
-      if (!m) return false;
-      const value = m[1].trim();
-      // Dynamic if it starts with a letter (variable/function) and isn't a quoted string or number
-      return /^[A-Za-z]/.test(value) && !/^["'`]/.test(value) && !/^(true|false|null|undefined|\d)/.test(value);
-    };
-
-    // Get string value, including from dynamic PROVENANCE patterns
-    const getStr = (key: string): string | null => {
-      // First try quoted string (most common)
-      const quoted = get(key);
-      if (quoted) return quoted;
-      // Check if it's a dynamic reference — return null but flag it
-      return null;
-    };
-
-    const getNum = (key: string): number | null => {
-      // PROVENANCE pattern: `PROVENANCE.field?.value || 720_737`
-      const provM = block.match(new RegExp(`${key}:\\s*\\w+\\.\\w+.*\\|\\|\\s*([\\d_]+\\.?[\\d_]*)`));
-      if (provM) return parseFloat(provM[1].replace(/_/g, ""));
-      // Nullish coalescing: `PROVENANCE.field?.value ?? 11_542`
-      const provM2 = block.match(new RegExp(`${key}:\\s*\\w+\\.\\w+.*\\?\\?\\s*([\\d_]+\\.?[\\d_]*)`));
-      if (provM2) return parseFloat(provM2[1].replace(/_/g, ""));
-      // Plain number
-      const m = block.match(new RegExp(`${key}:\\s*([\\d_]+\\.?[\\d_]*)`));
-      if (!m) return null;
-      return parseFloat(m[1].replace(/_/g, ""));
-    };
-    const getBool = (key: string): boolean => block.includes(`${key}: true`);
-
-    const ticker = get("ticker");
-    if (!ticker) continue;
-
-    const isForeignStock = /\.(T|HK|ST|DU|AX)$/.test(ticker) || ticker === "ALTBG";
-
-    companies.push({
-      ticker,
-      name: get("name") || ticker,
-      asset: get("asset") || "?",
-      isMiner: getBool("isMiner"),
-      holdings: getNum("holdings") ?? 0,
-      holdingsLastUpdated: getStr("holdingsLastUpdated"),
-      hasDynamicHoldings: isDynamic("holdingsLastUpdated"),
-      sharesForMnav: getNum("sharesForMnav"),
-      hasDynamicShares: isDynamic("sharesForMnav"),
-      sharesAsOf: getStr("sharesAsOf"),
-      totalDebt: getNum("totalDebt") ?? 0,
-      debtAsOf: getStr("debtAsOf"),
-      cashReserves: getNum("cashReserves") ?? 0,
-      cashAsOf: getStr("cashAsOf"),
-      preferredEquity: getNum("preferredEquity") ?? 0,
-      preferredAsOf: getStr("preferredAsOf"),
-      restrictedCash: getNum("restrictedCash") ?? 0,
-      hasSecondaryHoldings: block.includes("secondaryCryptoHoldings:"),
-      hasCryptoInvestments: block.includes("cryptoInvestments:"),
-      hasMultiHoldings: block.includes("multiHoldings:"),
-      hasPreferredEquity: (getNum("preferredEquity") ?? 0) > 0,
-      hasRestrictedCash: (getNum("restrictedCash") ?? 0) > 0,
-      isForeignStock,
-      pendingMerger: getBool("pendingMerger"),
-      tier: getNum("tier") ?? 2,
-    });
-  }
-
-  return companies;
-}
-
 // ── Fetch live prices from production ───────────────────────────────
 
-async function fetchLivePrices(): Promise<LivePrices | null> {
+async function fetchLivePrices(): Promise<PricesData> {
   try {
     const resp = await fetch(`${PROD_URL}/api/prices`, {
       headers: { "Accept": "application/json" },
       signal: AbortSignal.timeout(10_000),
     });
     if (!resp.ok) return null;
-    return await resp.json() as LivePrices;
+    return await resp.json() as PricesData;
   } catch {
     return null;
   }
 }
 
-// ── Simple mNAV calculator (no dilution — static inputs only) ───────
+// ── Fetch D1 overlay data ───────────────────────────────────────────
 
-function calculateSimpleMnav(
-  co: CompanyAudit,
-  prices: LivePrices,
-): { mnav: number; source: string } | null {
-  // Get crypto price
-  const cryptoPrice = prices.crypto[co.asset]?.price;
-  if (!cryptoPrice || co.holdings <= 0) return null;
+async function fetchD1Overlay(tickers: string[]): Promise<{
+  d1: D1MetricMap;
+  sources: D1MetricSourceMap;
+  dates: D1MetricDateMap;
+  quotes: D1MetricQuoteMap;
+  searchTerms: D1MetricSearchTermMap;
+  accessions: D1MetricAccessionMap;
+}> {
+  const d1: D1MetricMap = {};
+  const sources: D1MetricSourceMap = {};
+  const dates: D1MetricDateMap = {};
+  const quotes: D1MetricQuoteMap = {};
+  const searchTerms: D1MetricSearchTermMap = {};
+  const accessions: D1MetricAccessionMap = {};
 
-  // Get market cap
-  let marketCap: number | null = null;
-  let source = "";
-  const stockData = prices.stocks[co.ticker];
+  // Batch fetch — sequential to avoid rate limits
+  for (const ticker of tickers) {
+    try {
+      const rows = await getLatestMetrics(ticker, [...CORE_D1_METRICS]);
+      const metricMap: Record<string, number> = {};
+      const sourceMap: Record<string, string | null> = {};
+      const dateMap: Record<string, string | null> = {};
+      const quoteMap: Record<string, string | null> = {};
+      const searchTermMap: Record<string, string | null> = {};
+      const accessionMap: Record<string, string | null> = {};
 
-  if (co.sharesForMnav && co.sharesForMnav > 0 && stockData?.price) {
-    marketCap = co.sharesForMnav * stockData.price;
-    source = `${fmtM(co.sharesForMnav)} shares × $${stockData.price.toFixed(2)}`;
-  } else if (stockData?.marketCap && stockData.marketCap > 0) {
-    marketCap = stockData.marketCap;
-    source = `API mcap $${fmtM(marketCap)}`;
+      for (const row of rows) {
+        metricMap[row.metric] = row.value;
+        sourceMap[row.metric] = row.artifact?.source_url ?? null;
+        dateMap[row.metric] = row.as_of ?? row.reported_at ?? null;
+        quoteMap[row.metric] = row.citation_quote ?? null;
+        searchTermMap[row.metric] = row.citation_search_term ?? null;
+        accessionMap[row.metric] = row.artifact?.accession ?? null;
+      }
+
+      if (Object.keys(metricMap).length > 0) {
+        d1[ticker] = metricMap;
+        sources[ticker] = sourceMap;
+        dates[ticker] = dateMap;
+        quotes[ticker] = quoteMap;
+        searchTerms[ticker] = searchTermMap;
+        accessions[ticker] = accessionMap;
+      }
+    } catch (e) {
+      console.error(`  [D1] Failed to fetch ${ticker}: ${(e as Error).message}`);
+    }
   }
 
-  if (!marketCap || marketCap <= 0) return null;
-
-  // Crypto NAV (primary only — secondary/investments not extracted by regex)
-  const cryptoNav = co.holdings * cryptoPrice;
-  if (cryptoNav <= 0) return null;
-
-  // EV
-  const freeCash = co.cashReserves - co.restrictedCash;
-  const ev = marketCap + co.totalDebt + co.preferredEquity - freeCash;
-
-  const totalNav = cryptoNav + co.restrictedCash;
-  const mnav = ev / totalNav;
-
-  return { mnav, source };
+  return { d1, sources, dates, quotes, searchTerms, accessions };
 }
 
 // ── Staleness helpers ───────────────────────────────────────────────
 
-function daysSince(isoDate: string | null): number | null {
+function daysSince(isoDate: string | null | undefined): number | null {
   if (!isoDate) return null;
   const d = new Date(isoDate);
   if (isNaN(d.getTime())) return null;
   return Math.floor((Date.now() - d.getTime()) / (1000 * 60 * 60 * 24));
 }
 
+// Check if a company field uses dynamic PROVENANCE
+function hasDynamicField(company: Company, field: 'holdings' | 'shares'): boolean {
+  // Companies with PROVENANCE patterns have _d1Fields or dynamic data pipelines
+  // Heuristic: if D1 overlay set the field, it's "dynamic" (fresh from pipeline)
+  const d1Fields = (company as any)._d1Fields as string[] | undefined;
+  if (field === 'holdings' && d1Fields?.includes('holdings')) return true;
+  if (field === 'shares' && d1Fields?.includes('sharesForMnav')) return true;
+  return false;
+}
+
 // ── Scoring ─────────────────────────────────────────────────────────
 
-function auditCompany(co: CompanyAudit, prices: LivePrices | null): AuditResult {
+function auditCompany(co: Company, prices: PricesData): AuditResult {
   const flags: AuditFlag[] = [];
   let outlierScore = 0;
   let stalenessScore = 0;
   let complexityScore = 0;
 
-  // ── 0. LIVE mNAV (if prices available) ────────────────────────
+  const d1Fields = (co as any)._d1Fields as string[] || [];
+
+  // ── 0. LIVE mNAV (using real engine) ────────────────────────
   let liveMnav: number | null = null;
-  let mnavSource: string | null = null;
+  let mnavWarnings: string[] = [];
 
   if (prices && !co.pendingMerger) {
-    const result = calculateSimpleMnav(co, prices);
-    if (result) {
-      liveMnav = result.mnav;
-      mnavSource = result.source;
+    const result = getCompanyMNAVDetailed(co, prices, false);
+    liveMnav = result.mnav;
+    mnavWarnings = result.warnings;
 
-      // Outlier scoring based on live mNAV
+    if (liveMnav !== null) {
       if (liveMnav < 0.5) {
         outlierScore += 4;
         flags.push({ category: "outlier", severity: "HIGH", message: `mNAV ${liveMnav.toFixed(2)}x — very low, likely data error or liquidating` });
@@ -280,6 +190,8 @@ function auditCompany(co: CompanyAudit, prices: LivePrices | null): AuditResult 
   }
 
   // ── 1. STALENESS ──────────────────────────────────────────────
+  const dynamicHoldings = hasDynamicField(co, 'holdings');
+  const dynamicShares = hasDynamicField(co, 'shares');
 
   const holdingsDays = daysSince(co.holdingsLastUpdated);
   const sharesDays = daysSince(co.sharesAsOf);
@@ -287,108 +199,103 @@ function auditCompany(co: CompanyAudit, prices: LivePrices | null): AuditResult 
   const cashDays = daysSince(co.cashAsOf);
   const preferredDays = daysSince(co.preferredAsOf);
 
-  // Holdings staleness (skip if dynamic — value exists but regex can't read date)
-  if (holdingsDays !== null && holdingsDays > 180) {
+  // Holdings staleness
+  if (holdingsDays !== null && holdingsDays > 180 && !dynamicHoldings) {
     stalenessScore += 3;
     flags.push({ category: "staleness", severity: "HIGH", message: `Holdings ${holdingsDays}d old (${co.holdingsLastUpdated})` });
-  } else if (holdingsDays !== null && holdingsDays > 90) {
+  } else if (holdingsDays !== null && holdingsDays > 90 && !dynamicHoldings) {
     stalenessScore += 1;
     flags.push({ category: "staleness", severity: "MEDIUM", message: `Holdings ${holdingsDays}d old (${co.holdingsLastUpdated})` });
-  } else if (holdingsDays === null && !co.hasDynamicHoldings) {
+  } else if (holdingsDays === null && !dynamicHoldings) {
     stalenessScore += 2;
     flags.push({ category: "missing", severity: "MEDIUM", message: "No holdingsLastUpdated date" });
   }
-  // If dynamic, it exists — just not readable. No penalty.
 
   // Shares staleness
-  if (sharesDays !== null && sharesDays > 180) {
+  if (sharesDays !== null && sharesDays > 180 && !dynamicShares) {
     stalenessScore += 2;
     flags.push({ category: "staleness", severity: "HIGH", message: `Shares ${sharesDays}d old (${co.sharesAsOf})` });
-  } else if (sharesDays !== null && sharesDays > 120) {
+  } else if (sharesDays !== null && sharesDays > 120 && !dynamicShares) {
     stalenessScore += 1;
     flags.push({ category: "staleness", severity: "MEDIUM", message: `Shares ${sharesDays}d old (${co.sharesAsOf})` });
-  } else if (co.sharesForMnav !== null && sharesDays === null && !co.hasDynamicShares) {
+  } else if (co.sharesForMnav && co.sharesForMnav > 0 && sharesDays === null && !dynamicShares) {
     stalenessScore += 1;
     flags.push({ category: "missing", severity: "LOW", message: "Has sharesForMnav but no sharesAsOf date" });
   }
 
   // Debt staleness (only if material debt)
-  if (co.totalDebt > 0) {
+  if ((co.totalDebt ?? 0) > 0) {
     if (debtDays !== null && debtDays > 180) {
       stalenessScore += 2;
-      flags.push({ category: "staleness", severity: "HIGH", message: `Debt ${debtDays}d old — $${fmtM(co.totalDebt)} (${co.debtAsOf})` });
+      flags.push({ category: "staleness", severity: "HIGH", message: `Debt ${debtDays}d old — $${fmtM(co.totalDebt ?? 0)} (${co.debtAsOf})` });
     } else if (debtDays !== null && debtDays > 120) {
       stalenessScore += 1;
-      flags.push({ category: "staleness", severity: "MEDIUM", message: `Debt ${debtDays}d old — $${fmtM(co.totalDebt)} (${co.debtAsOf})` });
+      flags.push({ category: "staleness", severity: "MEDIUM", message: `Debt ${debtDays}d old — $${fmtM(co.totalDebt ?? 0)} (${co.debtAsOf})` });
     } else if (debtDays === null) {
       stalenessScore += 2;
-      flags.push({ category: "missing", severity: "HIGH", message: `Has $${fmtM(co.totalDebt)} debt but no debtAsOf date` });
+      flags.push({ category: "missing", severity: "HIGH", message: `Has $${fmtM(co.totalDebt ?? 0)} debt but no debtAsOf date` });
     }
   }
 
   // Cash staleness
-  if (co.cashReserves > 0) {
+  if ((co.cashReserves ?? 0) > 0) {
     if (cashDays !== null && cashDays > 180) {
       stalenessScore += 1;
-      flags.push({ category: "staleness", severity: "MEDIUM", message: `Cash ${cashDays}d old — $${fmtM(co.cashReserves)} (${co.cashAsOf})` });
+      flags.push({ category: "staleness", severity: "MEDIUM", message: `Cash ${cashDays}d old — $${fmtM(co.cashReserves ?? 0)} (${co.cashAsOf})` });
     } else if (cashDays === null) {
       stalenessScore += 1;
-      flags.push({ category: "missing", severity: "LOW", message: `Has $${fmtM(co.cashReserves)} cash but no cashAsOf date` });
+      flags.push({ category: "missing", severity: "LOW", message: `Has $${fmtM(co.cashReserves ?? 0)} cash but no cashAsOf date` });
     }
   }
 
   // Preferred staleness
-  if (co.preferredEquity > 0) {
+  if ((co.preferredEquity ?? 0) > 0) {
     if (preferredDays !== null && preferredDays > 365) {
       stalenessScore += 2;
-      flags.push({ category: "staleness", severity: "HIGH", message: `Preferred ${preferredDays}d old — $${fmtM(co.preferredEquity)} (${co.preferredAsOf})` });
+      flags.push({ category: "staleness", severity: "HIGH", message: `Preferred ${preferredDays}d old — $${fmtM(co.preferredEquity ?? 0)} (${co.preferredAsOf})` });
     } else if (preferredDays !== null && preferredDays > 180) {
       stalenessScore += 1;
-      flags.push({ category: "staleness", severity: "MEDIUM", message: `Preferred ${preferredDays}d old — $${fmtM(co.preferredEquity)} (${co.preferredAsOf})` });
+      flags.push({ category: "staleness", severity: "MEDIUM", message: `Preferred ${preferredDays}d old — $${fmtM(co.preferredEquity ?? 0)} (${co.preferredAsOf})` });
     } else if (preferredDays === null) {
       stalenessScore += 2;
-      flags.push({ category: "missing", severity: "HIGH", message: `Has $${fmtM(co.preferredEquity)} preferred but no preferredAsOf date` });
+      flags.push({ category: "missing", severity: "HIGH", message: `Has $${fmtM(co.preferredEquity ?? 0)} preferred but no preferredAsOf date` });
     }
   }
 
   // ── 2. COMPLEXITY ─────────────────────────────────────────────
 
-  if (co.hasSecondaryHoldings) {
+  if (co.secondaryCryptoHoldings && co.secondaryCryptoHoldings.length > 0) {
     complexityScore += 2;
     flags.push({ category: "complexity", severity: "MEDIUM", message: "Has secondary crypto holdings (multi-asset)" });
   }
-  if (co.hasCryptoInvestments) {
+  if (co.cryptoInvestments && co.cryptoInvestments.length > 0) {
     complexityScore += 3;
     flags.push({ category: "complexity", severity: "HIGH", message: "Has crypto investments (fund/LST/equity) — double-counting risk" });
   }
-  if (co.hasMultiHoldings) {
+  if ((co.preferredEquity ?? 0) > 0) {
     complexityScore += 1;
-    flags.push({ category: "complexity", severity: "LOW", message: "Has D1 multiHoldings overlay" });
+    flags.push({ category: "complexity", severity: "LOW", message: `Preferred equity: $${fmtM(co.preferredEquity ?? 0)}` });
   }
-  if (co.hasPreferredEquity) {
+  if ((co.restrictedCash ?? 0) > 0) {
     complexityScore += 1;
-    flags.push({ category: "complexity", severity: "LOW", message: `Preferred equity: $${fmtM(co.preferredEquity)}` });
+    flags.push({ category: "complexity", severity: "LOW", message: `Restricted cash: $${fmtM(co.restrictedCash ?? 0)}` });
   }
-  if (co.hasRestrictedCash) {
-    complexityScore += 1;
-    flags.push({ category: "complexity", severity: "LOW", message: `Restricted cash: $${fmtM(co.restrictedCash)}` });
-  }
-  if (co.isForeignStock) {
+  const isForeignStock = /\.(T|HK|ST|DU|AX|SA|L|KQ|AD)$/.test(co.ticker) || co.ticker === "ALCPB";
+  if (isForeignStock) {
     complexityScore += 2;
     flags.push({ category: "complexity", severity: "MEDIUM", message: "Foreign stock — forex rate dependency" });
   }
-  if (co.totalDebt > 100_000_000) {
+  if ((co.totalDebt ?? 0) > 100_000_000) {
     complexityScore += 1;
-    flags.push({ category: "complexity", severity: "LOW", message: `Large debt: $${fmtM(co.totalDebt)}` });
+    flags.push({ category: "complexity", severity: "LOW", message: `Large debt: $${fmtM(co.totalDebt ?? 0)}` });
   }
-  if (co.totalDebt > 1_000_000_000) {
+  if ((co.totalDebt ?? 0) > 1_000_000_000) {
     complexityScore += 1;
   }
 
   // ── 3. STRUCTURAL CHECKS ─────────────────────────────────────
 
-  // Missing sharesForMnav — only flag if not dynamic
-  if (co.sharesForMnav === null && !co.hasDynamicShares && !co.pendingMerger) {
+  if (!co.sharesForMnav && !co.pendingMerger) {
     outlierScore += 3;
     flags.push({ category: "missing", severity: "HIGH", message: "No sharesForMnav — mNAV falls back to API market cap" });
   }
@@ -398,12 +305,12 @@ function auditCompany(co: CompanyAudit, prices: LivePrices | null): AuditResult 
     flags.push({ category: "structural", severity: "HIGH", message: "Zero holdings — mNAV is undefined" });
   }
 
-  if (co.cashReserves === 0 && co.cashAsOf === null && co.totalDebt > 0) {
+  if ((co.cashReserves ?? 0) === 0 && !co.cashAsOf && (co.totalDebt ?? 0) > 0) {
     outlierScore += 1;
     flags.push({ category: "missing", severity: "MEDIUM", message: "Has debt but no cash data — EV may be overstated" });
   }
 
-  if (co.totalDebt === 0 && co.debtAsOf === null && !co.pendingMerger) {
+  if ((co.totalDebt ?? 0) === 0 && !co.debtAsOf && !co.pendingMerger) {
     flags.push({ category: "missing", severity: "LOW", message: "No debt data (may be correct if debt-free)" });
   }
 
@@ -412,8 +319,8 @@ function auditCompany(co: CompanyAudit, prices: LivePrices | null): AuditResult 
   }
 
   // Unusual capital structure
-  if (co.totalDebt > 0 && co.preferredEquity > co.totalDebt) {
-    flags.push({ category: "structural", severity: "MEDIUM", message: `Preferred ($${fmtM(co.preferredEquity)}) exceeds debt ($${fmtM(co.totalDebt)}) — unusual capital structure` });
+  if ((co.totalDebt ?? 0) > 0 && (co.preferredEquity ?? 0) > (co.totalDebt ?? 0)) {
+    flags.push({ category: "structural", severity: "MEDIUM", message: `Preferred ($${fmtM(co.preferredEquity ?? 0)}) exceeds debt ($${fmtM(co.totalDebt ?? 0)}) — unusual capital structure` });
   }
 
   const totalScore = outlierScore + stalenessScore + complexityScore;
@@ -422,14 +329,18 @@ function auditCompany(co: CompanyAudit, prices: LivePrices | null): AuditResult 
     ticker: co.ticker,
     name: co.name,
     asset: co.asset,
-    isMiner: co.isMiner,
+    isMiner: co.isMiner || false,
     outlierScore,
     stalenessScore,
     complexityScore,
     totalScore,
     flags,
     liveMnav,
-    mnavSource,
+    mnavWarnings,
+    d1Fields,
+    totalDebt: co.totalDebt ?? 0,
+    cashReserves: co.cashReserves ?? 0,
+    preferredEquity: co.preferredEquity ?? 0,
   };
 }
 
@@ -464,6 +375,7 @@ function colorMnav(mnav: number | null): string {
 
 function colorDays(days: number | null): string {
   if (days === -1) return `${DIM}—${RESET}`;
+  if (days === -2) return `\x1b[36mdyn${RESET}`;  // cyan for dynamic/D1
   if (days === null) return `\x1b[31m??${RESET}`;
   if (days <= 45) return `\x1b[32m${days}d${RESET}`;
   if (days <= 90) return `${days}d`;
@@ -475,14 +387,31 @@ function colorDays(days: number | null): string {
 // ── Main ────────────────────────────────────────────────────────────
 
 async function run() {
-  const companies = extractCompanies();
   const tickerFilter = process.argv.find(a => a.startsWith("--ticker="))?.split("=")[1]?.toUpperCase();
   const jsonMode = process.argv.includes("--json");
   const verbose = process.argv.includes("--verbose");
   const offline = process.argv.includes("--offline");
+  const noD1 = process.argv.includes("--no-d1");
+
+  // Start with static companies
+  let companies: Company[] = [...allCompanies];
+
+  // Fetch D1 overlay (matches live site behavior)
+  if (!noD1) {
+    process.stdout.write("Fetching D1 overlay... ");
+    try {
+      const tickers = companies.map(c => c.ticker);
+      const { d1, sources, dates, quotes, searchTerms, accessions } = await fetchD1Overlay(tickers);
+      const d1Count = Object.keys(d1).length;
+      companies = applyD1Overlay(companies, d1, sources, dates, quotes, searchTerms, accessions);
+      console.log(`${d1Count} companies with D1 data`);
+    } catch (e) {
+      console.log(`FAILED: ${(e as Error).message} (using static only)`);
+    }
+  }
 
   // Fetch live prices
-  let prices: LivePrices | null = null;
+  let prices: PricesData = null;
   if (!offline) {
     process.stdout.write("Fetching live prices... ");
     prices = await fetchLivePrices();
@@ -510,6 +439,7 @@ async function run() {
   console.log();
   console.log("=".repeat(78));
   console.log(`${BOLD}mNAV AUDIT REPORT${RESET}  —  ${filtered.length} companies ranked by audit priority`);
+  if (!noD1) console.log(`${DIM}Using D1 overlay (same as live site). Pass --no-d1 for static-only.${RESET}`);
   console.log("=".repeat(78));
   console.log();
 
@@ -521,23 +451,22 @@ async function run() {
     console.log(`${BOLD}LIVE mNAV OVERVIEW${RESET}  (${withMnav.length} calculable, ${suspicious.length} suspicious)`);
     console.log();
 
-    // Show mNAV table: all companies sorted by mNAV
     console.log("  " + "Ticker".padEnd(10) + "mNAV".padEnd(10) + "Asset".padEnd(6) + "Debt".padEnd(12) + "Pref".padEnd(12) + "Cash".padEnd(12) + "Score");
     console.log("  " + "-".repeat(68));
 
     for (const r of withMnav) {
-      const co = filtered.find(c => c.ticker === r.ticker)!;
       const mnavStr = colorMnav(r.liveMnav);
       const scoreStr = r.totalScore > 0 ? `${r.totalScore}` : `${DIM}0${RESET}`;
+      const d1Tag = r.d1Fields.length > 0 ? ` ${DIM}[D1]${RESET}` : "";
       console.log(
         "  " +
         r.ticker.padEnd(10) +
         mnavStr.padEnd(10 + 9) + // +9 for ANSI
         r.asset.padEnd(6) +
-        (co.totalDebt > 0 ? `$${fmtM(co.totalDebt)}` : `${DIM}—${RESET}`).padEnd(12 + (co.totalDebt > 0 ? 0 : 9)) +
-        (co.preferredEquity > 0 ? `$${fmtM(co.preferredEquity)}` : `${DIM}—${RESET}`).padEnd(12 + (co.preferredEquity > 0 ? 0 : 9)) +
-        (co.cashReserves > 0 ? `$${fmtM(co.cashReserves)}` : `${DIM}—${RESET}`).padEnd(12 + (co.cashReserves > 0 ? 0 : 9)) +
-        scoreStr
+        (r.totalDebt > 0 ? `$${fmtM(r.totalDebt)}` : `${DIM}—${RESET}`).padEnd(12 + (r.totalDebt > 0 ? 0 : 9)) +
+        (r.preferredEquity > 0 ? `$${fmtM(r.preferredEquity)}` : `${DIM}—${RESET}`).padEnd(12 + (r.preferredEquity > 0 ? 0 : 9)) +
+        (r.cashReserves > 0 ? `$${fmtM(r.cashReserves)}` : `${DIM}—${RESET}`).padEnd(12 + (r.cashReserves > 0 ? 0 : 9)) +
+        scoreStr + d1Tag
       );
     }
 
@@ -606,16 +535,16 @@ async function run() {
   console.log("-".repeat(78));
   console.log();
   console.log("  " + "Ticker".padEnd(10) + "Holdings".padEnd(14) + "Shares".padEnd(14) + "Debt".padEnd(14) + "Cash".padEnd(14) + "Preferred".padEnd(14));
-  console.log("  " + "-".repeat(10) + "-".repeat(14) + "-".repeat(14) + "-".repeat(14) + "-".repeat(14) + "-".repeat(14));
+  console.log("  " + "-".repeat(80));
 
   const forHeatmap = filtered
     .map(co => ({
       ticker: co.ticker,
-      holdings: co.hasDynamicHoldings ? -2 : daysSince(co.holdingsLastUpdated),
-      shares: co.hasDynamicShares ? -2 : daysSince(co.sharesAsOf),
-      debt: co.totalDebt > 0 ? daysSince(co.debtAsOf) : -1,
-      cash: co.cashReserves > 0 ? daysSince(co.cashAsOf) : -1,
-      preferred: co.preferredEquity > 0 ? daysSince(co.preferredAsOf) : -1,
+      holdings: hasDynamicField(co, 'holdings') ? -2 : daysSince(co.holdingsLastUpdated),
+      shares: hasDynamicField(co, 'shares') ? -2 : daysSince(co.sharesAsOf),
+      debt: (co.totalDebt ?? 0) > 0 ? daysSince(co.debtAsOf) : -1,
+      cash: (co.cashReserves ?? 0) > 0 ? daysSince(co.cashAsOf) : -1,
+      preferred: (co.preferredEquity ?? 0) > 0 ? daysSince(co.preferredAsOf) : -1,
     }))
     .sort((a, b) => {
       const vals = (r: typeof a) => [r.holdings, r.shares, r.debt, r.cash, r.preferred].filter(v => v !== null && v >= 0);
@@ -628,11 +557,11 @@ async function run() {
     console.log(
       "  " +
       row.ticker.padEnd(10) +
-      colorDaysExt(row.holdings).padEnd(14 + 9) +
-      colorDaysExt(row.shares).padEnd(14 + 9) +
-      colorDaysExt(row.debt).padEnd(14 + 9) +
-      colorDaysExt(row.cash).padEnd(14 + 9) +
-      colorDaysExt(row.preferred).padEnd(14 + 9)
+      colorDays(row.holdings).padEnd(14 + 9) +
+      colorDays(row.shares).padEnd(14 + 9) +
+      colorDays(row.debt).padEnd(14 + 9) +
+      colorDays(row.cash).padEnd(14 + 9) +
+      colorDays(row.preferred).padEnd(14 + 9)
     );
   }
 
@@ -659,13 +588,19 @@ function printCompanyResult(r: AuditResult, showFlags: boolean) {
   const scoreStr = `[${r.outlierScore}+${r.stalenessScore}+${r.complexityScore}=${r.totalScore}]`;
   const minerTag = r.isMiner ? ` ${DIM}(miner)${RESET}` : "";
   const mnavTag = r.liveMnav !== null ? `  mNAV=${colorMnav(r.liveMnav)}` : "";
+  const d1Tag = r.d1Fields.length > 0 ? `  ${DIM}[D1: ${r.d1Fields.join(",")}]${RESET}` : "";
   console.log();
-  console.log(`  ${BOLD}${r.ticker}${RESET} ${r.name} (${r.asset})${minerTag}  ${DIM}${scoreStr}${RESET}${mnavTag}`);
+  console.log(`  ${BOLD}${r.ticker}${RESET} ${r.name} (${r.asset})${minerTag}  ${DIM}${scoreStr}${RESET}${mnavTag}${d1Tag}`);
   if (showFlags) {
     for (const f of r.flags) {
       if (f.severity === "LOW" && !process.argv.includes("--verbose")) continue;
       const color = severityColor(f.severity);
       console.log(`    ${color}${f.severity.padEnd(6)}${RESET} ${f.message}`);
+    }
+    if (r.mnavWarnings.length > 0) {
+      for (const w of r.mnavWarnings) {
+        console.log(`    ${DIM}⚠ ${w}${RESET}`);
+      }
     }
   } else {
     const highFlags = r.flags.filter(f => f.severity === "HIGH" || f.severity === "MEDIUM");
@@ -673,11 +608,6 @@ function printCompanyResult(r: AuditResult, showFlags: boolean) {
       console.log(`    ${highFlags.map(f => `${severityColor(f.severity)}${f.message}${RESET}`).join("; ")}`);
     }
   }
-}
-
-function colorDaysExt(days: number | null): string {
-  if (days === -2) return `\x1b[36mdyn${RESET}`;  // cyan for dynamic
-  return colorDays(days);
 }
 
 run();

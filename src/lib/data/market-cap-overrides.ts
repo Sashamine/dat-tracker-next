@@ -65,5 +65,5 @@ export const FALLBACK_STOCKS: Record<string, { price: number; marketCap: number 
   "XTAIF": { price: 0.50, marketCap: 18_900_000 },  // Updated Jan 26, 2026 - TMX Money XTAO.U
   "IHLDF": { price: 0.10, marketCap: 10_000_000 },
   "LUXFF": { price: 0.05, marketCap: 1_580_000 },  // 31.55M shares × ~$0.05 USD (Jan 2026 SEDAR+ verified)
-  "NA": { price: 1.50, marketCap: 81_000_000 },
+  "NA": { price: 2.95, marketCap: 70_000_000 },  // 23.6M shares × $2.95 (Mar 2026)
 };

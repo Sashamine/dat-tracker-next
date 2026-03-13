@@ -123,6 +123,15 @@ export async function GET(request: NextRequest) {
 
   const tickers = allTickers.slice(offset, offset + limit);
 
+  // Load entity-metric config to determine auto-approve status per entity+metric.
+  // Entities with auto_approve=0 get status='candidate' instead of 'approved'.
+  const configRows = await d1.query<{ entity_id: string; metric: string; auto_approve: number }>(
+    `SELECT entity_id, metric, auto_approve FROM entity_metric_config WHERE auto_approve = 0`
+  ).catch(() => ({ results: [] as { entity_id: string; metric: string; auto_approve: number }[] }));
+  const noAutoApprove = new Set(
+    (configRows.results || []).map(r => `${r.entity_id}|${r.metric}`)
+  );
+
   if (!dryRun) {
     await d1.query(
       `INSERT OR REPLACE INTO runs (run_id, started_at, ended_at, trigger, code_sha, notes)
@@ -319,14 +328,15 @@ export async function GET(request: NextRequest) {
             continue;
           }
 
+          const seedStatus = noAutoApprove.has(`${ticker}|${r.metric}`) ? 'candidate' : 'approved';
           const seed = await d1.query(
             `UPDATE datapoints
              SET proposal_key = ?,
-                 status = 'approved'
+                 status = ?
              WHERE datapoint_id = ?
                AND proposal_key IS NULL
                AND NOT EXISTS (SELECT 1 FROM datapoints WHERE proposal_key = ?);`,
-            [proposalKey, legacy.datapoint_id, proposalKey]
+            [proposalKey, seedStatus, legacy.datapoint_id, proposalKey]
           );
 
           const seeded = Number(seed.meta?.changes || 0) > 0;
@@ -334,6 +344,9 @@ export async function GET(request: NextRequest) {
           else datapointsNoop += 1;
           continue;
         }
+
+        // Check entity_metric_config: if auto_approve=0, write as 'candidate' (invisible on site)
+        const metricStatus = noAutoApprove.has(`${ticker}|${r.metric}`) ? 'candidate' : 'approved';
 
         const incoming = {
           value: r.value,
@@ -347,7 +360,7 @@ export async function GET(request: NextRequest) {
           confidence: 1.0,
           flags_json: r.flags_json || null,
           confidence_details_json: null as string | null,
-          status: 'approved',
+          status: metricStatus,
         };
 
         await d1.query(

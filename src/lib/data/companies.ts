@@ -1284,10 +1284,10 @@ export const btcCompanies: Company[] = [
     holdings: 1_830,
     holdingsLastUpdated: "2026-02-28",
     holdingsSource: "sec-filing",
-    holdingsSourceUrl: "/filings/fufu/0001213900-25-108472",
-    accessionNumber: "0001213900-25-108472",
+    holdingsSourceUrl: "/filings/fufu/0001213900-26-023884",
+    accessionNumber: "0001213900-26-023884",
     sourceType: "sec-filing",
-    sourceQuote: "1,830 BTC held",
+    sourceQuote: "Bitcoin Held: 1,830 BTC, an increase of 34 BTC from January 31, 2026",
     datStartDate: "2024-01-01",
     website: "https://bitfufu.com",
     secCik: "0001921158",
@@ -1301,20 +1301,20 @@ export const btcCompanies: Company[] = [
     sharesSourceQuote: "Weighted average shares outstanding - basic: 164,516,040 (Q3 2025)",
     sharesSourceUrl: "/filings/fufu/0001213900-25-108472",
     sharesAsOf: "2025-09-30",
-    totalDebt: 141_301_000,  // Includes $101.3M payables + reduced $15M credit line (was $40M)
+    totalDebt: 109_000_000,  // $15M credit line (reduced from $40M) + ~$94M long-term AP (Dec 31, 2025)
     debtAsOf: "2026-02-28",
-    debtSourceQuote: "$101.3M payables + $15M credit line (reduced from $40M). SEC 6-K Q2 2025.",
-    debtSourceUrl: "/filings/fufu/0001213900-25-084744",
+    debtSourceQuote: "reduced outstanding borrowings on our $100 million line of credit to $15 million; long-term accounts payable balance decreased to approximately $94 million as of December 31, 2025",
+    debtSourceUrl: "/filings/fufu/0001213900-26-023884",
     cashReserves: 40_000_000,  // Mar 2026 update: maintains ~$40M cash position
-    cashSource: "Mar 2026 Corporate Update",
-    cashSourceQuote: "Mar 2026 Corporate Update",
-    cashSourceUrl: "/filings/fufu/0001213900-25-084744",
+    cashSource: "SEC 6-K Mar 5, 2026 (Feb 2026 production update)",
+    cashSourceQuote: "approximately $40 million in cash and cash equivalents",
+    cashSourceUrl: "/filings/fufu/0001213900-26-023884",
     cashAsOf: "2026-02-28",
     encumberedHoldings: 476,  // 476 BTC pledged for miner procurement
     encumberedSource: "SEC 6-K Q2 2025: 476 BTC pledged as collateral for mining equipment procurement",
     encumberedSourceUrl: "/filings/fufu/0001213900-25-084744",
     strategy: "HODL-forward miner with dedicated BTC management team. Cloud mining platform (641k+ users).",
-    notes: "Singapore (Nasdaq FUFU). 1,830 BTC held; 476 BTC pledged for miner procurement. Credit line debt reduced to $15M. 2025 Net Income ~$41.8M. BITMAIN partner with 26.4 EH/s managed.",
+    notes: "Singapore (Nasdaq FUFU). 1,830 BTC held (Feb 28, 2026); 476 BTC pledged for miner procurement. Credit line reduced $40M→$15M; LT AP ~$94M (Dec 31). 2025 Net Income ~$41.8M. BITMAIN partner. Feb 2026: 26.4 EH/s, 227 BTC produced, 8.1 BTC/day.",
   },
   // EXOD (Exodus Movement) REMOVED - not a DAT accumulator
   // They hold BTC but sell it for operations/acquisitions, no explicit accumulation strategy
@@ -2342,12 +2342,13 @@ export const hypeCompanies: Company[] = [
     burnSourceUrl: "/filings/hypd/0001410578-25-001361",
     burnAsOf: "2025-03-31",
     capitalRaisedPipe: 50_000_000,
-    // Shares: 8,097,659 common (Nov 10, 2025) + 5,435,897 preferred × 3 conversion = 24.4M FD
+    // Shares: 8,397,659 common (Jan 5, 2026: 8,097,659 + 300K from preferred conversion) + 5,335,897 remaining preferred × 3 = 24.4M FD
+    // 8-K Jan 5, 2026 (0001104659-26-000748): 100K Series A Preferred → 300K common (3:1 conversion). FD unchanged.
     sharesForMnav: 24_400_000,
-    sharesSourceUrl: "/filings/hypd/0001104659-25-111671",
-    sharesSource: "SEC 10-Q Nov 14, 2025 (8.1M common + 16.3M from preferred conversion)",
-    sharesSourceQuote: "SEC 10-Q Nov 14, 2025 (8.1M common + 16.3M from preferred conversion)",
-    sharesAsOf: "2025-11-10",
+    sharesSourceUrl: "/filings/hypd/0001104659-26-000748",
+    sharesSource: "SEC 8-K Jan 5, 2026 (8.4M common + 16.0M from remaining preferred conversion)",
+    sharesSourceQuote: "100,000 shares of Series A Preferred Stock were converted into 300,000 shares of common stock",
+    sharesAsOf: "2026-01-05",
     cashReserves: 8_223_180,  // SEC 10-Q Sep 30, 2025
     cashSource: "SEC 10-Q Q3 2025",
     cashSourceQuote: "SEC 10-Q Q3 2025",
@@ -2362,9 +2363,9 @@ export const hypeCompanies: Company[] = [
     debtSourceQuote: "SEC 10-Q Q3 2025",
     debtSourceUrl: "/filings/hypd/0001104659-25-111671",
     debtAsOf: "2025-09-30",
-    leader: "Hyunsu Jung (CEO)",
+    leader: "Hyunsu Jung (CEO, appointed Jan 1, 2026)",
     strategy: "First US public HYPE treasury. Liquid staking via Kinetiq.",
-    notes: "Rebranded from Eyenovia Jul 2025. 1-for-80 reverse split Jan 31, 2025. $500M ATM (Cantor/Chardan, Nov 2025) + $1B S-3 shelf. Dec 4: bought 150K HYPE (total 1.86M); 1.92M KNTQ airdrop; 300K HYPE to Native Markets for USDH. Rysk vault (Feb 2026). Avanza Pension 10.2% holder.",
+    notes: "Rebranded from Eyenovia Jul 2025. 1-for-80 reverse split Jan 31, 2025. $500M ATM (Cantor/Chardan, Nov 2025) + $1B S-3 shelf. Dec 4: bought 150K HYPE (total 1.86M); 1.92M KNTQ airdrop; 300K HYPE to Native Markets for USDH. Rysk vault (Feb 2026). Avanza Pension 10.2% holder. Jan 5, 2026: 100K preferred → 300K common conversion; new CEO Hyunsu Jung (ex-DARMA Capital PM).",
     dataWarnings: [
       {
         type: "stale-data",
@@ -3196,11 +3197,11 @@ export const dogeCompanies: Company[] = [
     capitalRaisedAtmSource: "SEC 20-F / 6-K filings",
     capitalRaisedAtmSourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001735556&type=20-F",
     avgDailyVolume: 3_000_000,
-    sharesForMnav: 1_500_000,  // Post 1:60 reverse split Jan 20, 2026 (was 88.6M -> 1.5M)
-    sharesSourceUrl: "/filings/btog/0001104659-25-105009",
+    sharesForMnav: 1_500_000,  // Post 1:60 reverse split Jan 20, 2026 (was 88.6M → ~1.48M Class A + 12.8K Class B)
+    sharesSourceUrl: "/filings/btog/0001104659-26-005086",
     sharesAsOf: "2026-01-20",
-    sharesSource: "SEC 6-K Jan 20, 2026 (1:60 reverse split)",
-    sharesSourceQuote: "SEC 6-K Jan 20, 2026 (1:60 reverse split)",
+    sharesSource: "SEC 6-K Jan 20, 2026 (1:60 reverse split: 88.6M → ~1.5M Class A, 768K → 12.8K Class B)",
+    sharesSourceQuote: "the number of outstanding Class A ordinary shares will be reduced from approximately 88.6 million to approximately 1.5 million and the number of outstanding Class B ordinary shares will be reduced from 768,000 to 12,800 shares",
     totalDebt: 16_338_506,  // $10M Series A-1 + $5M Series B-1 + $1.34M Series C-1 convertible notes
     debtSource: "SEC 20-F Oct 31, 2025 + 6-K Jan 20, 2026 (convertible notes)",
     debtSourceQuote: "SEC 20-F Oct 31, 2025 + 6-K Jan 20, 2026 (convertible notes)",
@@ -3215,7 +3216,7 @@ export const dogeCompanies: Company[] = [
     encumberedHoldings: 40_543_745,  // DOGE pledged as collateral per 20-F FY2025
     leader: "Jinghai Jiang (CEO)",
     strategy: "Quarterly DOGE acquisitions via $500M facility.",
-    notes: "Nasdaq listed. 1:60 reverse split Jan 20, 2026. $16.3M convertible debt outstanding. 40.5M DOGE (57.5%) pledged as collateral for financings/convertible notes (20-F). Audit note 2026-03-05: lock metadata re-anchored to SEC 6-K/legal channel and cash normalized to D1/XBRL value ($55,639). Data quality classification: LEGAL_MATCH for shares; holdings are legal-channel anchored but not yet mapped to a single exhibit-level quote URL in-repo.",
+    notes: "Nasdaq listed. 1:60 reverse split Jan 20, 2026 (88.6M→1.5M Class A). Feb 11, 2026: regained Nasdaq min bid compliance. $16.3M convertible debt outstanding. 40.5M DOGE (57.5%) pledged as collateral for financings/convertible notes (20-F). Audit note 2026-03-05: lock metadata re-anchored to SEC 6-K/legal channel and cash normalized to D1/XBRL value ($55,639).",
   },
 ];
 
