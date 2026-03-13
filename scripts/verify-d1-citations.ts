@@ -121,19 +121,65 @@ function findSnippetInDocument(document: string, snippet: string): boolean {
 // ---------------------------------------------------------------------------
 
 /**
- * Extract numbers appearing near (within ~500 chars of) the search term in doc text.
- * Returns all candidate numbers, sorted by proximity to the search term.
+ * Try to locate a search term in a document. Tries the literal term first,
+ * then falls back to alternative representations:
+ * - Raw digits (strip commas/spaces from the search term)
+ * - Scaled formats: "160,200,000" → look for "160,200" or "160.2"
  */
-function extractNumbersNearSnippet(document: string, snippet: string): number[] {
+function findSearchTermInDoc(document: string, snippet: string): { index: number; length: number } | null {
+  // 1. Try literal match
   const escaped = snippet.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const pattern = escaped.replace(/\s+/g, '\\s+');
   const regex = new RegExp(pattern, 'gi');
   const match = regex.exec(document);
-  if (!match) return [];
+  if (match) return { index: match.index, length: match[0].length };
 
-  const matchPos = match.index;
+  // 2. Try raw digits (e.g., "315,332,655" → "315332655")
+  const digits = snippet.replace(/[,\s$]/g, '');
+  if (/^\d+\.?\d*$/.test(digits)) {
+    const idx = document.indexOf(digits);
+    if (idx >= 0) return { index: idx, length: digits.length };
+  }
+
+  // 3. For "X million" / "X billion" style terms, try finding "X" near "million"/"billion"
+  const millionMatch = snippet.match(/^([\d,.]+)\s*(million|billion|thousand)/i);
+  if (millionMatch) {
+    const numPart = millionMatch[1].replace(/[,\s]/g, '');
+    const unitPart = millionMatch[2].toLowerCase();
+    // Search for the numeric part followed loosely by the unit word
+    const loosePattern = new RegExp(numPart.replace(/\./g, '\\.') + '[\\s,]*' + unitPart, 'gi');
+    const looseMatch = loosePattern.exec(document);
+    if (looseMatch) return { index: looseMatch.index, length: looseMatch[0].length };
+    // Also try just finding the number part
+    const numIdx = document.indexOf(numPart);
+    if (numIdx >= 0) return { index: numIdx, length: numPart.length };
+  }
+
+  // 4. For large numbers, try finding a truncated version
+  // e.g., "315,332,655" → try "315,332" or "315332"
+  // Only use 6+ digit prefixes to avoid false matches on short numbers
+  if (/^\d[\d,]+$/.test(snippet.trim()) && digits.length >= 7) {
+    for (const len of [7, 6]) {
+      const prefix = digits.slice(0, len);
+      const idx = document.indexOf(prefix);
+      if (idx >= 0) return { index: idx, length: prefix.length };
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Extract numbers appearing near (within ~500 chars of) the search term in doc text.
+ * Returns all candidate numbers, sorted by proximity to the search term.
+ */
+function extractNumbersNearSnippet(document: string, snippet: string): number[] {
+  const found = findSearchTermInDoc(document, snippet);
+  if (!found) return [];
+
+  const matchPos = found.index;
   const windowStart = Math.max(0, matchPos - 500);
-  const windowEnd = Math.min(document.length, matchPos + snippet.length + 500);
+  const windowEnd = Math.min(document.length, matchPos + found.length + 500);
   const window = document.slice(windowStart, windowEnd);
 
   // Match numbers: 1,234,567 or 1234567 or 1,234.56 or $1.2B etc.
