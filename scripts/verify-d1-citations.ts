@@ -78,8 +78,8 @@ async function fetchR2Document(ticker: string, accession: string): Promise<strin
   ];
 
   for (const prefix of orderedPrefixes) {
-    // Try .txt first, then without extension (some foreign docs)
-    for (const suffix of ['.txt', '']) {
+    // Try .txt first, then exhibit.txt, then without extension (some foreign docs)
+    for (const suffix of ['.txt', '.exhibit.txt', '']) {
       const url = `${R2_BASE_URL}/${prefix}/${tickerLower}/${accession}${suffix}`;
       try {
         const res = await fetch(url);
@@ -87,7 +87,19 @@ async function fetchR2Document(ticker: string, accession: string): Promise<strin
           const contentType = res.headers.get('content-type') || '';
           // Skip PDFs — can't search text in them
           if (contentType.includes('pdf')) continue;
-          return await res.text();
+          const text = await res.text();
+          // If we got the cover page (.txt) AND an exhibit exists, concatenate them
+          if (suffix === '.txt') {
+            const exhibitUrl = `${R2_BASE_URL}/${prefix}/${tickerLower}/${accession}.exhibit.txt`;
+            try {
+              const exhibitRes = await fetch(exhibitUrl);
+              if (exhibitRes.ok) {
+                const exhibitText = await exhibitRes.text();
+                return text + '\n\n' + exhibitText;
+              }
+            } catch {}
+          }
+          return text;
         }
       } catch {
         continue;
@@ -586,8 +598,11 @@ async function main() {
   // -------------------------------------------------------------------------
   // Only check datapoints that have a search term and an accession (document link).
   // Skip derived/carried-forward values (prefixed with [Derived], [Carried forward], etc.)
+  // Skip XBRL-sourced datapoints — already verified in step 1 via re-extraction.
+  // XBRL numbers live in structured data attributes, not visible filing text,
+  // so text-based value extraction is unreliable for them.
   const DERIVED_PREFIXES = ['[Zero', '[Derived', '[Carried', '[Pre-filing', '[SPAC', '[Historical'];
-  const valueCheckRows = rows.filter((r) => {
+  const allValueCheckRows = rows.filter((r) => {
     if (!r.citation_search_term || !r.accession) return false;
     if (r.value === 0) return false; // Zero values are often special
     // Skip derived citations — no number to extract from document
@@ -595,11 +610,13 @@ async function main() {
     if (DERIVED_PREFIXES.some((p) => quote.startsWith(p))) return false;
     return true;
   });
+  const xbrlSkipped = allValueCheckRows.filter((r) => r.method === 'sec_companyfacts_xbrl');
+  const valueCheckRows = allValueCheckRows.filter((r) => r.method !== 'sec_companyfacts_xbrl');
 
   console.log(`\n${'='.repeat(60)}`);
   console.log('4. VALUE EXTRACTION VERIFICATION (number near search term)');
   console.log(`${'='.repeat(60)}`);
-  console.log(`  ${valueCheckRows.length} datapoints to verify\n`);
+  console.log(`  ${valueCheckRows.length} datapoints to verify (${xbrlSkipped.length} XBRL-sourced skipped — verified in step 1)\n`);
 
   const valueChecks: ValueCheck[] = [];
 
@@ -758,7 +775,7 @@ async function main() {
 
   console.log(`  XBRL checks:       ${xbrlChecks.length} (${xbrlPass.length} pass, ${xbrlIssues} issues, ${xbrlFailed.length} can't verify)`);
   console.log(`  Quote checks:      ${quoteChecks.length} (${quoteChecks.filter((c) => c.status === 'pass').length} pass, ${quoteIssues} synthetic/missing)`);
-  console.log(`  Value checks:      ${valueChecks.length} (${vPass.length + vPassScaled.length} pass [${vPassScaled.length} scaled], ${valueIssues} mismatches, ${vWeakSearch.length} weak search, ${vNoCandidates.length} no candidates)`);
+  console.log(`  Value checks:      ${valueChecks.length} text-based + ${xbrlSkipped.length} XBRL-verified (${vPass.length + vPassScaled.length} pass [${vPassScaled.length} scaled], ${valueIssues} mismatches, ${vWeakSearch.length} weak search, ${vNoCandidates.length} no candidates)`);
   console.log(`  Provenance:        ${full.length}/${provenanceChecks.length} full coverage (${((full.length / provenanceChecks.length) * 100).toFixed(1)}%)`);
   console.log(`  Total issues:      ${totalIssues} (real mismatches only)`);
 
