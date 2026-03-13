@@ -346,11 +346,11 @@ export const ethCompanies: Company[] = [
     capitalRaisedAtmSourceUrl: "https://efts.sec.gov/LATEST/search-index?q=%22BTCS%22&forms=S-3",
     avgDailyVolume: 15_000_000,
     hasOptions: true,
-    sharesForMnav: 50_000_000,  // D1 XBRL Feb 5, 2026: CommonStockSharesOutstanding = 50M. Matches holdings-history.
-    sharesSourceUrl: "/filings/btcs/0001493152-26-003924",
-    sharesSource: "SEC XBRL Feb 5, 2026",
-    sharesSourceQuote: "SEC XBRL Feb 5, 2026: CommonStockSharesOutstanding = 50,000,000",
-    sharesAsOf: "2026-02-05",
+    sharesForMnav: 46_838_532,  // Q3 2025 10-Q cover page: 46,838,532 shares outstanding as of Nov 10, 2025
+    sharesSourceUrl: "/filings/btcs/0001493152-25-022359",
+    sharesSource: "SEC 10-Q Q3 2025",
+    sharesSourceQuote: "As of November 10, 2025, there were 46,838,532 shares of Common Stock outstanding",
+    sharesAsOf: "2025-11-10",
     leader: "Charles Allen",
     totalDebt: 61_660_526,  // $7,810,526 May convert + $10,050,000 Jul convert + $43,800,000 Aave DeFi
     debtSource: "SEC 8-K Feb 6, 2026: $43.8M Aave DeFi debt + Q3 10-Q: $17.86M convertible notes face value",

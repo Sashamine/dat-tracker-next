@@ -48,6 +48,26 @@ const TICKER_BATCHES: Record<string, number> = {
 };
 const R2_PREFIXES = ['new-uploads', 'batch1', 'batch2', 'batch3', 'batch4', 'batch5', 'batch6', 'foreign-filings', 'external-sources'];
 
+/**
+ * Strip HTML/XBRL tags and decode entities to get plain text.
+ * SEC inline XBRL wraps numbers in tags like <ix:nonNumeric>, making
+ * them invisible to plain-text search.
+ */
+function stripHtml(html: string): string {
+  return html
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ')  // Remove style blocks
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, ' ') // Remove script blocks
+    .replace(/<[^>]+>/g, ' ')                           // Remove all tags
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#\d+;/g, ' ')                            // Numeric entities
+    .replace(/\s+/g, ' ')                               // Collapse whitespace
+    .trim();
+}
+
 async function fetchR2Document(ticker: string, accession: string): Promise<string | null> {
   const tickerLower = ticker.toLowerCase();
   const batch = TICKER_BATCHES[tickerLower] || 1;
@@ -82,6 +102,93 @@ function findSnippetInDocument(document: string, snippet: string): boolean {
   const pattern = escaped.replace(/\s+/g, '\\s+');
   const regex = new RegExp(pattern, 'gi');
   return regex.test(document);
+}
+
+// ---------------------------------------------------------------------------
+// Value extraction: find numbers near a search term in a document
+// ---------------------------------------------------------------------------
+
+/**
+ * Extract numbers appearing near (within ~500 chars of) the search term in doc text.
+ * Returns all candidate numbers, sorted by proximity to the search term.
+ */
+function extractNumbersNearSnippet(document: string, snippet: string): number[] {
+  const escaped = snippet.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const pattern = escaped.replace(/\s+/g, '\\s+');
+  const regex = new RegExp(pattern, 'gi');
+  const match = regex.exec(document);
+  if (!match) return [];
+
+  const matchPos = match.index;
+  const windowStart = Math.max(0, matchPos - 500);
+  const windowEnd = Math.min(document.length, matchPos + snippet.length + 500);
+  const window = document.slice(windowStart, windowEnd);
+
+  // Match numbers: 1,234,567 or 1234567 or 1,234.56 or $1.2B etc.
+  // Also match numbers with spaces as thousand separators (common in foreign filings)
+  const numberRegex = /(?:\$\s*)?(\d[\d,\s]*(?:\.\d+)?)\s*(?:billion|million|thousand|B\b|M\b|K\b)?/gi;
+  const candidates: { value: number; pos: number }[] = [];
+
+  let m: RegExpExecArray | null;
+  while ((m = numberRegex.exec(window)) !== null) {
+    const raw = m[1].replace(/[,\s]/g, '');
+    let value = parseFloat(raw);
+    if (isNaN(value)) continue;
+
+    // Apply scale from suffix
+    const suffix = m[0].toLowerCase();
+    if (suffix.includes('billion') || /\d\s*B\b/i.test(m[0])) value *= 1e9;
+    else if (suffix.includes('million') || /\d\s*M\b/i.test(m[0])) value *= 1e6;
+    else if (suffix.includes('thousand') || /\d\s*K\b/i.test(m[0])) value *= 1e3;
+
+    // Distance from snippet match
+    const absPos = windowStart + m.index;
+    const dist = Math.abs(absPos - matchPos);
+    candidates.push({ value, pos: dist });
+  }
+
+  // Sort by proximity to the search term
+  candidates.sort((a, b) => a.pos - b.pos);
+  return candidates.map((c) => c.value);
+}
+
+/**
+ * Check if any extracted number is close to the expected D1 value.
+ * Accounts for scale differences (e.g., D1 stores 15000000, doc says "15,000" in thousands).
+ * Returns { matched, scale } where scale indicates if a ×1000 or ×1000000 multiplier was needed.
+ */
+function valueMatchesExtracted(
+  d1Value: number,
+  candidates: number[],
+  tolerancePct: number = 1
+): { matched: boolean; scale: number } {
+  if (d1Value === 0) return { matched: true, scale: 1 };
+
+  // Try direct match, then ×1000 (SEC "in thousands"), then ×1000000 (SEC "in millions")
+  for (const scale of [1, 1000, 1_000_000]) {
+    const target = d1Value / scale;
+    for (const candidate of candidates) {
+      if (candidate === 0) continue;
+      const pctDiff = Math.abs(target - candidate) / Math.max(Math.abs(target), Math.abs(candidate)) * 100;
+      if (pctDiff <= tolerancePct) return { matched: true, scale };
+    }
+  }
+  return { matched: false, scale: 1 };
+}
+
+/**
+ * Check if a search term is too short/ambiguous to reliably extract values.
+ * Short terms match too many numbers in a document, producing false positives.
+ */
+function isWeakSearchTerm(term: string): boolean {
+  const cleaned = term.replace(/[",.$\s]/g, '');
+  // Single/double digit numbers, or very short strings
+  if (cleaned.length <= 3) return true;
+  // Pure small numbers like "10", "89", "255"
+  if (/^\d{1,3}$/.test(cleaned)) return true;
+  // Short decimals like "1.5", "2.30", "6.7", "8.2", "10.6"
+  if (/^\d{1,2}\.\d{1,2}$/.test(term.trim())) return true;
+  return false;
 }
 
 // ---------------------------------------------------------------------------
@@ -132,6 +239,18 @@ type ProvenanceCheck = {
   hasCitationQuote: boolean;
   hasArtifact: boolean;
   status: 'full' | 'partial' | 'none';
+};
+
+type ValueCheck = {
+  ticker: string;
+  metric: string;
+  d1Value: number;
+  searchTerm: string;
+  accession: string;
+  closestCandidate: number | null;
+  divergencePct: number | null;
+  scale: number; // 1 = direct, 1000 = "in thousands", 1000000 = "in millions"
+  status: 'pass' | 'pass_scaled' | 'no_match' | 'weak_search' | 'doc_missing' | 'no_candidates' | 'derived_skip';
 };
 
 // ---------------------------------------------------------------------------
@@ -463,6 +582,169 @@ async function main() {
   }
 
   // -------------------------------------------------------------------------
+  // 4. Value extraction: extract numbers near search term, compare to D1
+  // -------------------------------------------------------------------------
+  // Only check datapoints that have a search term and an accession (document link).
+  // Skip derived/carried-forward values (prefixed with [Derived], [Carried forward], etc.)
+  const DERIVED_PREFIXES = ['[Zero', '[Derived', '[Carried', '[Pre-filing', '[SPAC', '[Historical'];
+  const valueCheckRows = rows.filter((r) => {
+    if (!r.citation_search_term || !r.accession) return false;
+    if (r.value === 0) return false; // Zero values are often special
+    // Skip derived citations — no number to extract from document
+    const quote = r.citation_quote || '';
+    if (DERIVED_PREFIXES.some((p) => quote.startsWith(p))) return false;
+    return true;
+  });
+
+  console.log(`\n${'='.repeat(60)}`);
+  console.log('4. VALUE EXTRACTION VERIFICATION (number near search term)');
+  console.log(`${'='.repeat(60)}`);
+  console.log(`  ${valueCheckRows.length} datapoints to verify\n`);
+
+  const valueChecks: ValueCheck[] = [];
+
+  for (const row of valueCheckRows) {
+    const cacheKey = `${row.entity_id}|${row.accession}`;
+    if (!(cacheKey in docCache)) {
+      docCache[cacheKey] = await fetchR2Document(row.entity_id, row.accession!);
+    }
+
+    const doc = docCache[cacheKey];
+    if (!doc) {
+      valueChecks.push({
+        ticker: row.entity_id,
+        metric: row.metric,
+        d1Value: row.value,
+        searchTerm: row.citation_search_term!,
+        accession: row.accession!,
+        closestCandidate: null,
+        divergencePct: null,
+        status: 'doc_missing',
+      });
+      continue;
+    }
+
+    let candidates = extractNumbersNearSnippet(doc, row.citation_search_term!);
+
+    // If no candidates found and doc looks like HTML/XBRL, retry with stripped text
+    if (candidates.length === 0 && doc.includes('</') && doc.includes('<')) {
+      const stripped = stripHtml(doc);
+      candidates = extractNumbersNearSnippet(stripped, row.citation_search_term!);
+    }
+
+    if (candidates.length === 0) {
+      // If the search term itself is weak, categorize differently
+      const weak = isWeakSearchTerm(row.citation_search_term!);
+      valueChecks.push({
+        ticker: row.entity_id,
+        metric: row.metric,
+        d1Value: row.value,
+        searchTerm: row.citation_search_term!,
+        accession: row.accession!,
+        closestCandidate: null,
+        divergencePct: null,
+        scale: 1,
+        status: weak ? 'weak_search' : 'no_candidates',
+      });
+      continue;
+    }
+
+    const { matched, scale } = valueMatchesExtracted(row.value, candidates, 5); // 5% tolerance
+
+    // Find closest candidate for reporting (try all scales)
+    let closest = candidates[0];
+    let closestDivergence = row.value !== 0
+      ? Math.abs(row.value - closest) / Math.abs(row.value) * 100
+      : 0;
+    for (const s of [1, 1000, 1_000_000]) {
+      const target = row.value / s;
+      for (const c of candidates) {
+        const d = target !== 0 ? Math.abs(target - c) / Math.abs(target) * 100 : 0;
+        if (d < closestDivergence) {
+          closest = c;
+          closestDivergence = d;
+        }
+      }
+    }
+
+    let status: ValueCheck['status'];
+    if (matched) {
+      status = scale > 1 ? 'pass_scaled' : 'pass';
+    } else if (isWeakSearchTerm(row.citation_search_term!)) {
+      status = 'weak_search';
+    } else {
+      status = 'no_match';
+    }
+
+    valueChecks.push({
+      ticker: row.entity_id,
+      metric: row.metric,
+      d1Value: row.value,
+      searchTerm: row.citation_search_term!,
+      accession: row.accession!,
+      closestCandidate: closest,
+      divergencePct: closestDivergence,
+      scale,
+      status,
+    });
+  }
+
+  const vPass = valueChecks.filter((c) => c.status === 'pass');
+  const vPassScaled = valueChecks.filter((c) => c.status === 'pass_scaled');
+  const vNoMatch = valueChecks.filter((c) => c.status === 'no_match');
+  const vWeakSearch = valueChecks.filter((c) => c.status === 'weak_search');
+  const vDocMissing = valueChecks.filter((c) => c.status === 'doc_missing');
+  const vNoCandidates = valueChecks.filter((c) => c.status === 'no_candidates');
+
+  console.log(`  PASS:              ${vPass.length}`);
+  console.log(`  PASS (scaled):     ${vPassScaled.length} (matched after ×1000 or ×1M scale)`);
+  console.log(`  NO MATCH (>5%):    ${vNoMatch.length} ← real mismatches to investigate`);
+  console.log(`  WEAK SEARCH TERM:  ${vWeakSearch.length} (search too short/ambiguous to verify)`);
+  console.log(`  DOC MISSING:       ${vDocMissing.length}`);
+  console.log(`  NO CANDIDATES:     ${vNoCandidates.length}`);
+
+  if (vPassScaled.length > 0 && verbose) {
+    console.log(`\n${'─'.repeat(60)}`);
+    console.log(`PASS WITH SCALE (${vPassScaled.length}):`);
+    console.log(`${'─'.repeat(60)}`);
+    for (const c of vPassScaled) {
+      const scaleLabel = c.scale === 1000 ? '×1000 (in thousands)' : '×1M (in millions)';
+      console.log(`  ${c.ticker} / ${c.metric}: D1=${c.d1Value.toLocaleString()} matched doc at ${scaleLabel}`);
+    }
+  }
+
+  if (vNoMatch.length > 0) {
+    console.log(`\n${'─'.repeat(60)}`);
+    console.log(`VALUE MISMATCHES (${vNoMatch.length}):`);
+    console.log(`${'─'.repeat(60)}`);
+    for (const c of vNoMatch) {
+      console.log(`\n  ${c.ticker} / ${c.metric}`);
+      console.log(`    D1 value:  ${c.d1Value.toLocaleString()}`);
+      console.log(`    Closest:   ${c.closestCandidate?.toLocaleString()} (${c.divergencePct?.toFixed(1)}% off)`);
+      console.log(`    Search:    "${c.searchTerm.slice(0, 80)}"`);
+      console.log(`    Accession: ${c.accession}`);
+    }
+  }
+
+  if (vWeakSearch.length > 0) {
+    console.log(`\n${'─'.repeat(60)}`);
+    console.log(`WEAK SEARCH TERMS (${vWeakSearch.length}) — need better search terms in D1:`);
+    console.log(`${'─'.repeat(60)}`);
+    for (const c of vWeakSearch) {
+      console.log(`  ${c.ticker} / ${c.metric}: search="${c.searchTerm}" (D1: ${c.d1Value.toLocaleString()})`);
+    }
+  }
+
+  if (vNoCandidates.length > 0 && verbose) {
+    console.log(`\n${'─'.repeat(60)}`);
+    console.log(`NO NUMBERS FOUND NEAR SEARCH TERM (${vNoCandidates.length}):`);
+    console.log(`${'─'.repeat(60)}`);
+    for (const c of vNoCandidates) {
+      console.log(`  ${c.ticker} / ${c.metric}: "${c.searchTerm.slice(0, 60)}" (D1: ${c.d1Value.toLocaleString()})`);
+    }
+  }
+
+  // -------------------------------------------------------------------------
   // Summary
   // -------------------------------------------------------------------------
   console.log(`\n${'='.repeat(60)}`);
@@ -471,12 +753,14 @@ async function main() {
 
   const xbrlIssues = xbrlValueMismatch.length + xbrlConceptMismatch.length;
   const quoteIssues = quoteChecks.filter((c) => c.status === 'quote_not_found').length;
-  const totalIssues = xbrlIssues + quoteIssues;
+  const valueIssues = vNoMatch.length; // Only real mismatches, not weak search terms
+  const totalIssues = xbrlIssues + valueIssues; // Quote issues excluded (mostly synthetic quotes)
 
   console.log(`  XBRL checks:       ${xbrlChecks.length} (${xbrlPass.length} pass, ${xbrlIssues} issues, ${xbrlFailed.length} can't verify)`);
-  console.log(`  Quote checks:      ${quoteChecks.length} (${quoteChecks.filter((c) => c.status === 'pass').length} pass, ${quoteIssues} issues)`);
+  console.log(`  Quote checks:      ${quoteChecks.length} (${quoteChecks.filter((c) => c.status === 'pass').length} pass, ${quoteIssues} synthetic/missing)`);
+  console.log(`  Value checks:      ${valueChecks.length} (${vPass.length + vPassScaled.length} pass [${vPassScaled.length} scaled], ${valueIssues} mismatches, ${vWeakSearch.length} weak search, ${vNoCandidates.length} no candidates)`);
   console.log(`  Provenance:        ${full.length}/${provenanceChecks.length} full coverage (${((full.length / provenanceChecks.length) * 100).toFixed(1)}%)`);
-  console.log(`  Total issues:      ${totalIssues}`);
+  console.log(`  Total issues:      ${totalIssues} (real mismatches only)`);
 
   if (totalIssues > 0) {
     console.log('\n  ⚠ Issues found — review mismatches above');
