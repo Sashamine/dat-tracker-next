@@ -619,18 +619,19 @@ export const btcCompanies: Company[] = [
     sharesSourceQuote: "TDnet: 1,142,274,340 common (Jan 29, 2026) + 24,529,000 new common shares (Feb 13, 2026 3rd-party allotment)",
     sharesSourceUrl: "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20251114/20251112598935.pdf",
     sharesAsOf: "2026-02-13",
-    // Debt: 4 credit facilities totaling $355M (all zero-coupon bonds have been fully redeemed)
-    totalDebt: 355_000_000,  // $355M: $75M (Jan 30) + $50M (Dec 1) + $130M (Nov 21) + $100M (Nov 4) credit facilities
-    debtSource: "Metaplanet Analytics Dashboard — 4 credit facilities outstanding, all zero-coupon bonds redeemed ($0 remaining).",
-    debtSourceQuote: "Metaplanet Analytics Dashboard — 4 credit facilities outstanding, all zero-coupon bonds redeemed ($0 remaining).",
-    debtSourceUrl: "https://metaplanet.jp/en/analytics",
-    debtAsOf: "2026-02-14",
-    cashReserves: 97_000_000,  // Estimated from capital flow trace: $18M (Q3) + $590M inflows - $511M outflows ≈ $97M. Mercury corrected to $155M (was $136M). Confirm with FY2025 annual report.
+    // Debt: FY2025 balance sheet ¥43,836M (~$287M at Dec 31) + $75M Jan 30 credit facility = ~$362M
+    // All zero-coupon bonds fully redeemed. Only credit facilities remain.
+    totalDebt: 362_000_000,  // ¥43.8B (Dec 31 BS) + ¥11.5B Jan 30 draw ≈ $362M at 152.7 FX
+    debtSource: "FY2025 audited balance sheet (Dec 31): ¥43,836M short-term debt + Jan 30, 2026 credit facility ($75M/¥11.5B)",
+    debtSourceQuote: "FY2025 BS: Short-Term Debt ¥43,836M. No long-term debt.",
+    debtSourceUrl: "https://stockanalysis.com/quote/tyo/3350/financials/balance-sheet/",
+    debtAsOf: "2026-01-30",
+    cashReserves: 17_000_000,  // FY2025 audited: ¥2,552M (~$16.7M). Post-period: +$75M credit +$80M placement -BTC purchases
     restrictedCash: 0,
-    cashSource: "Estimated: Q3 $18M + $355M credit + $155M Mercury preferred (corrected FX) + $80M Feb placement - $451M BTC - $60M redemptions/repayments/opex",
-    cashSourceQuote: "Estimated: Q3 $18M + $355M credit + $155M Mercury preferred (corrected FX) + $80M Feb placement - $451M BTC - $60M redemptions/repayments/opex",
-    cashSourceUrl: "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20251114/20251112598935.pdf",
-    cashAsOf: "2026-02-14",
+    cashSource: "FY2025 audited balance sheet (Dec 31, 2025): ¥2,552M cash. Post-period inflows from credit facility + placement partially offset by BTC purchases.",
+    cashSourceQuote: "FY2025 BS: Cash & Equivalents ¥2,552M",
+    cashSourceUrl: "https://stockanalysis.com/quote/tyo/3350/financials/balance-sheet/",
+    cashAsOf: "2025-12-31",
     preferredEquity: 155_000_000,  // Mercury Class B preferred at par: 23.61M shares × ¥1,000 = ¥23.61B (~$155M at 152.7 FX). Consistent with MSTR STRK/STRF treatment (par value). Metaplanet's dashboard excludes preferred from EV entirely (their mNAV ~1.07x); we include at par.
     preferredSourceUrl: "https://finance-frontend-pc-dist.west.edge.storage-yahoo.jp/disclosure/20251114/20251112598935.pdf",
     preferredSource: "TDnet/IR disclosures (Metaplanet) — preferred terms via Mercury Class B preferred",
