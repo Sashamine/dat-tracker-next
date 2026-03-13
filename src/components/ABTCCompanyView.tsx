@@ -1,41 +1,13 @@
 "use client";
 
-import { ABTC_PROVENANCE } from "@/lib/data/provenance/abtc";
-import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
+import { buildCompanyProvenance, standardProvenanceHelpers } from "@/lib/utils/company-provenance";
+import { pv, derivedSource } from "@/lib/data/types/provenance";
 import { getCompanyEarnings } from "@/lib/data/earnings-data";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
+import type { ProvenanceValue } from "@/lib/data/types/provenance";
 import { formatLargeNumber } from "@/lib/calculations";
 
 import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
-
-type PvParam = ProvenanceValue<number> | undefined;
-type AnySource = XBRLSource | DocumentSource | DerivedSource;
-
-/** provenanceHelpers is read by CompanyViewBase at runtime but not yet in the exported type */
-type ConfigWithHelpers = CompanyViewBaseConfig & {
-  provenanceHelpers: {
-    sourceUrl: (p: PvParam) => string | undefined;
-    sourceType: (p: PvParam) => string | undefined;
-    sourceDate: (p: PvParam) => string | undefined;
-    searchTerm: (p: PvParam) => string | undefined;
-  };
-};
-
-function su(p: PvParam) {
-  return p?.source ? getSourceUrl(p.source) : undefined;
-}
-function st(p: PvParam) {
-  return p?.source?.type;
-}
-function sd(p: PvParam) {
-  return p?.source ? getSourceDate(p.source) : undefined;
-}
-function ss(p: PvParam) {
-  const src: AnySource | undefined = p?.source;
-  if (src && 'searchTerm' in src) return src.searchTerm;
-  return undefined;
-}
 
 interface ABTCMetrics extends CompanyViewBaseMetrics {
   leverage: number;
@@ -50,27 +22,24 @@ interface Props {
 }
 
 export function ABTCCompanyView({ company, className = "" }: Props) {
-  const config: ConfigWithHelpers = {
+  const cp = buildCompanyProvenance(company);
+
+  const config: CompanyViewBaseConfig = {
     ticker: "ABTC",
     asset: "BTC",
-    provenance: ABTC_PROVENANCE,
-    provenanceHelpers: {
-      sourceUrl: su,
-      sourceType: st,
-      sourceDate: sd,
-      searchTerm: ss,
-    },
+    provenance: cp,
+    provenanceHelpers: standardProvenanceHelpers,
 
     buildMetrics: ({ company, prices, marketCap, effectiveShares }) => {
-      if (!ABTC_PROVENANCE.holdings) return null;
+      if (!company.holdings) return null;
 
       const btcPrice = prices?.crypto?.BTC?.price || 0;
 
-      const holdings = ABTC_PROVENANCE.holdings.value;
-      const totalDebt = ABTC_PROVENANCE.totalDebt?.value ?? 0;
-      const cashReserves = ABTC_PROVENANCE.cashReserves?.value ?? 0;
+      const holdings = company.holdings ?? 0;
+      const totalDebt = company.totalDebt ?? 0;
+      const cashReserves = company.cashReserves ?? 0;
       const preferredEquity = 0;
-      const sharesOutstanding = ABTC_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
+      const sharesOutstanding = company.sharesForMnav ?? 0;
 
       const inTheMoneyDebtValue = effectiveShares?.inTheMoneyDebtValue || 0;
       const adjustedDebt = Math.max(0, totalDebt - inTheMoneyDebtValue);
@@ -87,7 +56,7 @@ export function ABTCCompanyView({ company, className = "" }: Props) {
 
       const cryptoNavPv: ProvenanceValue<number> = pv(
         cryptoNav,
-        derivedSource({ derivation: "BTC Holdings × BTC Price", formula: "holdings × btcPrice", inputs: { holdings: ABTC_PROVENANCE.holdings } }),
+        derivedSource({ derivation: "BTC Holdings × BTC Price", formula: "holdings × btcPrice", inputs: { holdings: cp.holdings } }),
         `Using live BTC price: $${btcPrice.toLocaleString()}`
       );
 
@@ -95,26 +64,26 @@ export function ABTCCompanyView({ company, className = "" }: Props) {
         mNav !== null
           ? pv(
               mNav,
-              derivedSource({ derivation: "Enterprise Value ÷ Crypto NAV", formula: "(marketCap + debt - cash) / cryptoNav", inputs: { holdings: ABTC_PROVENANCE.holdings } }),
+              derivedSource({ derivation: "Enterprise Value ÷ Crypto NAV", formula: "(marketCap + debt - cash) / cryptoNav", inputs: { holdings: cp.holdings } }),
               `Market Cap: ${formatLargeNumber(marketCap)}`
             )
           : null;
 
       const leveragePv: ProvenanceValue<number> = pv(
         leverage,
-        derivedSource({ derivation: "Net Debt ÷ Crypto NAV", formula: "(debt - cash) / cryptoNav", inputs: { holdings: ABTC_PROVENANCE.holdings } }),
+        derivedSource({ derivation: "Net Debt ÷ Crypto NAV", formula: "(debt - cash) / cryptoNav", inputs: { holdings: cp.holdings } }),
         `Debt: ${formatLargeNumber(totalDebt)} (Bitmain miner purchase agreement)`
       );
 
       const equityNavPv: ProvenanceValue<number> = pv(
         equityNav,
-        derivedSource({ derivation: "Crypto NAV + Cash − Debt", formula: "(holdings × btcPrice) + cash - debt", inputs: { holdings: ABTC_PROVENANCE.holdings } }),
+        derivedSource({ derivation: "Crypto NAV + Cash − Debt", formula: "(holdings × btcPrice) + cash - debt", inputs: { holdings: cp.holdings } }),
         `Debt: ${formatLargeNumber(totalDebt)} (Bitmain)`
       );
 
       const equityNavPerSharePv: ProvenanceValue<number> = pv(
         equityNavPerShare,
-        derivedSource({ derivation: "Equity NAV ÷ Shares Outstanding", formula: "equityNav / shares", inputs: { holdings: ABTC_PROVENANCE.holdings, shares: ABTC_PROVENANCE.sharesOutstanding! } }),
+        derivedSource({ derivation: "Equity NAV ÷ Shares Outstanding", formula: "equityNav / shares", inputs: { holdings: cp.holdings, shares: cp.sharesOutstanding } }),
         "Uses 928M total shares (all classes, post-merger)."
       );
 

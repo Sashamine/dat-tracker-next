@@ -1,30 +1,12 @@
 "use client";
 
-import { DFDV_PROVENANCE, DFDV_CIK } from "@/lib/data/provenance/dfdv";
-import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
+import { buildCompanyProvenance, standardProvenanceHelpers } from "@/lib/utils/company-provenance";
+import { pv, derivedSource } from "@/lib/data/types/provenance";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
+import type { ProvenanceValue } from "@/lib/data/types/provenance";
 import { formatLargeNumber } from "@/lib/calculations";
 
 import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
-
-type PvParam = ProvenanceValue<number> | undefined;
-type AnySource = XBRLSource | DocumentSource | DerivedSource;
-
-function su(p: PvParam) {
-  return p?.source ? getSourceUrl(p.source) : undefined;
-}
-function st(p: PvParam) {
-  return p?.source?.type;
-}
-function sd(p: PvParam) {
-  return p?.source ? getSourceDate(p.source) : undefined;
-}
-function ss(p: PvParam) {
-  const src: AnySource | undefined = p?.source;
-  if (src && 'searchTerm' in src) return src.searchTerm;
-  return undefined;
-}
 
 interface DFDVMetrics extends CompanyViewBaseMetrics {
   leverage: number;
@@ -38,28 +20,25 @@ interface Props {
 }
 
 export function DFDVCompanyView({ company, className = "" }: Props) {
+  const cp = buildCompanyProvenance(company);
+
   const config: CompanyViewBaseConfig = {
     ticker: "DFDV",
     asset: "SOL",
-    cik: DFDV_CIK,
-    provenance: DFDV_PROVENANCE,
-    provenanceHelpers: {
-      sourceUrl: su,
-      sourceType: st,
-      sourceDate: sd,
-      searchTerm: ss,
-    },
+    cik: company.secCik,
+    provenance: cp,
+    provenanceHelpers: standardProvenanceHelpers,
 
     buildMetrics: ({ company, prices, marketCap, effectiveShares }) => {
-      if (!DFDV_PROVENANCE.holdings || !DFDV_PROVENANCE.totalDebt || !DFDV_PROVENANCE.cashReserves) return null;
+      if (!company.holdings) return null;
 
       const solPrice = prices?.crypto?.SOL?.price || 0;
 
-      const holdings = DFDV_PROVENANCE.holdings.value;
-      const totalDebt = DFDV_PROVENANCE.totalDebt.value;
-      const cashReserves = DFDV_PROVENANCE.cashReserves.value;
-      const preferredEquity = DFDV_PROVENANCE.preferredEquity?.value ?? 0;
-      const sharesOutstanding = DFDV_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
+      const holdings = company.holdings ?? 0;
+      const totalDebt = company.totalDebt ?? 0;
+      const cashReserves = company.cashReserves ?? 0;
+      const preferredEquity = company.preferredEquity ?? 0;
+      const sharesOutstanding = company.sharesForMnav ?? 0;
 
       const inTheMoneyDebtValue = effectiveShares?.inTheMoneyDebtValue || 0;
       const adjustedDebt = Math.max(0, totalDebt - inTheMoneyDebtValue);
@@ -75,7 +54,7 @@ export function DFDVCompanyView({ company, className = "" }: Props) {
 
       const cryptoNavPv: ProvenanceValue<number> = pv(
         cryptoNav,
-        derivedSource({ derivation: "SOL Holdings × SOL Price", formula: "holdings × solPrice", inputs: { holdings: DFDV_PROVENANCE.holdings } }),
+        derivedSource({ derivation: "SOL Holdings × SOL Price", formula: "holdings × solPrice", inputs: { holdings: cp.holdings } }),
         `Using live SOL price: $${solPrice.toLocaleString()}`
       );
 
@@ -83,26 +62,26 @@ export function DFDVCompanyView({ company, className = "" }: Props) {
         mNav !== null
           ? pv(
               mNav,
-              derivedSource({ derivation: "Enterprise Value ÷ Crypto NAV", formula: "(marketCap + adjustedDebt + preferred - cash) / cryptoNav", inputs: { debt: DFDV_PROVENANCE.totalDebt, cash: DFDV_PROVENANCE.cashReserves, holdings: DFDV_PROVENANCE.holdings } }),
+              derivedSource({ derivation: "Enterprise Value ÷ Crypto NAV", formula: "(marketCap + adjustedDebt + preferred - cash) / cryptoNav", inputs: { debt: cp.totalDebt, cash: cp.cashReserves, holdings: cp.holdings } }),
               `AdjDebt: ${formatLargeNumber(adjustedDebt)}`
             )
           : null;
 
       const leveragePv: ProvenanceValue<number> = pv(
         leverage,
-        derivedSource({ derivation: "Net Debt ÷ Crypto NAV", formula: "(adjustedDebt - cash) / cryptoNav", inputs: { debt: DFDV_PROVENANCE.totalDebt, cash: DFDV_PROVENANCE.cashReserves, holdings: DFDV_PROVENANCE.holdings } }),
+        derivedSource({ derivation: "Net Debt ÷ Crypto NAV", formula: "(adjustedDebt - cash) / cryptoNav", inputs: { debt: cp.totalDebt, cash: cp.cashReserves, holdings: cp.holdings } }),
         `NetDebt: ${formatLargeNumber(netDebt)}`
       );
 
       const equityNavPv: ProvenanceValue<number> = pv(
         equityNav,
-        derivedSource({ derivation: "Crypto NAV + Cash − Adjusted Debt − Preferred", formula: "cryptoNav + cash - adjustedDebt - preferred", inputs: { holdings: DFDV_PROVENANCE.holdings, cash: DFDV_PROVENANCE.cashReserves, debt: DFDV_PROVENANCE.totalDebt } }),
+        derivedSource({ derivation: "Crypto NAV + Cash − Adjusted Debt − Preferred", formula: "cryptoNav + cash - adjustedDebt - preferred", inputs: { holdings: cp.holdings, cash: cp.cashReserves, debt: cp.totalDebt } }),
         `AdjDebt: ${formatLargeNumber(adjustedDebt)}`
       );
 
       const equityNavPerSharePv: ProvenanceValue<number> = pv(
         equityNavPerShare,
-        derivedSource({ derivation: "Equity NAV ÷ Shares Outstanding", formula: "equityNav / shares", inputs: { holdings: DFDV_PROVENANCE.holdings, shares: DFDV_PROVENANCE.sharesOutstanding!, debt: DFDV_PROVENANCE.totalDebt, cash: DFDV_PROVENANCE.cashReserves } }),
+        derivedSource({ derivation: "Equity NAV ÷ Shares Outstanding", formula: "equityNav / shares", inputs: { holdings: cp.holdings, shares: cp.sharesOutstanding, debt: cp.totalDebt, cash: cp.cashReserves } }),
         `Adj debt for ITM`
       );
 

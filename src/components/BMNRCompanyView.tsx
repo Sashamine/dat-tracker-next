@@ -2,39 +2,12 @@
 
 import { BMNR_PROVENANCE, BMNR_CIK, BMNR_STAKING_PROVENANCE, estimateBMNRShares } from "@/lib/data/provenance/bmnr";
 import type { ShareEstimate } from "@/lib/data/provenance/bmnr";
-import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
+import { buildCompanyProvenance, standardProvenanceHelpers } from "@/lib/utils/company-provenance";
+import { pv, derivedSource } from "@/lib/data/types/provenance";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
+import type { ProvenanceValue } from "@/lib/data/types/provenance";
 
 import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
-
-type PvParam = ProvenanceValue<number> | undefined;
-type AnySource = XBRLSource | DocumentSource | DerivedSource;
-
-/** provenanceHelpers is read by CompanyViewBase at runtime but not yet in the exported type */
-type ConfigWithHelpers = CompanyViewBaseConfig & {
-  provenanceHelpers: {
-    sourceUrl: (p: PvParam) => string | undefined;
-    sourceType: (p: PvParam) => string | undefined;
-    sourceDate: (p: PvParam) => string | undefined;
-    searchTerm: (p: PvParam) => string | undefined;
-  };
-};
-
-function su(p: PvParam) {
-  return p?.source ? getSourceUrl(p.source) : undefined;
-}
-function st(p: PvParam) {
-  return p?.source?.type;
-}
-function sd(p: PvParam) {
-  return p?.source ? getSourceDate(p.source) : undefined;
-}
-function ss(p: PvParam) {
-  const src: AnySource | undefined = p?.source;
-  if (src && 'searchTerm' in src) return src.searchTerm;
-  return undefined;
-}
 
 interface BMNRMetrics extends CompanyViewBaseMetrics {
   leverage: number;
@@ -48,17 +21,14 @@ interface Props {
 }
 
 export function BMNRCompanyView({ company, className = "" }: Props) {
-  const config: ConfigWithHelpers = {
+  const cp = buildCompanyProvenance(company);
+
+  const config: CompanyViewBaseConfig = {
     ticker: "BMNR",
     asset: "ETH",
     cik: BMNR_CIK,
-    provenance: BMNR_PROVENANCE,
-    provenanceHelpers: {
-      sourceUrl: su,
-      sourceType: st,
-      sourceDate: sd,
-      searchTerm: ss,
-    },
+    provenance: cp,
+    provenanceHelpers: standardProvenanceHelpers,
 
     // BMNR uses an estimated share count for mNAV/HPS (more current than verified 10-Q)
     // and a market-cap override consistent with the old view (back out stock price from API market cap).
@@ -68,15 +38,15 @@ export function BMNRCompanyView({ company, className = "" }: Props) {
       return impliedStockPrice * est.totalEstimated;
     },
 
-    buildMetrics: ({ prices, marketCap }) => {
-      if (!BMNR_PROVENANCE.holdings || !BMNR_PROVENANCE.cashReserves) return null;
+    buildMetrics: ({ company, prices, marketCap }) => {
+      if (!company.holdings) return null;
 
       const ethPrice = prices?.crypto?.ETH?.price || 0;
 
-      const holdings = BMNR_PROVENANCE.holdings.value;
-      const totalDebt = BMNR_PROVENANCE.totalDebt?.value ?? 0;
-      const cashReserves = BMNR_PROVENANCE.cashReserves.value;
-      const preferredEquity = BMNR_PROVENANCE.preferredEquity?.value ?? 0;
+      const holdings = company.holdings ?? 0;
+      const totalDebt = company.totalDebt ?? 0;
+      const cashReserves = company.cashReserves ?? 0;
+      const preferredEquity = company.preferredEquity ?? 0;
 
       const shareEstimate = estimateBMNRShares();
       const estimatedShares = shareEstimate.totalEstimated;
@@ -101,7 +71,7 @@ export function BMNRCompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "ETH Holdings × ETH Price",
           formula: "holdings × ethPrice",
-          inputs: { holdings: BMNR_PROVENANCE.holdings },
+          inputs: { holdings: cp.holdings },
         }),
         `Using live ETH price: $${ethPrice.toLocaleString()}`
       );
@@ -111,7 +81,7 @@ export function BMNRCompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "Estimated from ATM activity",
           formula: shareEstimate.methodology,
-          inputs: { ...(BMNR_PROVENANCE.sharesOutstanding ? { anchor: BMNR_PROVENANCE.sharesOutstanding } : {}) },
+          inputs: { ...(cp.sharesOutstanding ? { anchor: cp.sharesOutstanding } : {}) },
         }),
         shareEstimate.methodology
       );
@@ -124,9 +94,9 @@ export function BMNRCompanyView({ company, className = "" }: Props) {
                 derivation: "Enterprise Value ÷ Total NAV (Crypto NAV + restricted cash)",
                 formula: "(marketCap + debt + preferred - freeCash) / (cryptoNav + restrictedCash)",
                 inputs: {
-                  holdings: BMNR_PROVENANCE.holdings,
-                  cash: BMNR_PROVENANCE.cashReserves,
-                  ...(BMNR_PROVENANCE.totalDebt && { debt: BMNR_PROVENANCE.totalDebt }),
+                  holdings: cp.holdings,
+                  cash: cp.cashReserves,
+                  ...(cp.totalDebt && { debt: cp.totalDebt }),
                   shares: estimatedSharesPv,
                 },
               }),
@@ -140,9 +110,9 @@ export function BMNRCompanyView({ company, className = "" }: Props) {
           derivation: "Net Debt ÷ Crypto NAV",
           formula: "(debt - cash) / cryptoNav",
           inputs: {
-            ...(BMNR_PROVENANCE.totalDebt && { debt: BMNR_PROVENANCE.totalDebt }),
-            cash: BMNR_PROVENANCE.cashReserves,
-            holdings: BMNR_PROVENANCE.holdings,
+            ...(cp.totalDebt && { debt: cp.totalDebt }),
+            cash: cp.cashReserves,
+            holdings: cp.holdings,
           },
         }),
         `BMNR has no debt - leverage is 0x`
@@ -154,10 +124,10 @@ export function BMNRCompanyView({ company, className = "" }: Props) {
           derivation: "Crypto NAV + Cash − Debt − Preferred",
           formula: "(holdings × ethPrice) + cash - debt - preferred",
           inputs: {
-            holdings: BMNR_PROVENANCE.holdings,
-            cash: BMNR_PROVENANCE.cashReserves,
-            ...(BMNR_PROVENANCE.totalDebt && { debt: BMNR_PROVENANCE.totalDebt }),
-            ...(BMNR_PROVENANCE.preferredEquity && { preferred: BMNR_PROVENANCE.preferredEquity }),
+            holdings: cp.holdings,
+            cash: cp.cashReserves,
+            ...(cp.totalDebt && { debt: cp.totalDebt }),
+            ...(cp.preferredEquity && { preferred: cp.preferredEquity }),
           },
         }),
         `No debt or preferred - Equity NAV = Crypto NAV + Cash`
@@ -169,8 +139,8 @@ export function BMNRCompanyView({ company, className = "" }: Props) {
           derivation: "Equity NAV ÷ Estimated Shares",
           formula: "equityNav / estimatedShares",
           inputs: {
-            holdings: BMNR_PROVENANCE.holdings,
-            cash: BMNR_PROVENANCE.cashReserves,
+            holdings: cp.holdings,
+            cash: cp.cashReserves,
           },
         }),
         `Using estimated ${(estimatedShares / 1_000_000).toFixed(0)}M shares (10-Q baseline + ATM estimate)`
@@ -221,11 +191,11 @@ export function BMNRCompanyView({ company, className = "" }: Props) {
             </div>
           )}
 
-          {BMNR_PROVENANCE.sharesOutstanding && (
+          {cp.sharesOutstanding && (
             <div className="col-span-2 md:col-span-1">
               <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-800">
                 <p className="text-sm text-gray-500 dark:text-gray-400">Verified Shares</p>
-                <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{(BMNR_PROVENANCE.sharesOutstanding.value / 1_000_000).toFixed(1)}M</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{(cp.sharesOutstanding.value / 1_000_000).toFixed(1)}M</p>
                 <p className="text-xs text-gray-400">From 10-Q cover page</p>
               </div>
             </div>

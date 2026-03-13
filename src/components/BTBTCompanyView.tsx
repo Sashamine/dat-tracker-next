@@ -1,47 +1,19 @@
 "use client";
 
 import {
-  BTBT_PROVENANCE,
   BTBT_CIK,
   BTBT_STAKING,
   BTBT_BALANCE_SHEET,
   BTBT_INCOME_STATEMENT,
 } from "@/lib/data/provenance/btbt";
-import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
+import { buildCompanyProvenance, standardProvenanceHelpers } from "@/lib/utils/company-provenance";
+import { pv, derivedSource } from "@/lib/data/types/provenance";
 import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
+import type { ProvenanceValue } from "@/lib/data/types/provenance";
 import { formatLargeNumber } from "@/lib/calculations";
 
 import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
-
-type PvParam = ProvenanceValue<number> | undefined;
-type AnySource = XBRLSource | DocumentSource | DerivedSource;
-
-/** provenanceHelpers is read by CompanyViewBase at runtime but not yet in the exported type */
-type ConfigWithHelpers = CompanyViewBaseConfig & {
-  provenanceHelpers: {
-    sourceUrl: (p: PvParam) => string | undefined;
-    sourceType: (p: PvParam) => string | undefined;
-    sourceDate: (p: PvParam) => string | undefined;
-    searchTerm: (p: PvParam) => string | undefined;
-  };
-};
-
-function su(p: PvParam) {
-  return p?.source ? getSourceUrl(p.source) : undefined;
-}
-function st(p: PvParam) {
-  return p?.source?.type;
-}
-function sd(p: PvParam) {
-  return p?.source ? getSourceDate(p.source) : undefined;
-}
-function ss(p: PvParam) {
-  const src: AnySource | undefined = p?.source;
-  if (src && 'searchTerm' in src) return src.searchTerm;
-  return undefined;
-}
 
 interface BTBTMetrics extends CompanyViewBaseMetrics {
   leverage: number;
@@ -55,20 +27,17 @@ interface Props {
 }
 
 export function BTBTCompanyView({ company, className = "" }: Props) {
-  const config: ConfigWithHelpers = {
+  const cp = buildCompanyProvenance(company);
+
+  const config: CompanyViewBaseConfig = {
     ticker: "BTBT",
     asset: "ETH",
     cik: BTBT_CIK,
-    provenance: BTBT_PROVENANCE,
-    provenanceHelpers: {
-      sourceUrl: su,
-      sourceType: st,
-      sourceDate: sd,
-      searchTerm: ss,
-    },
+    provenance: cp,
+    provenanceHelpers: standardProvenanceHelpers,
 
     buildMetrics: ({ company, prices, marketCap }) => {
-      if (!BTBT_PROVENANCE.holdings || !BTBT_PROVENANCE.totalDebt || !BTBT_PROVENANCE.cashReserves) return null;
+      if (!company.holdings) return null;
 
       const ethPrice = prices?.crypto?.ETH?.price || 0;
       const stockData = prices?.stocks?.BTBT;
@@ -76,11 +45,11 @@ export function BTBTCompanyView({ company, className = "" }: Props) {
       // Match overview page logic: use getMarketCapForMnavSync for ITM debt + warrant proceeds
       const { inTheMoneyDebtValue, inTheMoneyWarrantProceeds } = getMarketCapForMnavSync(company, stockData, prices?.forex);
 
-      const holdings = BTBT_PROVENANCE.holdings.value;
-      const rawDebt = BTBT_PROVENANCE.totalDebt.value;
-      const cashReserves = BTBT_PROVENANCE.cashReserves.value;
-      const preferredEquity = BTBT_PROVENANCE.preferredEquity?.value ?? 0;
-      const sharesOutstanding = BTBT_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
+      const holdings = company.holdings ?? 0;
+      const rawDebt = company.totalDebt ?? 0;
+      const cashReserves = company.cashReserves ?? 0;
+      const preferredEquity = company.preferredEquity ?? 0;
+      const sharesOutstanding = company.sharesForMnav ?? 0;
 
       const adjustedDebt = Math.max(0, rawDebt - (inTheMoneyDebtValue || 0));
 
@@ -105,7 +74,7 @@ export function BTBTCompanyView({ company, className = "" }: Props) {
 
       const cryptoNavPv: ProvenanceValue<number> = pv(
         cryptoNav,
-        derivedSource({ derivation: "ETH Holdings × ETH Price", formula: "holdings × ethPrice", inputs: { holdings: BTBT_PROVENANCE.holdings } }),
+        derivedSource({ derivation: "ETH Holdings × ETH Price", formula: "holdings × ethPrice", inputs: { holdings: cp.holdings } }),
         `Using live ETH price: $${ethPrice.toLocaleString()}`
       );
 
@@ -116,7 +85,7 @@ export function BTBTCompanyView({ company, className = "" }: Props) {
               derivedSource({
                 derivation: "EV ÷ Crypto NAV (warrants/cash adjustments)",
                 formula: "(marketCap + adjustedDebt + preferred - freeCash) / cryptoNav",
-                inputs: { debt: BTBT_PROVENANCE.totalDebt, cash: BTBT_PROVENANCE.cashReserves, holdings: BTBT_PROVENANCE.holdings },
+                inputs: { debt: cp.totalDebt, cash: cp.cashReserves, holdings: cp.holdings },
               }),
               `Adjusted debt: ${formatLargeNumber(adjustedDebt)}`
             )
@@ -127,7 +96,7 @@ export function BTBTCompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "Net Debt ÷ Crypto NAV",
           formula: "netDebt / cryptoNav",
-          inputs: { debt: BTBT_PROVENANCE.totalDebt, cash: BTBT_PROVENANCE.cashReserves, holdings: BTBT_PROVENANCE.holdings },
+          inputs: { debt: cp.totalDebt, cash: cp.cashReserves, holdings: cp.holdings },
         }),
         `NetDebt: ${formatLargeNumber(netDebt)}`
       );
@@ -137,7 +106,7 @@ export function BTBTCompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "Crypto NAV + Cash − Adjusted Debt − Preferred",
           formula: "cryptoNav + cash - adjustedDebt - preferred",
-          inputs: { holdings: BTBT_PROVENANCE.holdings, cash: BTBT_PROVENANCE.cashReserves, debt: BTBT_PROVENANCE.totalDebt },
+          inputs: { holdings: cp.holdings, cash: cp.cashReserves, debt: cp.totalDebt },
         }),
         otherInvestments > 0 ? `Includes $${(otherInvestments / 1e6).toFixed(0)}M other investments` : undefined
       );
@@ -147,7 +116,7 @@ export function BTBTCompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "Equity NAV ÷ Shares Outstanding",
           formula: "equityNav / shares",
-          inputs: { holdings: BTBT_PROVENANCE.holdings, shares: BTBT_PROVENANCE.sharesOutstanding!, debt: BTBT_PROVENANCE.totalDebt, cash: BTBT_PROVENANCE.cashReserves },
+          inputs: { holdings: cp.holdings, shares: cp.sharesOutstanding, debt: cp.totalDebt, cash: cp.cashReserves },
         }),
         `${(sharesOutstanding / 1e6).toFixed(1)}M shares`
       );

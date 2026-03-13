@@ -1,46 +1,20 @@
 "use client";
 
-import { H100_PROVENANCE, H100_CAPITAL_PROGRAMS } from "@/lib/data/provenance/h100";
-import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
+import { H100_CAPITAL_PROGRAMS } from "@/lib/data/provenance/h100";
+import { buildCompanyProvenance, standardProvenanceHelpers } from "@/lib/utils/company-provenance";
+import { pv, derivedSource } from "@/lib/data/types/provenance";
 import type { Company } from "@/lib/types";
-import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
+import type { ProvenanceValue } from "@/lib/data/types/provenance";
 import { formatLargeNumber } from "@/lib/calculations";
 
 import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
 
 const CONV = H100_CAPITAL_PROGRAMS.convertible;
 
-type PvParam = ProvenanceValue<number> | undefined;
-type AnySource = XBRLSource | DocumentSource | DerivedSource;
-
-type ConfigWithHelpers = CompanyViewBaseConfig & {
-  provenanceHelpers: {
-    sourceUrl: (p: PvParam) => string | undefined;
-    sourceType: (p: PvParam) => string | undefined;
-    sourceDate: (p: PvParam) => string | undefined;
-    searchTerm: (p: PvParam) => string | undefined;
-  };
-};
-
 interface H100Metrics extends CompanyViewBaseMetrics {
   leverage: number;
   adjustedDebt: number;
   itmDebtAdjustment: number;
-}
-
-function su(p: PvParam) {
-  return p?.source ? getSourceUrl(p.source) : undefined;
-}
-function st(p: PvParam) {
-  return p?.source?.type;
-}
-function sd(p: PvParam) {
-  return p?.source ? getSourceDate(p.source) : undefined;
-}
-function ss(p: PvParam) {
-  const src: AnySource | undefined = p?.source;
-  if (src && "searchTerm" in src) return src.searchTerm;
-  return undefined;
 }
 
 interface Props {
@@ -49,28 +23,25 @@ interface Props {
 }
 
 export function H100CompanyView({ company, className = "" }: Props) {
-  const config: ConfigWithHelpers = {
+  const cp = buildCompanyProvenance(company);
+
+  const config: CompanyViewBaseConfig = {
     ticker: "H100.ST",
     asset: "BTC",
-    provenance: H100_PROVENANCE,
-    provenanceHelpers: {
-      sourceUrl: su,
-      sourceType: st,
-      sourceDate: sd,
-      searchTerm: ss,
-    },
+    provenance: cp,
+    provenanceHelpers: standardProvenanceHelpers,
 
     buildMetrics: ({ company, prices, marketCap, effectiveShares }) => {
-      if (!H100_PROVENANCE.holdings || !H100_PROVENANCE.totalDebt || !H100_PROVENANCE.cashReserves) return null;
+      if (!company.holdings) return null;
 
       const btcPrice = prices?.crypto?.BTC?.price || 0;
       const sekUsdRate = prices?.forex?.SEK || 10.6;
 
-      const holdings = H100_PROVENANCE.holdings.value;
-      const totalDebt = H100_PROVENANCE.totalDebt.value;
-      const cashReserves = H100_PROVENANCE.cashReserves.value;
-      const preferredEquity = H100_PROVENANCE.preferredEquity?.value ?? 0;
-      const sharesOutstanding = H100_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
+      const holdings = company.holdings ?? 0;
+      const totalDebt = company.totalDebt ?? 0;
+      const cashReserves = company.cashReserves ?? 0;
+      const preferredEquity = company.preferredEquity ?? 0;
+      const sharesOutstanding = company.sharesForMnav ?? 0;
 
       const inTheMoneyDebtValue = effectiveShares?.inTheMoneyDebtValue || 0;
       const adjustedDebt = Math.max(0, totalDebt - inTheMoneyDebtValue);
@@ -86,7 +57,7 @@ export function H100CompanyView({ company, className = "" }: Props) {
 
       const cryptoNavPv: ProvenanceValue<number> = pv(
         cryptoNav,
-        derivedSource({ derivation: "BTC Holdings × BTC Price", formula: "holdings × btcPrice", inputs: { holdings: H100_PROVENANCE.holdings } }),
+        derivedSource({ derivation: "BTC Holdings × BTC Price", formula: "holdings × btcPrice", inputs: { holdings: cp.holdings } }),
         `Using live BTC price: $${btcPrice.toLocaleString()}`
       );
 
@@ -97,7 +68,7 @@ export function H100CompanyView({ company, className = "" }: Props) {
               derivedSource({
                 derivation: "Enterprise Value ÷ Crypto NAV",
                 formula: "(marketCap + adjustedDebt + preferred - cash) / cryptoNav",
-                inputs: { debt: H100_PROVENANCE.totalDebt, cash: H100_PROVENANCE.cashReserves, holdings: H100_PROVENANCE.holdings },
+                inputs: { debt: cp.totalDebt, cash: cp.cashReserves, holdings: cp.holdings },
               }),
               `Market Cap: ${formatLargeNumber(marketCap)} (SEK at kr${sekUsdRate.toFixed(1)}/USD). Adjusted Debt: ${formatLargeNumber(adjustedDebt)}`
             )
@@ -108,7 +79,7 @@ export function H100CompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "Net Debt ÷ Crypto NAV",
           formula: "(adjustedDebt - cash) / cryptoNav",
-          inputs: { debt: H100_PROVENANCE.totalDebt, cash: H100_PROVENANCE.cashReserves, holdings: H100_PROVENANCE.holdings },
+          inputs: { debt: cp.totalDebt, cash: cp.cashReserves, holdings: cp.holdings },
         }),
         `Net Debt: ${formatLargeNumber(netDebt)}`
       );
@@ -118,7 +89,7 @@ export function H100CompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "Crypto NAV + Cash − Adjusted Debt",
           formula: "(holdings × btcPrice) + cash - adjustedDebt",
-          inputs: { holdings: H100_PROVENANCE.holdings, cash: H100_PROVENANCE.cashReserves, debt: H100_PROVENANCE.totalDebt },
+          inputs: { holdings: cp.holdings, cash: cp.cashReserves, debt: cp.totalDebt },
         }),
         `Zero-coupon convertible — no interest payments. Debt adjusted for ITM instruments.`
       );
@@ -128,7 +99,7 @@ export function H100CompanyView({ company, className = "" }: Props) {
         derivedSource({
           derivation: "Equity NAV ÷ Shares Outstanding",
           formula: "equityNav / shares",
-          inputs: { holdings: H100_PROVENANCE.holdings, shares: H100_PROVENANCE.sharesOutstanding!, debt: H100_PROVENANCE.totalDebt, cash: H100_PROVENANCE.cashReserves },
+          inputs: { holdings: cp.holdings, shares: cp.sharesOutstanding, debt: cp.totalDebt, cash: cp.cashReserves },
         }),
         `Single share class (${(sharesOutstanding / 1e6).toFixed(1)}M shares)`
       );
@@ -163,7 +134,7 @@ export function H100CompanyView({ company, className = "" }: Props) {
         <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-300 dark:border-red-700">
           <h4 className="text-sm font-semibold text-red-700 dark:text-red-400 uppercase tracking-wide mb-2">⚠️ IR Page Discrepancy — Convertible Debt</h4>
           <p className="text-sm text-red-600 dark:text-red-300">
-            H100&apos;s IR page claims “no convertibles outstanding”, but MFN filings show zero-coupon convertible debentures remain.
+            H100&apos;s IR page claims "no convertibles outstanding", but MFN filings show zero-coupon convertible debentures remain.
           </p>
         </div>
 

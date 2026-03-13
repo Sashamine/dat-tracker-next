@@ -1,9 +1,9 @@
 "use client";
 
-import { DCC_PROVENANCE } from "@/lib/data/provenance/dcc";
-import { pv, derivedSource, getSourceUrl, getSourceDate } from "@/lib/data/types/provenance";
+import { buildCompanyProvenance, standardProvenanceHelpers } from "@/lib/utils/company-provenance";
+import { pv, derivedSource } from "@/lib/data/types/provenance";
 import type { Company, DataWarning } from "@/lib/types";
-import type { ProvenanceValue, XBRLSource, DocumentSource, DerivedSource } from "@/lib/data/types/provenance";
+import type { ProvenanceValue } from "@/lib/data/types/provenance";
 import { trackCitationSourceClick } from "@/lib/client-events";
 
 import { CompanyViewBase, type CompanyViewBaseConfig, type CompanyViewBaseMetrics } from "./CompanyViewBase";
@@ -13,35 +13,8 @@ const TREASURY_DASHBOARD_URL = "https://treasury.digitalx.com";
 const ASX_FILINGS_URL = "https://www.asx.com.au/markets/company/DCC";
 const LISTCORP_URL = "https://www.listcorp.com/asx/dcc/digitalx-limited";
 
-type PvParam = ProvenanceValue<number> | undefined;
-type AnySource = XBRLSource | DocumentSource | DerivedSource;
-
-type ConfigWithHelpers = CompanyViewBaseConfig & {
-  provenanceHelpers: {
-    sourceUrl: (p: PvParam) => string | undefined;
-    sourceType: (p: PvParam) => string | undefined;
-    sourceDate: (p: PvParam) => string | undefined;
-    searchTerm: (p: PvParam) => string | undefined;
-  };
-};
-
 interface DCCMetrics extends CompanyViewBaseMetrics {
   leverage: number;
-}
-
-function su(p: PvParam) {
-  return p?.source ? getSourceUrl(p.source) : undefined;
-}
-function st(p: PvParam) {
-  return p?.source?.type;
-}
-function sd(p: PvParam) {
-  return p?.source ? getSourceDate(p.source) : undefined;
-}
-function ss(p: PvParam) {
-  const src: AnySource | undefined = p?.source;
-  if (src && "searchTerm" in src) return src.searchTerm;
-  return undefined;
 }
 
 interface Props {
@@ -50,27 +23,24 @@ interface Props {
 }
 
 export function DCCCompanyView({ company, className = "" }: Props) {
-  const config: ConfigWithHelpers = {
+  const cp = buildCompanyProvenance(company);
+
+  const config: CompanyViewBaseConfig = {
     ticker: "DCC.AX",
     asset: "BTC",
-    provenance: DCC_PROVENANCE,
-    provenanceHelpers: {
-      sourceUrl: su,
-      sourceType: st,
-      sourceDate: sd,
-      searchTerm: ss,
-    },
+    provenance: cp,
+    provenanceHelpers: standardProvenanceHelpers,
 
     buildMetrics: ({ company, prices, marketCap }) => {
-      if (!DCC_PROVENANCE.holdings || !DCC_PROVENANCE.totalDebt || !DCC_PROVENANCE.cashReserves) return null;
+      if (!company.holdings) return null;
 
       const btcPrice = prices?.crypto?.BTC?.price || 0;
 
-      const holdings = DCC_PROVENANCE.holdings.value;
-      const totalDebt = DCC_PROVENANCE.totalDebt.value;
-      const cashReserves = DCC_PROVENANCE.cashReserves.value;
-      const preferredEquity = DCC_PROVENANCE.preferredEquity?.value ?? 0;
-      const sharesOutstanding = DCC_PROVENANCE.sharesOutstanding?.value ?? company.sharesForMnav ?? 0;
+      const holdings = company.holdings ?? 0;
+      const totalDebt = company.totalDebt ?? 0;
+      const cashReserves = company.cashReserves ?? 0;
+      const preferredEquity = company.preferredEquity ?? 0;
+      const sharesOutstanding = company.sharesForMnav ?? 0;
 
       const cryptoNav = holdings * btcPrice;
       const netDebt = Math.max(0, totalDebt - cashReserves);
@@ -83,7 +53,7 @@ export function DCCCompanyView({ company, className = "" }: Props) {
 
       const cryptoNavPv: ProvenanceValue<number> = pv(
         cryptoNav,
-        derivedSource({ derivation: "BTC Holdings × BTC Price", formula: "holdings × btcPrice", inputs: { holdings: DCC_PROVENANCE.holdings } }),
+        derivedSource({ derivation: "BTC Holdings × BTC Price", formula: "holdings × btcPrice", inputs: { holdings: cp.holdings } }),
         `Using live BTC price: $${btcPrice.toLocaleString()}`
       );
 
@@ -91,26 +61,26 @@ export function DCCCompanyView({ company, className = "" }: Props) {
         mNav !== null
           ? pv(
               mNav,
-              derivedSource({ derivation: "Enterprise Value ÷ Crypto NAV", formula: "(marketCap + debt - cash) / cryptoNav", inputs: { debt: DCC_PROVENANCE.totalDebt, cash: DCC_PROVENANCE.cashReserves, holdings: DCC_PROVENANCE.holdings } }),
+              derivedSource({ derivation: "Enterprise Value ÷ Crypto NAV", formula: "(marketCap + debt - cash) / cryptoNav", inputs: { debt: cp.totalDebt, cash: cp.cashReserves, holdings: cp.holdings } }),
               `No debt, clean balance sheet`
             )
           : null;
 
       const leveragePv: ProvenanceValue<number> = pv(
         leverage,
-        derivedSource({ derivation: "Net Debt ÷ Crypto NAV", formula: "(debt - cash) / cryptoNav", inputs: { debt: DCC_PROVENANCE.totalDebt, cash: DCC_PROVENANCE.cashReserves, holdings: DCC_PROVENANCE.holdings } }),
+        derivedSource({ derivation: "Net Debt ÷ Crypto NAV", formula: "(debt - cash) / cryptoNav", inputs: { debt: cp.totalDebt, cash: cp.cashReserves, holdings: cp.holdings } }),
         `NetDebt: ${netDebt}`
       );
 
       const equityNavPv: ProvenanceValue<number> = pv(
         equityNav,
-        derivedSource({ derivation: "Crypto NAV + Cash − Debt", formula: "cryptoNav + cash - debt", inputs: { holdings: DCC_PROVENANCE.holdings, cash: DCC_PROVENANCE.cashReserves, debt: DCC_PROVENANCE.totalDebt } }),
+        derivedSource({ derivation: "Crypto NAV + Cash − Debt", formula: "cryptoNav + cash - debt", inputs: { holdings: cp.holdings, cash: cp.cashReserves, debt: cp.totalDebt } }),
         `After debt`
       );
 
       const equityNavPerSharePv: ProvenanceValue<number> = pv(
         equityNavPerShare,
-        derivedSource({ derivation: "Equity NAV ÷ Shares Outstanding", formula: "equityNav / shares", inputs: { holdings: DCC_PROVENANCE.holdings, shares: DCC_PROVENANCE.sharesOutstanding!, debt: DCC_PROVENANCE.totalDebt, cash: DCC_PROVENANCE.cashReserves } }),
+        derivedSource({ derivation: "Equity NAV ÷ Shares Outstanding", formula: "equityNav / shares", inputs: { holdings: cp.holdings, shares: cp.sharesOutstanding, debt: cp.totalDebt, cash: cp.cashReserves } }),
         `${(sharesOutstanding / 1e9).toFixed(2)}B shares`
       );
 
@@ -198,7 +168,7 @@ export function DCCCompanyView({ company, className = "" }: Props) {
                   : "bg-blue-50 dark:bg-blue-950/30 text-blue-800 dark:text-blue-200 border border-blue-200 dark:border-blue-800"
               }`}
             >
-              <span>{w.severity === "warning" ? "⚠️" : "ℹ️"}</span>
+              <span>{w.severity === "warning" ? "\u26A0\uFE0F" : "\u2139\uFE0F"}</span>
               <span>{w.message}</span>
             </div>
           ))}
