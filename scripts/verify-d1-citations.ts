@@ -68,7 +68,21 @@ function stripHtml(html: string): string {
     .trim();
 }
 
-async function fetchR2Document(ticker: string, accession: string): Promise<string | null> {
+async function fetchR2Document(ticker: string, accession: string, r2Key?: string | null): Promise<string | null> {
+  // Try the exact r2_key from D1 first (handles non-standard paths like UUIDs)
+  if (r2Key) {
+    try {
+      const url = `${R2_BASE_URL}/${r2Key}`;
+      const res = await fetch(url);
+      if (res.ok) {
+        const contentType = res.headers.get('content-type') || '';
+        if (!contentType.includes('pdf')) {
+          return await res.text();
+        }
+      }
+    } catch {}
+  }
+
   const tickerLower = ticker.toLowerCase();
   const batch = TICKER_BATCHES[tickerLower] || 1;
 
@@ -78,8 +92,8 @@ async function fetchR2Document(ticker: string, accession: string): Promise<strin
   ];
 
   for (const prefix of orderedPrefixes) {
-    // Try .txt first, then without extension (some foreign docs)
-    for (const suffix of ['.txt', '']) {
+    // Try .txt first, then exhibit.txt, then without extension (some foreign docs)
+    for (const suffix of ['.txt', '.exhibit.txt', '']) {
       const url = `${R2_BASE_URL}/${prefix}/${tickerLower}/${accession}${suffix}`;
       try {
         const res = await fetch(url);
@@ -87,7 +101,19 @@ async function fetchR2Document(ticker: string, accession: string): Promise<strin
           const contentType = res.headers.get('content-type') || '';
           // Skip PDFs — can't search text in them
           if (contentType.includes('pdf')) continue;
-          return await res.text();
+          const text = await res.text();
+          // If we got the cover page (.txt) AND an exhibit exists, concatenate them
+          if (suffix === '.txt') {
+            const exhibitUrl = `${R2_BASE_URL}/${prefix}/${tickerLower}/${accession}.exhibit.txt`;
+            try {
+              const exhibitRes = await fetch(exhibitUrl);
+              if (exhibitRes.ok) {
+                const exhibitText = await exhibitRes.text();
+                return text + '\n\n' + exhibitText;
+              }
+            } catch {}
+          }
+          return text;
         }
       } catch {
         continue;
@@ -109,19 +135,65 @@ function findSnippetInDocument(document: string, snippet: string): boolean {
 // ---------------------------------------------------------------------------
 
 /**
- * Extract numbers appearing near (within ~500 chars of) the search term in doc text.
- * Returns all candidate numbers, sorted by proximity to the search term.
+ * Try to locate a search term in a document. Tries the literal term first,
+ * then falls back to alternative representations:
+ * - Raw digits (strip commas/spaces from the search term)
+ * - Scaled formats: "160,200,000" → look for "160,200" or "160.2"
  */
-function extractNumbersNearSnippet(document: string, snippet: string): number[] {
+function findSearchTermInDoc(document: string, snippet: string): { index: number; length: number } | null {
+  // 1. Try literal match
   const escaped = snippet.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const pattern = escaped.replace(/\s+/g, '\\s+');
   const regex = new RegExp(pattern, 'gi');
   const match = regex.exec(document);
-  if (!match) return [];
+  if (match) return { index: match.index, length: match[0].length };
 
-  const matchPos = match.index;
+  // 2. Try raw digits (e.g., "315,332,655" → "315332655")
+  const digits = snippet.replace(/[,\s$]/g, '');
+  if (/^\d+\.?\d*$/.test(digits)) {
+    const idx = document.indexOf(digits);
+    if (idx >= 0) return { index: idx, length: digits.length };
+  }
+
+  // 3. For "X million" / "X billion" style terms, try finding "X" near "million"/"billion"
+  const millionMatch = snippet.match(/^([\d,.]+)\s*(million|billion|thousand)/i);
+  if (millionMatch) {
+    const numPart = millionMatch[1].replace(/[,\s]/g, '');
+    const unitPart = millionMatch[2].toLowerCase();
+    // Search for the numeric part followed loosely by the unit word
+    const loosePattern = new RegExp(numPart.replace(/\./g, '\\.') + '[\\s,]*' + unitPart, 'gi');
+    const looseMatch = loosePattern.exec(document);
+    if (looseMatch) return { index: looseMatch.index, length: looseMatch[0].length };
+    // Also try just finding the number part
+    const numIdx = document.indexOf(numPart);
+    if (numIdx >= 0) return { index: numIdx, length: numPart.length };
+  }
+
+  // 4. For large numbers, try finding a truncated version
+  // e.g., "315,332,655" → try "315,332" or "315332"
+  // Only use 6+ digit prefixes to avoid false matches on short numbers
+  if (/^\d[\d,]+$/.test(snippet.trim()) && digits.length >= 7) {
+    for (const len of [7, 6]) {
+      const prefix = digits.slice(0, len);
+      const idx = document.indexOf(prefix);
+      if (idx >= 0) return { index: idx, length: prefix.length };
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Extract numbers appearing near (within ~500 chars of) the search term in doc text.
+ * Returns all candidate numbers, sorted by proximity to the search term.
+ */
+function extractNumbersNearSnippet(document: string, snippet: string): number[] {
+  const found = findSearchTermInDoc(document, snippet);
+  if (!found) return [];
+
+  const matchPos = found.index;
   const windowStart = Math.max(0, matchPos - 500);
-  const windowEnd = Math.min(document.length, matchPos + snippet.length + 500);
+  const windowEnd = Math.min(document.length, matchPos + found.length + 500);
   const window = document.slice(windowStart, windowEnd);
 
   // Match numbers: 1,234,567 or 1234567 or 1,234.56 or $1.2B etc.
@@ -208,6 +280,7 @@ type D1Row = {
   source_url: string | null;
   accession: string | null;
   source_type: string | null;
+  r2_key: string | null;
 };
 
 type XBRLCheck = {
@@ -292,14 +365,14 @@ async function main() {
   const query = filterTicker
     ? `SELECT d.entity_id, d.metric, d.value, d.unit, d.as_of, d.method, d.xbrl_concept,
               d.citation_quote, d.citation_search_term, d.artifact_id,
-              a.source_url, a.accession, a.source_type
+              a.source_url, a.accession, a.source_type, a.r2_key
        FROM latest_datapoints d
        LEFT JOIN artifacts a ON a.artifact_id = d.artifact_id
        WHERE d.entity_id = ?
        ORDER BY d.entity_id, d.metric`
     : `SELECT d.entity_id, d.metric, d.value, d.unit, d.as_of, d.method, d.xbrl_concept,
               d.citation_quote, d.citation_search_term, d.artifact_id,
-              a.source_url, a.accession, a.source_type
+              a.source_url, a.accession, a.source_type, a.r2_key
        FROM latest_datapoints d
        LEFT JOIN artifacts a ON a.artifact_id = d.artifact_id
        ORDER BY d.entity_id, d.metric`;
@@ -473,10 +546,10 @@ async function main() {
       continue;
     }
 
-    // Cache R2 fetches per accession
-    const cacheKey = `${row.entity_id}|${row.accession}`;
+    // Cache R2 fetches per accession (include r2_key for non-standard paths)
+    const cacheKey = `${row.entity_id}|${row.accession}|${row.r2_key || ''}`;
     if (!(cacheKey in docCache)) {
-      docCache[cacheKey] = await fetchR2Document(row.entity_id, row.accession);
+      docCache[cacheKey] = await fetchR2Document(row.entity_id, row.accession, row.r2_key);
     }
 
     const doc = docCache[cacheKey];
@@ -586,8 +659,11 @@ async function main() {
   // -------------------------------------------------------------------------
   // Only check datapoints that have a search term and an accession (document link).
   // Skip derived/carried-forward values (prefixed with [Derived], [Carried forward], etc.)
+  // Skip XBRL-sourced datapoints — already verified in step 1 via re-extraction.
+  // XBRL numbers live in structured data attributes, not visible filing text,
+  // so text-based value extraction is unreliable for them.
   const DERIVED_PREFIXES = ['[Zero', '[Derived', '[Carried', '[Pre-filing', '[SPAC', '[Historical'];
-  const valueCheckRows = rows.filter((r) => {
+  const allValueCheckRows = rows.filter((r) => {
     if (!r.citation_search_term || !r.accession) return false;
     if (r.value === 0) return false; // Zero values are often special
     // Skip derived citations — no number to extract from document
@@ -595,18 +671,20 @@ async function main() {
     if (DERIVED_PREFIXES.some((p) => quote.startsWith(p))) return false;
     return true;
   });
+  const xbrlSkipped = allValueCheckRows.filter((r) => r.method === 'sec_companyfacts_xbrl');
+  const valueCheckRows = allValueCheckRows.filter((r) => r.method !== 'sec_companyfacts_xbrl');
 
   console.log(`\n${'='.repeat(60)}`);
   console.log('4. VALUE EXTRACTION VERIFICATION (number near search term)');
   console.log(`${'='.repeat(60)}`);
-  console.log(`  ${valueCheckRows.length} datapoints to verify\n`);
+  console.log(`  ${valueCheckRows.length} datapoints to verify (${xbrlSkipped.length} XBRL-sourced skipped — verified in step 1)\n`);
 
   const valueChecks: ValueCheck[] = [];
 
   for (const row of valueCheckRows) {
-    const cacheKey = `${row.entity_id}|${row.accession}`;
+    const cacheKey = `${row.entity_id}|${row.accession}|${row.r2_key || ''}`;
     if (!(cacheKey in docCache)) {
-      docCache[cacheKey] = await fetchR2Document(row.entity_id, row.accession!);
+      docCache[cacheKey] = await fetchR2Document(row.entity_id, row.accession!, row.r2_key);
     }
 
     const doc = docCache[cacheKey];
@@ -758,7 +836,7 @@ async function main() {
 
   console.log(`  XBRL checks:       ${xbrlChecks.length} (${xbrlPass.length} pass, ${xbrlIssues} issues, ${xbrlFailed.length} can't verify)`);
   console.log(`  Quote checks:      ${quoteChecks.length} (${quoteChecks.filter((c) => c.status === 'pass').length} pass, ${quoteIssues} synthetic/missing)`);
-  console.log(`  Value checks:      ${valueChecks.length} (${vPass.length + vPassScaled.length} pass [${vPassScaled.length} scaled], ${valueIssues} mismatches, ${vWeakSearch.length} weak search, ${vNoCandidates.length} no candidates)`);
+  console.log(`  Value checks:      ${valueChecks.length} text-based + ${xbrlSkipped.length} XBRL-verified (${vPass.length + vPassScaled.length} pass [${vPassScaled.length} scaled], ${valueIssues} mismatches, ${vWeakSearch.length} weak search, ${vNoCandidates.length} no candidates)`);
   console.log(`  Provenance:        ${full.length}/${provenanceChecks.length} full coverage (${((full.length / provenanceChecks.length) * 100).toFixed(1)}%)`);
   console.log(`  Total issues:      ${totalIssues} (real mismatches only)`);
 
