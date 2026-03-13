@@ -68,7 +68,21 @@ function stripHtml(html: string): string {
     .trim();
 }
 
-async function fetchR2Document(ticker: string, accession: string): Promise<string | null> {
+async function fetchR2Document(ticker: string, accession: string, r2Key?: string | null): Promise<string | null> {
+  // Try the exact r2_key from D1 first (handles non-standard paths like UUIDs)
+  if (r2Key) {
+    try {
+      const url = `${R2_BASE_URL}/${r2Key}`;
+      const res = await fetch(url);
+      if (res.ok) {
+        const contentType = res.headers.get('content-type') || '';
+        if (!contentType.includes('pdf')) {
+          return await res.text();
+        }
+      }
+    } catch {}
+  }
+
   const tickerLower = ticker.toLowerCase();
   const batch = TICKER_BATCHES[tickerLower] || 1;
 
@@ -266,6 +280,7 @@ type D1Row = {
   source_url: string | null;
   accession: string | null;
   source_type: string | null;
+  r2_key: string | null;
 };
 
 type XBRLCheck = {
@@ -350,14 +365,14 @@ async function main() {
   const query = filterTicker
     ? `SELECT d.entity_id, d.metric, d.value, d.unit, d.as_of, d.method, d.xbrl_concept,
               d.citation_quote, d.citation_search_term, d.artifact_id,
-              a.source_url, a.accession, a.source_type
+              a.source_url, a.accession, a.source_type, a.r2_key
        FROM latest_datapoints d
        LEFT JOIN artifacts a ON a.artifact_id = d.artifact_id
        WHERE d.entity_id = ?
        ORDER BY d.entity_id, d.metric`
     : `SELECT d.entity_id, d.metric, d.value, d.unit, d.as_of, d.method, d.xbrl_concept,
               d.citation_quote, d.citation_search_term, d.artifact_id,
-              a.source_url, a.accession, a.source_type
+              a.source_url, a.accession, a.source_type, a.r2_key
        FROM latest_datapoints d
        LEFT JOIN artifacts a ON a.artifact_id = d.artifact_id
        ORDER BY d.entity_id, d.metric`;
@@ -531,10 +546,10 @@ async function main() {
       continue;
     }
 
-    // Cache R2 fetches per accession
-    const cacheKey = `${row.entity_id}|${row.accession}`;
+    // Cache R2 fetches per accession (include r2_key for non-standard paths)
+    const cacheKey = `${row.entity_id}|${row.accession}|${row.r2_key || ''}`;
     if (!(cacheKey in docCache)) {
-      docCache[cacheKey] = await fetchR2Document(row.entity_id, row.accession);
+      docCache[cacheKey] = await fetchR2Document(row.entity_id, row.accession, row.r2_key);
     }
 
     const doc = docCache[cacheKey];
@@ -667,9 +682,9 @@ async function main() {
   const valueChecks: ValueCheck[] = [];
 
   for (const row of valueCheckRows) {
-    const cacheKey = `${row.entity_id}|${row.accession}`;
+    const cacheKey = `${row.entity_id}|${row.accession}|${row.r2_key || ''}`;
     if (!(cacheKey in docCache)) {
-      docCache[cacheKey] = await fetchR2Document(row.entity_id, row.accession!);
+      docCache[cacheKey] = await fetchR2Document(row.entity_id, row.accession!, row.r2_key);
     }
 
     const doc = docCache[cacheKey];
