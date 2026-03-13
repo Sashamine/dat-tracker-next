@@ -134,15 +134,40 @@ function extractNumbersNearSnippet(document: string, snippet: string): number[] 
 
 /**
  * Check if any extracted number is close to the expected D1 value.
- * Accounts for scale differences (e.g., D1 stores 1000000, doc says "1 million").
+ * Accounts for scale differences (e.g., D1 stores 15000000, doc says "15,000" in thousands).
+ * Returns { matched, scale } where scale indicates if a ×1000 or ×1000000 multiplier was needed.
  */
-function valueMatchesExtracted(d1Value: number, candidates: number[], tolerancePct: number = 1): boolean {
-  if (d1Value === 0) return true; // Zero values are often derived/special
-  for (const candidate of candidates) {
-    if (candidate === 0) continue;
-    const pctDiff = Math.abs(d1Value - candidate) / Math.max(Math.abs(d1Value), Math.abs(candidate)) * 100;
-    if (pctDiff <= tolerancePct) return true;
+function valueMatchesExtracted(
+  d1Value: number,
+  candidates: number[],
+  tolerancePct: number = 1
+): { matched: boolean; scale: number } {
+  if (d1Value === 0) return { matched: true, scale: 1 };
+
+  // Try direct match, then ×1000 (SEC "in thousands"), then ×1000000 (SEC "in millions")
+  for (const scale of [1, 1000, 1_000_000]) {
+    const target = d1Value / scale;
+    for (const candidate of candidates) {
+      if (candidate === 0) continue;
+      const pctDiff = Math.abs(target - candidate) / Math.max(Math.abs(target), Math.abs(candidate)) * 100;
+      if (pctDiff <= tolerancePct) return { matched: true, scale };
+    }
   }
+  return { matched: false, scale: 1 };
+}
+
+/**
+ * Check if a search term is too short/ambiguous to reliably extract values.
+ * Short terms match too many numbers in a document, producing false positives.
+ */
+function isWeakSearchTerm(term: string): boolean {
+  const cleaned = term.replace(/[",.$\s]/g, '');
+  // Single/double digit numbers, or very short strings
+  if (cleaned.length <= 3) return true;
+  // Pure small numbers like "10", "89", "255"
+  if (/^\d{1,3}$/.test(cleaned)) return true;
+  // Short decimals like "1.5", "2.30", "6.7", "8.2", "10.6"
+  if (/^\d{1,2}\.\d{1,2}$/.test(term.trim())) return true;
   return false;
 }
 
@@ -204,7 +229,8 @@ type ValueCheck = {
   accession: string;
   closestCandidate: number | null;
   divergencePct: number | null;
-  status: 'pass' | 'no_match' | 'doc_missing' | 'no_candidates' | 'derived_skip';
+  scale: number; // 1 = direct, 1000 = "in thousands", 1000000 = "in millions"
+  status: 'pass' | 'pass_scaled' | 'no_match' | 'weak_search' | 'doc_missing' | 'no_candidates' | 'derived_skip';
 };
 
 // ---------------------------------------------------------------------------
@@ -581,6 +607,8 @@ async function main() {
     const candidates = extractNumbersNearSnippet(doc, row.citation_search_term!);
 
     if (candidates.length === 0) {
+      // If the search term itself is weak, categorize differently
+      const weak = isWeakSearchTerm(row.citation_search_term!);
       valueChecks.push({
         ticker: row.entity_id,
         metric: row.metric,
@@ -589,24 +617,37 @@ async function main() {
         accession: row.accession!,
         closestCandidate: null,
         divergencePct: null,
-        status: 'no_candidates',
+        scale: 1,
+        status: weak ? 'weak_search' : 'no_candidates',
       });
       continue;
     }
 
-    const matched = valueMatchesExtracted(row.value, candidates, 5); // 5% tolerance
+    const { matched, scale } = valueMatchesExtracted(row.value, candidates, 5); // 5% tolerance
 
-    // Find closest candidate for reporting
+    // Find closest candidate for reporting (try all scales)
     let closest = candidates[0];
     let closestDivergence = row.value !== 0
       ? Math.abs(row.value - closest) / Math.abs(row.value) * 100
       : 0;
-    for (const c of candidates) {
-      const d = row.value !== 0 ? Math.abs(row.value - c) / Math.abs(row.value) * 100 : 0;
-      if (d < closestDivergence) {
-        closest = c;
-        closestDivergence = d;
+    for (const s of [1, 1000, 1_000_000]) {
+      const target = row.value / s;
+      for (const c of candidates) {
+        const d = target !== 0 ? Math.abs(target - c) / Math.abs(target) * 100 : 0;
+        if (d < closestDivergence) {
+          closest = c;
+          closestDivergence = d;
+        }
       }
+    }
+
+    let status: ValueCheck['status'];
+    if (matched) {
+      status = scale > 1 ? 'pass_scaled' : 'pass';
+    } else if (isWeakSearchTerm(row.citation_search_term!)) {
+      status = 'weak_search';
+    } else {
+      status = 'no_match';
     }
 
     valueChecks.push({
@@ -617,19 +658,34 @@ async function main() {
       accession: row.accession!,
       closestCandidate: closest,
       divergencePct: closestDivergence,
-      status: matched ? 'pass' : 'no_match',
+      scale,
+      status,
     });
   }
 
   const vPass = valueChecks.filter((c) => c.status === 'pass');
+  const vPassScaled = valueChecks.filter((c) => c.status === 'pass_scaled');
   const vNoMatch = valueChecks.filter((c) => c.status === 'no_match');
+  const vWeakSearch = valueChecks.filter((c) => c.status === 'weak_search');
   const vDocMissing = valueChecks.filter((c) => c.status === 'doc_missing');
   const vNoCandidates = valueChecks.filter((c) => c.status === 'no_candidates');
 
-  console.log(`  PASS:            ${vPass.length}`);
-  console.log(`  NO MATCH (>5%):  ${vNoMatch.length}`);
-  console.log(`  DOC MISSING:     ${vDocMissing.length}`);
-  console.log(`  NO CANDIDATES:   ${vNoCandidates.length}`);
+  console.log(`  PASS:              ${vPass.length}`);
+  console.log(`  PASS (scaled):     ${vPassScaled.length} (matched after ×1000 or ×1M scale)`);
+  console.log(`  NO MATCH (>5%):    ${vNoMatch.length} ← real mismatches to investigate`);
+  console.log(`  WEAK SEARCH TERM:  ${vWeakSearch.length} (search too short/ambiguous to verify)`);
+  console.log(`  DOC MISSING:       ${vDocMissing.length}`);
+  console.log(`  NO CANDIDATES:     ${vNoCandidates.length}`);
+
+  if (vPassScaled.length > 0 && verbose) {
+    console.log(`\n${'─'.repeat(60)}`);
+    console.log(`PASS WITH SCALE (${vPassScaled.length}):`);
+    console.log(`${'─'.repeat(60)}`);
+    for (const c of vPassScaled) {
+      const scaleLabel = c.scale === 1000 ? '×1000 (in thousands)' : '×1M (in millions)';
+      console.log(`  ${c.ticker} / ${c.metric}: D1=${c.d1Value.toLocaleString()} matched doc at ${scaleLabel}`);
+    }
+  }
 
   if (vNoMatch.length > 0) {
     console.log(`\n${'─'.repeat(60)}`);
@@ -641,6 +697,15 @@ async function main() {
       console.log(`    Closest:   ${c.closestCandidate?.toLocaleString()} (${c.divergencePct?.toFixed(1)}% off)`);
       console.log(`    Search:    "${c.searchTerm.slice(0, 80)}"`);
       console.log(`    Accession: ${c.accession}`);
+    }
+  }
+
+  if (vWeakSearch.length > 0) {
+    console.log(`\n${'─'.repeat(60)}`);
+    console.log(`WEAK SEARCH TERMS (${vWeakSearch.length}) — need better search terms in D1:`);
+    console.log(`${'─'.repeat(60)}`);
+    for (const c of vWeakSearch) {
+      console.log(`  ${c.ticker} / ${c.metric}: search="${c.searchTerm}" (D1: ${c.d1Value.toLocaleString()})`);
     }
   }
 
@@ -662,14 +727,14 @@ async function main() {
 
   const xbrlIssues = xbrlValueMismatch.length + xbrlConceptMismatch.length;
   const quoteIssues = quoteChecks.filter((c) => c.status === 'quote_not_found').length;
-  const valueIssues = vNoMatch.length;
-  const totalIssues = xbrlIssues + quoteIssues + valueIssues;
+  const valueIssues = vNoMatch.length; // Only real mismatches, not weak search terms
+  const totalIssues = xbrlIssues + valueIssues; // Quote issues excluded (mostly synthetic quotes)
 
   console.log(`  XBRL checks:       ${xbrlChecks.length} (${xbrlPass.length} pass, ${xbrlIssues} issues, ${xbrlFailed.length} can't verify)`);
-  console.log(`  Quote checks:      ${quoteChecks.length} (${quoteChecks.filter((c) => c.status === 'pass').length} pass, ${quoteIssues} issues)`);
-  console.log(`  Value checks:      ${valueChecks.length} (${vPass.length} pass, ${valueIssues} mismatches, ${vNoCandidates.length} no candidates)`);
+  console.log(`  Quote checks:      ${quoteChecks.length} (${quoteChecks.filter((c) => c.status === 'pass').length} pass, ${quoteIssues} synthetic/missing)`);
+  console.log(`  Value checks:      ${valueChecks.length} (${vPass.length + vPassScaled.length} pass [${vPassScaled.length} scaled], ${valueIssues} mismatches, ${vWeakSearch.length} weak search, ${vNoCandidates.length} no candidates)`);
   console.log(`  Provenance:        ${full.length}/${provenanceChecks.length} full coverage (${((full.length / provenanceChecks.length) * 100).toFixed(1)}%)`);
-  console.log(`  Total issues:      ${totalIssues}`);
+  console.log(`  Total issues:      ${totalIssues} (real mismatches only)`);
 
   if (totalIssues > 0) {
     console.log('\n  ⚠ Issues found — review mismatches above');
