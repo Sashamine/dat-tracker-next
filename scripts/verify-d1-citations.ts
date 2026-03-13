@@ -48,6 +48,26 @@ const TICKER_BATCHES: Record<string, number> = {
 };
 const R2_PREFIXES = ['new-uploads', 'batch1', 'batch2', 'batch3', 'batch4', 'batch5', 'batch6', 'foreign-filings', 'external-sources'];
 
+/**
+ * Strip HTML/XBRL tags and decode entities to get plain text.
+ * SEC inline XBRL wraps numbers in tags like <ix:nonNumeric>, making
+ * them invisible to plain-text search.
+ */
+function stripHtml(html: string): string {
+  return html
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ')  // Remove style blocks
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, ' ') // Remove script blocks
+    .replace(/<[^>]+>/g, ' ')                           // Remove all tags
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#\d+;/g, ' ')                            // Numeric entities
+    .replace(/\s+/g, ' ')                               // Collapse whitespace
+    .trim();
+}
+
 async function fetchR2Document(ticker: string, accession: string): Promise<string | null> {
   const tickerLower = ticker.toLowerCase();
   const batch = TICKER_BATCHES[tickerLower] || 1;
@@ -604,7 +624,13 @@ async function main() {
       continue;
     }
 
-    const candidates = extractNumbersNearSnippet(doc, row.citation_search_term!);
+    let candidates = extractNumbersNearSnippet(doc, row.citation_search_term!);
+
+    // If no candidates found and doc looks like HTML/XBRL, retry with stripped text
+    if (candidates.length === 0 && doc.includes('</') && doc.includes('<')) {
+      const stripped = stripHtml(doc);
+      candidates = extractNumbersNearSnippet(stripped, row.citation_search_term!);
+    }
 
     if (candidates.length === 0) {
       // If the search term itself is weak, categorize differently
