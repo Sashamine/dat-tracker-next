@@ -18,6 +18,10 @@ import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
 import { getHoldingsGrowthByPeriod } from "@/lib/data/earnings-data";
 import { MNAV_HISTORY } from "@/lib/data/mnav-history-calculated";
 import { cn } from "@/lib/utils";
+import { TreasuryYieldLeaderboard } from "@/components/earnings/treasury-yield-leaderboard";
+import { EarningsCalendar } from "@/components/earnings/earnings-calendar";
+import { Button } from "@/components/ui/button";
+import type { Asset, CalendarQuarter } from "@/lib/types";
 
 type HpsGrowthApiSnapshot = {
   date: string;
@@ -458,6 +462,8 @@ function AnalyticsContent() {
   const [growthPeriod, setGrowthPeriod] = useState<GrowthPeriod>("90d");
   const [historyRange, setHistoryRange] = useState<TimeRange>("1y");
   const [historyMetric, setHistoryMetric] = useState<MetricType>("median");
+  const [showUpcomingEarnings, setShowUpcomingEarnings] = useState(true);
+  const [selectedQuarter, setSelectedQuarter] = useState<CalendarQuarter | undefined>(undefined);
 
   const { data: prices } = usePricesStream();
   const { data: companiesData, isLoading } = useCompanies();
@@ -639,7 +645,7 @@ function AnalyticsContent() {
         </div>
 
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Sector Analytics</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Sector Intelligence</h1>
           <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
             Structural patterns across {companyCount} DAT companies
           </p>
@@ -793,6 +799,55 @@ function AnalyticsContent() {
             metric={historyMetric}
             setMetric={setHistoryMetric}
           />
+        </div>
+
+        {/* Quarterly Performance & Earnings — merged from /earnings */}
+        <div id="quarterly" className="mt-10 scroll-mt-8">
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Quarterly Performance</h2>
+            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+              Which companies are growing holdings per share the fastest?
+            </p>
+          </div>
+
+          <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-4 lg:p-6">
+            <TreasuryYieldLeaderboard
+              key={`${selectedQuarter || 'default'}-${selectedAsset === "ALL" ? "all" : selectedAsset}`}
+              quarter={selectedQuarter}
+              asset={selectedAsset !== "ALL" && selectedAsset !== "OTHER" ? selectedAsset as Asset : undefined}
+              onQuarterChange={(q: CalendarQuarter) => setSelectedQuarter(q)}
+            />
+          </div>
+
+          <div className="mt-6 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 p-4">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100">
+                {showUpcomingEarnings ? "Upcoming Earnings" : "Recent Results"}
+              </h3>
+              <div className="flex gap-2">
+                <Button
+                  variant={showUpcomingEarnings ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setShowUpcomingEarnings(true)}
+                >
+                  Upcoming
+                </Button>
+                <Button
+                  variant={!showUpcomingEarnings ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setShowUpcomingEarnings(false)}
+                >
+                  Recent
+                </Button>
+              </div>
+            </div>
+            <EarningsCalendar
+              days={90}
+              asset={selectedAsset !== "ALL" && selectedAsset !== "OTHER" ? selectedAsset as Asset : undefined}
+              upcoming={showUpcomingEarnings}
+              limit={8}
+            />
+          </div>
         </div>
       </main>
     </div>

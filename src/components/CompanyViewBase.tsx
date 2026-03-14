@@ -35,6 +35,8 @@ import {
   ChartInterval,
   DEFAULT_INTERVAL,
 } from "@/lib/hooks/use-stock-history";
+import useSWR from "swr";
+import { getCompanyAhpsMetrics, type AhpsHistoryEntry } from "@/lib/utils/ahps";
 
 export type CompanyViewBaseExpandedCard = "mnav" | "leverage" | "equityNav" | null;
 
@@ -194,6 +196,31 @@ export function CompanyViewBase({ company, className = "", config }: { company: 
 
   const intel = getCompanyIntel(config.ticker);
 
+  // Strategy context: AHPS 90D growth
+  const hpsGrowthFetcher = (url: string) => fetch(url).then(r => r.json());
+  const { data: hpsData } = useSWR<{ success: boolean; results: Array<{ ticker: string; currentSnapshot: { date: string; holdings: number; sharesOutstanding: number; holdingsPerShare: number }; history: Array<{ date: string; holdings: number; sharesOutstanding: number; holdingsPerShare: number }> }> }>(
+    `/api/d1/hps-growth?ticker=${config.ticker}`,
+    hpsGrowthFetcher,
+    { revalidateOnFocus: false }
+  );
+  const ahpsGrowth90d = useMemo(() => {
+    const row = hpsData?.results?.find(r => r.ticker.toUpperCase() === config.ticker.toUpperCase());
+    if (!row) return null;
+    const history: AhpsHistoryEntry[] = row.history?.map(s => ({
+      date: s.date,
+      holdings: s.holdings,
+      sharesOutstanding: s.sharesOutstanding,
+      holdingsPerShare: s.holdingsPerShare,
+    })) || [];
+    const ahps = getCompanyAhpsMetrics({
+      ticker: config.ticker,
+      company: { ...company, holdings: row.currentSnapshot.holdings, sharesForMnav: row.currentSnapshot.sharesOutstanding, holdingsLastUpdated: row.currentSnapshot.date },
+      history,
+      currentStockPrice: stockPrice || undefined,
+    });
+    return ahps.ahpsGrowth90d;
+  }, [hpsData, config.ticker, company, stockPrice]);
+
   const helpers: SourceHelpers = config.provenanceHelpers || {};
   const sourceUrl = helpers.sourceUrl || (() => undefined);
   const sourceType = helpers.sourceType || ((p: PvParam) => p?.source?.type);
@@ -212,6 +239,21 @@ export function CompanyViewBase({ company, className = "", config }: { company: 
         <span className="text-xs px-2 py-0.5 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded ml-auto">Click any value for source</span>
         <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
       </div>
+
+      {/* Strategy Context — The Trinity */}
+      {metrics.mNav !== null && (
+        <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+          <span>mNAV: <span className="font-bold">{metrics.mNav.toFixed(2)}x</span></span>
+          <span className="text-gray-300 dark:text-gray-600">·</span>
+          <span>AHPS 90D: <span className={cn("font-bold", ahpsGrowth90d !== null && ahpsGrowth90d >= 0 ? "text-green-600" : ahpsGrowth90d !== null ? "text-red-600" : "")}>
+            {ahpsGrowth90d !== null ? `${ahpsGrowth90d >= 0 ? "+" : ""}${ahpsGrowth90d.toFixed(1)}%` : "—"}
+          </span></span>
+          <span className="text-gray-300 dark:text-gray-600">·</span>
+          <span>Leverage: <span className={cn("font-bold", (metrics.leverage ?? 0) >= 1 ? "text-amber-600" : "")}>
+            {metrics.leverage !== undefined && metrics.leverage > 0 ? `${metrics.leverage.toFixed(2)}x` : "—"}
+          </span></span>
+        </div>
+      )}
 
       <StalenessNote
         dates={(config.stalenessDates ? config.stalenessDates({ company }) : [company.holdingsLastUpdated, company.debtAsOf, company.cashAsOf, company.sharesAsOf])}

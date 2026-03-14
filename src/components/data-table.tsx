@@ -169,7 +169,6 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
     minMNAV,
     maxMNAV,
     maxLeverage,
-    setMaxLeverage,
     assets,
     companyTypes,
     search,
@@ -717,199 +716,64 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
           </div>
         </div>
       </div>
+      {/* Top row: Mkt Cap, Treasury, AHPS 90D, mNAV */}
       <div className="grid grid-cols-4 gap-3 pt-3 border-t border-gray-100 dark:border-gray-800">
         <div>
-          <p className="text-xs text-gray-500 uppercase">
-            {isSizeView ? "Treasury" : "AHPS 90D"}
-          </p>
-          {isSizeView ? (
-            <p className="font-semibold text-gray-900 dark:text-gray-100">{formatCompactUsd(company.holdingsValue)}</p>
-          ) : (
-            <div className="flex items-center gap-1">
-              <p className={cn("font-semibold", getGrowthColor(company.ahpsGrowth90d))}>
-                {formatGrowthPct(company.ahpsGrowth90d)}
-              </p>
-            </div>
-          )}
+          <p className="text-xs text-gray-500 uppercase">Mkt Cap</p>
+          <p className="font-semibold text-gray-900 dark:text-gray-100">{company.marketCap > 0 ? formatCompactUsd(company.marketCap) : "—"}</p>
         </div>
         <div>
-          <p className="text-xs text-gray-500 uppercase">{isSizeView ? "HPS" : "mNAV"}</p>
-          {isSizeView ? (
-            <p className="font-semibold text-gray-900 dark:text-gray-100">{formatHps(company.currentHps)}</p>
-          ) : (
-            <div className="flex items-center gap-1 font-semibold text-gray-900 dark:text-gray-100">
-              {company.pendingMerger ? "—" : (
-                <>
-                  {company.mnavWarnings && company.mnavWarnings.length > 0 && (
-                    <span className="text-amber-500 text-xs">⚠️</span>
-                  )}
-                  <MNAVTooltip
-                    mNAV={company.mNAV}
-                    marketCap={company.marketCap}
-                    holdingsValue={company.holdingsValue}
-                    totalDebt={company.totalDebt}
-                    preferredEquity={company.preferredEquity}
-                    cashReserves={company.cashReserves}
-                    restrictedCash={company.restrictedCash}
-                    otherInvestments={company.otherInvestments}
-                    ticker={company.ticker}
-                    asset={company.asset}
-                    holdings={company.holdings}
-                    sharesForMnav={company.sharesForMnav}
-                    stockPrice={company.stockPrice}
-                    cryptoPrice={company.cryptoPrice}
-                    hasLiveData={company.hasLiveBalanceSheet}
-                    hasDilutiveInstruments={hasDilutiveInstruments}
-                    basicShares={dilutionInfo.basicShares}
-                    dilutedShares={dilutionInfo.dilutedShares}
-                    itmDilutionShares={dilutionInfo.itmDilutionShares}
-                    itmDebtAdjustment={dilutionInfo.itmDebtAdjustment}
-                    holdingsSourceUrl={company.holdingsSourceUrl}
-                    officialDashboard={COMPANY_SOURCES[company.ticker]?.officialDashboard}
-                    secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
-                    officialDashboardName={COMPANY_SOURCES[company.ticker]?.officialDashboardName}
-                    officialMnavNote={COMPANY_SOURCES[company.ticker]?.officialMnavNote}
-                    sharesSource={company.sharesSource}
-                    sharesAsOf={company.sharesAsOf}
-                    sharesSourceUrl={company.sharesSourceUrl}
-                    debtSource={company.debtSource}
-                    debtAsOf={company.debtAsOf}
-                    debtSourceUrl={company.debtSourceUrl}
-                    cashSource={company.cashSource}
-                    cashAsOf={company.cashAsOf}
-                    cashSourceUrl={company.cashSourceUrl}
-                    preferredSource={company.preferredSource}
-                    preferredAsOf={company.preferredAsOf}
-                    preferredSourceUrl={company.preferredSourceUrl}
-                  />
-                </>
-              )}
-            </div>
-          )}
+          <p className="text-xs text-gray-500 uppercase">Treasury</p>
+          <p className="font-semibold text-gray-900 dark:text-gray-100">{formatCompactUsd(company.holdingsValue)}</p>
         </div>
         <div>
-          <p className="text-xs text-gray-500 uppercase">{isSizeView ? "mNAV" : "AHPS 1Y"}</p>
-          {isSizeView ? (
-            <p className="font-semibold text-gray-900 dark:text-gray-100">{company.pendingMerger ? "—" : `${company.mNAV.toFixed(2)}x`}</p>
-          ) : (
-            <p className={cn("font-semibold", getGrowthColor(company.ahpsGrowth1y))}>
-              {formatGrowthPct(company.ahpsGrowth1y)}
-            </p>
-          )}
-        </div>
-        <div>
-          <p className="text-xs text-gray-500 uppercase">Leverage</p>
-          <p className={cn(
-            "font-semibold",
-            company.leverageRatio >= 1 ? "text-amber-600" : "text-gray-900 dark:text-gray-100"
-          )}>
-            {company.cashStale && company.estimatedLeverage !== null ? (
-              <span className="inline-flex items-center gap-1 border-b border-dashed border-red-400/60 cursor-help"
-                title={`Approximate — cash balance is from ${company._staticCashAsOf || company.cashAsOf} (over 90 days old). Leverage estimated using crypto purchases since then.`}>
-                <span className="text-red-500 font-bold">~</span>
-                <span className={cn(company.estimatedLeverage >= 1 ? "text-amber-600" : "text-gray-500")}>
-                  {company.estimatedLeverage.toFixed(2)}x
-                </span>
-              </span>
-            ) : company.leverageRatio > 0 ? (
-              <span className={cn(
-                "inline-flex items-center gap-1",
-                company.cashStale && "border-b border-dashed border-red-400/60 cursor-help"
-              )}
-                title={company.cashStale ? `Approximate — cash balance is from ${company._staticCashAsOf || company.cashAsOf} (over 90 days old). Actual leverage may differ.` : undefined}>
-                {company.cashStale && <span className="text-red-500 font-bold">~</span>}
-                {company.leverageRatio >= 1 && <span>⚠️</span>}
-                {company.leverageRatio.toFixed(2)}x
-              </span>
-            ) : "—"}
+          <p className="text-xs text-gray-500 uppercase">AHPS 90D</p>
+          <p className={cn("font-semibold", getGrowthColor(company.ahpsGrowth90d))}>
+            {formatGrowthPct(company.ahpsGrowth90d)}
           </p>
         </div>
+        <div>
+          <p className="text-xs text-gray-500 uppercase">mNAV</p>
+          <p className="font-semibold text-gray-900 dark:text-gray-100">{company.pendingMerger ? "—" : `${company.mNAV.toFixed(2)}x`}</p>
+        </div>
+      </div>
+      {/* Bottom row: Asset, Leverage */}
+      <div className="flex items-center gap-4 pt-2 text-xs text-gray-500">
+        <span>Asset: {company.asset}</span>
+        <span>Leverage: {company.cashStale && company.estimatedLeverage !== null ? (
+          <span className="border-b border-dashed border-red-400/60 cursor-help"
+            title={`Approximate — cash from ${company._staticCashAsOf || company.cashAsOf}`}>
+            <span className="text-red-500 font-bold">~</span>
+            {company.estimatedLeverage.toFixed(2)}x
+          </span>
+        ) : company.leverageRatio > 0 ? (
+          <span className={cn(company.leverageRatio >= 1 && "text-amber-600 font-medium")}>
+            {company.leverageRatio >= 1 ? "⚠️ " : ""}{company.leverageRatio.toFixed(2)}x
+          </span>
+        ) : "—"}</span>
       </div>
     </div>
     );
   };
 
-  const isGrowthView = sortField === "hpsGrowth90d" || sortField === "hpsGrowth1y";
-  const isSizeView = !isGrowthView;
-
-  const switchToGrowth = () => {
-    setSortField("hpsGrowth90d");
-    setSortDir("desc");
-  };
-
-  const switchToSize = () => {
-    setSortField("holdingsValue");
-    setSortDir("desc");
-  };
-
-  const viewSubtitle = isGrowthView
-    ? `Median: ${formatGrowthPct(medianGrowth)} • ${positiveGrowthCount}/${filteredCompanies.length} growing AHPS`
-    : `${filteredCompanies.length} companies • ${formatCompactUsd(visibleTreasuryValue)} total treasury`;
+  const viewSubtitle = `${filteredCompanies.length} companies • ${formatCompactUsd(visibleTreasuryValue)} total treasury`;
 
   return (
     <div className="rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden lg:border-0">
 
-      {/* View Toggle */}
+      {/* Summary Bar */}
       <div className="border-b border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900/50">
-        <div className="flex items-center gap-2 p-3">
-          <button
-            onClick={switchToSize}
-            className={cn(
-              "px-4 py-2 text-sm font-semibold rounded-lg transition-colors",
-              isSizeView
-                ? "bg-indigo-600 text-white shadow-md"
-                : "bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 border border-gray-200 dark:border-gray-700"
-            )}
-          >
-            Size
-          </button>
-          <button
-            onClick={switchToGrowth}
-            className={cn(
-              "px-4 py-2 text-sm font-semibold rounded-lg transition-colors",
-              isGrowthView
-                ? "bg-indigo-600 text-white shadow-md"
-                : "bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 border border-gray-200 dark:border-gray-700"
-            )}
-          >
-            Growth
-          </button>
-        </div>
-        {isGrowthView && (
-          <div className="flex items-center gap-1.5 px-3 pb-2">
-            <span className="text-xs text-gray-500 dark:text-gray-400 mr-1">Leverage:</span>
-            {([
-              { label: "All", value: Infinity },
-              { label: "< 0.5x", value: 0.5 },
-              { label: "< 0.25x", value: 0.25 },
-              { label: "Debt-free", value: 0 },
-            ] as const).map(({ label, value }) => (
-              <button
-                key={label}
-                onClick={() => setMaxLeverage(value)}
-                className={cn(
-                  "px-2 py-0.5 text-xs rounded-full transition-colors",
-                  maxLeverage === value
-                    ? "bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 font-medium"
-                    : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
-                )}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-        )}
-        <div className="px-3 pb-3 text-sm text-gray-500 dark:text-gray-400">
+        <div className="px-3 py-3 text-sm text-gray-500 dark:text-gray-400">
           {viewSubtitle}
         </div>
       </div>
       {filteredCompanies.length === 0 ? (
         <div className="p-8 text-center">
           <p className="text-gray-700 dark:text-gray-200 font-medium">
-            No companies match the current leaderboard filters.
+            No companies match the current filters.
           </p>
           <p className="mt-1 text-sm text-gray-500">
-            Clear one or more filters to repopulate the DAT company leaderboard.
+            Clear one or more filters to see results.
           </p>
         </div>
       ) : (
@@ -934,78 +798,36 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                     Company {sortIndicator("ticker")}
                   </TableHead>
                   <TableHead>Asset</TableHead>
-                  {isSizeView ? (
-                    <>
-                      <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("marketCap")}>
-                        Market Cap {sortIndicator("marketCap")}
-                      </TableHead>
-                      <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("holdingsValue")}>
-                        Treasury Value {sortIndicator("holdingsValue")}
-                      </TableHead>
-                      <TableHead className="text-right">
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger className="cursor-help">HPS</TooltipTrigger>
-                            <TooltipContent><p className="text-sm">Holdings Per Share — crypto holdings divided by diluted shares outstanding</p></TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </TableHead>
-                      <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("mNAV")}>
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger className="cursor-help">mNAV {sortIndicator("mNAV")}</TooltipTrigger>
-                            <TooltipContent><p className="text-sm">Market NAV — Enterprise Value / Crypto NAV. Below 1.0x = discount, above = premium.</p></TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </TableHead>
-                      <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("leverageRatio")}>
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger className="cursor-help">Leverage {sortIndicator("leverageRatio")}</TooltipTrigger>
-                            <TooltipContent><p className="text-sm">Net Debt / Crypto NAV — how much debt relative to crypto holdings. Higher = more leveraged.</p></TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </TableHead>
-                    </>
-                  ) : (
-                    <>
-                      <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("hpsGrowth90d")}>
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger className="cursor-help">AHPS 90D {sortIndicator("hpsGrowth90d")}</TooltipTrigger>
-                            <TooltipContent><p className="text-sm">Adjusted Holdings Per Share growth over 90 days — measures crypto accretion per share after dilution.</p></TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </TableHead>
-                      <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("hpsGrowth1y")}>
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger className="cursor-help">AHPS 1Y {sortIndicator("hpsGrowth1y")}</TooltipTrigger>
-                            <TooltipContent><p className="text-sm">Adjusted Holdings Per Share growth over 1 year — long-term crypto accretion per share after dilution.</p></TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </TableHead>
-                      <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("leverageRatio")}>
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger className="cursor-help">Leverage {sortIndicator("leverageRatio")}</TooltipTrigger>
-                            <TooltipContent><p className="text-sm">Net Debt / Crypto NAV — how much debt relative to crypto holdings. Higher = more leveraged.</p></TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </TableHead>
-                      <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("mNAV")}>
-                        <TooltipProvider>
-                          <Tooltip>
-                            <TooltipTrigger className="cursor-help">mNAV {sortIndicator("mNAV")}</TooltipTrigger>
-                            <TooltipContent><p className="text-sm">Market NAV — Enterprise Value / Crypto NAV. Below 1.0x = discount, above = premium.</p></TooltipContent>
-                          </Tooltip>
-                        </TooltipProvider>
-                      </TableHead>
-                      <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("holdingsValue")}>
-                        Treasury Value {sortIndicator("holdingsValue")}
-                      </TableHead>
-                    </>
-                  )}
+                  <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("marketCap")}>
+                    Market Cap {sortIndicator("marketCap")}
+                  </TableHead>
+                  <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("holdingsValue")}>
+                    Treasury {sortIndicator("holdingsValue")}
+                  </TableHead>
+                  <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("hpsGrowth90d")}>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger className="cursor-help">AHPS 90D {sortIndicator("hpsGrowth90d")}</TooltipTrigger>
+                        <TooltipContent><p className="text-sm">Adjusted Holdings Per Share growth over 90 days — measures crypto accretion per share after dilution.</p></TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </TableHead>
+                  <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("mNAV")}>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger className="cursor-help">mNAV {sortIndicator("mNAV")}</TooltipTrigger>
+                        <TooltipContent><p className="text-sm">Market NAV — Enterprise Value / Crypto NAV. Below 1.0x = discount, above = premium.</p></TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </TableHead>
+                  <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("leverageRatio")}>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger className="cursor-help">Leverage {sortIndicator("leverageRatio")}</TooltipTrigger>
+                        <TooltipContent><p className="text-sm">Net Debt / Crypto NAV — how much debt relative to crypto holdings. Higher = more leveraged.</p></TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -1089,210 +911,121 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                         </Badge>
                       </TableCell>
 
-                      {isSizeView ? (
-                        <>
-                          <TableCell className="text-right font-mono text-gray-900 dark:text-gray-100">
-                            {company.marketCap > 0 ? formatCompactUsd(company.marketCap) : "—"}
-                          </TableCell>
-                          <TableCell className="text-right">
-                            {company.pendingMerger ? (
-                              <div className="flex flex-col items-end">
-                                <span className="text-gray-400 text-sm">TBD</span>
-                                <span className="text-xs text-amber-600 font-mono">
-                                  ~{formatNumber(company.expectedHoldings || 0)} {company.asset} expected
-                                </span>
-                              </div>
-                            ) : (
-                              <div className="flex flex-col items-end">
-                                <CitationPopover
-                                  sourceUrl={company.holdingsSourceUrl}
-                                  sourceLabel={company.holdingsSource}
-                                  ticker={company.ticker}
-                                  metric="holdings_native"
-                                  confidenceScore={company.confidenceScores?.["holdings_native"]}
-                                  jurisdiction={company.jurisdiction}
-                                  legacy={company.holdingsBasis === "static_fallback"}
-                                  sourceQuote={company.sourceQuote}
-                                searchTerm={company.sourceSearchTerm}
-                                >
-                                  <FlashingLargeNumber
-                                    value={company.holdingsValue}
-                                    className="font-mono font-medium text-gray-900 dark:text-gray-100"
-                                  />
-                                </CitationPopover>
-                                <span className="text-xs text-gray-500 font-mono inline-flex items-center gap-1">
-                                  {formatNumber(company.holdings)} {company.asset}
-                                  <HoldingsBasisBadge basis={company.holdingsBasis} />
-                                </span>
-                              </div>
-                            )}
-                          </TableCell>
-                          <TableCell className="text-right font-mono text-gray-900 dark:text-gray-100">
-                            {formatHps(company.currentHps)}
-                          </TableCell>
-                          <TableCell className="text-right font-mono">
-                            {company.pendingMerger ? (
-                              <span className="text-gray-400">—</span>
-                            ) : (
-                              <div className="flex items-center justify-end gap-1">
-                                {company.mnavWarnings && company.mnavWarnings.length > 0 && <span className="text-amber-500 text-xs">⚠️</span>}
-                                <MNAVTooltip
-                                  mNAV={company.mNAV}
-                                  marketCap={company.marketCap}
-                                  holdingsValue={company.holdingsValue}
-                                  totalDebt={company.totalDebt}
-                                  preferredEquity={company.preferredEquity}
-                                  cashReserves={company.cashReserves}
-                                  restrictedCash={company.restrictedCash}
-                                  otherInvestments={company.otherInvestments}
-                                  ticker={company.ticker}
-                                  asset={company.asset}
-                                  holdings={company.holdings}
-                                  sharesForMnav={company.sharesForMnav}
-                                  stockPrice={company.stockPrice}
-                                  cryptoPrice={company.cryptoPrice}
-                                  hasLiveData={company.hasLiveBalanceSheet}
-                                  hasDilutiveInstruments={hasDilutiveInstruments}
-                                  basicShares={dilutionInfo.basicShares}
-                                  dilutedShares={dilutionInfo.dilutedShares}
-                                  itmDilutionShares={dilutionInfo.itmDilutionShares}
-                                  itmDebtAdjustment={dilutionInfo.itmDebtAdjustment}
-                                  holdingsSourceUrl={company.holdingsSourceUrl}
-                                  officialDashboard={COMPANY_SOURCES[company.ticker]?.officialDashboard}
-                                  secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
-                                  officialDashboardName={COMPANY_SOURCES[company.ticker]?.officialDashboardName}
-                                  officialMnavNote={COMPANY_SOURCES[company.ticker]?.officialMnavNote}
-                                  sharesSource={company.sharesSource}
-                                  sharesAsOf={company.sharesAsOf}
-                                  sharesSourceUrl={company.sharesSourceUrl}
-                                  debtSource={company.debtSource}
-                                  debtAsOf={company.debtAsOf}
-                                  debtSourceUrl={company.debtSourceUrl}
-                                  cashSource={company.cashSource}
-                                  cashAsOf={company.cashAsOf}
-                                  cashSourceUrl={company.cashSourceUrl}
-                                  preferredSource={company.preferredSource}
-                                  preferredAsOf={company.preferredAsOf}
-                                  preferredSourceUrl={company.preferredSourceUrl}
-                                />
-                              </div>
-                            )}
-                          </TableCell>
-                          <TableCell className="text-right font-mono text-sm">
-                            {company.cashStale && company.estimatedLeverage !== null ? (
-                              <span className={cn(
-                                "border-b border-dashed border-red-400/60 cursor-help",
-                                company.estimatedLeverage >= 1 ? "text-amber-600 font-medium" : "text-gray-500",
-                              )} title={`Approximate — cash balance is from ${company._staticCashAsOf || company.cashAsOf} (over 90 days old). Leverage estimated using crypto purchases since then.`}>
-                                <span className="text-red-500 font-bold">~</span>
-                                {company.estimatedLeverage >= 1 ? "⚠️ " : ""}
-                                {company.estimatedLeverage.toFixed(2)}x
-                              </span>
-                            ) : company.leverageRatio > 0 ? (
-                              <span className={cn(
-                                company.leverageRatio >= 1 ? "text-amber-600 font-medium" : "text-gray-500",
-                              )}>
-                                {company.leverageRatio >= 1 ? "⚠️ " : ""}
-                                {company.leverageRatio.toFixed(2)}x
-                              </span>
-                            ) : (
-                              <span className="text-gray-400">—</span>
-                            )}
-                          </TableCell>
-                        </>
-                      ) : (
-                        <>
-                          <TableCell className="text-right font-mono">
-                            <span className={cn("font-semibold", getGrowthColor(company.ahpsGrowth90d))}>
-                              {formatGrowthPct(company.ahpsGrowth90d)}
+                      {/* Market Cap */}
+                      <TableCell className="text-right font-mono text-gray-900 dark:text-gray-100">
+                        {company.marketCap > 0 ? formatCompactUsd(company.marketCap) : "—"}
+                      </TableCell>
+                      {/* Treasury */}
+                      <TableCell className="text-right">
+                        {company.pendingMerger ? (
+                          <div className="flex flex-col items-end">
+                            <span className="text-gray-400 text-sm">TBD</span>
+                            <span className="text-xs text-amber-600 font-mono">
+                              ~{formatNumber(company.expectedHoldings || 0)} {company.asset} expected
                             </span>
-                          </TableCell>
-                          <TableCell className="text-right font-mono">
-                            <span className={cn("font-semibold", getGrowthColor(company.ahpsGrowth1y))}>
-                              {formatGrowthPct(company.ahpsGrowth1y)}
-                            </span>
-                          </TableCell>
-                          <TableCell className="text-right font-mono text-sm">
-                            {company.cashStale && company.estimatedLeverage !== null ? (
-                              <span className={cn(
-                                "border-b border-dashed border-red-400/60 cursor-help",
-                                company.estimatedLeverage >= 1 ? "text-amber-600 font-medium" : "text-gray-500",
-                              )} title={`Approximate — cash balance is from ${company._staticCashAsOf || company.cashAsOf} (over 90 days old). Leverage estimated using crypto purchases since then.`}>
-                                <span className="text-red-500 font-bold">~</span>
-                                {company.estimatedLeverage >= 1 ? "⚠️ " : ""}
-                                {company.estimatedLeverage.toFixed(2)}x
-                              </span>
-                            ) : company.leverageRatio > 0 ? (
-                              <span className={cn(
-                                company.leverageRatio >= 1 ? "text-amber-600 font-medium" : "text-gray-500",
-                              )}>
-                                {company.leverageRatio >= 1 ? "⚠️ " : ""}
-                                {company.leverageRatio.toFixed(2)}x
-                              </span>
-                            ) : (
-                              <span className="text-gray-400">—</span>
-                            )}
-                          </TableCell>
-                          <TableCell className="text-right font-mono">
-                            {company.pendingMerger ? (
-                              <span className="text-gray-400">—</span>
-                            ) : (
-                              <div className="flex items-center justify-end gap-1">
-                                {company.mnavWarnings && company.mnavWarnings.length > 0 && <span className="text-amber-500 text-xs">⚠️</span>}
-                                <MNAVTooltip
-                                  mNAV={company.mNAV}
-                                  marketCap={company.marketCap}
-                                  holdingsValue={company.holdingsValue}
-                                  totalDebt={company.totalDebt}
-                                  preferredEquity={company.preferredEquity}
-                                  cashReserves={company.cashReserves}
-                                  restrictedCash={company.restrictedCash}
-                                  otherInvestments={company.otherInvestments}
-                                  ticker={company.ticker}
-                                  asset={company.asset}
-                                  holdings={company.holdings}
-                                  sharesForMnav={company.sharesForMnav}
-                                  stockPrice={company.stockPrice}
-                                  cryptoPrice={company.cryptoPrice}
-                                  hasLiveData={company.hasLiveBalanceSheet}
-                                  hasDilutiveInstruments={hasDilutiveInstruments}
-                                  basicShares={dilutionInfo.basicShares}
-                                  dilutedShares={dilutionInfo.dilutedShares}
-                                  itmDilutionShares={dilutionInfo.itmDilutionShares}
-                                  itmDebtAdjustment={dilutionInfo.itmDebtAdjustment}
-                                  holdingsSourceUrl={company.holdingsSourceUrl}
-                                  officialDashboard={COMPANY_SOURCES[company.ticker]?.officialDashboard}
-                                  secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
-                                  officialDashboardName={COMPANY_SOURCES[company.ticker]?.officialDashboardName}
-                                  officialMnavNote={COMPANY_SOURCES[company.ticker]?.officialMnavNote}
-                                  sharesSource={company.sharesSource}
-                                  sharesAsOf={company.sharesAsOf}
-                                  sharesSourceUrl={company.sharesSourceUrl}
-                                  debtSource={company.debtSource}
-                                  debtAsOf={company.debtAsOf}
-                                  debtSourceUrl={company.debtSourceUrl}
-                                  cashSource={company.cashSource}
-                                  cashAsOf={company.cashAsOf}
-                                  cashSourceUrl={company.cashSourceUrl}
-                                  preferredSource={company.preferredSource}
-                                  preferredAsOf={company.preferredAsOf}
-                                  preferredSourceUrl={company.preferredSourceUrl}
-                                />
-                              </div>
-                            )}
-                          </TableCell>
-                          <TableCell className="text-right">
-                            {company.pendingMerger ? (
-                              <span className="text-gray-400">TBD</span>
-                            ) : (
+                          </div>
+                        ) : (
+                          <div className="flex flex-col items-end">
+                            <CitationPopover
+                              sourceUrl={company.holdingsSourceUrl}
+                              sourceLabel={company.holdingsSource}
+                              ticker={company.ticker}
+                              metric="holdings_native"
+                              confidenceScore={company.confidenceScores?.["holdings_native"]}
+                              jurisdiction={company.jurisdiction}
+                              legacy={company.holdingsBasis === "static_fallback"}
+                              sourceQuote={company.sourceQuote}
+                              searchTerm={company.sourceSearchTerm}
+                            >
                               <FlashingLargeNumber
                                 value={company.holdingsValue}
                                 className="font-mono font-medium text-gray-900 dark:text-gray-100"
                               />
-                            )}
-                          </TableCell>
-                        </>
-                      )}
+                            </CitationPopover>
+                            <span className="text-xs text-gray-500 font-mono inline-flex items-center gap-1">
+                              {formatNumber(company.holdings)} {company.asset}
+                              <HoldingsBasisBadge basis={company.holdingsBasis} />
+                            </span>
+                          </div>
+                        )}
+                      </TableCell>
+                      {/* AHPS 90D */}
+                      <TableCell className="text-right font-mono">
+                        <span className={cn("font-semibold", getGrowthColor(company.ahpsGrowth90d))}>
+                          {formatGrowthPct(company.ahpsGrowth90d)}
+                        </span>
+                      </TableCell>
+                      {/* mNAV */}
+                      <TableCell className="text-right font-mono">
+                        {company.pendingMerger ? (
+                          <span className="text-gray-400">—</span>
+                        ) : (
+                          <div className="flex items-center justify-end gap-1">
+                            {company.mnavWarnings && company.mnavWarnings.length > 0 && <span className="text-amber-500 text-xs">⚠️</span>}
+                            <MNAVTooltip
+                              mNAV={company.mNAV}
+                              marketCap={company.marketCap}
+                              holdingsValue={company.holdingsValue}
+                              totalDebt={company.totalDebt}
+                              preferredEquity={company.preferredEquity}
+                              cashReserves={company.cashReserves}
+                              restrictedCash={company.restrictedCash}
+                              otherInvestments={company.otherInvestments}
+                              ticker={company.ticker}
+                              asset={company.asset}
+                              holdings={company.holdings}
+                              sharesForMnav={company.sharesForMnav}
+                              stockPrice={company.stockPrice}
+                              cryptoPrice={company.cryptoPrice}
+                              hasLiveData={company.hasLiveBalanceSheet}
+                              hasDilutiveInstruments={hasDilutiveInstruments}
+                              basicShares={dilutionInfo.basicShares}
+                              dilutedShares={dilutionInfo.dilutedShares}
+                              itmDilutionShares={dilutionInfo.itmDilutionShares}
+                              itmDebtAdjustment={dilutionInfo.itmDebtAdjustment}
+                              holdingsSourceUrl={company.holdingsSourceUrl}
+                              officialDashboard={COMPANY_SOURCES[company.ticker]?.officialDashboard}
+                              secFilingsUrl={COMPANY_SOURCES[company.ticker]?.secFilingsUrl}
+                              officialDashboardName={COMPANY_SOURCES[company.ticker]?.officialDashboardName}
+                              officialMnavNote={COMPANY_SOURCES[company.ticker]?.officialMnavNote}
+                              sharesSource={company.sharesSource}
+                              sharesAsOf={company.sharesAsOf}
+                              sharesSourceUrl={company.sharesSourceUrl}
+                              debtSource={company.debtSource}
+                              debtAsOf={company.debtAsOf}
+                              debtSourceUrl={company.debtSourceUrl}
+                              cashSource={company.cashSource}
+                              cashAsOf={company.cashAsOf}
+                              cashSourceUrl={company.cashSourceUrl}
+                              preferredSource={company.preferredSource}
+                              preferredAsOf={company.preferredAsOf}
+                              preferredSourceUrl={company.preferredSourceUrl}
+                            />
+                          </div>
+                        )}
+                      </TableCell>
+                      {/* Leverage */}
+                      <TableCell className="text-right font-mono text-sm">
+                        {company.cashStale && company.estimatedLeverage !== null ? (
+                          <span className={cn(
+                            "border-b border-dashed border-red-400/60 cursor-help",
+                            company.estimatedLeverage >= 1 ? "text-amber-600 font-medium" : "text-gray-500",
+                          )} title={`Approximate — cash balance is from ${company._staticCashAsOf || company.cashAsOf} (over 90 days old). Leverage estimated using crypto purchases since then.`}>
+                            <span className="text-red-500 font-bold">~</span>
+                            {company.estimatedLeverage >= 1 ? "⚠️ " : ""}
+                            {company.estimatedLeverage.toFixed(2)}x
+                          </span>
+                        ) : company.leverageRatio > 0 ? (
+                          <span className={cn(
+                            company.leverageRatio >= 1 ? "text-amber-600 font-medium" : "text-gray-500",
+                          )}>
+                            {company.leverageRatio >= 1 ? "⚠️ " : ""}
+                            {company.leverageRatio.toFixed(2)}x
+                          </span>
+                        ) : (
+                          <span className="text-gray-400">—</span>
+                        )}
+                      </TableCell>
                     </TableRow>
                   );
                 })}

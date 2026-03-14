@@ -67,7 +67,7 @@ export function useFilters() {
   // Sort state
   const [sortField, setSortField] = useQueryState(
     "sort",
-    parseAsString.withDefault("holdingsValue")
+    parseAsString.withDefault("marketCap")
   );
   const [sortDir, setSortDir] = useQueryState(
     "dir",

@@ -104,7 +104,7 @@ export function MobileHeader({ title = "DAT Tracker", showBack = false, classNam
                     onClick={() => setMenuOpen(false)}
                     className="block px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
                   >
-                    Sector
+                    Sector Intelligence
                   </Link>
                 </div>
               </div>
