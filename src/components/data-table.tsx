@@ -97,6 +97,14 @@ function formatCompactUsd(value: number | null | undefined): string {
   return `$${value.toFixed(0)}`;
 }
 
+function formatCompactNumber(value: number | null | undefined): string {
+  if (value === null || value === undefined || !Number.isFinite(value) || value <= 0) return "—";
+  if (value >= 1_000_000_000) return `${(value / 1_000_000_000).toFixed(1)}B`;
+  if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
+  if (value >= 1_000) return `${(value / 1_000).toFixed(1)}K`;
+  return value.toFixed(0);
+}
+
 
 function formatHps(value: number | null | undefined): string {
   if (value === null || value === undefined || !Number.isFinite(value) || value <= 0) return "—";
@@ -723,6 +731,9 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
         <div>
           <p className="text-xs text-gray-500 uppercase">Mkt Cap</p>
           <p className="font-semibold text-gray-900 dark:text-gray-100">{company.marketCap > 0 ? formatCompactUsd(company.marketCap) : "—"}</p>
+          {company.stockVolume > 0 && (
+            <p className="text-xs text-gray-400">{formatCompactNumber(company.stockVolume)} vol</p>
+          )}
         </div>
         <div>
           <p className="text-xs text-gray-500 uppercase">Treasury</p>
@@ -921,6 +932,9 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                       {/* Market Cap */}
                       <TableCell className="text-right font-mono text-gray-900 dark:text-gray-100">
                         {company.marketCap > 0 ? formatCompactUsd(company.marketCap) : "—"}
+                        {company.stockVolume > 0 && (
+                          <div className="text-xs text-gray-400">{formatCompactNumber(company.stockVolume)} vol</div>
+                        )}
                       </TableCell>
                       {/* Treasury */}
                       <TableCell className="text-right">
