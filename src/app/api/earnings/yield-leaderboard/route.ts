@@ -12,14 +12,25 @@ function isValidQuarter(q: string): q is CalendarQuarter {
   return /^Q[1-4]-\d{4}$/.test(q);
 }
 
-interface D1Row {
+interface D1HoldingsRow {
   entity_id: string;
   as_of: string;
-  holdings: number;
-  shares: number;
+  value: number;
   unit: string;
   method: string | null;
   confidence: number | null;
+}
+
+interface D1SharesRow {
+  entity_id: string;
+  as_of: string;
+  value: number;
+}
+
+interface HpsSnapshot {
+  as_of: string;
+  holdings: number;
+  shares: number;
 }
 
 function getQuarterBounds(quarter: CalendarQuarter): { start: Date; end: Date } {
@@ -59,30 +70,29 @@ export async function GET(request: Request) {
 
     const d1 = D1Client.fromEnv();
 
-    // Same query as hps-growth: join holdings_native with basic_shares on (entity_id, as_of)
-    const sql = `
-      SELECT
-        h.entity_id,
-        h.as_of,
-        h.value AS holdings,
-        h.unit,
-        h.method,
-        h.confidence,
-        s.shares
-      FROM datapoints h
-      INNER JOIN (
-        SELECT entity_id, as_of, value AS shares,
-               ROW_NUMBER() OVER (PARTITION BY entity_id, as_of ORDER BY created_at DESC) AS rn
-        FROM datapoints
-        WHERE metric = 'basic_shares' AND status = 'approved' AND as_of IS NOT NULL AND value > 0
-      ) s ON h.entity_id = s.entity_id AND h.as_of = s.as_of AND s.rn = 1
-      WHERE h.metric = 'holdings_native' AND status = 'approved' AND h.as_of IS NOT NULL AND h.value > 0
-      ORDER BY h.entity_id ASC, h.as_of ASC
+    // Fetch holdings and shares SEPARATELY to avoid excluding companies
+    // where the two metrics have different as_of dates
+    const holdingsSql = `
+      SELECT entity_id, as_of, value, unit, method, confidence
+      FROM datapoints
+      WHERE metric = 'holdings_native' AND status = 'approved'
+        AND as_of IS NOT NULL AND value > 0
+      ORDER BY entity_id ASC, as_of ASC
+    `;
+    const sharesSql = `
+      SELECT entity_id, as_of, value
+      FROM datapoints
+      WHERE metric = 'basic_shares' AND status = 'approved'
+        AND as_of IS NOT NULL AND value > 0
+      ORDER BY entity_id ASC, as_of ASC
     `;
 
-    const raw = await d1.query<D1Row>(sql, []);
+    const [holdingsRaw, sharesRaw] = await Promise.all([
+      d1.query<D1HoldingsRow>(holdingsSql, []),
+      d1.query<D1SharesRow>(sharesSql, []),
+    ]);
 
-    // Deduplicate: same method priority as hps-growth
+    // Group holdings by ticker, deduplicate by (entity_id, as_of)
     const methodPriority = (method: string | null): number => {
       switch (method) {
         case 'backfill_holdings_history_ts': return 4;
@@ -93,24 +103,94 @@ export async function GET(request: Request) {
       }
     };
 
-    const byTicker = new Map<string, Map<string, D1Row>>();
-    for (const row of raw.results) {
+    const holdingsByTicker = new Map<string, D1HoldingsRow[]>();
+    for (const row of holdingsRaw.results) {
       const expectedAsset = tickerAsset.get(row.entity_id.toUpperCase());
       if (expectedAsset && row.unit.toUpperCase() !== expectedAsset) continue;
 
-      const tickerRows = byTicker.get(row.entity_id) || new Map<string, D1Row>();
-      const existing = tickerRows.get(row.as_of);
-      if (!existing) {
-        tickerRows.set(row.as_of, row);
-      } else {
-        // Prefer higher method priority, then higher confidence
+      const arr = holdingsByTicker.get(row.entity_id) || [];
+      // Deduplicate same date: prefer higher method priority
+      const existingIdx = arr.findIndex(r => r.as_of === row.as_of);
+      if (existingIdx >= 0) {
+        const existing = arr[existingIdx];
         const ep = methodPriority(existing.method);
         const rp = methodPriority(row.method);
         if (rp > ep || (rp === ep && (row.confidence ?? 0) > (existing.confidence ?? 0))) {
-          tickerRows.set(row.as_of, row);
+          arr[existingIdx] = row;
+        }
+      } else {
+        arr.push(row);
+      }
+      holdingsByTicker.set(row.entity_id, arr);
+    }
+
+    // Group shares by ticker, deduplicate by (entity_id, as_of) — keep latest created_at
+    const sharesByTicker = new Map<string, D1SharesRow[]>();
+    for (const row of sharesRaw.results) {
+      const arr = sharesByTicker.get(row.entity_id) || [];
+      const existingIdx = arr.findIndex(r => r.as_of === row.as_of);
+      if (existingIdx >= 0) {
+        // Keep the one with higher value (more conservative for diluted)
+        if (row.value > arr[existingIdx].value) {
+          arr[existingIdx] = row;
+        }
+      } else {
+        arr.push(row);
+      }
+      sharesByTicker.set(row.entity_id, arr);
+    }
+
+    // Build HPS snapshots per ticker by pairing each holdings date
+    // with the nearest shares snapshot (on or before that date)
+    const byTicker = new Map<string, HpsSnapshot[]>();
+    for (const [ticker, holdings] of holdingsByTicker) {
+      const shares = sharesByTicker.get(ticker);
+      if (!shares || shares.length === 0) continue;
+
+      const sortedShares = [...shares].sort((a, b) => a.as_of.localeCompare(b.as_of));
+      const hpsSnapshots: HpsSnapshot[] = [];
+
+      for (const h of holdings) {
+        // Find the nearest shares snapshot on or before this holdings date
+        const nearestShares = findSnapshotOnOrBefore(sortedShares, new Date(h.as_of), {
+          getDate: (s) => s.as_of,
+        });
+        if (!nearestShares || nearestShares.value <= 0) continue;
+
+        hpsSnapshots.push({
+          as_of: h.as_of,
+          holdings: h.value,
+          shares: nearestShares.value,
+        });
+      }
+
+      // Also check: are there shares snapshots AFTER the last holdings?
+      // If so, add them as HPS snapshots using carry-forward holdings
+      const lastHoldings = holdings[holdings.length - 1];
+      if (lastHoldings) {
+        for (const s of sortedShares) {
+          if (s.as_of > lastHoldings.as_of) {
+            // Carry forward the last known holdings with this share count
+            hpsSnapshots.push({
+              as_of: s.as_of,
+              holdings: lastHoldings.value,
+              shares: s.value,
+            });
+          }
         }
       }
-      byTicker.set(row.entity_id, tickerRows);
+
+      // Deduplicate by as_of (prefer earlier entry which has actual holdings data)
+      const seen = new Set<string>();
+      const deduped = hpsSnapshots.filter(s => {
+        if (seen.has(s.as_of)) return false;
+        seen.add(s.as_of);
+        return true;
+      });
+
+      if (deduped.length >= 2) {
+        byTicker.set(ticker, deduped.sort((a, b) => a.as_of.localeCompare(b.as_of)));
+      }
     }
 
     // Also fetch corporate actions for split adjustment
@@ -130,28 +210,23 @@ export async function GET(request: Request) {
 
     const metrics: TreasuryYieldMetrics[] = [];
 
-    for (const [ticker, snapshotsByDate] of byTicker) {
+    for (const [ticker, snapshots] of byTicker) {
       const company = companyByTicker.get(ticker.toUpperCase());
       // For tickers in D1 but not in companies.ts (e.g. removed miners),
       // derive name and asset from the D1 data itself
-      const firstRow = snapshotsByDate.values().next().value;
+      const firstHoldings = holdingsByTicker.get(ticker)?.[0];
       const companyName = company?.name ?? ticker;
-      const companyAsset = company?.asset ?? (firstRow?.unit?.toUpperCase() || "BTC");
+      const companyAsset = company?.asset ?? (firstHoldings?.unit?.toUpperCase() || "BTC");
       if (asset && companyAsset !== asset) continue;
 
-      const snapshots = Array.from(snapshotsByDate.values()).sort((a, b) => a.as_of.localeCompare(b.as_of));
       if (snapshots.length < 2) continue;
 
       // Find snapshot on or before quarter start (carry-forward, no limit).
-      // If a company's data hasn't changed since before the quarter,
-      // that IS the baseline state entering the quarter.
       const startSnapshot = findSnapshotOnOrBefore(snapshots, qStart, {
         getDate: (s) => s.as_of,
       });
 
       // For the end snapshot, extend 45 days past quarter end.
-      // Q4 results are often dated/reported in January. A company's Dec 31
-      // holdings might appear as a Jan 5 snapshot. Allow that.
       const endSearchDate = new Date(qEnd.getTime() + 45 * 86400000);
       const endSnapshot = findSnapshotOnOrBefore(snapshots, endSearchDate, {
         getDate: (s) => s.as_of,
@@ -164,7 +239,6 @@ export async function GET(request: Request) {
       const actions = actionsByTicker[ticker.toUpperCase()] || [];
       const adjustShares = (shares: number, asOf: string): number => {
         if (actions.length === 0) return shares;
-        // Apply all splits that happened AFTER asOf to normalize to current basis
         let adjusted = shares;
         for (const action of actions) {
           if (action.effective_date > asOf) {
