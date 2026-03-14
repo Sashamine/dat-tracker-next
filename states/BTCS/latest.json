@@ -3,7 +3,7 @@
   "ticker": "BTCS",
   "secCik": "0001436229",
   "asOf": "2026-02-05",
-  "generatedAt": "2026-03-13T21:28:44.189Z",
+  "generatedAt": "2026-03-13T21:51:50.650Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -36,7 +36,7 @@
     "source": {
       "cashSourceUrl": "/filings/btcs/0001493152-25-022359",
       "debtSourceUrl": "/filings/btcs/0001493152-26-005565",
-      "preferredSourceUrl": "/filings/btcs/0001493152-25-022359"
+      "preferredSourceUrl": null
     }
   },
   "verification": {

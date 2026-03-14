@@ -30,15 +30,19 @@ export function GenericCompanyView({ company, className = "" }: Props) {
 
     scheduledEventsProps: ({ ticker, stockPrice }) => ({ ticker, stockPrice }),
 
-    buildMetrics: ({ company: co, prices, marketCap }) => {
+    buildMetrics: ({ company: co, prices, marketCap, effectiveShares }) => {
       const holdings = co.holdings ?? 0;
-      const totalDebt = co.totalDebt ?? 0;
+      const rawDebt = co.totalDebt ?? 0;
       const cashReserves = co.cashReserves ?? 0;
       const preferredEquity = co.preferredEquity ?? 0;
       const restrictedCash = co.restrictedCash ?? 0;
       const sharesOutstanding = co.sharesForMnav ?? 0;
 
       if (!holdings || !sharesOutstanding) return null;
+
+      // Adjust debt for ITM convertibles (shares already in diluted count via effectiveShares)
+      const itmDebtValue = effectiveShares?.inTheMoneyDebtValue || 0;
+      const totalDebt = Math.max(0, rawDebt - itmDebtValue);
 
       // Use mnav-engine's calculateTotalCryptoNAV for multi-asset + LST + investment support
       const { totalUsd: cryptoNav, primaryAssetAmount, primaryAssetPrice, secondaryCryptoValue } =
@@ -74,7 +78,7 @@ export function GenericCompanyView({ company, className = "" }: Props) {
                 formula: "(marketCap + debt + preferred - freeCash) / cryptoNav",
                 inputs: { holdings: cp.holdings, debt: cp.totalDebt, cash: cp.cashReserves },
               }),
-              `EV: ${formatLargeNumber(ev)}`
+              itmDebtValue > 0 ? `EV: ${formatLargeNumber(ev)} (debt adj -${formatLargeNumber(itmDebtValue)} ITM)` : `EV: ${formatLargeNumber(ev)}`
             )
           : null;
 

@@ -3,7 +3,7 @@
   "ticker": "TRON",
   "secCik": "0001956744",
   "asOf": "2026-02-12",
-  "generatedAt": "2026-03-13T21:28:44.193Z",
+  "generatedAt": "2026-03-13T21:51:50.655Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -34,8 +34,8 @@
     "preferredEquity": 10,
     "asOf": "2025-09-30",
     "source": {
-      "cashSourceUrl": "/filings/tron/0001493152-25-021526",
-      "debtSourceUrl": "/filings/tron/0001493152-25-021526",
+      "cashSourceUrl": null,
+      "debtSourceUrl": null,
       "preferredSourceUrl": "/filings/tron/0001493152-25-021526"
     }
   },

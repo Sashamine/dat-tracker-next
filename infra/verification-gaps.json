@@ -1,14 +1,23 @@
 {
   "schemaVersion": "0.1",
-  "generatedAt": "2026-03-13T21:28:44.257Z",
-  "runId": "fix-test",
+  "generatedAt": "2026-03-13T21:51:50.718Z",
+  "runId": "final",
   "gaps": {
     "missing_debt_evidence": [
       "ALCPB",
-      "SUIG"
+      "SUIG",
+      "TRON"
+    ],
+    "missing_preferred_evidence": [
+      "BTCS",
+      "TAOX"
     ],
     "missing_sec_shares_evidence": [
       "CEPO"
+    ],
+    "missing_cash_evidence": [
+      "SQNS",
+      "TRON"
     ]
   }
 }

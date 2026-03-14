@@ -928,24 +928,56 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                       <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("holdingsValue")}>
                         Treasury Value {sortIndicator("holdingsValue")}
                       </TableHead>
-                      <TableHead className="text-right">HPS</TableHead>
+                      <TableHead className="text-right">
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger className="cursor-help">HPS</TooltipTrigger>
+                            <TooltipContent><p className="text-sm">Holdings Per Share — crypto holdings divided by diluted shares outstanding</p></TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </TableHead>
                       <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("mNAV")}>
-                        mNAV {sortIndicator("mNAV")}
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger className="cursor-help">mNAV {sortIndicator("mNAV")}</TooltipTrigger>
+                            <TooltipContent><p className="text-sm">Market NAV — Enterprise Value / Crypto NAV. Below 1.0x = discount, above = premium.</p></TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
                       </TableHead>
                       <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("leverageRatio")}>
-                        Leverage {sortIndicator("leverageRatio")}
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger className="cursor-help">Leverage {sortIndicator("leverageRatio")}</TooltipTrigger>
+                            <TooltipContent><p className="text-sm">Net Debt / Crypto NAV — how much debt relative to crypto holdings. Higher = more leveraged.</p></TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
                       </TableHead>
                     </>
                   ) : (
                     <>
                       <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("hpsGrowth90d")}>
-                        AHPS Growth (90D) {sortIndicator("hpsGrowth90d")}
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger className="cursor-help">AHPS Growth (90D) {sortIndicator("hpsGrowth90d")}</TooltipTrigger>
+                            <TooltipContent><p className="text-sm">Adjusted Holdings Per Share growth over 90 days — measures crypto accretion per share after dilution.</p></TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
                       </TableHead>
                       <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("leverageRatio")}>
-                        Leverage {sortIndicator("leverageRatio")}
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger className="cursor-help">Leverage {sortIndicator("leverageRatio")}</TooltipTrigger>
+                            <TooltipContent><p className="text-sm">Net Debt / Crypto NAV — how much debt relative to crypto holdings. Higher = more leveraged.</p></TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
                       </TableHead>
                       <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("mNAV")}>
-                        mNAV {sortIndicator("mNAV")}
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger className="cursor-help">mNAV {sortIndicator("mNAV")}</TooltipTrigger>
+                            <TooltipContent><p className="text-sm">Market NAV — Enterprise Value / Crypto NAV. Below 1.0x = discount, above = premium.</p></TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
                       </TableHead>
                       <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("holdingsValue")}>
                         Treasury Value {sortIndicator("holdingsValue")}

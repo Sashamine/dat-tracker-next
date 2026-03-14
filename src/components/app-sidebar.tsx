@@ -148,7 +148,8 @@ export function AppSidebar({ className }: AppSidebarProps) {
           </Link>
         </div>
 
-        {/* Admin */}
+        {/* Admin — hidden in production, visible with NEXT_PUBLIC_ADMIN=1 */}
+        {process.env.NEXT_PUBLIC_ADMIN === "1" && (
         <div>
           <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 mt-4">
             Admin
@@ -189,6 +190,7 @@ export function AppSidebar({ className }: AppSidebarProps) {
             </Link>
           </div>
         </div>
+        )}
 
         <hr className="border-gray-200 dark:border-gray-700" />
 

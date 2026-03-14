@@ -3,7 +3,7 @@
   "ticker": "SQNS",
   "secCik": "0001383395",
   "asOf": "2025-12-31",
-  "generatedAt": "2026-03-13T21:28:44.191Z",
+  "generatedAt": "2026-03-13T21:51:50.652Z",
   "listing": {
     "country": "US",
     "exchangeMic": "XNAS",
@@ -34,7 +34,7 @@
     "preferredEquity": null,
     "asOf": "2025-12-31",
     "source": {
-      "cashSourceUrl": "/filings/sqns/0001383395-26-000013",
+      "cashSourceUrl": null,
       "debtSourceUrl": "/filings/sqns/0001383395-26-000018",
       "preferredSourceUrl": null
     }
