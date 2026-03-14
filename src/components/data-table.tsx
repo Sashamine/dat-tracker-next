@@ -829,7 +829,7 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
     );
   };
 
-  const isGrowthView = sortField === "hpsGrowth90d";
+  const isGrowthView = sortField === "hpsGrowth90d" || sortField === "hpsGrowth1y";
   const isSizeView = !isGrowthView;
 
   const switchToGrowth = () => {
