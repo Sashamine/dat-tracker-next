@@ -63,7 +63,7 @@ export const CADENCE_DAYS: Record<string, number> = {
  */
 export const TICKER_CADENCE_OVERRIDES: Record<string, number> = {
   'MSTR':    30,   // Weekly 8-K BTC updates
-  '3350.T':  30,   // StrategyTracker updates every 15 min
+  '3350.T':  30,   // TDnet filings (frequent share issuances)
 };
 
 /**

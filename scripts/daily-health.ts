@@ -20,11 +20,68 @@ import {
   type CompanyReviewResult,
 } from '../src/lib/data/integrity-review';
 import { ASSUMPTIONS, ASSUMPTION_REVIEW_MAX_AGE_DAYS } from '../src/lib/data/assumptions';
+import { applyD1Overlay, type D1MetricMap } from '../src/lib/d1-overlay';
+import { getLatestMetrics } from '../src/lib/d1';
+import { CORE_D1_METRICS } from '../src/lib/metrics';
 
 const jsonMode = process.argv.includes('--json');
 const today = new Date().toISOString().split('T')[0];
 
+async function main() {
+
 const reviews = getAllCompanyReviews(allCompanies);
+
+// ── Section 0: D1 Divergence Check ──────────────────────────────────
+// Fetch D1 latest metrics and compare against companies.ts.
+// Any >5% divergence means one source is wrong and mNAV may be off.
+
+interface Divergence {
+  ticker: string;
+  field: string;
+  d1: number;
+  static: number;
+  pct: number;
+}
+
+let d1Divergences: Divergence[] = [];
+let d1Status = 'ok';
+
+try {
+  // Fetch D1 metrics for all companies that have data
+  const d1Map: D1MetricMap = {};
+  const tickers = allCompanies.map(c => c.ticker);
+
+  // Batch: fetch all at once using a direct query
+  for (const ticker of tickers) {
+    try {
+      const rows = await getLatestMetrics(ticker, [...CORE_D1_METRICS]);
+      if (rows.length > 0) {
+        const mm: Record<string, number> = {};
+        for (const r of rows) mm[r.metric] = r.value;
+        if (Object.keys(mm).length > 0) d1Map[ticker] = mm;
+      }
+    } catch {
+      // Skip companies with no D1 data
+    }
+  }
+
+  // Apply overlay and collect divergences
+  const overlaid = applyD1Overlay(allCompanies, d1Map);
+  for (const co of overlaid) {
+    if (co._d1Divergences) {
+      for (const div of co._d1Divergences) {
+        d1Divergences.push({ ticker: co.ticker, ...div });
+      }
+    }
+  }
+
+  if (d1Divergences.length > 0) d1Status = 'divergences_found';
+} catch (err) {
+  d1Status = 'fetch_failed';
+  if (!jsonMode) {
+    console.warn(`  ⚠️  D1 fetch failed: ${err instanceof Error ? err.message : String(err)}`);
+  }
+}
 
 // ── Section 1: Freshness ────────────────────────────────────────────
 
@@ -80,6 +137,7 @@ if (jsonMode) {
   const report = {
     date: today,
     companies: allCompanies.length,
+    d1Divergences: { status: d1Status, count: d1Divergences.length, items: d1Divergences },
     confidence: confCounts,
     marketCapSources: mcSources,
     pipeline: { secCovered, foreign },
@@ -113,6 +171,18 @@ if (jsonMode) {
 // Human-readable output
 console.log(`\n  DAILY HEALTH CHECK — ${today}`);
 console.log(`  ${allCompanies.length} companies\n`);
+
+// D1 divergences — most critical, shown first
+if (d1Divergences.length > 0) {
+  console.log(`  D1 DIVERGENCES (${d1Divergences.length}):`);
+  d1Divergences.sort((a, b) => b.pct - a.pct);
+  for (const d of d1Divergences) {
+    console.log(`    ${d.ticker}.${d.field}: D1=${d.d1.toLocaleString()} vs static=${d.static.toLocaleString()} (${d.pct}% off)`);
+  }
+  console.log('');
+} else if (d1Status === 'ok') {
+  console.log(`  D1 Overlay:  No divergences\n`);
+}
 
 // Confidence
 console.log(`  Confidence:  🟢 ${confCounts.high}  🟡 ${confCounts.medium}  🔴 ${confCounts.low}`);
@@ -181,7 +251,14 @@ if (overdueAssumptions > 0) {
 console.log('');
 
 // Exit with error if critical issues
-const hasCritical = lowConf.length > 0 || overdueAssumptions > 0;
+const hasCritical = d1Divergences.length > 0 || lowConf.length > 0 || overdueAssumptions > 0;
 if (hasCritical) {
   process.exit(1);
 }
+
+} // end main()
+
+main().catch(err => {
+  console.error('Daily health check failed:', err);
+  process.exit(2);
+});

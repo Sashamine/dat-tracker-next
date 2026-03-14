@@ -7,7 +7,7 @@ import { usePricesStream } from "@/lib/hooks/use-prices-stream";
 import type { PricesData } from "@/lib/hooks/use-prices-stream";
 import { useYesterdayMnav } from "@/lib/hooks/use-yesterday-mnav";
 import { getCompanyIntel } from "@/lib/data/company-intel";
-import { getCompanyMNAV } from "@/lib/math/mnav-engine";
+
 import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
 import type { EffectiveSharesResult } from "@/lib/data/dilutive-instruments";
 import { getMarketCapForMnavSync, getTickerCurrency } from "@/lib/utils/market-cap";
@@ -80,6 +80,8 @@ export type CompanyViewBaseMetrics = {
   leverage?: number;
   adjustedDebt?: number;
   itmDebtAdjustment?: number;
+  /** Warrant exercise proceeds (cash, not crypto) — for correct 24hr mNAV scaling */
+  inTheMoneyWarrantProceeds?: number;
 };
 
 export type SourceHelpers = {
@@ -166,20 +168,32 @@ export function CompanyViewBase({ company, className = "", config }: { company: 
     return config.buildMetrics({ company, prices, marketCap, effectiveShares });
   }, [company, prices, marketCap, effectiveShares, config]);
 
-  // mNAV 24hr change: compare current mNAV against yesterday's prices
+  // mNAV 24hr change: price-ratio scaling (holds dilution constant).
+  // Avoids discontinuities when stock crosses dilutive instrument strike prices.
   const mnavChange = useMemo(() => {
-    if (!metrics?.mNav || !prices) return null;
+    if (!metrics?.mNav || !metrics?.cryptoNav || !prices) return null;
     const yday = yesterdayMnavData?.[config.ticker];
     if (!yday?.stockPrice || !yday?.cryptoPrice) return null;
-    const ydayPrices = {
-      ...prices,
-      crypto: { ...prices.crypto, [config.asset]: { ...prices.crypto[config.asset], price: yday.cryptoPrice } },
-      stocks: { ...prices.stocks, [config.ticker]: { ...prices.stocks[config.ticker], price: yday.stockPrice } },
-    };
-    const ydayMnav = getCompanyMNAV(company, ydayPrices);
-    if (!ydayMnav || ydayMnav === 0) return null;
+    if (!stockPrice || !cryptoPrice || stockPrice <= 0 || cryptoPrice <= 0) return null;
+
+    // Scale market cap by stock price ratio (holds dilution constant)
+    const stockRatio = yday.stockPrice / stockPrice;
+    const ydayMarketCap = marketCap * stockRatio;
+    // EV = marketCap + debt + pref - cash. Non-mcap components are the same.
+    const todayEV = metrics.mNav * metrics.cryptoNav;
+    const evNonMcap = todayEV - marketCap;
+    const ydayEV = ydayMarketCap + evNonMcap;
+    // Scale crypto NAV by primary crypto price ratio.
+    // Warrant proceeds are cash (not crypto) — don't scale them by cryptoRatio.
+    const cryptoRatio = yday.cryptoPrice / cryptoPrice;
+    const warrantProceeds = metrics.inTheMoneyWarrantProceeds || 0;
+    const pureCryptoNav = metrics.cryptoNav - warrantProceeds;
+    const ydayCryptoNav = pureCryptoNav * cryptoRatio + warrantProceeds;
+    if (ydayCryptoNav <= 0 || ydayEV <= 0) return null;
+    const ydayMnav = ydayEV / ydayCryptoNav;
+    if (ydayMnav <= 0) return null;
     return ((metrics.mNav / ydayMnav) - 1) * 100;
-  }, [metrics?.mNav, prices, yesterdayMnavData, config.ticker, config.asset, company]);
+  }, [metrics?.mNav, metrics?.cryptoNav, marketCap, stockPrice, cryptoPrice, yesterdayMnavData, config.ticker]);
 
   const handleTimeRangeChange = (newRange: TimeRange) => {
     setTimeRange(newRange);
