@@ -148,6 +148,18 @@ export async function GET(request: NextRequest) {
   let datapointsNoop = 0;
   let failures = 0;
 
+  // Pre-load corporate actions (splits) so we can adjust XBRL share counts.
+  // Without this, the cron re-inserts pre-split values that corrupt HPS calculations.
+  const allActions = await d1.query<{ entity_id: string; effective_date: string; ratio: number }>(
+    `SELECT entity_id, effective_date, ratio FROM corporate_actions ORDER BY entity_id, effective_date`
+  ).catch(() => ({ results: [] as { entity_id: string; effective_date: string; ratio: number }[] }));
+  const actionsByTicker = new Map<string, Array<{ effective_date: string; ratio: number }>>();
+  for (const a of allActions.results) {
+    const k = a.entity_id.toUpperCase();
+    if (!actionsByTicker.has(k)) actionsByTicker.set(k, []);
+    actionsByTicker.get(k)!.push({ effective_date: a.effective_date, ratio: a.ratio });
+  }
+
   for (const ticker of tickers) {
     try {
       const x = await extractXBRLData(ticker);
@@ -217,7 +229,22 @@ export async function GET(request: NextRequest) {
 
     if (typeof x.cashAndEquivalents === 'number') rows.push({ metric: 'cash_usd', value: x.cashAndEquivalents, unit: 'USD', as_of: x.cashDate || null, xbrl_concept: x.cashConcept || null });
     if (typeof x.totalDebt === 'number') rows.push({ metric: 'debt_usd', value: x.totalDebt, unit: 'USD', as_of: x.debtDate || null, xbrl_concept: x.debtConcept || null });
-    if (typeof x.sharesOutstanding === 'number') rows.push({ metric: 'basic_shares', value: x.sharesOutstanding, unit: 'shares', as_of: x.sharesOutstandingDate || null, xbrl_concept: x.sharesConcept || null });
+    if (typeof x.sharesOutstanding === 'number') {
+      // Adjust for corporate actions (reverse splits) that occurred AFTER this XBRL date.
+      // XBRL returns raw historical values; if a 1:5 reverse split happened after the
+      // filing date, the raw value is 5x too high. Apply the split ratio to normalize.
+      let adjustedShares = x.sharesOutstanding;
+      const splits = actionsByTicker.get(ticker.toUpperCase()) || [];
+      const sharesAsOf = x.sharesOutstandingDate || '';
+      for (const split of splits) {
+        if (sharesAsOf && split.effective_date > sharesAsOf) {
+          adjustedShares *= split.ratio;
+        }
+      }
+      // Round to nearest integer (splits can produce fractional shares)
+      adjustedShares = Math.round(adjustedShares);
+      rows.push({ metric: 'basic_shares', value: adjustedShares, unit: 'shares', as_of: x.sharesOutstandingDate || null, xbrl_concept: x.sharesConcept || null });
+    }
     if (typeof x.bitcoinHoldings === 'number') rows.push({ metric: 'bitcoin_holdings_usd', value: x.bitcoinHoldings, unit: 'USD', as_of: x.bitcoinHoldingsDate || null, xbrl_concept: x.bitcoinHoldingsUsdConcept || null });
     if (typeof x.bitcoinHoldingsNative === 'number' && x.bitcoinHoldingsNativeUnit === 'BTC') {
       const impliedPriceUsd =

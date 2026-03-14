@@ -737,6 +737,11 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
         <div>
           <p className="text-xs text-gray-500 uppercase">mNAV</p>
           <p className="font-semibold text-gray-900 dark:text-gray-100">{company.pendingMerger ? "—" : `${company.mNAV.toFixed(2)}x`}</p>
+          {!company.pendingMerger && company.mNAVChange !== null && (
+            <p className={cn("text-xs", getGrowthColor(company.mNAVChange))}>
+              {company.mNAVChange >= 0 ? "+" : ""}{company.mNAVChange.toFixed(1)}%
+            </p>
+          )}
         </div>
       </div>
       {/* Bottom row: Asset, Senior Claims */}
@@ -962,7 +967,8 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                         {company.pendingMerger ? (
                           <span className="text-gray-400">—</span>
                         ) : (
-                          <div className="flex items-center justify-end gap-1">
+                          <div className="flex flex-col items-end gap-0.5">
+                            <div className="flex items-center gap-1">
                             {company.mnavWarnings && company.mnavWarnings.length > 0 && <span className="text-amber-500 text-xs">⚠️</span>}
                             <MNAVTooltip
                               mNAV={company.mNAV}
@@ -1003,6 +1009,12 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                               preferredAsOf={company.preferredAsOf}
                               preferredSourceUrl={company.preferredSourceUrl}
                             />
+                            </div>
+                            {company.mNAVChange !== null && (
+                              <span className={cn("text-xs", getGrowthColor(company.mNAVChange))}>
+                                {company.mNAVChange >= 0 ? "+" : ""}{company.mNAVChange.toFixed(1)}%
+                              </span>
+                            )}
                           </div>
                         )}
                       </TableCell>
