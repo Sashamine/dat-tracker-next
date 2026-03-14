@@ -111,18 +111,7 @@ export function AppSidebar({ className }: AppSidebarProps) {
                 : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
             )}
           >
-            Sector
-          </Link>
-          <Link
-            href="/earnings"
-            className={cn(
-              "block w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors",
-              pathname === "/earnings"
-                ? "bg-indigo-600 text-white"
-                : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-            )}
-          >
-            Earnings
+            Sector Intelligence
           </Link>
         </div>
 

@@ -54,6 +54,33 @@ function getAssetStats(companies: Company[], prices?: PricesSnapshot | null) {
 }
 
 
+function HowToReadExplainer() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="mb-4 lg:mb-6">
+      <button
+        onClick={() => setOpen(!open)}
+        className="text-sm text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1"
+      >
+        <svg className={`w-4 h-4 transition-transform ${open ? "rotate-90" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </svg>
+        How to read this table
+      </button>
+      {open && (
+        <div className="mt-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 p-4 text-sm text-gray-600 dark:text-gray-300 space-y-2 max-w-2xl">
+          <p><strong>mNAV</strong> = Enterprise Value / Crypto NAV — are you paying a premium or discount for the wrapper?</p>
+          <p><strong>AHPS Growth</strong> = Change in holdings per share — is the DAT thesis working?</p>
+          <p><strong>Leverage</strong> = Net Debt / Crypto NAV — how much is debt-funded?</p>
+          <p className="text-gray-500 dark:text-gray-400 italic">
+            High growth + high mNAV + low leverage = genuine accretion. High growth + high leverage = leveraged bet.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function HomeContent() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [visibleSummary, setVisibleSummary] = useState<{ visibleCount: number; visibleTreasuryValue: number } | null>(null);
@@ -139,7 +166,7 @@ function HomeContent() {
           <div className="mb-4 lg:mb-6 hidden lg:flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                Crypto Per Share Leaderboard
+                Digital Asset Treasuries
               </h1>
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 {overviewSummaryText}
@@ -150,7 +177,7 @@ function HomeContent() {
                 </p>
               )}
               <p className="mt-1 max-w-2xl text-sm text-gray-600 dark:text-gray-300">
-                Compare DATs by treasury scale, per-share growth, and wrapper efficiency from one homepage view.
+                Real-time mNAV, growth, and leverage for every public company with a crypto treasury strategy.
               </p>
             </div>
             <div className="flex items-center gap-4">
@@ -200,12 +227,15 @@ function HomeContent() {
             </div>
           </div>
 
+          {/* How to read this — collapsible explainer */}
+          <HowToReadExplainer />
+
           {/* Mobile Stats Bar */}
           <div className="lg:hidden mb-4 rounded-lg border border-gray-200 bg-gray-50 px-3 py-3 dark:border-gray-800 dark:bg-gray-900">
             <div className="flex items-start justify-between gap-3">
               <div>
                 <h1 className="text-base font-semibold text-gray-900 dark:text-gray-100">
-                  Crypto Per Share Leaderboard
+                  Digital Asset Treasuries
                 </h1>
                 <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                   {overviewSummaryText}
@@ -215,9 +245,6 @@ function HomeContent() {
                     Showing {visibleCount} of {totalCompanies} companies
                   </p>
                 )}
-                <p className="mt-1 text-xs text-gray-600 dark:text-gray-300">
-                  Default view: Size. Switch to Growth or Efficiency for per-share execution.
-                </p>
               </div>
               <div className="flex items-center gap-3">
                 <MobileFilterButton onClick={() => setIsFilterOpen(true)} activeCount={activeFilterCount} />
