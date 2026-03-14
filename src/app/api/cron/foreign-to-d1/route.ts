@@ -1084,33 +1084,15 @@ async function fetchStrategyTracker(): Promise<ForeignFetcherResult[]> {
         });
       };
 
-      // BTC holdings
+      // BTC holdings — StrategyTracker's core value prop: updated every ~15 min
       addPoint('holdings_native', pm.latestBtcBalance, 'BTC', 'btc');
 
-      // Shares outstanding (basic)
-      if (pm.sharesOutstanding != null && pm.sharesOutstanding > 0) {
-        addPoint('basic_shares', pm.sharesOutstanding, 'shares', 'shares');
-      }
-
-      // Total debt (USD)
-      if (pm.latestDebt != null && pm.latestDebt > 0) {
-        addPoint('debt_usd', pm.latestDebt, 'USD', 'debt');
-      }
-
-      // Cash (USD)
-      if (pm.latestCashBalance != null && pm.latestCashBalance > 0) {
-        addPoint('cash_usd', pm.latestCashBalance, 'USD', 'cash');
-      }
-
-      // Preferred equity (USD) — sum of all preferred stock notional values
-      if (pm.hasPreferredStocks && pm.preferredStocks && pm.preferredStocks.length > 0) {
-        const totalPreferredUsd = pm.preferredStocks.reduce(
-          (sum, p) => sum + (p.notionalUSD || 0), 0
-        );
-        if (totalPreferredUsd > 0) {
-          addPoint('preferred_equity_usd', totalPreferredUsd, 'USD', 'pref');
-        }
-      }
+      // NOTE: We intentionally do NOT ingest capital structure metrics
+      // (shares, debt, cash, preferred) from StrategyTracker. Per CLAUDE.md,
+      // aggregators are for verification only, not primary data sources.
+      // Capital structure should come from regulatory filings (TDnet, SEC).
+      // StrategyTracker has stale share counts (e.g., 723M vs actual 1.167B
+      // for Metaplanet as of Mar 2026) that override correct data.
 
       results.push({
         ticker: entityId,
