@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { useState, useCallback, Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { AppSidebar } from "@/components/app-sidebar";
 import { MobileHeader } from "@/components/mobile-header";
 import { EarningsCalendar } from "@/components/earnings/earnings-calendar";
@@ -11,10 +12,26 @@ import { Asset, CalendarQuarter } from "@/lib/types";
 // Asset filter options
 const ASSET_OPTIONS: Asset[] = ["BTC", "ETH", "SOL", "HYPE", "TAO", "DOGE", "XRP"];
 
+function isValidQuarter(q: string): q is CalendarQuarter {
+  return /^Q[1-4]-\d{4}$/.test(q);
+}
+
 export default function EarningsPage() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const quarterParam = searchParams.get("quarter");
+  const initialQuarter = quarterParam && isValidQuarter(quarterParam) ? quarterParam as CalendarQuarter : undefined;
+
   const [selectedAsset, setSelectedAsset] = useState<Asset | undefined>(undefined);
   const [showUpcoming, setShowUpcoming] = useState(true);
-  const [selectedQuarter, setSelectedQuarter] = useState<CalendarQuarter | undefined>(undefined);
+  const [selectedQuarter, setSelectedQuarter] = useState<CalendarQuarter | undefined>(initialQuarter);
+
+  const handleQuarterChange = useCallback((quarter: CalendarQuarter) => {
+    setSelectedQuarter(quarter);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("quarter", quarter);
+    router.replace(`/earnings?${params.toString()}`, { scroll: false });
+  }, [searchParams, router]);
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 flex flex-col lg:flex-row">
@@ -69,7 +86,7 @@ export default function EarningsPage() {
               key={`${selectedQuarter || 'default'}-${selectedAsset || 'all'}`}
               quarter={selectedQuarter}
               asset={selectedAsset}
-              onQuarterChange={setSelectedQuarter}
+              onQuarterChange={handleQuarterChange}
             />
           </div>
 
