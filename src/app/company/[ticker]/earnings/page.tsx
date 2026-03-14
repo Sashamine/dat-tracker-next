@@ -341,9 +341,12 @@ export default function CompanyEarningsPage() {
                   {displayEarnings.map((earning, idx) => {
                     // Calculate growth in holdings per share (QoQ for quarterly, YoY for annual)
                     const prevEarning = idx < displayEarnings.length - 1 ? displayEarnings[idx + 1] : null;
-                    const holdingsGrowth = earning.holdingsPerShare !== undefined && prevEarning?.holdingsPerShare !== undefined && prevEarning.holdingsPerShare !== 0
-                      ? ((earning.holdingsPerShare - prevEarning.holdingsPerShare) / prevEarning.holdingsPerShare) * 100
+                    const prevHps = prevEarning?.holdingsPerShare;
+                    const curHps = earning.holdingsPerShare;
+                    const holdingsGrowth = curHps !== undefined && prevHps !== undefined && prevHps > 0
+                      ? ((curHps - prevHps) / prevHps) * 100
                       : null;
+                    const isNewPosition = curHps !== undefined && curHps > 0 && prevHps !== undefined && prevHps === 0;
 
                     return (
                       <tr key={idx} className="hover:bg-gray-50 dark:hover:bg-gray-800/50">
@@ -380,6 +383,8 @@ export default function CompanyEarningsPage() {
                             )}>
                               {holdingsGrowth >= 0 ? "+" : ""}{holdingsGrowth.toFixed(1)}%
                             </span>
+                          ) : isNewPosition ? (
+                            <span className="text-sm font-semibold text-green-600">New</span>
                           ) : (
                             <span className="text-sm text-gray-400">—</span>
                           )}
@@ -396,9 +401,12 @@ export default function CompanyEarningsPage() {
               {displayEarnings.map((earning, idx) => {
                 // Calculate growth in holdings per share (QoQ for quarterly, YoY for annual)
                 const prevEarning = idx < displayEarnings.length - 1 ? displayEarnings[idx + 1] : null;
-                const holdingsGrowth = earning.holdingsPerShare !== undefined && prevEarning?.holdingsPerShare !== undefined && prevEarning.holdingsPerShare !== 0
-                  ? ((earning.holdingsPerShare - prevEarning.holdingsPerShare) / prevEarning.holdingsPerShare) * 100
+                const prevHps = prevEarning?.holdingsPerShare;
+                const curHps = earning.holdingsPerShare;
+                const holdingsGrowth = curHps !== undefined && prevHps !== undefined && prevHps > 0
+                  ? ((curHps - prevHps) / prevHps) * 100
                   : null;
+                const isNewPosition = curHps !== undefined && curHps > 0 && prevHps !== undefined && prevHps === 0;
 
                 return (
                   <div key={idx} className="p-4">
@@ -451,6 +459,8 @@ export default function CompanyEarningsPage() {
                             )}>
                               {holdingsGrowth >= 0 ? "+" : ""}{holdingsGrowth.toFixed(1)}%
                             </span>
+                          ) : isNewPosition ? (
+                            <span className="font-semibold text-green-600">New</span>
                           ) : (
                             <span className="text-gray-400">—</span>
                           )}
