@@ -4467,8 +4467,15 @@ export function getCompanyEarnings(ticker: string): EarningsRecord[] {
   return EARNINGS_DATA
     .filter((e) => e.ticker === ticker)
     .sort((a, b) => {
-      // Sort by date descending (most recent first)
-      return new Date(b.earningsDate).getTime() - new Date(a.earningsDate).getTime();
+      // Sort by calendar year/quarter descending (most recent first)
+      // earningsDate is the report release date which can be months after period end,
+      // so sorting by it produces scrambled order for companies like ALCPB.
+      const yearA = a.calendarYear ?? a.fiscalYear;
+      const yearB = b.calendarYear ?? b.fiscalYear;
+      if (yearA !== yearB) return yearB - yearA;
+      const qA = a.calendarQuarter ?? a.fiscalQuarter;
+      const qB = b.calendarQuarter ?? b.fiscalQuarter;
+      return qB - qA;
     });
 }
 
