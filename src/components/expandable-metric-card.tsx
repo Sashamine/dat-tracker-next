@@ -34,7 +34,7 @@ export function LeverageCalculationCard({
     <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-700 mt-4">
       <div className="flex items-center justify-between mb-3">
         <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide">
-          Leverage Calculation
+          Senior Claims Calculation
         </h3>
         <span className="text-xl font-bold text-amber-600">
           {leverage.toFixed(2)}x
@@ -95,7 +95,7 @@ export function LeverageCalculationCard({
       <div className="bg-amber-50 dark:bg-amber-900/30 rounded p-3 border border-amber-200 dark:border-amber-700">
         <div className="flex justify-between items-center">
           <span className="text-amber-700 dark:text-amber-300 text-sm">
-            Leverage = Net Debt / Crypto NAV
+            Senior Claims = (Net Debt + Preferred) / Crypto NAV
           </span>
           <span className="font-mono text-lg text-amber-600 font-bold">
             {formatLargeNumber(netDebt)} / {formatLargeNumber(cryptoNav)} = {leverage.toFixed(2)}x

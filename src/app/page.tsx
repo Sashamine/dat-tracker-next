@@ -71,9 +71,9 @@ function HowToReadExplainer() {
         <div className="mt-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 p-4 text-sm text-gray-600 dark:text-gray-300 space-y-2 max-w-2xl">
           <p><strong>mNAV</strong> = Enterprise Value / Crypto NAV — are you paying a premium or discount for the wrapper?</p>
           <p><strong>AHPS Growth</strong> = Change in holdings per share — is the DAT thesis working?</p>
-          <p><strong>Leverage</strong> = Net Debt / Crypto NAV — how much is debt-funded?</p>
+          <p><strong>Senior Claims</strong> = (Net Debt + Preferred Equity) / Crypto NAV — what fraction of the treasury is spoken for before common equity?</p>
           <p className="text-gray-500 dark:text-gray-400 italic">
-            High growth + high mNAV + low leverage = genuine accretion. High growth + high leverage = leveraged bet.
+            High growth + high mNAV + low senior claims = genuine accretion. High growth + high senior claims = leveraged bet.
           </p>
         </div>
       )}

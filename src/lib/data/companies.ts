@@ -876,7 +876,7 @@ export const btcCompanies: Company[] = [
     // CASH: SEC 8-K Jan 5, 2026 - $67.6M as of Dec 31, 2025
     // Post-Jan: +$119M SATA raise, -$20M Coinbase payoff, -BTC purchases → estimated ~$50-80M current
     cashReserves: 127_200_000,  // Feb 13 8-K: $127.2M as of Feb 11, 2026
-    restrictedCash: 127_200_000,  // Operating capital earmarked for BTC - not excess
+    restrictedCash: 0,  // $127.2M is liquid cash on hand, not contractually encumbered
     cashSource: "SEC 8-K Feb 13, 2026: $127.2M as of Feb 11, 2026",
     cashSourceQuote: "SEC 8-K Feb 13, 2026: $127.2M as of Feb 11, 2026",
     cashSourceUrl: "/filings/asst/0001628280-26-007897",
