@@ -164,20 +164,21 @@ export async function GET(request: Request) {
         });
       }
 
-      // Also check: are there shares snapshots AFTER the last holdings?
-      // If so, add them as HPS snapshots using carry-forward holdings
-      const lastHoldings = holdings[holdings.length - 1];
-      if (lastHoldings) {
-        for (const s of sortedShares) {
-          if (s.as_of > lastHoldings.as_of) {
-            // Carry forward the last known holdings with this share count
-            hpsSnapshots.push({
-              as_of: s.as_of,
-              holdings: lastHoldings.value,
-              shares: s.value,
-            });
-          }
-        }
+      // Also add HPS snapshots at shares dates that don't have holdings.
+      // Use carry-forward: the most recent holdings on or before each shares date.
+      const holdingsDates = new Set(holdings.map(h => h.as_of));
+      const sortedHoldings = [...holdings].sort((a, b) => a.as_of.localeCompare(b.as_of));
+      for (const s of sortedShares) {
+        if (holdingsDates.has(s.as_of)) continue; // Already covered above
+        const nearestHoldings = findSnapshotOnOrBefore(sortedHoldings, new Date(s.as_of), {
+          getDate: (h) => h.as_of,
+        });
+        if (!nearestHoldings || nearestHoldings.value <= 0) continue;
+        hpsSnapshots.push({
+          as_of: s.as_of,
+          holdings: nearestHoldings.value,
+          shares: s.value,
+        });
       }
 
       // Deduplicate by as_of (prefer earlier entry which has actual holdings data)
