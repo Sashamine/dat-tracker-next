@@ -114,6 +114,18 @@ function median(values: number[]): number | null {
   return sorted.length % 2 === 0 ? (sorted[mid - 1] + sorted[mid]) / 2 : sorted[mid];
 }
 
+// Use IQR-based bounds to handle outliers: clip axes at Q3 + 2×IQR
+function computeRobustBounds(values: number[]): { lo: number; hi: number } {
+  if (values.length < 4) return { lo: Math.min(0, ...values), hi: Math.max(1, ...values) };
+  const sorted = [...values].sort((a, b) => a - b);
+  const q1 = sorted[Math.floor(sorted.length * 0.25)];
+  const q3 = sorted[Math.floor(sorted.length * 0.75)];
+  const iqr = q3 - q1;
+  const lo = Math.min(0, q1 - 2 * iqr);
+  const hi = Math.max(q3 + 2 * iqr, q3 * 1.2);
+  return { lo, hi };
+}
+
 function ScatterCard({
   title,
   subtitle,
@@ -136,13 +148,15 @@ function ScatterCard({
   onSelect: (ticker: string) => void;
 }) {
   const filtered = points.filter((point) => xAccessor(point) !== null && yAccessor(point) !== null) as ChartPoint[];
-  const maxX = Math.max(1, ...filtered.map((point) => xAccessor(point) ?? 0));
-  const minY = Math.min(0, ...filtered.map((point) => yAccessor(point) ?? 0));
-  const maxY = Math.max(0, ...filtered.map((point) => yAccessor(point) ?? 0));
-  const yPadding = Math.max(1, (maxY - minY) * 0.12 || 1);
-  const chartMinY = minY - yPadding;
-  const chartMaxY = maxY + yPadding;
-  const yRange = Math.max(1, chartMaxY - chartMinY);
+
+  // Use IQR-based bounds to prevent outliers from compressing the chart
+  const xValues = filtered.map((point) => xAccessor(point) ?? 0);
+  const yValues = filtered.map((point) => yAccessor(point) ?? 0);
+  const xBounds = computeRobustBounds(xValues);
+  const yBounds = computeRobustBounds(yValues);
+  const xRange = Math.max(1, xBounds.hi - xBounds.lo);
+  const yRange = Math.max(1, yBounds.hi - yBounds.lo);
+
   const maxSize = Math.max(1, ...filtered.map((point) => sizeAccessor(point)));
   const labelTickers = new Set(
     [...filtered]
@@ -157,7 +171,7 @@ function ScatterCard({
         <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h2>
         <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{subtitle}</p>
       </div>
-      <div className="relative h-[320px] overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950 sm:h-[380px]">
+      <div className="relative h-[320px] rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950 sm:h-[380px]">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-x-0 top-1/4 border-t border-dashed border-gray-200 dark:border-gray-700" />
           <div className="absolute inset-x-0 top-1/2 border-t border-dashed border-gray-200 dark:border-gray-700" />
@@ -166,11 +180,27 @@ function ScatterCard({
           <div className="absolute inset-y-0 left-1/2 border-l border-dashed border-gray-200 dark:border-gray-700" />
           <div className="absolute inset-y-0 left-3/4 border-l border-dashed border-gray-200 dark:border-gray-700" />
         </div>
-        <div className="absolute inset-0 px-4 pb-10 pt-6 sm:px-8 sm:pb-12">
+        <div className="absolute inset-0 overflow-hidden px-4 pb-10 pt-6 sm:px-8 sm:pb-12">
           {filtered.map((point) => {
-            const x = ((xAccessor(point) ?? 0) / maxX) * 100;
-            const y = 100 - (((yAccessor(point) ?? 0) - chartMinY) / yRange) * 100;
+            // Clamp to bounds — outliers pin to the edge
+            const rawX = xAccessor(point) ?? 0;
+            const rawY = yAccessor(point) ?? 0;
+            const x = Math.max(0, Math.min(100, ((rawX - xBounds.lo) / xRange) * 100));
+            const y = Math.max(0, Math.min(100, 100 - ((rawY - yBounds.lo) / yRange) * 100));
             const radius = 8 + Math.log10(Math.max(1, sizeAccessor(point))) / Math.log10(Math.max(10, maxSize)) * 14;
+            const isOutlier = rawX > xBounds.hi || rawX < xBounds.lo || rawY > yBounds.hi || rawY < yBounds.lo;
+            // Tooltip: flip direction when near edges
+            const tooltipAbove = y > 30;
+            const tooltipLeft = x > 75;
+            const tooltipRight = x < 25;
+            const tooltipPosClass = tooltipAbove
+              ? "bottom-full mb-2"
+              : "top-full mt-2";
+            const tooltipAlignClass = tooltipLeft
+              ? "right-0"
+              : tooltipRight
+                ? "left-0"
+                : "left-1/2 -translate-x-1/2";
             return (
               <button
                 key={point.id}
@@ -182,6 +212,7 @@ function ScatterCard({
                 <span
                   className={cn(
                     "block rounded-full border-2 shadow-sm transition-transform duration-150 group-hover:scale-110",
+                    isOutlier ? "opacity-60" : "",
                     assetDotColors[point.asset] || assetDotColors.BTC
                   )}
                   style={{ width: `${radius}px`, height: `${radius}px` }}
@@ -191,7 +222,11 @@ function ScatterCard({
                     {point.ticker}
                   </span>
                 )}
-                <span className="pointer-events-none absolute left-1/2 top-0 z-10 hidden w-48 -translate-x-1/2 -translate-y-[110%] rounded-lg border border-gray-200 bg-white/95 p-3 text-left shadow-lg group-hover:block dark:border-gray-700 dark:bg-gray-950/95">
+                <span className={cn(
+                  "pointer-events-none absolute z-50 hidden w-48 rounded-lg border border-gray-200 bg-white/95 p-3 text-left shadow-lg group-hover:block dark:border-gray-700 dark:bg-gray-950/95",
+                  tooltipPosClass,
+                  tooltipAlignClass,
+                )}>
                   <span className="block text-sm font-semibold text-gray-900 dark:text-gray-100">{point.name}</span>
                   <span className="mt-1 block text-xs text-gray-500 dark:text-gray-400">{point.ticker}</span>
                   <span className="mt-2 block text-xs text-gray-500 dark:text-gray-400">Treasury {formatCompactUsd(point.treasuryValue)}</span>
