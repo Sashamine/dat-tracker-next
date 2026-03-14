@@ -695,6 +695,9 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
               )}
             </div>
             <p className="text-sm text-gray-500 truncate max-w-[200px]">{company.name}</p>
+            {company.leader && (
+              <p className="text-xs text-gray-400 dark:text-gray-500 truncate max-w-[200px]">{company.leader}</p>
+            )}
           </div>
         </div>
         <div className="text-right">
@@ -840,14 +843,14 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
 
       {/* View Toggle */}
       <div className="border-b border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900/50">
-        <div className="flex items-center gap-1 p-2">
+        <div className="flex items-center gap-2 p-3">
           <button
             onClick={switchToSize}
             className={cn(
-              "px-3 py-1.5 text-sm font-medium rounded-md transition-colors",
+              "px-4 py-2 text-sm font-semibold rounded-lg transition-colors",
               isSizeView
-                ? "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm border border-gray-200 dark:border-gray-700"
-                : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+                ? "bg-indigo-600 text-white shadow-md"
+                : "bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 border border-gray-200 dark:border-gray-700"
             )}
           >
             Size
@@ -855,10 +858,10 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
           <button
             onClick={switchToGrowth}
             className={cn(
-              "px-3 py-1.5 text-sm font-medium rounded-md transition-colors",
+              "px-4 py-2 text-sm font-semibold rounded-lg transition-colors",
               isGrowthView
-                ? "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm border border-gray-200 dark:border-gray-700"
-                : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+                ? "bg-indigo-600 text-white shadow-md"
+                : "bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 border border-gray-200 dark:border-gray-700"
             )}
           >
             Growth
@@ -925,6 +928,9 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                   <TableHead>Asset</TableHead>
                   {isSizeView ? (
                     <>
+                      <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("marketCap")}>
+                        Market Cap {sortIndicator("marketCap")}
+                      </TableHead>
                       <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("holdingsValue")}>
                         Treasury Value {sortIndicator("holdingsValue")}
                       </TableHead>
@@ -1055,6 +1061,9 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                                 metric="holdings_native"
                               />
                             </div>
+                            {company.leader && (
+                              <span className="text-xs text-gray-400 dark:text-gray-500 truncate">{company.leader}</span>
+                            )}
                           </div>
                         </div>
                       </TableCell>
@@ -1066,6 +1075,9 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
 
                       {isSizeView ? (
                         <>
+                          <TableCell className="text-right font-mono text-gray-900 dark:text-gray-100">
+                            {company.marketCap > 0 ? formatCompactUsd(company.marketCap) : "—"}
+                          </TableCell>
                           <TableCell className="text-right">
                             {company.pendingMerger ? (
                               <div className="flex flex-col items-end">
