@@ -13,6 +13,8 @@ export interface MNAVCalculationResult {
   mnav: number | null;
   cryptoNavUsd: number;
   evUsd: number;
+  /** Warrant exercise proceeds included in both cryptoNavUsd and evUsd cash adjustment */
+  inTheMoneyWarrantProceeds: number;
   assets: string[];
   warnings: string[];
 }
@@ -137,7 +139,7 @@ export function getCompanyMNAVDetailed(
   prices: PricesData,
   filterOutliers: boolean = false
 ): MNAVCalculationResult {
-  const empty: MNAVCalculationResult = { mnav: null, cryptoNavUsd: 0, evUsd: 0, assets: [], warnings: [] };
+  const empty: MNAVCalculationResult = { mnav: null, cryptoNavUsd: 0, evUsd: 0, inTheMoneyWarrantProceeds: 0, assets: [], warnings: [] };
   
   if (!prices || company.pendingMerger) return empty;
 
@@ -179,7 +181,8 @@ export function getCompanyMNAVDetailed(
   return {
     mnav: finalMnav,
     cryptoNavUsd: totalCV,
-    evUsd: marketCap + adjustedDebt + (company.preferredEquity || 0) - (company.cashReserves || 0),
+    evUsd: marketCap + adjustedDebt + (company.preferredEquity || 0) - adjustedCashReserves,
+    inTheMoneyWarrantProceeds,
     assets,
     warnings
   };

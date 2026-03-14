@@ -129,6 +129,7 @@ export function GenericCompanyView({ company, className = "" }: Props) {
         leveragePv,
         equityNavPv,
         equityNavPerSharePv,
+        inTheMoneyWarrantProceeds: effectiveShares?.inTheMoneyWarrantProceeds || 0,
       } satisfies CompanyViewBaseMetrics;
     },
 

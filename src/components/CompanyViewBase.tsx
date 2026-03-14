@@ -80,6 +80,8 @@ export type CompanyViewBaseMetrics = {
   leverage?: number;
   adjustedDebt?: number;
   itmDebtAdjustment?: number;
+  /** Warrant exercise proceeds (cash, not crypto) — for correct 24hr mNAV scaling */
+  inTheMoneyWarrantProceeds?: number;
 };
 
 export type SourceHelpers = {
@@ -181,9 +183,12 @@ export function CompanyViewBase({ company, className = "", config }: { company: 
     const todayEV = metrics.mNav * metrics.cryptoNav;
     const evNonMcap = todayEV - marketCap;
     const ydayEV = ydayMarketCap + evNonMcap;
-    // Scale crypto NAV by primary crypto price ratio
+    // Scale crypto NAV by primary crypto price ratio.
+    // Warrant proceeds are cash (not crypto) — don't scale them by cryptoRatio.
     const cryptoRatio = yday.cryptoPrice / cryptoPrice;
-    const ydayCryptoNav = metrics.cryptoNav * cryptoRatio;
+    const warrantProceeds = metrics.inTheMoneyWarrantProceeds || 0;
+    const pureCryptoNav = metrics.cryptoNav - warrantProceeds;
+    const ydayCryptoNav = pureCryptoNav * cryptoRatio + warrantProceeds;
     if (ydayCryptoNav <= 0 || ydayEV <= 0) return null;
     const ydayMnav = ydayEV / ydayCryptoNav;
     if (ydayMnav <= 0) return null;

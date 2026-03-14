@@ -308,9 +308,12 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
       // Non-market-cap EV components are the same for both days
       const evNonMcap = mnavResult.evUsd - todayMarketCap;
       const ydayEV = ydayMarketCap + evNonMcap;
-      // Scale crypto NAV by primary crypto price ratio
+      // Scale crypto NAV by primary crypto price ratio.
+      // Warrant proceeds are cash (not crypto) — don't scale them by cryptoRatio.
       const cryptoRatio = ydayCryptoPrice / cryptoPrice;
-      const ydayCryptoNav = mnavResult.cryptoNavUsd * cryptoRatio;
+      const warrantProceeds = mnavResult.inTheMoneyWarrantProceeds || 0;
+      const pureCryptoNav = mnavResult.cryptoNavUsd - warrantProceeds;
+      const ydayCryptoNav = pureCryptoNav * cryptoRatio + warrantProceeds;
       if (ydayCryptoNav > 0) {
         const ydayMNAV = ydayEV / ydayCryptoNav;
         if (ydayMNAV > 0) {

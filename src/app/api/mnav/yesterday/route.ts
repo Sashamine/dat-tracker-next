@@ -6,19 +6,20 @@ import { MSTR_PROVENANCE } from "@/lib/data/provenance/mstr";
 import { BMNR_PROVENANCE, estimateBMNRShares } from "@/lib/data/provenance/bmnr";
 import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
 import { convertToUSDSync } from "@/lib/utils/currency";
+import { TICKER_CURRENCY } from "@/lib/prices/shared";
 
-// Tickers whose stock history API returns prices in local currency
+// Use the shared TICKER_CURRENCY mapping (single source of truth for
+// which stock history prices need currency conversion). Merge in any
+// Yahoo-only currencies that aren't in the shared map.
 const TICKER_CURRENCIES: Record<string, string> = {
-  "3350.T": "JPY",
-  "3189.T": "JPY",
-  "3825.T": "JPY",
-  "0434.HK": "HKD",
-  "H100.ST": "SEK",
-  "ALCPB": "EUR",
-  "DCC.AX": "AUD",
-  "NDA.V": "CAD",
-  "DMGI.V": "CAD",
-  "OBTC3": "BRL",
+  ...TICKER_CURRENCY,
+  // Yahoo-fetched tickers with non-USD prices (from /api/prices YAHOO_CURRENCIES)
+  "BTCT.V": "CAD",
+  "SATS.L": "GBP",
+  "CASH3.SA": "BRL",
+  "377030.KQ": "KRW",
+  "PHX.AD": "AED",
+  "AKER": "NOK",
 };
 
 /**
