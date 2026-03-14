@@ -243,9 +243,11 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
     // ITM converts are counted in diluted shares, so subtract their face value from debt
     const adjustedDebt = Math.max(0, totalDebt - (marketCapResult.inTheMoneyDebtValue || 0));
 
-    // Leverage ratio = Net Debt / Crypto NAV (using adjusted debt for consistency with company page)
+    // Senior Claims = (Net Debt + Preferred Equity) / Crypto NAV
+    // Shows total claims on crypto treasury senior to common equity
     const netDebt = Math.max(0, adjustedDebt - cashReserves);
-    const leverageRatio = cryptoNav > 0 ? netDebt / cryptoNav : 0;
+    const preferredEquity = company.preferredEquity || 0;
+    const leverageRatio = cryptoNav > 0 ? (netDebt + preferredEquity) / cryptoNav : 0;
 
     // Build effective prices with frozen closing price for stocks without live data.
     // This ensures mNAV is always calculable — stock price holds at last close.
@@ -320,10 +322,10 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
         const age = Date.now() - new Date(sourceDate).getTime();
         return age > 90 * 24 * 60 * 60 * 1000;
       })(),
-      // Estimated leverage when cash is stale: infer cash spent on crypto since cashAsOf
+      // Estimated senior claims when cash is stale: infer cash spent on crypto since cashAsOf
       estimatedLeverage: (() => {
         const sourceDate = company._staticCashAsOf || company.cashAsOf;
-        if (!sourceDate || !company.totalDebt || cryptoNav <= 0) return null;
+        if (!sourceDate || (!company.totalDebt && !preferredEquity) || cryptoNav <= 0) return null;
         const age = Date.now() - new Date(sourceDate).getTime();
         if (age <= 90 * 24 * 60 * 60 * 1000) return null; // not stale
 
@@ -346,7 +348,7 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
         const estimatedCashSpent = holdingsIncrease * costPerUnit;
         const estimatedCash = Math.max(0, cashReserves - estimatedCashSpent);
         const estimatedNetDebt = Math.max(0, adjustedDebt - estimatedCash);
-        return estimatedNetDebt / cryptoNav;
+        return (estimatedNetDebt + preferredEquity) / cryptoNav;
       })(),
       currentHps: company.holdings > 0 && company.sharesForMnav ? company.holdings / company.sharesForMnav : null,
       currentAhps: ahpsMetrics.currentAhps,
@@ -737,10 +739,10 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
           <p className="font-semibold text-gray-900 dark:text-gray-100">{company.pendingMerger ? "—" : `${company.mNAV.toFixed(2)}x`}</p>
         </div>
       </div>
-      {/* Bottom row: Asset, Leverage */}
+      {/* Bottom row: Asset, Senior Claims */}
       <div className="flex items-center gap-4 pt-2 text-xs text-gray-500">
         <span>Asset: {company.asset}</span>
-        <span>Leverage: {company.cashStale && company.estimatedLeverage !== null ? (
+        <span>Sr. Claims: {company.cashStale && company.estimatedLeverage !== null ? (
           <span className="border-b border-dashed border-red-400/60 cursor-help"
             title={`Approximate — cash from ${company._staticCashAsOf || company.cashAsOf}`}>
             <span className="text-red-500 font-bold">~</span>
@@ -823,8 +825,8 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                   <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("leverageRatio")}>
                     <TooltipProvider>
                       <Tooltip>
-                        <TooltipTrigger className="cursor-help">Leverage {sortIndicator("leverageRatio")}</TooltipTrigger>
-                        <TooltipContent><p className="text-sm">Net Debt / Crypto NAV — how much debt relative to crypto holdings. Higher = more leveraged.</p></TooltipContent>
+                        <TooltipTrigger className="cursor-help">Sr. Claims {sortIndicator("leverageRatio")}</TooltipTrigger>
+                        <TooltipContent><p className="text-sm">(Net Debt + Preferred Equity) / Crypto NAV — total claims senior to common equity.</p></TooltipContent>
                       </Tooltip>
                     </TooltipProvider>
                   </TableHead>
@@ -1004,13 +1006,13 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                           </div>
                         )}
                       </TableCell>
-                      {/* Leverage */}
+                      {/* Senior Claims */}
                       <TableCell className="text-right font-mono text-sm">
                         {company.cashStale && company.estimatedLeverage !== null ? (
                           <span className={cn(
                             "border-b border-dashed border-red-400/60 cursor-help",
                             company.estimatedLeverage >= 1 ? "text-amber-600 font-medium" : "text-gray-500",
-                          )} title={`Approximate — cash balance is from ${company._staticCashAsOf || company.cashAsOf} (over 90 days old). Leverage estimated using crypto purchases since then.`}>
+                          )} title={`Approximate — cash balance is from ${company._staticCashAsOf || company.cashAsOf} (over 90 days old). Estimated using crypto purchases since then.`}>
                             <span className="text-red-500 font-bold">~</span>
                             {company.estimatedLeverage >= 1 ? "⚠️ " : ""}
                             {company.estimatedLeverage.toFixed(2)}x

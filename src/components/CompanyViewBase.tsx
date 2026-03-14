@@ -249,7 +249,7 @@ export function CompanyViewBase({ company, className = "", config }: { company: 
             {ahpsGrowth90d !== null ? `${ahpsGrowth90d >= 0 ? "+" : ""}${ahpsGrowth90d.toFixed(1)}%` : "—"}
           </span></span>
           <span className="text-gray-300 dark:text-gray-600">·</span>
-          <span>Leverage: <span className={cn("font-bold", (metrics.leverage ?? 0) >= 1 ? "text-amber-600" : "")}>
+          <span>Sr. Claims: <span className={cn("font-bold", (metrics.leverage ?? 0) >= 1 ? "text-amber-600" : "")}>
             {metrics.leverage !== undefined && metrics.leverage > 0 ? `${metrics.leverage.toFixed(2)}x` : "—"}
           </span></span>
         </div>
@@ -302,11 +302,11 @@ export function CompanyViewBase({ company, className = "", config }: { company: 
 
         <div className={cn("cursor-pointer transition-all rounded-lg", expandedCard === "leverage" && "ring-2 ring-amber-500")} onClick={() => toggleCard("leverage")}>
           <ProvenanceMetric
-            label="Leverage"
+            label="Senior Claims"
             data={metrics.leveragePv}
             format="mnav"
-            subLabel={<span className="flex items-center gap-1">Net Debt / Crypto NAV <span className="text-amber-500">{expandedCard === "leverage" ? "▼" : "▶"}</span></span>}
-            tooltip="Debt relative to crypto NAV"
+            subLabel={<span className="flex items-center gap-1">(Debt + Pref) / Crypto NAV <span className="text-amber-500">{expandedCard === "leverage" ? "▼" : "▶"}</span></span>}
+            tooltip="Total claims senior to common equity relative to crypto NAV"
             ticker={config.ticker.toLowerCase()}
           />
         </div>
