@@ -10,7 +10,7 @@ import { getCompanyIntel } from "@/lib/data/company-intel";
 import { getCompanyMNAV } from "@/lib/math/mnav-engine";
 import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
 import type { EffectiveSharesResult } from "@/lib/data/dilutive-instruments";
-import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
+import { getMarketCapForMnavSync, getTickerCurrency } from "@/lib/utils/market-cap";
 import { formatLargeNumber } from "@/lib/calculations";
 import { cn } from "@/lib/utils";
 import { trackCitationSourceClick } from "@/lib/client-events";
@@ -478,7 +478,7 @@ export function CompanyViewBase({ company, className = "", config }: { company: 
               cashReserves: metrics.cashReserves,
               restrictedCash: 0,
               asset: config.asset,
-              currency: "USD",
+              currency: getTickerCurrency(config.ticker),
             }}
           />
         )}
