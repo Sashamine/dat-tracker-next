@@ -1,6 +1,6 @@
 # DAT Tracker Roadmap
 
-> **Last Updated**: 2026-03-07
+> **Last Updated**: 2026-03-13
 
 ---
 
@@ -497,22 +497,46 @@ Extend AMF model to Swedish and German regulators.
 
 ---
 
+## Phase 7 — UI Stabilization
+
+> "Every page shows the same number for the same metric."
+
+**Context:** Strategy agent audit (2026-03-13) proposed 12 fixes. Codebase verification found most "bugs" don't exist (calculations are correct, guards are in place, formatting works). These are the verified real issues.
+
+### 7.1 Reconciliation Test Suite — COMPLETE
+
+309 tests pass (20 skipped for pendingMerger/missing data). Covers: Market Cap, mNAV consistency, mNAV scalar/detailed agreement, AHPS, Leverage, Holdings-history shares sync. Mock prices fixture at `src/lib/__tests__/fixtures/mock-prices.ts`.
+
+### 7.2 Standardize Company Pages — COMPLETE
+
+Audited all 20 custom views. Eliminated 5 redundant ones (HSDT, UPXI, ALCPB, DFDV, NAKA — ~580 lines). Added ITM debt adjustment to GenericCompanyView. Market Cap and mNAV 24h change were already in CompanyViewBase. 15 remaining custom views each have genuine unique logic (staking breakdowns, convertible stories, estimated shares, dual-class, restricted cash).
+
+### 7.3 Polish Fixes — COMPLETE
+
+- [x] **Hide admin routes from public nav** — wrapped in `NEXT_PUBLIC_ADMIN=1` env check
+- [x] **Column header tooltips** — HPS, mNAV, AHPS Growth, Leverage all have explanatory tooltips
+- [x] **Remove debug logs** — MSTR/3350.T/TWAV market cap console.logs removed
+
+---
+
 ## Agents Workboard (live)
 
 Update this section when starting/stopping work so other agents see what's in-flight.
 
 ### Now (in progress)
 - **Phase 0.5 Product Framing** — GPT handles UI (three-view homepage, scatter plot, cosmetics)
-- **QA bug fixes** — Claude fixing data/architecture bugs from Mar 7 QA report
 - **Ingestion + transform loop** — runs green (scheduled inventory + invariants)
 
 ### Next (queued)
-- Phase 0.5.5 NAV composition transparency (STKE equity gap)
+- Phase 7.2 company view standardization (incremental)
 - Remaining external source caching (SEDAR+, dashboards via Playwright)
 - Phase 3.1 mobile citation UX (bottom sheet)
 - Phase 3.2 Filing viewer quote highlighting
 
 ### Done (recent)
+- **Phase 7 complete** — reconciliation tests (309 pass), 5 redundant views eliminated, debug logs removed, admin nav hidden, column tooltips added — 2026-03-13
+- **Citation chain: 155/155 verified, 0 NOT FOUND** — fixed 13 broken search terms (manual corrections doc, MSTR 10-K, TDNET PDF extraction, SEC exhibit fetches), 15 NULLs remain (known limitations: XBRL-only values, captcha-blocked foreign sites, missing filings) — 2026-03-13
+- **Strategy agent audit review** — verified 12 proposed fixes against codebase, found 6 phantom bugs, kept 6 real items, wrote corrected brief with architecture context — 2026-03-13
 - **Phase 4.4 COMPLETE**: D1 proposal system + auto-approve ≥90% + proposals UI (PRs #440, #441) — 2026-03-12
 - LLM fallback extraction: regex → LLM cascade in auto-extract pipeline (Phase 4.4, PR #439) — 2026-03-12
 - Test suite hardening: dynamic dates, mock isolation, 5 data fixes (Phase 4.4, PR #438) — 2026-03-12

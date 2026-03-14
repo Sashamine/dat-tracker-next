@@ -47,6 +47,17 @@ interface StockHistoryPoint {
 
 // Align intraday timestamps to nearest interval
 // Uses last known closing price when stock market is closed (weekends/after hours)
+// Parse a timestamp that may be a Unix timestamp string ("1710523906") or date string ("2026-01-15")
+function parseTimestampMs(time: string): number {
+  // Unix timestamp: all digits, reasonable range (after year 2000)
+  if (/^\d+$/.test(time) && parseInt(time) > 946684800) {
+    return parseInt(time) * 1000;
+  }
+  // Date string (YYYY-MM-DD or ISO): parse as date
+  const d = new Date(time);
+  return isNaN(d.getTime()) ? 0 : d.getTime();
+}
+
 // Filters out future timestamps (can happen due to UTC vs local timezone)
 function alignTimestamps(
   btcData: CryptoHistoryPoint[],
@@ -59,7 +70,8 @@ function alignTimestamps(
   // Create a sorted list of stock prices with timestamps
   const stockPrices: { ts: number; close: number }[] = [];
   for (const point of stockData) {
-    const ts = parseInt(point.time) * 1000;
+    const ts = parseTimestampMs(point.time);
+    if (ts === 0) continue; // Skip unparseable timestamps
     stockPrices.push({ ts, close: point.close });
   }
   stockPrices.sort((a, b) => a.ts - b.ts);
@@ -78,7 +90,7 @@ function alignTimestamps(
 
   // For each BTC price point, find matching stock price or use last close
   for (const btc of btcData) {
-    const ts = parseInt(btc.time) * 1000;
+    const ts = parseTimestampMs(btc.time);
     
     // Skip future timestamps (can happen due to UTC vs local timezone)
     if (ts > now) continue;

@@ -74,11 +74,6 @@ import { DJTCompanyView } from "@/components/DJTCompanyView";
 import { FWDICompanyView } from "@/components/FWDICompanyView";
 import { BTBTCompanyView } from "@/components/BTBTCompanyView";
 import { ABTCCompanyView } from "@/components/ABTCCompanyView";
-import { NAKACompanyView } from "@/components/NAKACompanyView";
-import { HSDTCompanyView } from "@/components/HSDTCompanyView";
-import { ALCPBCompanyView } from "@/components/ALCPBCompanyView";
-import { DFDVCompanyView } from "@/components/DFDVCompanyView";
-import { UPXICompanyView } from "@/components/UPXICompanyView";
 import { DCCCompanyView } from "@/components/DCCCompanyView";
 import { H100CompanyView } from "@/components/H100CompanyView";
 import { DDCCompanyView } from "@/components/DDCCompanyView";
@@ -616,7 +611,7 @@ export default function CompanyPage() {
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
               </Link>
               {/* Hide website/twitter for companies with custom views (they show in Strategy & Overview) */}
-              {displayCompany.website && !["MSTR","BMNR","MARA","XXI","3350.T","SBET","ASST","AVX","DJT","FWDI","ABTC","NAKA","BTBT","UPXI","DFDV","HSDT","ALCPB","DCC.AX","DDC"].includes(displayCompany.ticker) && (
+              {displayCompany.website && !["MSTR","BMNR","MARA","XXI","3350.T","SBET","ASST","AVX","DJT","FWDI","ABTC","BTBT","DCC.AX","DDC"].includes(displayCompany.ticker) && (
                 <a
                   href={displayCompany.website}
                   target="_blank"
@@ -633,7 +628,7 @@ export default function CompanyPage() {
                   <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                 </a>
               )}
-              {displayCompany.twitter && !["MSTR","BMNR","MARA","XXI","3350.T","SBET","ASST","AVX","DJT","FWDI","ABTC","NAKA","BTBT","UPXI","DFDV","HSDT","ALCPB","DCC.AX","DDC"].includes(displayCompany.ticker) && (
+              {displayCompany.twitter && !["MSTR","BMNR","MARA","XXI","3350.T","SBET","ASST","AVX","DJT","FWDI","ABTC","BTBT","DCC.AX","DDC"].includes(displayCompany.ticker) && (
                 <a
                   href={displayCompany.twitter}
                   target="_blank"
@@ -735,18 +730,8 @@ export default function CompanyPage() {
           <FWDICompanyView company={displayCompany} />
         ) : displayCompany.ticker === "ABTC" ? (
           <ABTCCompanyView company={displayCompany} />
-        ) : displayCompany.ticker === "NAKA" ? (
-          <NAKACompanyView company={displayCompany} />
         ) : displayCompany.ticker === "BTBT" ? (
           <BTBTCompanyView company={displayCompany} />
-        ) : displayCompany.ticker === "UPXI" ? (
-          <UPXICompanyView company={displayCompany} />
-        ) : displayCompany.ticker === "DFDV" ? (
-          <DFDVCompanyView company={displayCompany} />
-        ) : displayCompany.ticker === "HSDT" ? (
-          <HSDTCompanyView company={displayCompany} />
-        ) : displayCompany.ticker === "ALCPB" ? (
-          <ALCPBCompanyView company={displayCompany} />
         ) : displayCompany.ticker === "DCC.AX" ? (
           <DCCCompanyView company={displayCompany} />
         ) : displayCompany.ticker === "H100.ST" ? (

@@ -124,36 +124,37 @@ export function AppSidebar({ className }: AppSidebarProps) {
           >
             Earnings
           </Link>
-          <Link
-            href="/anchors"
-            className={cn(
-              "block w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors",
-              pathname === "/anchors"
-                ? "bg-indigo-600 text-white"
-                : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-            )}
-          >
-            SEC Anchors
-          </Link>
-          <Link
-            href="/verify"
-            className={cn(
-              "block w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors",
-              pathname === "/verify"
-                ? "bg-indigo-600 text-white"
-                : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
-            )}
-          >
-            Verify Holdings
-          </Link>
         </div>
 
-        {/* Admin */}
+        {/* Admin — hidden in production, visible with NEXT_PUBLIC_ADMIN=1 */}
+        {process.env.NEXT_PUBLIC_ADMIN === "1" && (
         <div>
           <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2 mt-4">
             Admin
           </h3>
           <div className="space-y-1">
+            <Link
+              href="/anchors"
+              className={cn(
+                "block w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+                pathname === "/anchors"
+                  ? "bg-indigo-600 text-white"
+                  : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+              )}
+            >
+              SEC Anchors
+            </Link>
+            <Link
+              href="/verify"
+              className={cn(
+                "block w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+                pathname === "/verify"
+                  ? "bg-indigo-600 text-white"
+                  : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+              )}
+            >
+              Verify Holdings
+            </Link>
             <Link
               href="/admin/data-health"
               className={cn(
@@ -189,6 +190,7 @@ export function AppSidebar({ className }: AppSidebarProps) {
             </Link>
           </div>
         </div>
+        )}
 
         <hr className="border-gray-200 dark:border-gray-700" />
 
