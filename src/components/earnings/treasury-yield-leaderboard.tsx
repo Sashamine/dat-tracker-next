@@ -135,7 +135,7 @@ export function TreasuryYieldLeaderboard({
               <TableRow className="bg-gray-50 dark:bg-gray-800/50">
                 <TableHead className="w-12 text-center">#</TableHead>
                 <TableHead>Company</TableHead>
-                <TableHead className="text-right">HPS Growth</TableHead>
+                <TableHead className="text-right">AHPS Growth</TableHead>
                 <TableHead className="text-right hidden sm:table-cell">Data Period</TableHead>
               </TableRow>
             </TableHeader>
