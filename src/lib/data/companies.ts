@@ -3129,8 +3129,8 @@ export const dogeCompanies: Company[] = [
     burnAsOf: "2025-09-30",
     capitalRaisedPipe: 200_000_000,
     avgDailyVolume: 5_000_000,
-    marketCap: 8_000_000,  // TBH pre-merger market cap ~$8M (10.8M shares × ~$0.75)
-    sharesForMnav: 10_800_000,  // TBH pre-merger shares (Nov 2025 10-Q)
+    marketCap: 15_000_000,  // TBH pre-merger market cap ~$15M (19.8M shares × ~$0.75)
+    sharesForMnav: 19_799_090,  // SEC 10-Q (filed 2025-11-17): 19,799,090 as of 2025-11-12
     sharesSource: "SEC 10-Q (filed 2025-11-17): EntityCommonStockSharesOutstanding = 19,799,090 as of 2025-11-12",
     sharesSourceQuote: "SEC 10-Q (filed 2025-11-17): EntityCommonStockSharesOutstanding = 19,799,090 as of 2025-11-12",
     sharesSourceUrl: "/filings/tbh/0001213900-25-111616",

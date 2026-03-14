@@ -772,7 +772,8 @@ const TBH_HISTORY: HoldingsSnapshot[] = [
   // TBH has no DOGE - these are TBH shares only for tracking purposes
   { date: "2025-03-07", holdings: 0, sharesOutstanding: 8_000_000, holdingsPerShare: 0, source: "TBH IPO on Nasdaq", sourceUrl: "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001903595", sourceType: "sec-filing" },
   { date: "2025-10-12", holdings: 0, sharesOutstanding: 10_800_000, holdingsPerShare: 0, source: "8-K HOD merger", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1903595/000121390025099991/0001213900-25-099991-index.html", sourceType: "sec-filing" },
-  { date: "2025-12-18", holdings: 0, sharesOutstanding: 10_800_000, holdingsPerShare: 0, source: "8-K DOGE treasury update", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1903595/000121390025122463/0001213900-25-122463-index.html", sourceType: "sec-filing" },
+  { date: "2025-11-12", holdings: 0, sharesOutstanding: 19_799_090, holdingsPerShare: 0, source: "SEC 10-Q (filed 2025-11-17): 19,799,090 shares", sourceUrl: "/filings/tbh/0001213900-25-111616", sourceType: "sec-filing" },
+  { date: "2025-12-18", holdings: 0, sharesOutstanding: 19_799_090, holdingsPerShare: 0, source: "8-K DOGE treasury update", sourceUrl: "https://www.sec.gov/Archives/edgar/data/1903595/000121390025122463/0001213900-25-122463-index.html", sourceType: "sec-filing" },
 ];
 
 // Bit Origin (BTOG) - DOGE treasury, Singapore-based (Cayman Islands incorporated)

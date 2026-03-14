@@ -98,7 +98,19 @@ export function applyD1Overlay(
     // When D1 wins for shares, add back pre-funded warrant shares that are
     // included in static sharesForMnav but missing from D1 basic_shares
     // (D1 only tracks SEC XBRL CommonStockSharesOutstanding = common stock).
-    const pfwShares = sharesRaw.isD1 ? getBaseIncludedShares(c.ticker) : 0;
+    //
+    // Guard: if D1 basic_shares ≈ sharesForMnav (within 1%), D1 already
+    // includes PFW shares (backfill or non-XBRL source). Adding PFWs again
+    // would double-count. Skip the add-back and warn.
+    const pfwSharesRaw = sharesRaw.isD1 ? getBaseIncludedShares(c.ticker) : 0;
+    let pfwShares = pfwSharesRaw;
+    if (pfwSharesRaw > 0 && sharesRaw.isD1 && sharesRaw.value != null && c.sharesForMnav) {
+      const pctDiff = Math.abs((sharesRaw.value - c.sharesForMnav) / c.sharesForMnav) * 100;
+      if (pctDiff <= 1) {
+        console.warn(`[d1-overlay] ${c.ticker}: D1 basic_shares (${sharesRaw.value.toLocaleString()}) ≈ sharesForMnav (${c.sharesForMnav.toLocaleString()}) — skipping PFW add-back to avoid double-count`);
+        pfwShares = 0;
+      }
+    }
     const shares = pfwShares > 0
       ? { value: (sharesRaw.value ?? 0) + pfwShares, isD1: true }
       : sharesRaw;
@@ -120,12 +132,17 @@ export function applyD1Overlay(
     const holdingsBasis: HoldingsBasis = holdings.isD1 ? 'native_units' : 'static_fallback';
 
     // Detect D1 vs static divergences. Any >5% divergence means one source is wrong.
+    // For shares: adjust static value by removing PFW shares, since D1 only reports
+    // XBRL CommonStockSharesOutstanding (basic common stock, no pre-funded warrants).
+    const pfwSharesForCheck = getBaseIncludedShares(c.ticker);
+    const staticSharesForCheck = (c.sharesForMnav || 0) - pfwSharesForCheck;
+
     const divergences: Array<{ field: string; d1: number; static: number; pct: number }> = [];
     const divergenceChecks: [string, number | undefined, number | undefined][] = [
       ['cashReserves', metrics.cash_usd, c.cashReserves],
       ['totalDebt', metrics.debt_usd, c.totalDebt],
       ['preferredEquity', metrics.preferred_equity_usd, c.preferredEquity],
-      ['sharesForMnav', metrics.basic_shares, c.sharesForMnav],
+      ['sharesForMnav', metrics.basic_shares, staticSharesForCheck > 0 ? staticSharesForCheck : c.sharesForMnav],
       ['holdings', metrics.holdings_native, c.holdings],
     ];
     for (const [field, d1Val, staticVal] of divergenceChecks) {
@@ -181,6 +198,19 @@ export function applyD1Overlay(
     // Dev-only invariant: native_units basis implies positive holdings
     if (process.env.NODE_ENV === 'development' && holdingsBasis === 'native_units' && overlaid.holdings <= 0) {
       console.warn(`[d1-overlay] ${c.ticker}: holdingsBasis=native_units but holdings=${overlaid.holdings}`);
+    }
+
+    // Post-overlay invariant: final shares should not exceed both inputs.
+    // If overlaid shares are >10% larger than BOTH D1 and static, something
+    // went wrong (e.g. PFW double-count that slipped past the guard above).
+    if (shares.isD1 && metrics.basic_shares != null && c.sharesForMnav) {
+      const finalShares = overlaid.sharesForMnav ?? 0;
+      const maxInput = Math.max(metrics.basic_shares, c.sharesForMnav);
+      if (finalShares > maxInput * 1.1) {
+        console.warn(
+          `[d1-overlay] ${c.ticker}: overlaid shares (${finalShares.toLocaleString()}) exceed both D1 (${metrics.basic_shares.toLocaleString()}) and static (${c.sharesForMnav.toLocaleString()}) by >10% — possible double-count`
+        );
+      }
     }
 
     return overlaid;

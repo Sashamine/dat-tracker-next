@@ -16,7 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { Company } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
-import { getCompanyMNAV, getCompanyMNAVDetailed, calculateTotalCryptoNAV } from "@/lib/math/mnav-engine";
+import { getCompanyMNAVDetailed, calculateTotalCryptoNAV } from "@/lib/math/mnav-engine";
 import { dilutiveInstruments, getEffectiveShares } from "@/lib/data/dilutive-instruments";
 import { useFilters } from "@/lib/hooks/use-filters";
 import { StalenessCompact } from "@/components/staleness-indicator";
@@ -278,9 +278,19 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
     const mNAV = mnavResult.mnav;
     const mnavWarnings = mnavResult.warnings;
 
-    // Calculate mNAV 24h change client-side using same company data + yesterday prices.
-    // Uses yesterday stock/crypto prices; if no yesterday stock price, falls back to
-    // current live price (stock frozen, only crypto moves).
+    // Calculate mNAV 24h change using price-ratio scaling.
+    //
+    // WHY NOT recalculate with yesterday's prices:
+    // getCompanyMNAV(company, ydayPrices) re-runs getEffectiveShares() with
+    // yesterday's stock price, which can flip dilutive instruments ITM/OTM
+    // at their strike prices. This creates large discrete jumps in diluted
+    // shares and ITM debt that look like real mNAV moves but are artifacts
+    // of our methodology. Example: HSDT has 73.9M warrants at $10.134 —
+    // crossing that strike nearly doubles effective shares overnight.
+    //
+    // Instead, scale today's EV and CryptoNAV by price ratios. This holds
+    // the company state (dilution, debt adjustments) constant and isolates
+    // the 24hr change to actual market price movements.
     let mNAVChange: number | null = null;
     const ydayStockPrice = yesterdayData?.stockPrice && yesterdayData.stockPrice > 0
       ? yesterdayData.stockPrice
@@ -288,21 +298,24 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
     const ydayCryptoPrice = yesterdayData?.cryptoPrice && yesterdayData.cryptoPrice > 0
       ? yesterdayData.cryptoPrice
       : 0;
-    if (mNAV && mNAV !== 0 && ydayStockPrice > 0 && ydayCryptoPrice > 0) {
-      const ydayPrices = {
-        ...effectivePrices,
-        crypto: {
-          ...effectivePrices.crypto,
-          [company.asset]: { ...(effectivePrices.crypto[company.asset] || { change24h: 0 }), price: ydayCryptoPrice },
-        },
-        stocks: {
-          ...effectivePrices.stocks,
-          [company.ticker]: { ...(effectivePrices.stocks[company.ticker] || { change24h: 0, volume: 0, marketCap: 0 }), price: ydayStockPrice },
-        },
-      };
-      const yesterdayMnavVal = getCompanyMNAV(company, ydayPrices);
-      if (yesterdayMnavVal && yesterdayMnavVal !== 0) {
-        mNAVChange = ((mNAV / yesterdayMnavVal) - 1) * 100;
+    if (mNAV && mNAV !== 0 && mnavResult.evUsd > 0 && mnavResult.cryptoNavUsd > 0 &&
+        stockPrice > 0 && ydayStockPrice > 0 && cryptoPrice > 0 && ydayCryptoPrice > 0) {
+      // Scale market cap component by stock price ratio (holds dilution constant)
+      const stockRatio = ydayStockPrice / stockPrice;
+      // EV = marketCap + debt + pref - cash. Only marketCap moves with stock price.
+      const todayMarketCap = marketCap;
+      const ydayMarketCap = todayMarketCap * stockRatio;
+      // Non-market-cap EV components are the same for both days
+      const evNonMcap = mnavResult.evUsd - todayMarketCap;
+      const ydayEV = ydayMarketCap + evNonMcap;
+      // Scale crypto NAV by primary crypto price ratio
+      const cryptoRatio = ydayCryptoPrice / cryptoPrice;
+      const ydayCryptoNav = mnavResult.cryptoNavUsd * cryptoRatio;
+      if (ydayCryptoNav > 0) {
+        const ydayMNAV = ydayEV / ydayCryptoNav;
+        if (ydayMNAV > 0) {
+          mNAVChange = ((mNAV / ydayMNAV) - 1) * 100;
+        }
       }
     }
 

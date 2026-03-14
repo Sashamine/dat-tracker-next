@@ -1,6 +1,7 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { applyD1Overlay } from './d1-overlay';
 import type { Company } from './types';
+import * as dilutiveInstruments from './data/dilutive-instruments';
 
 /** Minimal company stub for testing divergence detection. */
 function makeCompany(overrides: Partial<Company> = {}): Company {
@@ -109,5 +110,77 @@ describe('D1 overlay divergence detection', () => {
     expect(shareDiv!.pct).toBeGreaterThanOrEqual(37);
     expect(shareDiv!.d1).toBe(723_966_942);
     expect(shareDiv!.static).toBe(1_166_803_340);
+  });
+});
+
+describe('D1 overlay PFW double-count guards', () => {
+  it('skips PFW add-back when D1 basic_shares ≈ sharesForMnav (backfill detection)', () => {
+    // Simulate: D1 was backfilled with full share count (including PFWs)
+    // getBaseIncludedShares returns 16M PFWs for this ticker
+    const spy = vi.spyOn(dilutiveInstruments, 'getBaseIncludedShares').mockReturnValue(16_000_000);
+
+    const co = makeCompany({
+      ticker: 'PFWTEST',
+      sharesForMnav: 24_400_000,
+      sharesAsOf: '2026-01-05',
+    });
+    // D1 matches sharesForMnav exactly (backfill) with a newer date
+    const d1 = { PFWTEST: { basic_shares: 24_400_000 } };
+    const dates = { PFWTEST: { basic_shares: '2026-02-28' } };
+
+    const [result] = applyD1Overlay([co], d1, null, dates);
+
+    // Should NOT add 16M PFWs on top — shares should stay at 24.4M
+    expect(result.sharesForMnav).toBe(24_400_000);
+
+    spy.mockRestore();
+  });
+
+  it('adds PFW when D1 basic_shares is genuinely common-only (XBRL source)', () => {
+    // D1 has common-only shares from XBRL, static includes PFWs
+    const spy = vi.spyOn(dilutiveInstruments, 'getBaseIncludedShares').mockReturnValue(16_000_000);
+
+    const co = makeCompany({
+      ticker: 'PFWTEST',
+      sharesForMnav: 24_400_000, // 8.4M common + 16M PFW
+      sharesAsOf: '2026-01-05',
+    });
+    // D1 has common-only (much lower than sharesForMnav)
+    const d1 = { PFWTEST: { basic_shares: 8_400_000 } };
+    const dates = { PFWTEST: { basic_shares: '2026-02-28' } };
+
+    const [result] = applyD1Overlay([co], d1, null, dates);
+
+    // Should add PFWs: 8.4M + 16M = 24.4M
+    expect(result.sharesForMnav).toBe(24_400_000);
+
+    spy.mockRestore();
+  });
+
+  it('post-overlay invariant catches double-count that slips past guard', () => {
+    // Edge case: D1 is 5% different from static (passes the 1% guard)
+    // but PFW add-back still inflates beyond both inputs
+    const spy = vi.spyOn(dilutiveInstruments, 'getBaseIncludedShares').mockReturnValue(10_000_000);
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    const co = makeCompany({
+      ticker: 'PFWTEST',
+      sharesForMnav: 20_000_000, // 10M common + 10M PFW
+      sharesAsOf: '2026-01-05',
+    });
+    // D1 is 5% higher than static (passes 1% guard, PFW gets added)
+    const d1 = { PFWTEST: { basic_shares: 21_000_000 } };
+    const dates = { PFWTEST: { basic_shares: '2026-02-28' } };
+
+    applyD1Overlay([co], d1, null, dates);
+
+    // 21M + 10M PFW = 31M, which is >10% larger than max(21M, 20M) = 21M
+    // Post-overlay invariant should warn
+    expect(warnSpy).toHaveBeenCalledWith(
+      expect.stringContaining('exceed both D1')
+    );
+
+    spy.mockRestore();
+    warnSpy.mockRestore();
   });
 });
