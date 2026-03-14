@@ -15,7 +15,7 @@
  * - BTCT Website (Canada): BTCT.V — BTC holdings + shares from btctcorp.com homepage
  * - Remixpoint Website (Japan): 3825.T — BTC holdings from remixpoint.co.jp/digital-asset/
  * - Luxxfolio Website (Canada): LUXFF — LTC holdings + shares from press releases
- * - StrategyTracker API: 3350.T (Metaplanet) — real-time BTC holdings from data.strategytracker.com
+ * - (StrategyTracker removed — unreliable aggregator, wrong share counts multiple times)
  *
  * Usage:
  *   GET /api/cron/foreign-to-d1?manual=true
@@ -1026,102 +1026,13 @@ async function fetchLuxxfolioWebsite(): Promise<ForeignFetcherResult[]> {
   return results;
 }
 
-// ─── StrategyTracker Fetcher (Metaplanet + others) ──────────────────────────
-
-async function fetchStrategyTracker(): Promise<ForeignFetcherResult[]> {
-  const results: ForeignFetcherResult[] = [];
-
-  try {
-    const {
-      fetchStrategyTrackerFullData,
-      ST_TICKER_TO_ENTITY,
-    } = await import('@/lib/fetchers/strategytracker');
-
-    const data = await fetchStrategyTrackerFullData();
-    const reportedAt = data.timestamp.slice(0, 10);
-
-    // For now, only ingest Metaplanet — other companies have dedicated fetchers
-    // that provide higher-confidence data from primary regulatory sources.
-    const TARGET_ENTITIES = new Set(['3350.T']);
-
-    for (const [stTicker, fullCompany] of Object.entries(data.companies)) {
-      const entityId = ST_TICKER_TO_ENTITY[stTicker];
-      if (!entityId || !TARGET_ENTITIES.has(entityId)) continue;
-
-      const pm = fullCompany.processedMetrics;
-      if (!pm || !pm.latestBtcBalance || pm.latestBtcBalance <= 0) continue;
-
-      const asOf = pm.latestTreasuryDate || reportedAt;
-      const sourceUrl = 'https://analytics.metaplanet.jp';
-      const dataPoints: ForeignDataPoint[] = [];
-
-      // Helper to create a data point for a given metric
-      const addPoint = (metric: ForeignDataPoint['metric'], value: number, unit: string, suffix: string) => {
-        const cite = generateForeignCitation({
-          metric,
-          value,
-          unit,
-          filingSystem: 'strategytracker',
-          asOf,
-          accession: `ST-${stTicker}-${asOf}-${suffix}`,
-        });
-
-        dataPoints.push({
-          entityId,
-          metric,
-          value,
-          unit,
-          asOf,
-          reportedAt,
-          filingSystem: 'strategytracker',
-          accession: `ST-${stTicker}-${asOf}-${suffix}`,
-          sourceUrl,
-          sourceType: 'third_party_tracker',
-          citationQuote: cite.citation_quote,
-          citationSearchTerm: cite.citation_search_term,
-          method: 'strategytracker_api',
-          confidence: 0.8,
-        });
-      };
-
-      // BTC holdings — StrategyTracker's core value prop: updated every ~15 min
-      addPoint('holdings_native', pm.latestBtcBalance, 'BTC', 'btc');
-
-      // NOTE: We intentionally do NOT ingest capital structure metrics
-      // (shares, debt, cash, preferred) from StrategyTracker. Per CLAUDE.md,
-      // aggregators are for verification only, not primary data sources.
-      // Capital structure should come from regulatory filings (TDnet, SEC).
-      // StrategyTracker has stale share counts (e.g., 723M vs actual 1.167B
-      // for Metaplanet as of Mar 2026) that override correct data.
-
-      results.push({
-        ticker: entityId,
-        filingSystem: 'strategytracker',
-        dataPoints,
-        skipped: [],
-      });
-    }
-
-    if (results.length === 0) {
-      results.push({
-        ticker: '3350.T',
-        filingSystem: 'strategytracker',
-        dataPoints: [],
-        skipped: [{ id: 'strategytracker', reason: 'No target companies found in API response' }],
-      });
-    }
-  } catch (err) {
-    results.push({
-      ticker: '3350.T',
-      filingSystem: 'strategytracker',
-      dataPoints: [],
-      skipped: [],
-      error: err instanceof Error ? err.message : String(err),
-    });
-  }
-
-  return results;
-}
+// ─── StrategyTracker — REMOVED ──────────────────────────────────────────────
+// StrategyTracker (data.strategytracker.com) was removed as a data source.
+// It's a third-party aggregator that has been wrong multiple times:
+// - Metaplanet shares: reported 723M vs actual 1.167B (Mar 2026)
+// - Preferred equity: reported $147.7M vs actual $155M
+// Metaplanet BTC holdings come from TDnet (primary regulatory source).
+// Other companies have their own dedicated fetchers.
 
 // ─── Main Handler ───────────────────────────────────────────────────────────
 
@@ -1136,7 +1047,6 @@ const SYSTEM_FETCHERS: Record<string, () => Promise<ForeignFetcherResult[]>> = {
   btct_website: fetchBtctWebsite,
   remixpoint_website: fetchRemixpointWebsite,
   luxxfolio_website: fetchLuxxfolioWebsite,
-  strategytracker: fetchStrategyTracker,
 };
 
 export async function GET(request: NextRequest) {
