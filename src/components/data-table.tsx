@@ -186,6 +186,8 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
     setSortDir,
   } = useFilters();
 
+  const [ahpsPeriod, setAhpsPeriod] = useState<"90d" | "1y">("90d");
+
   const ahpsByTicker = new Map(
     (ahpsData?.results || []).map((row) => [row.ticker.toUpperCase(), row])
   );
@@ -441,8 +443,8 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
 
     switch (sortField) {
       case "hpsGrowth90d":
-        aVal = a.ahpsGrowth90d ?? Number.NEGATIVE_INFINITY;
-        bVal = b.ahpsGrowth90d ?? Number.NEGATIVE_INFINITY;
+        aVal = (ahpsPeriod === "1y" ? a.ahpsGrowth1y : a.ahpsGrowth90d) ?? Number.NEGATIVE_INFINITY;
+        bVal = (ahpsPeriod === "1y" ? b.ahpsGrowth1y : b.ahpsGrowth90d) ?? Number.NEGATIVE_INFINITY;
         break;
       case "hpsGrowth1y":
         aVal = a.ahpsGrowth1y ?? Number.NEGATIVE_INFINITY;
@@ -740,9 +742,9 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
           <p className="font-semibold text-gray-900 dark:text-gray-100">{formatCompactUsd(company.holdingsValue)}</p>
         </div>
         <div>
-          <p className="text-xs text-gray-500 uppercase">AHPS 90D</p>
-          <p className={cn("font-semibold", getGrowthColor(company.ahpsGrowth90d))}>
-            {formatGrowthPct(company.ahpsGrowth90d)}
+          <p className="text-xs text-gray-500 uppercase">AHPS {ahpsPeriod === "1y" ? "1Y" : "90D"}</p>
+          <p className={cn("font-semibold", getGrowthColor(ahpsPeriod === "1y" ? company.ahpsGrowth1y : company.ahpsGrowth90d))}>
+            {formatGrowthPct(ahpsPeriod === "1y" ? company.ahpsGrowth1y : company.ahpsGrowth90d)}
           </p>
         </div>
         <div>
@@ -822,13 +824,28 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                   <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("holdingsValue")}>
                     Treasury {sortIndicator("holdingsValue")}
                   </TableHead>
-                  <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("hpsGrowth90d")}>
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger className="cursor-help">AHPS 90D {sortIndicator("hpsGrowth90d")}</TooltipTrigger>
-                        <TooltipContent><p className="text-sm">Adjusted Holdings Per Share growth over 90 days — measures crypto accretion per share after dilution.</p></TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
+                  <TableHead className="text-right">
+                    <div className="flex items-center justify-end gap-1">
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger className="cursor-help text-xs">
+                            AHPS
+                          </TooltipTrigger>
+                          <TooltipContent><p className="text-sm">Adjusted Holdings Per Share growth — measures crypto accretion per share after dilution.</p></TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                      <span
+                        className={cn("cursor-pointer text-xs px-1 rounded", ahpsPeriod === "90d" ? "bg-gray-200 dark:bg-gray-700 font-semibold" : "text-gray-400 hover:text-gray-600")}
+                        onClick={(e) => { e.stopPropagation(); setAhpsPeriod("90d"); }}
+                      >90D</span>
+                      <span
+                        className={cn("cursor-pointer text-xs px-1 rounded", ahpsPeriod === "1y" ? "bg-gray-200 dark:bg-gray-700 font-semibold" : "text-gray-400 hover:text-gray-600")}
+                        onClick={(e) => { e.stopPropagation(); setAhpsPeriod("1y"); }}
+                      >1Y</span>
+                      <span className="cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("hpsGrowth90d")}>
+                        {sortIndicator("hpsGrowth90d")}
+                      </span>
+                    </div>
                   </TableHead>
                   <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("mNAV")}>
                     <TooltipProvider>
@@ -970,10 +987,10 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                           </div>
                         )}
                       </TableCell>
-                      {/* AHPS 90D */}
+                      {/* AHPS */}
                       <TableCell className="text-right font-mono">
-                        <span className={cn("font-semibold", getGrowthColor(company.ahpsGrowth90d))}>
-                          {formatGrowthPct(company.ahpsGrowth90d)}
+                        <span className={cn("font-semibold", getGrowthColor(ahpsPeriod === "1y" ? company.ahpsGrowth1y : company.ahpsGrowth90d))}>
+                          {formatGrowthPct(ahpsPeriod === "1y" ? company.ahpsGrowth1y : company.ahpsGrowth90d)}
                         </span>
                       </TableCell>
                       {/* mNAV */}
