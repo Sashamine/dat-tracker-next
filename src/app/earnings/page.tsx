@@ -80,8 +80,9 @@ export default function EarningsPage() {
             </h3>
             <div className="text-sm text-gray-600 dark:text-gray-400 space-y-2">
               <p>
-                <strong>Holdings per Share Growth</strong> measures how much crypto each share represents over time.
+                <strong>HPS Growth</strong> measures how much crypto each basic share represents over time.
                 A company that grows holdings faster than it dilutes shares will show positive yield.
+                For dilution-adjusted metrics (AHPS), see the Overview page Growth view.
               </p>
               <p>
                 <strong>Example:</strong> If a company held 0.001 BTC/share last quarter and now holds 0.0012 BTC/share,

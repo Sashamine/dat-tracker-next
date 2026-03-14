@@ -16,10 +16,20 @@ export interface AhpsHistoryEntry {
   stockPrice?: number;
 }
 
+export interface AhpsGrowthPeriod {
+  days: number;
+  growth: number | null;
+  annualized: number | null;
+  startDate?: string;
+  startAhps?: number;
+}
+
 export interface AhpsMetrics {
   currentAhps: number;
   ahpsGrowth90d: number | null;
   ahpsGrowth90dAnnualized: number | null;
+  /** Multi-period growth keyed by days (30, 90, 365, etc.) */
+  periods: Record<number, AhpsGrowthPeriod>;
   method: AhpsMethod;
   usesAdjustedShares: boolean;
   basicShares: number;
@@ -40,6 +50,8 @@ interface AhpsInput {
   company: Company;
   history?: AhpsHistoryEntry[];
   currentStockPrice?: number;
+  /** Which lookback periods to compute (default: [90]) */
+  lookbackDays?: number[];
 }
 
 function computeAhpsAt(
@@ -78,75 +90,13 @@ export function getCompanyAhpsMetrics({
   company,
   history,
   currentStockPrice,
+  lookbackDays = [90],
 }: AhpsInput): AhpsMetrics {
   const basicShares = company.sharesForMnav ?? 0;
   const holdings = company.holdings ?? 0;
 
   const current = computeAhpsAt(ticker, holdings, basicShares, currentStockPrice);
   const method: AhpsMethod = current.adjusted ? "dilution-adjusted" : "basic-shares-only";
-
-  let ahpsGrowth90d: number | null = null;
-  let ahpsGrowth90dAnnualized: number | null = null;
-
-  if (history && history.length >= 2) {
-    const now = new Date();
-    const ninetyDaysAgo = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
-
-    // Don't count the PIPE agreement: use datStartDate as the earliest valid baseline.
-    // PIPE capital hits the balance sheet immediately, so the first post-datStartDate
-    // snapshot is the true starting point. Growth before that is PIPE deployment, not
-    // organic premium harvesting.
-    const datStart = company.datStartDate ? new Date(company.datStartDate) : null;
-
-    if (datStart && ninetyDaysAgo < datStart) {
-      return {
-        currentAhps: current.ahps,
-        ahpsGrowth90d: null,
-        ahpsGrowth90dAnnualized: null,
-        method,
-        usesAdjustedShares: current.adjusted,
-        basicShares,
-        dilutedShares: current.diluted,
-        notes: current.adjusted
-          ? `Dilution-adjusted (${dilutiveInstruments[ticker]?.length ?? 0} instruments tracked). Basic: ${basicShares.toLocaleString()}, diluted: ${current.diluted.toLocaleString()}.`
-          : "AHPS growth not yet available — less than 90 days since DAT strategy started.",
-      };
-    }
-
-    const snapshot90d = findSnapshotOnOrBefore(history, ninetyDaysAgo, {
-      getDate: (snapshot) => snapshot.date,
-      // No maxLagDays: carry-forward is correct. A baseline from 6 months ago
-      // means nothing changed — company should show 0% growth, not "no data".
-    });
-
-    if (snapshot90d && snapshot90d.sharesOutstanding > 0) {
-      const historicalPrice = snapshot90d.stockPrice ?? currentStockPrice;
-      const past = computeAhpsAt(
-        ticker,
-        snapshot90d.holdings,
-        snapshot90d.sharesOutstanding,
-        historicalPrice,
-        snapshot90d.date
-      );
-
-      if (past.ahps > 0 && current.ahps > 0) {
-        ahpsGrowth90d = ((current.ahps - past.ahps) / past.ahps) * 100;
-
-        const latestDate = company.holdingsLastUpdated
-          ? new Date(company.holdingsLastUpdated)
-          : now;
-        const pastDate = new Date(snapshot90d.date);
-        const daysBetween =
-          (latestDate.getTime() - pastDate.getTime()) / (1000 * 60 * 60 * 24);
-
-        if (daysBetween > 30) {
-          const periodYears = daysBetween / 365.25;
-          ahpsGrowth90dAnnualized =
-            (Math.pow(current.ahps / past.ahps, 1 / periodYears) - 1) * 100;
-        }
-      }
-    }
-  }
 
   const hasInstruments = (dilutiveInstruments[ticker]?.length ?? 0) > 0;
   const instrumentCount = dilutiveInstruments[ticker]?.length ?? 0;
@@ -158,10 +108,68 @@ export function getCompanyAhpsMetrics({
         ? "No dilutive instruments tracked. AHPS equals HPS."
         : "All instruments out of the money at the available stock price. AHPS equals HPS.";
 
+  // Don't count the PIPE agreement: use datStartDate as the earliest valid baseline.
+  const datStart = company.datStartDate ? new Date(company.datStartDate) : null;
+  const now = new Date();
+
+  const periods: Record<number, AhpsGrowthPeriod> = {};
+
+  for (const days of lookbackDays) {
+    const period: AhpsGrowthPeriod = { days, growth: null, annualized: null };
+    periods[days] = period;
+
+    if (!history || history.length < 2) continue;
+
+    const cutoff = new Date(now.getTime() - days * 24 * 60 * 60 * 1000);
+
+    // Skip if DAT strategy started after the lookback window
+    if (datStart && cutoff < datStart) continue;
+
+    const snapshot = findSnapshotOnOrBefore(history, cutoff, {
+      getDate: (s) => s.date,
+      // No maxLagDays: carry-forward is correct. A baseline from further back
+      // means nothing changed — company should show 0% growth, not "no data".
+    });
+
+    if (!snapshot || snapshot.sharesOutstanding <= 0) continue;
+
+    const historicalPrice = snapshot.stockPrice ?? currentStockPrice;
+    const past = computeAhpsAt(
+      ticker,
+      snapshot.holdings,
+      snapshot.sharesOutstanding,
+      historicalPrice,
+      snapshot.date
+    );
+
+    if (past.ahps > 0 && current.ahps > 0) {
+      period.growth = ((current.ahps - past.ahps) / past.ahps) * 100;
+      period.startDate = snapshot.date;
+      period.startAhps = past.ahps;
+
+      const latestDate = company.holdingsLastUpdated
+        ? new Date(company.holdingsLastUpdated)
+        : now;
+      const pastDate = new Date(snapshot.date);
+      const daysBetween =
+        (latestDate.getTime() - pastDate.getTime()) / (1000 * 60 * 60 * 24);
+
+      if (daysBetween > 30) {
+        const periodYears = daysBetween / 365.25;
+        period.annualized =
+          (Math.pow(current.ahps / past.ahps, 1 / periodYears) - 1) * 100;
+      }
+    }
+  }
+
+  // Backwards-compatible 90d fields
+  const p90 = periods[90];
+
   return {
     currentAhps: current.ahps,
-    ahpsGrowth90d,
-    ahpsGrowth90dAnnualized,
+    ahpsGrowth90d: p90?.growth ?? null,
+    ahpsGrowth90dAnnualized: p90?.annualized ?? null,
+    periods,
     method,
     usesAdjustedShares: current.adjusted,
     basicShares,

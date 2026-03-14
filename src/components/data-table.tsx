@@ -237,6 +237,7 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
       company: ahpsCompany,
       history: ahpsHistory,
       currentStockPrice: stockPrice,
+      lookbackDays: [90, 365],
     });
 
     // Adjust debt for ITM convertibles (same as mNAV calculation)
@@ -351,6 +352,7 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
       currentHps: company.holdings > 0 && company.sharesForMnav ? company.holdings / company.sharesForMnav : null,
       currentAhps: ahpsMetrics.currentAhps,
       ahpsGrowth90d: ahpsMetrics.ahpsGrowth90d,
+      ahpsGrowth1y: ahpsMetrics.periods[365]?.growth ?? null,
       ahpsMethod: ahpsMetrics.method,
     };
   });
@@ -432,6 +434,10 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
       case "hpsGrowth90d":
         aVal = a.ahpsGrowth90d ?? Number.NEGATIVE_INFINITY;
         bVal = b.ahpsGrowth90d ?? Number.NEGATIVE_INFINITY;
+        break;
+      case "hpsGrowth1y":
+        aVal = a.ahpsGrowth1y ?? Number.NEGATIVE_INFINITY;
+        bVal = b.ahpsGrowth1y ?? Number.NEGATIVE_INFINITY;
         break;
       case "holdingsValue":
         // When prices haven't loaded, sort by ticker alphabetically for stability
@@ -782,11 +788,13 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
           )}
         </div>
         <div>
-          <p className="text-xs text-gray-500 uppercase">{isSizeView ? "mNAV" : "Treasury"}</p>
+          <p className="text-xs text-gray-500 uppercase">{isSizeView ? "mNAV" : "AHPS 1Y"}</p>
           {isSizeView ? (
             <p className="font-semibold text-gray-900 dark:text-gray-100">{company.pendingMerger ? "—" : `${company.mNAV.toFixed(2)}x`}</p>
           ) : (
-            <p className="font-semibold text-gray-900 dark:text-gray-100">{formatCompactUsd(company.holdingsValue)}</p>
+            <p className={cn("font-semibold", getGrowthColor(company.ahpsGrowth1y))}>
+              {formatGrowthPct(company.ahpsGrowth1y)}
+            </p>
           )}
         </div>
         <div>
@@ -964,8 +972,16 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                       <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("hpsGrowth90d")}>
                         <TooltipProvider>
                           <Tooltip>
-                            <TooltipTrigger className="cursor-help">AHPS Growth (90D) {sortIndicator("hpsGrowth90d")}</TooltipTrigger>
+                            <TooltipTrigger className="cursor-help">AHPS 90D {sortIndicator("hpsGrowth90d")}</TooltipTrigger>
                             <TooltipContent><p className="text-sm">Adjusted Holdings Per Share growth over 90 days — measures crypto accretion per share after dilution.</p></TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </TableHead>
+                      <TableHead className="text-right cursor-pointer hover:text-gray-900 dark:hover:text-gray-100" onClick={() => handleSort("hpsGrowth1y")}>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger className="cursor-help">AHPS 1Y {sortIndicator("hpsGrowth1y")}</TooltipTrigger>
+                            <TooltipContent><p className="text-sm">Adjusted Holdings Per Share growth over 1 year — long-term crypto accretion per share after dilution.</p></TooltipContent>
                           </Tooltip>
                         </TooltipProvider>
                       </TableHead>
@@ -1189,6 +1205,11 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
                           <TableCell className="text-right font-mono">
                             <span className={cn("font-semibold", getGrowthColor(company.ahpsGrowth90d))}>
                               {formatGrowthPct(company.ahpsGrowth90d)}
+                            </span>
+                          </TableCell>
+                          <TableCell className="text-right font-mono">
+                            <span className={cn("font-semibold", getGrowthColor(company.ahpsGrowth1y))}>
+                              {formatGrowthPct(company.ahpsGrowth1y)}
                             </span>
                           </TableCell>
                           <TableCell className="text-right font-mono text-sm">

@@ -4252,7 +4252,7 @@ function interpolateHoldingsPerShare(
 }
 
 // Get treasury yield for a specific calendar quarter
-// Uses interpolation to normalize all companies to exact quarter boundaries
+// Finds snapshots bracketing the quarter boundaries to compute HPS growth
 export function getQuarterlyYieldLeaderboard(options?: {
   quarter?: CalendarQuarter;
   asset?: Asset;
@@ -4260,6 +4260,8 @@ export function getQuarterlyYieldLeaderboard(options?: {
 }): TreasuryYieldMetrics[] {
   const { quarter = getAvailableQuarters()[0], asset, actionsByTicker } = options || {};
   const metrics: TreasuryYieldMetrics[] = [];
+
+  const { start: qStart, end: qEnd } = getQuarterBounds(quarter);
 
   for (const [ticker, data] of Object.entries(HOLDINGS_HISTORY)) {
     if (data.history.length < 2) continue;
@@ -4270,25 +4272,33 @@ export function getQuarterlyYieldLeaderboard(options?: {
     if (asset && company.asset !== asset) continue;
 
     const history = data.history;
-
-    // SIMPLIFIED: Use the two most recent data points for yield calculation
-    // This ensures we get yield data for all companies with 2+ snapshots
-    const latest = history[history.length - 1];
-    const previous = history[history.length - 2];
-
     const actions = actionsByTicker?.[ticker] || [];
 
+    // Find snapshot on or before quarter start (baseline)
+    const startSnapshot = findSnapshotOnOrBefore(history, qStart, {
+      getDate: (s) => s.date,
+    });
+
+    // Find snapshot on or before quarter end (result)
+    const endSnapshot = findSnapshotOnOrBefore(history, qEnd, {
+      getDate: (s) => s.date,
+    });
+
+    // Need both snapshots, and they must be different entries
+    if (!startSnapshot || !endSnapshot) continue;
+    if (startSnapshot.date === endSnapshot.date) continue;
+
     const startValue = holdingsPerShareCurrentBasis({
-      holdings: previous.holdings,
-      sharesOutstanding: previous.sharesOutstanding,
-      asOf: previous.date,
+      holdings: startSnapshot.holdings,
+      sharesOutstanding: startSnapshot.sharesOutstanding,
+      asOf: startSnapshot.date,
       actions,
     });
 
     const endValue = holdingsPerShareCurrentBasis({
-      holdings: latest.holdings,
-      sharesOutstanding: latest.sharesOutstanding,
-      asOf: latest.date,
+      holdings: endSnapshot.holdings,
+      sharesOutstanding: endSnapshot.sharesOutstanding,
+      asOf: endSnapshot.date,
       actions,
     });
 
@@ -4296,14 +4306,14 @@ export function getQuarterlyYieldLeaderboard(options?: {
     if (!startValue || startValue <= 0) continue;
     if (!endValue || endValue <= 0) continue;
 
-    // Calculate period covered by the two data points
-    const startDate = new Date(previous.date);
-    const endDate = new Date(latest.date);
+    // Calculate period covered
+    const startDate = new Date(startSnapshot.date);
+    const endDate = new Date(endSnapshot.date);
     const daysCovered = Math.floor((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
-    
+
     // Skip if data points are too close together (less than 7 days)
     if (daysCovered < 7) continue;
-    
+
     const growthPct = ((endValue / startValue) - 1) * 100;
 
     // Annualized growth if period is significant (30+ days)
@@ -4322,8 +4332,8 @@ export function getQuarterlyYieldLeaderboard(options?: {
       holdingsPerShareEnd: endValue,
       growthPct,
       annualizedGrowthPct,
-      startDate: previous.date,
-      endDate: latest.date,
+      startDate: startSnapshot.date,
+      endDate: endSnapshot.date,
       daysCovered,
     });
   }
