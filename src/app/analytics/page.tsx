@@ -114,16 +114,34 @@ function median(values: number[]): number | null {
   return sorted.length % 2 === 0 ? (sorted[mid - 1] + sorted[mid]) / 2 : sorted[mid];
 }
 
-// Use IQR-based bounds to handle outliers: clip axes at Q3 + 2×IQR
-function computeRobustBounds(values: number[]): { lo: number; hi: number } {
-  if (values.length < 4) return { lo: Math.min(0, ...values), hi: Math.max(1, ...values) };
-  const sorted = [...values].sort((a, b) => a - b);
-  const q1 = sorted[Math.floor(sorted.length * 0.25)];
-  const q3 = sorted[Math.floor(sorted.length * 0.75)];
-  const iqr = q3 - q1;
-  const lo = Math.min(0, q1 - 2 * iqr);
-  const hi = Math.max(q3 + 2 * iqr, q3 * 1.2);
-  return { lo, hi };
+// Auto-detect whether data needs log scale: if max/min ratio > 50, use log
+function needsLogScale(values: number[]): boolean {
+  const positive = values.filter(v => v > 0);
+  if (positive.length < 2) return false;
+  const min = Math.min(...positive);
+  const max = Math.max(...positive);
+  return max / min > 50;
+}
+
+// Map a value to 0-100 position using either log or linear scale
+function scaleValue(
+  val: number,
+  min: number,
+  max: number,
+  useLog: boolean,
+): number {
+  if (useLog) {
+    // Log scale for strictly positive data (treasury values, HPS)
+    const safeVal = Math.max(val, min);
+    const logMin = Math.log10(Math.max(min, 1e-10));
+    const logMax = Math.log10(Math.max(max, 1e-9));
+    const logRange = logMax - logMin || 1;
+    return ((Math.log10(safeVal) - logMin) / logRange) * 100;
+  }
+  // Linear scale with 10% padding
+  const range = max - min || 1;
+  const padded = range * 0.1;
+  return ((val - (min - padded)) / (range + 2 * padded)) * 100;
 }
 
 function ScatterCard({
@@ -149,13 +167,16 @@ function ScatterCard({
 }) {
   const filtered = points.filter((point) => xAccessor(point) !== null && yAccessor(point) !== null) as ChartPoint[];
 
-  // Use IQR-based bounds to prevent outliers from compressing the chart
   const xValues = filtered.map((point) => xAccessor(point) ?? 0);
   const yValues = filtered.map((point) => yAccessor(point) ?? 0);
-  const xBounds = computeRobustBounds(xValues);
-  const yBounds = computeRobustBounds(yValues);
-  const xRange = Math.max(1, xBounds.hi - xBounds.lo);
-  const yRange = Math.max(1, yBounds.hi - yBounds.lo);
+  const xLog = needsLogScale(xValues);
+  const yLog = needsLogScale(yValues);
+  const positiveX = xValues.filter(v => v > 0);
+  const positiveY = yValues.filter(v => v > 0);
+  const xMin = xLog ? Math.min(...positiveX) : Math.min(...xValues);
+  const xMax = Math.max(...xValues);
+  const yMin = yLog ? Math.min(...positiveY) : Math.min(...yValues);
+  const yMax = Math.max(...yValues);
 
   const maxSize = Math.max(1, ...filtered.map((point) => sizeAccessor(point)));
   const labelTickers = new Set(
@@ -182,13 +203,13 @@ function ScatterCard({
         </div>
         <div className="absolute inset-0 overflow-hidden px-4 pb-10 pt-6 sm:px-8 sm:pb-12">
           {filtered.map((point) => {
-            // Clamp to bounds — outliers pin to the edge
             const rawX = xAccessor(point) ?? 0;
             const rawY = yAccessor(point) ?? 0;
-            const x = Math.max(0, Math.min(100, ((rawX - xBounds.lo) / xRange) * 100));
-            const y = Math.max(0, Math.min(100, 100 - ((rawY - yBounds.lo) / yRange) * 100));
+            // Skip points with non-positive values on log axes
+            if ((xLog && rawX <= 0) || (yLog && rawY <= 0)) return null;
+            const x = Math.max(2, Math.min(98, scaleValue(rawX, xMin, xMax, xLog)));
+            const y = Math.max(2, Math.min(98, 100 - scaleValue(rawY, yMin, yMax, yLog)));
             const radius = 8 + Math.log10(Math.max(1, sizeAccessor(point))) / Math.log10(Math.max(10, maxSize)) * 14;
-            const isOutlier = rawX > xBounds.hi || rawX < xBounds.lo || rawY > yBounds.hi || rawY < yBounds.lo;
             // Tooltip: flip direction when near edges
             const tooltipAbove = y > 30;
             const tooltipLeft = x > 75;
@@ -212,7 +233,6 @@ function ScatterCard({
                 <span
                   className={cn(
                     "block rounded-full border-2 shadow-sm transition-transform duration-150 group-hover:scale-110",
-                    isOutlier ? "opacity-60" : "",
                     assetDotColors[point.asset] || assetDotColors.BTC
                   )}
                   style={{ width: `${radius}px`, height: `${radius}px` }}
