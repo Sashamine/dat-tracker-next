@@ -136,7 +136,6 @@ export function TreasuryYieldLeaderboard({
                 <TableHead className="w-12 text-center">#</TableHead>
                 <TableHead>Company</TableHead>
                 <TableHead className="text-right">AHPS Growth</TableHead>
-                <TableHead className="text-right hidden sm:table-cell">Data Period</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -173,22 +172,6 @@ export function TreasuryYieldLeaderboard({
                       {item.growthPct >= 0 ? "+" : ""}
                       {item.growthPct.toFixed(1)}%
                     </span>
-                    {item.annualizedGrowthPct !== undefined && (
-                      <div className="text-xs text-gray-400">
-                        {item.annualizedGrowthPct >= 0 ? "+" : ""}
-                        {item.annualizedGrowthPct.toFixed(0)}% ann.
-                      </div>
-                    )}
-                  </TableCell>
-                  <TableCell className="text-right hidden sm:table-cell">
-                    <div className="text-xs text-gray-500">
-                      {new Date(item.startDate).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-                      {" → "}
-                      {new Date(item.endDate).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
-                    </div>
-                    <div className="text-xs text-gray-400">
-                      {item.daysCovered}d
-                    </div>
                   </TableCell>
                 </TableRow>
               ))}
