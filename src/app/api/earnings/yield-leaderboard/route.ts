@@ -132,8 +132,12 @@ export async function GET(request: Request) {
 
     for (const [ticker, snapshotsByDate] of byTicker) {
       const company = companyByTicker.get(ticker.toUpperCase());
-      if (!company) continue;
-      if (asset && company.asset !== asset) continue;
+      // For tickers in D1 but not in companies.ts (e.g. removed miners),
+      // derive name and asset from the D1 data itself
+      const firstRow = snapshotsByDate.values().next().value;
+      const companyName = company?.name ?? ticker;
+      const companyAsset = company?.asset ?? (firstRow?.unit?.toUpperCase() || "BTC");
+      if (asset && companyAsset !== asset) continue;
 
       const snapshots = Array.from(snapshotsByDate.values()).sort((a, b) => a.as_of.localeCompare(b.as_of));
       if (snapshots.length < 2) continue;
@@ -192,9 +196,9 @@ export async function GET(request: Request) {
       }
 
       metrics.push({
-        ticker: company.ticker,
-        companyName: company.name,
-        asset: company.asset,
+        ticker: company?.ticker ?? ticker,
+        companyName,
+        asset: companyAsset as Asset,
         period: quarter,
         holdingsPerShareStart: startHps,
         holdingsPerShareEnd: endHps,
