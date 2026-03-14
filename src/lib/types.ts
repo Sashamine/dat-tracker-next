@@ -305,6 +305,7 @@ export interface Company {
   holdingsBasis?: HoldingsBasis;   // How holdings were resolved (native, USD÷price, static)
   d1HoldingsByAsset?: D1HoldingByAsset[]; // Optional per-asset holdings from D1 latest_datapoints.
   _d1Fields?: string[];            // Which balance-sheet fields were sourced from D1 (dev debug)
+  _d1Divergences?: Array<{ field: string; d1: number; static: number; pct: number }>; // D1 vs static divergences (>5%)
   _staticCashAsOf?: string;        // Original cashAsOf from companies.ts (D1 overlay can overwrite with carry-forward dates)
   confidenceScores?: Record<string, number | null>; // Confidence per metric (e.g., holdings_native)
   multiHoldings?: Record<string, number>; // asset -> amount (e.g., {"BTC": 100, "ETH": 500})

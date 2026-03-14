@@ -119,17 +119,20 @@ export function applyD1Overlay(
     // Holdings basis depends on which source won
     const holdingsBasis: HoldingsBasis = holdings.isD1 ? 'native_units' : 'static_fallback';
 
-    // Warn when D1 values diverge significantly from static (>50% = likely stale XBRL)
+    // Detect D1 vs static divergences. Any >5% divergence means one source is wrong.
+    const divergences: Array<{ field: string; d1: number; static: number; pct: number }> = [];
     const divergenceChecks: [string, number | undefined, number | undefined][] = [
       ['cashReserves', metrics.cash_usd, c.cashReserves],
       ['totalDebt', metrics.debt_usd, c.totalDebt],
       ['preferredEquity', metrics.preferred_equity_usd, c.preferredEquity],
       ['sharesForMnav', metrics.basic_shares, c.sharesForMnav],
+      ['holdings', metrics.holdings_native, c.holdings],
     ];
     for (const [field, d1Val, staticVal] of divergenceChecks) {
       if (d1Val != null && staticVal != null && staticVal > 0 && d1Val > 0) {
         const pct = Math.abs((d1Val - staticVal) / staticVal) * 100;
-        if (pct > 50) {
+        if (pct > 5) {
+          divergences.push({ field, d1: d1Val, static: staticVal, pct: Math.round(pct) });
           console.warn(`[d1-overlay] ${c.ticker}.${field}: D1=${d1Val} vs static=${staticVal} (${pct.toFixed(0)}% divergence)`);
         }
       }
@@ -171,6 +174,7 @@ export function applyD1Overlay(
         : {}),
       // Overlay metadata (typed on Company interface)
       _d1Fields: d1Fields.length > 0 ? d1Fields : undefined,
+      _d1Divergences: divergences.length > 0 ? divergences : undefined,
       holdingsBasis,
     };
 
