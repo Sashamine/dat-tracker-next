@@ -138,13 +138,18 @@ export async function GET(request: Request) {
       const snapshots = Array.from(snapshotsByDate.values()).sort((a, b) => a.as_of.localeCompare(b.as_of));
       if (snapshots.length < 2) continue;
 
-      // Find snapshot on or before quarter start and end
-      // Use carry-forward (no maxLagDays) — if a company's data hasn't changed since
-      // before the quarter, that IS the baseline state entering the quarter.
+      // Find snapshot on or before quarter start (carry-forward, no limit).
+      // If a company's data hasn't changed since before the quarter,
+      // that IS the baseline state entering the quarter.
       const startSnapshot = findSnapshotOnOrBefore(snapshots, qStart, {
         getDate: (s) => s.as_of,
       });
-      const endSnapshot = findSnapshotOnOrBefore(snapshots, qEnd, {
+
+      // For the end snapshot, extend 45 days past quarter end.
+      // Q4 results are often dated/reported in January. A company's Dec 31
+      // holdings might appear as a Jan 5 snapshot. Allow that.
+      const endSearchDate = new Date(qEnd.getTime() + 45 * 86400000);
+      const endSnapshot = findSnapshotOnOrBefore(snapshots, endSearchDate, {
         getDate: (s) => s.as_of,
       });
 
