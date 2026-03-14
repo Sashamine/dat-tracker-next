@@ -4355,13 +4355,17 @@ export function getQuarterlyYieldLeaderboard(options?: {
     const actions = actionsByTicker?.[ticker] || [];
 
     // Find snapshot on or before quarter start (baseline)
+    // Allow up to 45 days grace so the start snapshot is near the quarter boundary
     const startSnapshot = findSnapshotOnOrBefore(history, qStart, {
       getDate: (s) => s.date,
+      maxLagDays: 45,
     });
 
     // Find snapshot on or before quarter end (result)
+    // Allow up to 45 days grace so the end snapshot is near the quarter boundary
     const endSnapshot = findSnapshotOnOrBefore(history, qEnd, {
       getDate: (s) => s.date,
+      maxLagDays: 45,
     });
 
     // Need both snapshots, and they must be different entries

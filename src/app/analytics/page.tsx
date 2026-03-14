@@ -15,7 +15,6 @@ import { getCompanyMNAV } from "@/lib/math/mnav-engine";
 import { useMNAVStats } from "@/lib/hooks/use-mnav-stats";
 import { getCompanyAhpsMetrics, type AhpsHistoryEntry } from "@/lib/utils/ahps";
 import { getMarketCapForMnavSync } from "@/lib/utils/market-cap";
-import { getHoldingsGrowthByPeriod } from "@/lib/data/earnings-data";
 import { MNAV_HISTORY } from "@/lib/data/mnav-history-calculated";
 import { cn } from "@/lib/utils";
 import { TreasuryYieldLeaderboard } from "@/components/earnings/treasury-yield-leaderboard";
@@ -204,8 +203,8 @@ function ScatterCard({
             );
           })}
         </div>
-        <div className="pointer-events-none absolute bottom-2 left-3 text-[11px] text-gray-500 dark:text-gray-400">{yLabel}</div>
-        <div className="pointer-events-none absolute bottom-2 right-3 text-[11px] text-gray-500 dark:text-gray-400">{xLabel}</div>
+        <div className="pointer-events-none absolute left-1 top-1/2 -translate-y-1/2 -rotate-90 origin-center text-[11px] font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap">{yLabel} →</div>
+        <div className="pointer-events-none absolute bottom-1 left-1/2 -translate-x-1/2 text-[11px] font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap">{xLabel} →</div>
       </div>
     </div>
   );
@@ -499,43 +498,89 @@ function AnalyticsContent() {
   const treasuries = useMemo(() => companies.filter((company) => !company.isMiner), [companies]);
   const mnavStats = useMNAVStats(treasuries, prices ?? null);
 
+  const { data: ahpsData } = useSWR<{ success: boolean; results: HpsGrowthApiRow[] }>(
+    "/api/d1/hps-growth",
+    fetcher,
+    { revalidateOnFocus: false }
+  );
+
   const growthStats = useMemo(() => {
-    const daysMap: Record<GrowthPeriod, number | undefined> = {
-      "30d": 30,
-      "90d": 90,
-      "1y": 365,
-      "all": undefined,
+    // Use D1 API data (ahpsData) which has much better coverage than static HOLDINGS_HISTORY
+    const rows = ahpsData?.results || [];
+    const treasuryTickers = new Set(treasuries.map((company) => company.ticker.toUpperCase()));
+
+    // Map growth period to the right snapshot field
+    const snapshotKey: Record<GrowthPeriod, "snapshot30d" | "snapshot90d" | "snapshot1y" | null> = {
+      "30d": "snapshot30d",
+      "90d": "snapshot90d",
+      "1y": "snapshot1y",
+      "all": null,
     };
-    const days = daysMap[growthPeriod];
-    const assetFilter = selectedAsset === "ALL" || selectedAsset === "OTHER"
-      ? undefined
-      : selectedAsset as "BTC" | "ETH" | "SOL" | "HYPE" | "TAO";
+    const key = snapshotKey[growthPeriod];
 
-    let allGrowthData = getHoldingsGrowthByPeriod({ days, asset: assetFilter });
+    type GrowthEntry = { ticker: string; asset: string; name: string; growthPct: number };
+    const entries: GrowthEntry[] = [];
 
-    if (selectedAsset === "OTHER") {
-      const mainAssets = ["BTC", "ETH", "SOL", "HYPE", "TAO"];
-      allGrowthData = allGrowthData.filter((metric) => !mainAssets.includes(metric.asset));
+    for (const row of rows) {
+      const upperTicker = row.ticker.toUpperCase();
+      if (!treasuryTickers.has(upperTicker)) continue;
+
+      const company = treasuries.find((c) => c.ticker.toUpperCase() === upperTicker);
+      if (!company) continue;
+
+      // Apply asset filter
+      if (selectedAsset !== "ALL" && selectedAsset !== "OTHER" && company.asset !== selectedAsset) continue;
+      if (selectedAsset === "OTHER") {
+        const mainAssets = ["BTC", "ETH", "SOL", "HYPE", "TAO"];
+        if (mainAssets.includes(company.asset)) continue;
+      }
+
+      const endHps = row.currentSnapshot?.holdingsPerShare;
+      let startHps: number | undefined;
+
+      if (key) {
+        startHps = row[key]?.holdingsPerShare;
+      } else {
+        // "all" period: use first history entry
+        const firstEntry = row.history?.[0];
+        startHps = firstEntry?.holdingsPerShare;
+      }
+
+      if (!startHps || startHps <= 0 || !endHps || endHps <= 0) continue;
+
+      const growthPct = ((endHps / startHps) - 1) * 100;
+      if (!Number.isFinite(growthPct)) continue;
+
+      entries.push({ ticker: row.ticker, asset: company.asset, name: company.name, growthPct });
     }
 
-    const treasuryTickers = new Set(treasuries.map((company) => company.ticker));
-    const leaderboard = allGrowthData.filter((metric) => treasuryTickers.has(metric.ticker));
-    const companiesWithData = new Set(leaderboard.map((metric) => metric.ticker));
-    const insufficientData = treasuries.filter((company) => !companiesWithData.has(company.ticker)).length;
+    // Count companies in filter that lack data
+    let filteredTreasuries = treasuries;
+    if (selectedAsset !== "ALL" && selectedAsset !== "OTHER") {
+      filteredTreasuries = treasuries.filter((c) => c.asset === selectedAsset);
+    } else if (selectedAsset === "OTHER") {
+      const mainAssets = ["BTC", "ETH", "SOL", "HYPE", "TAO"];
+      filteredTreasuries = treasuries.filter((c) => !mainAssets.includes(c.asset));
+    }
+    const companiesWithData = new Set(entries.map((e) => e.ticker.toUpperCase()));
+    const insufficientData = filteredTreasuries.filter((c) => !companiesWithData.has(c.ticker.toUpperCase())).length;
 
-    if (leaderboard.length === 0) {
+    if (entries.length === 0) {
       return {
         median: 0,
         average: 0,
         positiveCount: 0,
         totalCount: 0,
-        best: null as (typeof leaderboard)[number] | null,
-        worst: null as (typeof leaderboard)[number] | null,
+        best: null as GrowthEntry | null,
+        worst: null as GrowthEntry | null,
         insufficientData,
       };
     }
 
-    const growths = leaderboard.map((metric) => metric.growthPct);
+    // Sort by growth descending
+    entries.sort((a, b) => b.growthPct - a.growthPct);
+
+    const growths = entries.map((e) => e.growthPct);
     const sortedGrowths = [...growths].sort((a, b) => a - b);
     const mid = Math.floor(sortedGrowths.length / 2);
     const medianGrowth = sortedGrowths.length % 2
@@ -547,18 +592,12 @@ function AnalyticsContent() {
       median: medianGrowth,
       average: averageGrowth,
       positiveCount: growths.filter((value) => value > 0).length,
-      totalCount: leaderboard.length,
-      best: leaderboard[0],
-      worst: leaderboard[leaderboard.length - 1],
+      totalCount: entries.length,
+      best: entries[0],
+      worst: entries[entries.length - 1],
       insufficientData,
     };
-  }, [growthPeriod, selectedAsset, treasuries]);
-
-  const { data: ahpsData } = useSWR<{ success: boolean; results: HpsGrowthApiRow[] }>(
-    "/api/d1/hps-growth",
-    fetcher,
-    { revalidateOnFocus: false }
-  );
+  }, [growthPeriod, selectedAsset, treasuries, ahpsData]);
 
   const points = useMemo<ChartPoint[]>(() => {
     const ahpsByTicker = new Map((ahpsData?.results || []).map((row) => [row.ticker.toUpperCase(), row]));
