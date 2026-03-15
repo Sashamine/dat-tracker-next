@@ -409,13 +409,7 @@ export default function CompanyPage() {
     : undefined;
   const ahpsMetrics = getCompanyAhpsMetrics({
     ticker: displayCompany.ticker,
-    company: ahpsRow
-      ? {
-          ...displayCompany,
-          holdings: ahpsRow.currentSnapshot.holdings,
-          holdingsLastUpdated: ahpsRow.currentSnapshot.date,
-        }
-      : displayCompany,
+    company: displayCompany,
     history: ahpsHistory,
     currentStockPrice: stockPrice,
   });

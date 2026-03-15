@@ -210,7 +210,7 @@ export function CompanyViewBase({ company, className = "", config }: { company: 
     })) || [];
     const ahps = getCompanyAhpsMetrics({
       ticker: config.ticker,
-      company: { ...company, holdings: row.currentSnapshot.holdings, holdingsLastUpdated: row.currentSnapshot.date },
+      company,
       history,
       currentStockPrice: stockPrice || undefined,
     });
