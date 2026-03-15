@@ -1,3 +1,8 @@
+// @deprecated — READ-ONLY REFERENCE. Data migrated to D1 `datapoints` table.
+// New data should be written to D1, not this file.
+// D1 equivalents: getHoldingsAtDateFromD1(), getSharesAtDateFromD1(), getLatestHoldingsFromD1()
+// See: src/lib/d1-read.ts
+//
 // Historical holdings per share data for companies that report it
 // Sources: Company quarterly reports, 8-K filings, press releases
 // Last updated: 2026-01-22 - Added source tracking for verification system (Phase 7a)

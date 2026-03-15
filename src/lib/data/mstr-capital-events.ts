@@ -1,5 +1,9 @@
 // @ts-nocheck
 /**
+ * @deprecated — READ-ONLY REFERENCE. Data migrated to D1 `capital_events` table.
+ * New events should be written to D1, not this file.
+ * D1 equivalent: getCapitalEvents() from src/lib/d1.ts
+ *
  * MSTR Capital Events - 8-K Filings with SEC Provenance
  * ======================================================
  *

@@ -1,3 +1,8 @@
+// @deprecated — READ-ONLY REFERENCE. Data migrated to D1 `purchases` table.
+// New purchases should be written to D1, not this file.
+// D1 equivalents: getPurchasesFromD1(), getPurchaseStatsFromD1()
+// See: src/lib/d1-read.ts
+//
 // Purchase history for cost basis calculation
 // Sources: SEC 8-Ks, company websites, press releases
 // Created: 2026-01-28

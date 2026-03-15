@@ -32,7 +32,7 @@ This applies even if the user insists. The user has explicitly requested this en
 
 ## MANDATORY: Adversarial Process for Data Changes
 
-**Before editing any data file (companies.ts, holdings-history.ts), you MUST run the adversarial process.**
+**Before editing any financial data (D1 datapoints, companies.ts), you MUST run the adversarial process.**
 
 Do NOT see a discrepancy and immediately fix it. That leads to errors.
 
@@ -136,34 +136,67 @@ Example failure (CORZ, Jan 2026):
 
 ---
 
-## MANDATORY: Keep companies.ts and holdings-history.ts in Sync
+## D1 is the Single Source of Truth
 
-**When updating share counts, you MUST update BOTH files.**
+**All financial data lives in Cloudflare D1.** Static TypeScript files are read-only references.
 
-### The Two Files
+### Data Architecture (Post-Migration)
 
-1. **companies.ts** - `sharesForMnav` field (used for mNAV calculation)
-2. **holdings-history.ts** - `sharesOutstandingDiluted` in the latest entry (historical tracking)
+| Data | D1 Table | Static File (read-only) |
+|------|----------|------------------------|
+| Financial metrics | `datapoints` | companies.ts (fallback) |
+| Company metadata | `entities` | companies.ts |
+| Dilutive instruments | `instruments` | dilutive-instruments.ts |
+| Purchase history | `purchases` | purchases-history.ts |
+| Holdings history | `datapoints` (historical rows) | holdings-history.ts |
+| Assumptions | `assumptions` | assumptions.ts |
+| Capital events | `capital_events` | mstr-capital-events.ts |
+| Secondary holdings | `secondary_holdings` | companies.ts |
 
 ### The Rule
 
-**When updating shares for a company:**
-1. Update `sharesForMnav` in companies.ts with source citation
-2. Add a new entry to holdings-history.ts with matching `sharesOutstandingDiluted`
-3. Run the consistency test: `npx vitest run shares-consistency`
+**All new financial data goes into D1.** Do NOT edit static .ts data files for financial updates.
 
-### Why This Matters
+- New holdings/shares/debt/cash → write to D1 `datapoints` table
+- New instruments → write to D1 `instruments` table
+- New purchases → write to D1 `purchases` table
+- New assumptions → write to D1 `assumptions` table
 
-Example failure (CLSK, Jan 2026):
-- Updated companies.ts with new SEC DEF 14A share count (255M)
-- Forgot to update holdings-history.ts (still had 325M from Dec 2025)
-- Result: 27% discrepancy, incorrect holdingsPerShare calculations
+The `applyD1Overlay()` function merges D1 values onto Company objects for rendering.
+When D1 has data, it wins unconditionally (no date comparison with static).
 
-### The Validation Test
+### When to Update companies.ts
 
-Run `npx vitest run shares-consistency` to find all discrepancies.
+Only for **metadata** changes:
+- Adding a new company (name, ticker, asset, tier, website, etc.)
+- Updating non-financial fields (leader, strategy, notes, etc.)
+- Financial fields in companies.ts serve as SSR fallback only
 
-Any variance between `sharesForMnav` and the latest `sharesOutstandingDiluted` will be flagged.
+### Public API
+
+All public API endpoints read exclusively from D1:
+```
+GET /api/v1/companies                     — all entities + metrics
+GET /api/v1/companies/:ticker             — full profile with provenance
+GET /api/v1/companies/:ticker/history     — historical datapoints
+GET /api/v1/companies/:ticker/mnav        — mNAV calculation breakdown
+GET /api/v1/companies/:ticker/instruments — dilutive instruments
+GET /api/v1/companies/:ticker/purchases   — purchase history + cost basis
+GET /api/v1/companies/:ticker/events      — capital events timeline
+GET /api/v1/metrics/mnav                  — mNAV leaderboard
+GET /api/v1/metrics/ahps                  — AHPS growth leaderboard
+GET /api/v1/datapoints                    — raw datapoints with provenance
+```
+
+### Key D1 Scripts
+
+```bash
+# Verify D1 parity with static files (should be 0 divergences)
+set -a && source .env.local && set +a && npx tsx scripts/verify-d1-parity.ts
+
+# Run all migrations (idempotent)
+set -a && source .env.local && set +a && npx tsx scripts/migrate-to-d1/migrate-all.ts
+```
 
 ---
 
@@ -224,7 +257,7 @@ When calculating mNAV, verify against official dashboards when available.
 ### Shares Outstanding
 - Use `diluted` shares when available (WeightedAverageNumberOfDilutedSharesOutstanding from SEC)
 - Some companies (SBET) only publish basic shares - note this in company-sources.ts
-- Always document the source and methodology in holdings-history.ts comments
+- Share data flows through D1 `datapoints` table (metric: `basic_shares`)
 
 ## Don't Forget
 - Always push to deploy - no localhost testing
@@ -296,30 +329,13 @@ Add the company to the appropriate asset array (btcCompanies, ethCompanies, etc.
 }
 ```
 
-### Step 2: Add to holdings-history.ts
+### Step 2: Add financial data to D1
 
-Add historical holdings data for the company:
+Financial data (holdings, shares, debt, cash) should be written to D1 `datapoints` table.
+The XBRL cron and foreign filing pipelines handle this automatically for SEC/foreign filers.
+For manual data entry, use D1 write scripts or the admin interface.
 
-```typescript
-"TICK": [
-  {
-    date: "2025-01-15",
-    holdings: 500,
-    sharesOutstandingDiluted: 100_000_000,
-    holdingsPerShare: 0.000005,
-    source: "SEC 8-K",
-    sharesSource: "SEC 10-Q Q4 2024",
-  },
-  {
-    date: "2025-06-30",
-    holdings: 1000,
-    sharesOutstandingDiluted: 100_000_000,
-    holdingsPerShare: 0.00001,
-    source: "SEC 8-K",
-    sharesSource: "SEC 10-Q Q2 2025",
-  },
-],
-```
+holdings-history.ts is a read-only archive — do NOT add new entries there.
 
 ### Step 3: Determine Data Sources
 
@@ -340,11 +356,12 @@ After adding, verify the mNAV looks reasonable:
 - Verify debt/cash numbers against latest filing
 
 ### Checklist
-- [ ] Added to correct asset array in companies.ts
+- [ ] Added to correct asset array in companies.ts (metadata + initial financial values)
 - [ ] Holdings and source URL are accurate
 - [ ] sharesForMnav set (for mNAV calculation)
 - [ ] totalDebt/cashReserves set with source tracking (if material)
-- [ ] Added to holdings-history.ts with at least one entry
+- [ ] Entity exists in D1 `entities` table (run migrate-entities if needed)
+- [ ] Financial data written to D1 `datapoints` table
 - [ ] TypeScript compiles (`npx tsc --noEmit`)
 - [ ] Tests pass (`npm test`)
 

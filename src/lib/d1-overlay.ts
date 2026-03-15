@@ -12,49 +12,6 @@ export type D1MetricSearchTermMap = Record<string, Record<string, string | null>
 export type D1MetricAccessionMap = Record<string, Record<string, string | null>>; // ticker -> metric -> artifact accession
 
 /**
- * Pick the most recent value by comparing as_of dates.
- * When both D1 and static have values and dates, the newer one wins.
- * Falls back to D1-first when dates are missing (legacy behavior).
- */
-function pickNewest(
-  d1Val: number | undefined,
-  d1Date: string | null | undefined,
-  staticVal: number | undefined,
-  staticDate: string | null | undefined,
-): { value: number | undefined; isD1: boolean } {
-  const hasD1 = d1Val != null;
-  const hasStatic = staticVal != null;
-
-  if (!hasD1) return { value: staticVal, isD1: false };
-  if (!hasStatic) return { value: d1Val, isD1: true };
-
-  // Both have values — compare dates if available
-  if (d1Date && staticDate && staticDate > d1Date) {
-    return { value: staticVal, isD1: false };
-  }
-
-  // D1 wins by default (dates equal, missing, or D1 is newer)
-  return { value: d1Val, isD1: true };
-}
-
-/**
- * Overlays D1 latest-metrics values onto enriched Company objects.
- * Date-aware: when both D1 and static have values with dates, the more
- * recent one wins. Falls back to D1-first when dates are unavailable.
- *
- * Holdings precedence (matches company detail page):
- *   1. holdings_native (unit: BTC/ETH/etc) — preferred; USD derived downstream via live price
- *   2. bitcoin_holdings_usd ÷ live price  — NOT applied here (overlay has no price context)
- *   3. companies.ts static value           — automatic fallback when D1 fields are absent
- *
- * The USD÷price fallback (step 2) is only used on the company detail page where
- * live prices are in scope.  Overview pages skip it because getCompanyMNAV()
- * already multiplies company.holdings × live price, so setting the native count
- * is sufficient.
- *
- * Returns companies unchanged if d1 is null (graceful fallback).
- */
-/**
  * Build a filing viewer URL from ticker + accession when available.
  * Falls back to the artifact's source_url.
  */
@@ -63,13 +20,25 @@ function buildSourceUrl(
   sourceUrl: string | null | undefined,
   accession: string | null | undefined,
 ): string | null {
-  // If we have an accession, prefer the internal filing viewer (supports ?q= deep linking)
   if (accession) {
     return `/filings/${ticker.toLowerCase()}/${accession}`;
   }
   return sourceUrl ?? null;
 }
 
+/**
+ * Overlays D1 latest-metrics values onto enriched Company objects.
+ *
+ * D1 is the single source of truth (Phase 4). When D1 has a value for a field,
+ * it wins unconditionally. Static values from companies.ts serve only as
+ * fallback when D1 has no data for a given metric.
+ *
+ * Holdings precedence:
+ *   1. holdings_native (unit: BTC/ETH/etc) — preferred; USD derived downstream via live price
+ *   2. companies.ts static value — fallback when D1 field is absent
+ *
+ * Returns companies unchanged if d1 is null (graceful fallback when D1 API is unavailable).
+ */
 export function applyD1Overlay(
   companies: Company[],
   d1: D1MetricMap | null,
@@ -90,50 +59,42 @@ export function applyD1Overlay(
     const accessionMap = accessions?.[c.ticker];
     if (!metrics) return c;
 
-    // Date-aware picks: use whichever source (D1 or static) is more recent
-    const debt = pickNewest(metrics.debt_usd, dateMap?.debt_usd, c.totalDebt, c.debtAsOf);
-    const cash = pickNewest(metrics.cash_usd, dateMap?.cash_usd, c.cashReserves, c.cashAsOf);
-    const pref = pickNewest(metrics.preferred_equity_usd, dateMap?.preferred_equity_usd, c.preferredEquity, c.preferredAsOf);
-    const sharesRaw = pickNewest(metrics.basic_shares, dateMap?.basic_shares, c.sharesForMnav, c.sharesAsOf);
-    // When D1 wins for shares, add back pre-funded warrant shares that are
-    // included in static sharesForMnav but missing from D1 basic_shares
-    // (D1 only tracks SEC XBRL CommonStockSharesOutstanding = common stock).
-    //
-    // Guard: if D1 basic_shares ≈ sharesForMnav (within 1%), D1 already
-    // includes PFW shares (backfill or non-XBRL source). Adding PFWs again
-    // would double-count. Skip the add-back and warn.
-    const pfwSharesRaw = sharesRaw.isD1 ? getBaseIncludedShares(c.ticker) : 0;
-    let pfwShares = pfwSharesRaw;
-    if (pfwSharesRaw > 0 && sharesRaw.isD1 && sharesRaw.value != null && c.sharesForMnav) {
-      const pctDiff = Math.abs((sharesRaw.value - c.sharesForMnav) / c.sharesForMnav) * 100;
-      if (pctDiff <= 1) {
-        console.warn(`[d1-overlay] ${c.ticker}: D1 basic_shares (${sharesRaw.value.toLocaleString()}) ≈ sharesForMnav (${c.sharesForMnav.toLocaleString()}) — skipping PFW add-back to avoid double-count`);
-        pfwShares = 0;
+    // D1 is primary — use D1 values when available, static as fallback
+    const hasD1Debt = metrics.debt_usd != null;
+    const hasD1Cash = metrics.cash_usd != null;
+    const hasD1Pref = metrics.preferred_equity_usd != null;
+    const hasD1Shares = metrics.basic_shares != null;
+    const hasD1Holdings = metrics.holdings_native != null && metrics.holdings_native > 0;
+
+    // Shares: when D1 provides basic_shares, add back pre-funded warrant shares
+    // that D1 doesn't track (D1 only has SEC XBRL CommonStockSharesOutstanding).
+    // Guard: if D1 basic_shares ≈ static sharesForMnav (within 1%), D1 already
+    // includes PFW shares — skip add-back to avoid double-count.
+    let sharesValue = hasD1Shares ? metrics.basic_shares : c.sharesForMnav;
+    const sharesIsD1 = hasD1Shares;
+    if (hasD1Shares) {
+      const pfwSharesRaw = getBaseIncludedShares(c.ticker);
+      if (pfwSharesRaw > 0 && c.sharesForMnav) {
+        const pctDiff = Math.abs((metrics.basic_shares - c.sharesForMnav) / c.sharesForMnav) * 100;
+        if (pctDiff <= 1) {
+          console.warn(`[d1-overlay] ${c.ticker}: D1 basic_shares (${metrics.basic_shares.toLocaleString()}) ≈ sharesForMnav (${c.sharesForMnav.toLocaleString()}) — skipping PFW add-back to avoid double-count`);
+        } else {
+          sharesValue = metrics.basic_shares + pfwSharesRaw;
+        }
       }
     }
-    const shares = pfwShares > 0
-      ? { value: (sharesRaw.value ?? 0) + pfwShares, isD1: true }
-      : sharesRaw;
-
-    // Holdings: D1 must be positive to override
-    const d1HoldingsNative = (metrics.holdings_native != null && metrics.holdings_native > 0)
-      ? metrics.holdings_native : undefined;
-    const holdings = pickNewest(d1HoldingsNative, dateMap?.holdings_native, c.holdings, c.holdingsLastUpdated);
 
     // Track which fields were sourced from D1 (dev-mode debug aid)
     const d1Fields: string[] = [];
-    if (debt.isD1) d1Fields.push('totalDebt');
-    if (cash.isD1) d1Fields.push('cashReserves');
-    if (pref.isD1) d1Fields.push('preferredEquity');
-    if (shares.isD1) d1Fields.push('sharesForMnav');
-    if (holdings.isD1) d1Fields.push('holdings');
+    if (hasD1Debt) d1Fields.push('totalDebt');
+    if (hasD1Cash) d1Fields.push('cashReserves');
+    if (hasD1Pref) d1Fields.push('preferredEquity');
+    if (sharesIsD1) d1Fields.push('sharesForMnav');
+    if (hasD1Holdings) d1Fields.push('holdings');
 
-    // Holdings basis depends on which source won
-    const holdingsBasis: HoldingsBasis = holdings.isD1 ? 'native_units' : 'static_fallback';
+    const holdingsBasis: HoldingsBasis = hasD1Holdings ? 'native_units' : 'static_fallback';
 
-    // Detect D1 vs static divergences. Any >5% divergence means one source is wrong.
-    // For shares: adjust static value by removing PFW shares, since D1 only reports
-    // XBRL CommonStockSharesOutstanding (basic common stock, no pre-funded warrants).
+    // Log D1 vs static divergences for monitoring (>5% = one source is wrong)
     const pfwSharesForCheck = getBaseIncludedShares(c.ticker);
     const staticSharesForCheck = (c.sharesForMnav || 0) - pfwSharesForCheck;
 
@@ -157,31 +118,30 @@ export function applyD1Overlay(
 
     const overlaid: Company = {
       ...c,
-      totalDebt:       debt.value ?? c.totalDebt,
-      cashReserves:    cash.value ?? c.cashReserves,
-      preferredEquity: pref.value ?? c.preferredEquity,
-      sharesForMnav:   shares.value ?? c.sharesForMnav,
-      sharesAsOf:      shares.isD1 ? (dateMap?.basic_shares ?? c.sharesAsOf) : c.sharesAsOf,
-      debtAsOf:        debt.isD1 ? (dateMap?.debt_usd ?? c.debtAsOf) : c.debtAsOf,
-      cashAsOf:        cash.isD1 ? (dateMap?.cash_usd ?? c.cashAsOf) : c.cashAsOf,
-      _staticCashAsOf: c.cashAsOf,  // Preserve original source date for staleness checks (D1 backfill can stamp carry-forward dates)
-      preferredAsOf:   pref.isD1 ? (dateMap?.preferred_equity_usd ?? c.preferredAsOf) : c.preferredAsOf,
-      // Prefer D1 receipt URLs and citation quotes where the metric was sourced from D1.
-      // When accession is available, build internal filing viewer URL for ?q= deep linking.
-      sharesSourceUrl:   shares.isD1 ? (buildSourceUrl(c.ticker, sourceMap?.basic_shares, accessionMap?.basic_shares) ?? c.sharesSourceUrl) : c.sharesSourceUrl,
-      sharesSourceQuote: shares.isD1 ? (quoteMap?.basic_shares ?? c.sharesSourceQuote) : c.sharesSourceQuote,
-      sharesSearchTerm:  shares.isD1 ? (searchTermMap?.basic_shares ?? c.sharesSearchTerm) : c.sharesSearchTerm,
-      debtSourceUrl:     debt.isD1 ? (buildSourceUrl(c.ticker, sourceMap?.debt_usd, accessionMap?.debt_usd) ?? c.debtSourceUrl) : c.debtSourceUrl,
-      debtSourceQuote:   debt.isD1 ? (quoteMap?.debt_usd ?? c.debtSourceQuote) : c.debtSourceQuote,
-      debtSearchTerm:    debt.isD1 ? (searchTermMap?.debt_usd ?? c.debtSearchTerm) : c.debtSearchTerm,
-      cashSourceUrl:     cash.isD1 ? (buildSourceUrl(c.ticker, sourceMap?.cash_usd, accessionMap?.cash_usd) ?? c.cashSourceUrl) : c.cashSourceUrl,
-      cashSourceQuote:   cash.isD1 ? (quoteMap?.cash_usd ?? c.cashSourceQuote) : c.cashSourceQuote,
-      cashSearchTerm:    cash.isD1 ? (searchTermMap?.cash_usd ?? c.cashSearchTerm) : c.cashSearchTerm,
-      preferredSourceUrl: pref.isD1 ? (buildSourceUrl(c.ticker, sourceMap?.preferred_equity_usd, accessionMap?.preferred_equity_usd) ?? c.preferredSourceUrl) : c.preferredSourceUrl,
-      preferredSourceQuote: pref.isD1 ? (quoteMap?.preferred_equity_usd ?? c.preferredSourceQuote) : c.preferredSourceQuote,
-      preferredSearchTerm: pref.isD1 ? (searchTermMap?.preferred_equity_usd ?? c.preferredSearchTerm) : c.preferredSearchTerm,
-      ...(holdings.isD1 ? { holdings: holdings.value } : {}),
-      ...(holdings.isD1
+      totalDebt:       hasD1Debt ? metrics.debt_usd : c.totalDebt,
+      cashReserves:    hasD1Cash ? metrics.cash_usd : c.cashReserves,
+      preferredEquity: hasD1Pref ? metrics.preferred_equity_usd : c.preferredEquity,
+      sharesForMnav:   sharesValue ?? c.sharesForMnav,
+      sharesAsOf:      sharesIsD1 ? (dateMap?.basic_shares ?? c.sharesAsOf) : c.sharesAsOf,
+      debtAsOf:        hasD1Debt ? (dateMap?.debt_usd ?? c.debtAsOf) : c.debtAsOf,
+      cashAsOf:        hasD1Cash ? (dateMap?.cash_usd ?? c.cashAsOf) : c.cashAsOf,
+      _staticCashAsOf: c.cashAsOf,
+      preferredAsOf:   hasD1Pref ? (dateMap?.preferred_equity_usd ?? c.preferredAsOf) : c.preferredAsOf,
+      // D1 citation chain (source URLs, quotes, search terms)
+      sharesSourceUrl:   sharesIsD1 ? (buildSourceUrl(c.ticker, sourceMap?.basic_shares, accessionMap?.basic_shares) ?? c.sharesSourceUrl) : c.sharesSourceUrl,
+      sharesSourceQuote: sharesIsD1 ? (quoteMap?.basic_shares ?? c.sharesSourceQuote) : c.sharesSourceQuote,
+      sharesSearchTerm:  sharesIsD1 ? (searchTermMap?.basic_shares ?? c.sharesSearchTerm) : c.sharesSearchTerm,
+      debtSourceUrl:     hasD1Debt ? (buildSourceUrl(c.ticker, sourceMap?.debt_usd, accessionMap?.debt_usd) ?? c.debtSourceUrl) : c.debtSourceUrl,
+      debtSourceQuote:   hasD1Debt ? (quoteMap?.debt_usd ?? c.debtSourceQuote) : c.debtSourceQuote,
+      debtSearchTerm:    hasD1Debt ? (searchTermMap?.debt_usd ?? c.debtSearchTerm) : c.debtSearchTerm,
+      cashSourceUrl:     hasD1Cash ? (buildSourceUrl(c.ticker, sourceMap?.cash_usd, accessionMap?.cash_usd) ?? c.cashSourceUrl) : c.cashSourceUrl,
+      cashSourceQuote:   hasD1Cash ? (quoteMap?.cash_usd ?? c.cashSourceQuote) : c.cashSourceQuote,
+      cashSearchTerm:    hasD1Cash ? (searchTermMap?.cash_usd ?? c.cashSearchTerm) : c.cashSearchTerm,
+      preferredSourceUrl: hasD1Pref ? (buildSourceUrl(c.ticker, sourceMap?.preferred_equity_usd, accessionMap?.preferred_equity_usd) ?? c.preferredSourceUrl) : c.preferredSourceUrl,
+      preferredSourceQuote: hasD1Pref ? (quoteMap?.preferred_equity_usd ?? c.preferredSourceQuote) : c.preferredSourceQuote,
+      preferredSearchTerm: hasD1Pref ? (searchTermMap?.preferred_equity_usd ?? c.preferredSearchTerm) : c.preferredSearchTerm,
+      ...(hasD1Holdings ? { holdings: metrics.holdings_native } : {}),
+      ...(hasD1Holdings
         ? {
             holdingsSourceUrl: buildSourceUrl(c.ticker, sourceMap?.holdings_native, accessionMap?.holdings_native) ?? c.holdingsSourceUrl,
             holdingsLastUpdated: dateMap?.holdings_native ?? c.holdingsLastUpdated,
@@ -189,7 +149,7 @@ export function applyD1Overlay(
             sourceSearchTerm: searchTermMap?.holdings_native ?? c.sourceSearchTerm,
           }
         : {}),
-      // Overlay metadata (typed on Company interface)
+      // Overlay metadata
       _d1Fields: d1Fields.length > 0 ? d1Fields : undefined,
       _d1Divergences: divergences.length > 0 ? divergences : undefined,
       holdingsBasis,
@@ -200,10 +160,8 @@ export function applyD1Overlay(
       console.warn(`[d1-overlay] ${c.ticker}: holdingsBasis=native_units but holdings=${overlaid.holdings}`);
     }
 
-    // Post-overlay invariant: final shares should not exceed both inputs.
-    // If overlaid shares are >10% larger than BOTH D1 and static, something
-    // went wrong (e.g. PFW double-count that slipped past the guard above).
-    if (shares.isD1 && metrics.basic_shares != null && c.sharesForMnav) {
+    // Post-overlay invariant: final shares should not exceed both inputs by >10%
+    if (sharesIsD1 && metrics.basic_shares != null && c.sharesForMnav) {
       const finalShares = overlaid.sharesForMnav ?? 0;
       const maxInput = Math.max(metrics.basic_shares, c.sharesForMnav);
       if (finalShares > maxInput * 1.1) {
