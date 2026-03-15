@@ -237,7 +237,6 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
       ? {
           ...company,
           holdings: ahpsRow.currentSnapshot.holdings,
-          sharesForMnav: ahpsRow.currentSnapshot.sharesOutstanding,
           holdingsLastUpdated: ahpsRow.currentSnapshot.date,
         }
       : company;
