@@ -672,13 +672,7 @@ function AnalyticsContent() {
         : undefined;
       const ahpsMetrics = getCompanyAhpsMetrics({
         ticker: company.ticker,
-        company: row
-          ? {
-              ...company,
-              holdings: row.currentSnapshot.holdings,
-              holdingsLastUpdated: row.currentSnapshot.date,
-            }
-          : company,
+        company,
         history,
         currentStockPrice: prices?.stocks?.[company.ticker]?.price,
       });

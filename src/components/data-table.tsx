@@ -233,16 +233,9 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
             holdingsPerShare: snapshot.holdingsPerShare,
           }))
       : undefined;
-    const ahpsCompany = ahpsRow
-      ? {
-          ...company,
-          holdings: ahpsRow.currentSnapshot.holdings,
-          holdingsLastUpdated: ahpsRow.currentSnapshot.date,
-        }
-      : company;
     const ahpsMetrics = getCompanyAhpsMetrics({
       ticker: company.ticker,
-      company: ahpsCompany,
+      company,
       history: ahpsHistory,
       currentStockPrice: stockPrice,
       lookbackDays: [90, 365],
