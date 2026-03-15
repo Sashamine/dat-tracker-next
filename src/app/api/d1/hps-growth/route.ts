@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import { D1Client } from '@/lib/d1';
 import { allCompanies } from '@/lib/data/companies';
 import { findSnapshotOnOrBefore } from '@/lib/utils/growth-snapshots';
-import { getHoldingsHistory } from '@/lib/data/holdings-history';
 
 /**
  * GET /api/d1/hps-growth
@@ -201,58 +200,6 @@ export async function GET() {
         snapshot1y: snapshot1y ? toSnapshot(snapshot1y) : null,
         history: snapshots.map(toSnapshot),
       });
-    }
-
-    // Prefer holdings-history.ts (static) over D1 when static has sufficient data.
-    // Static data has verified share counts from SEC filings and proper interpolation
-    // between anchors. D1 can have stale/round-number estimates between filings.
-    for (let i = 0; i < results.length; i++) {
-      const r = results[i];
-      const staticHistory = getHoldingsHistory(r.ticker);
-      if (!staticHistory?.history?.length) continue;
-
-      const staticSnapshots = staticHistory.history;
-      const staticHpsSnapshots: HpsSnapshot[] = staticSnapshots
-        .filter(s => s.holdings > 0 && s.sharesOutstanding && s.sharesOutstanding > 0)
-        .map(s => ({
-          date: s.date,
-          holdings: s.holdings,
-          sharesOutstanding: s.sharesOutstanding!,
-          holdingsPerShare: s.holdings / s.sharesOutstanding!,
-        }));
-
-      // Need at least 2 snapshots for growth calculation
-      if (staticHpsSnapshots.length < 2) continue;
-
-      const latestSnap = staticHpsSnapshots[staticHpsSnapshots.length - 1];
-      const snap30d = findSnapshotOnOrBefore(staticHpsSnapshots.slice(0, -1), new Date(`${d30}T00:00:00Z`), {
-        getDate: (s) => s.date,
-      });
-      const snap90d = findSnapshotOnOrBefore(staticHpsSnapshots.slice(0, -1), new Date(`${d90}T00:00:00Z`), {
-        getDate: (s) => s.date,
-      });
-      const snap1y = findSnapshotOnOrBefore(staticHpsSnapshots.slice(0, -1), new Date(`${d1y}T00:00:00Z`), {
-        getDate: (s) => s.date,
-      });
-
-      results[i] = {
-        ticker: r.ticker,
-        currentHps: latestSnap.holdingsPerShare,
-        hps30dAgo: snap30d ? snap30d.holdingsPerShare : null,
-        hps90dAgo: snap90d ? snap90d.holdingsPerShare : null,
-        hps1yAgo: snap1y ? snap1y.holdingsPerShare : null,
-        growth30d: growth(latestSnap.holdingsPerShare, snap30d?.holdingsPerShare ?? null),
-        growth90d: growth(latestSnap.holdingsPerShare, snap90d?.holdingsPerShare ?? null),
-        growth1y: growth(latestSnap.holdingsPerShare, snap1y?.holdingsPerShare ?? null),
-        currentHoldings: latestSnap.holdings,
-        currentShares: latestSnap.sharesOutstanding,
-        latestDate: latestSnap.date,
-        currentSnapshot: latestSnap,
-        snapshot30d: snap30d,
-        snapshot90d: snap90d,
-        snapshot1y: snap1y,
-        history: staticHpsSnapshots,
-      };
     }
 
     // Sort by 90d growth descending (nulls last)

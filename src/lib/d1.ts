@@ -271,3 +271,260 @@ export async function getMetricHistory(
   // For history, keep values on their historical basis (no forward-adjusting).
   return await normalizeLatestRowsForTicker(ticker, rows as unknown as LatestDatapointRow[], 'historical');
 }
+
+// ═══════════════════════════════════════════════════════════════════════════
+// New table query methods (Phase 1: D1 as Single Source of Truth)
+// ═══════════════════════════════════════════════════════════════════════════
+
+export type EntityRow = {
+  entity_id: string;
+  name: string;
+  asset: string;
+  tier: number;
+  country: string | null;
+  jurisdiction: string | null;
+  currency: string;
+  exchange_mic: string | null;
+  sec_cik: string | null;
+  dat_start_date: string | null;
+  is_miner: number;
+  treasury_model: string | null;
+  website: string | null;
+  twitter: string | null;
+  investor_relations_url: string | null;
+  leader: string | null;
+  strategy: string | null;
+  notes: string | null;
+  official_dashboard: string | null;
+  official_dashboard_name: string | null;
+  official_mnav_note: string | null;
+  shares_source: string | null;
+  shares_notes: string | null;
+  reports_holdings_frequency: string | null;
+  reports_mnav_daily: number;
+  metadata_json: string | null;
+  updated_at: string;
+};
+
+export type InstrumentRow = {
+  instrument_id: string;
+  entity_id: string;
+  type: string;
+  name: string | null;
+  strike_price: number;
+  potential_shares: number;
+  face_value: number | null;
+  settlement_type: string | null;
+  issued_date: string | null;
+  expiration: string | null;
+  included_in_base: number;
+  source: string | null;
+  source_url: string | null;
+  status: string;
+  notes: string | null;
+};
+
+export type PurchaseRow = {
+  purchase_id: string;
+  entity_id: string;
+  asset: string;
+  date: string;
+  quantity: number;
+  price_per_unit: number;
+  total_cost: number;
+  source: string | null;
+  source_url: string | null;
+};
+
+export type SecondaryHoldingRow = {
+  holding_id: string;
+  entity_id: string;
+  asset: string;
+  amount: number;
+  as_of: string | null;
+  source: string | null;
+  source_url: string | null;
+  note: string | null;
+};
+
+export type InvestmentRow = {
+  investment_id: string;
+  entity_id: string;
+  name: string;
+  type: string;
+  underlying_asset: string | null;
+  fair_value: number | null;
+  source_date: string | null;
+  source: string | null;
+  source_url: string | null;
+  lst_amount: number | null;
+  exchange_rate: number | null;
+  underlying_amount: number | null;
+  note: string | null;
+};
+
+export type CapitalEventRow = {
+  event_id: string;
+  entity_id: string;
+  date: string;
+  type: string;
+  description: string | null;
+  filed_date: string | null;
+  accession_number: string | null;
+  source_url: string | null;
+  item: string | null;
+  section: string | null;
+  data_json: string | null;
+  notes: string | null;
+};
+
+export type AssumptionRow = {
+  assumption_id: string;
+  entity_id: string;
+  field: string;
+  assumption: string;
+  reason: string | null;
+  trigger_event: string | null;
+  source_needed: string | null;
+  resolution_path: string | null;
+  sensitivity: string | null;
+  materiality: string | null;
+  status: string;
+  last_reviewed: string | null;
+  introduced_by: string | null;
+  review_notes: string | null;
+  resolved_date: string | null;
+  resolved_notes: string | null;
+};
+
+/** Get all entities, optionally filtered by asset */
+export async function getEntities(asset?: string): Promise<EntityRow[]> {
+  const d1 = D1Client.fromEnv();
+  if (asset) {
+    const out = await d1.query<EntityRow>(
+      'SELECT * FROM entities WHERE asset = ? ORDER BY entity_id',
+      [asset]
+    );
+    return out.results;
+  }
+  const out = await d1.query<EntityRow>('SELECT * FROM entities ORDER BY entity_id');
+  return out.results;
+}
+
+/** Get a single entity by ticker */
+export async function getEntity(ticker: string): Promise<EntityRow | null> {
+  const d1 = D1Client.fromEnv();
+  const out = await d1.query<EntityRow>(
+    'SELECT * FROM entities WHERE entity_id = ?',
+    [ticker.toUpperCase()]
+  );
+  return out.results[0] || null;
+}
+
+/** Get instruments for a ticker, optionally filtered by status */
+export async function getInstruments(
+  ticker: string,
+  status: string = 'active'
+): Promise<InstrumentRow[]> {
+  const d1 = D1Client.fromEnv();
+  const out = await d1.query<InstrumentRow>(
+    'SELECT * FROM instruments WHERE entity_id = ? AND status = ? ORDER BY strike_price',
+    [ticker.toUpperCase(), status]
+  );
+  return out.results;
+}
+
+/** Get all instruments for a ticker regardless of status */
+export async function getAllInstruments(ticker: string): Promise<InstrumentRow[]> {
+  const d1 = D1Client.fromEnv();
+  const out = await d1.query<InstrumentRow>(
+    'SELECT * FROM instruments WHERE entity_id = ? ORDER BY strike_price',
+    [ticker.toUpperCase()]
+  );
+  return out.results;
+}
+
+/** Get purchase history for a ticker */
+export async function getPurchasesFromD1(ticker: string): Promise<PurchaseRow[]> {
+  const d1 = D1Client.fromEnv();
+  const out = await d1.query<PurchaseRow>(
+    'SELECT * FROM purchases WHERE entity_id = ? ORDER BY date',
+    [ticker.toUpperCase()]
+  );
+  return out.results;
+}
+
+/** Get secondary crypto holdings for a ticker */
+export async function getSecondaryHoldings(ticker: string): Promise<SecondaryHoldingRow[]> {
+  const d1 = D1Client.fromEnv();
+  const out = await d1.query<SecondaryHoldingRow>(
+    'SELECT * FROM secondary_holdings WHERE entity_id = ? ORDER BY asset',
+    [ticker.toUpperCase()]
+  );
+  return out.results;
+}
+
+/** Get crypto investments (funds, ETFs, LSTs) for a ticker */
+export async function getInvestments(ticker: string): Promise<InvestmentRow[]> {
+  const d1 = D1Client.fromEnv();
+  const out = await d1.query<InvestmentRow>(
+    'SELECT * FROM investments WHERE entity_id = ? ORDER BY name',
+    [ticker.toUpperCase()]
+  );
+  return out.results;
+}
+
+/** Get capital events for a ticker, optionally filtered by type and date range */
+export async function getCapitalEvents(
+  ticker: string,
+  opts?: { type?: string; startDate?: string; endDate?: string }
+): Promise<CapitalEventRow[]> {
+  const d1 = D1Client.fromEnv();
+  let sql = 'SELECT * FROM capital_events WHERE entity_id = ?';
+  const params: unknown[] = [ticker.toUpperCase()];
+
+  if (opts?.type) {
+    sql += ' AND type = ?';
+    params.push(opts.type);
+  }
+  if (opts?.startDate) {
+    sql += ' AND date >= ?';
+    params.push(opts.startDate);
+  }
+  if (opts?.endDate) {
+    sql += ' AND date <= ?';
+    params.push(opts.endDate);
+  }
+
+  sql += ' ORDER BY date';
+  const out = await d1.query<CapitalEventRow>(sql, params);
+  return out.results;
+}
+
+/** Get assumptions for a ticker, optionally filtered by status */
+export async function getAssumptions(
+  ticker?: string,
+  status?: string
+): Promise<AssumptionRow[]> {
+  const d1 = D1Client.fromEnv();
+  let sql = 'SELECT * FROM assumptions';
+  const params: unknown[] = [];
+  const conditions: string[] = [];
+
+  if (ticker) {
+    conditions.push('entity_id = ?');
+    params.push(ticker.toUpperCase());
+  }
+  if (status) {
+    conditions.push('status = ?');
+    params.push(status);
+  }
+
+  if (conditions.length > 0) {
+    sql += ' WHERE ' + conditions.join(' AND ');
+  }
+  sql += ' ORDER BY entity_id, field';
+
+  const out = await d1.query<AssumptionRow>(sql, params);
+  return out.results;
+}

@@ -1,4 +1,8 @@
 /**
+ * @deprecated — READ-ONLY REFERENCE. Data migrated to D1 `assumptions` table.
+ * New assumptions should be written to D1, not this file.
+ * D1 equivalent: getAssumptions() from src/lib/d1.ts
+ *
  * Assumption Register
  *
  * Tracks all provisional assumptions in the dataset that affect
