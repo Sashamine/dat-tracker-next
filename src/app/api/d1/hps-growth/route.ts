@@ -203,75 +203,56 @@ export async function GET() {
       });
     }
 
-    // Cross-validate D1 results against holdings-history.ts (static source of truth).
-    // If a company's latest D1 HPS diverges >50% from static, D1 data is likely corrupt
-    // (e.g. pre-split share counts, bad scraper values). Replace with static data.
-    const warnings: string[] = [];
+    // Prefer holdings-history.ts (static) over D1 when static has sufficient data.
+    // Static data has verified share counts from SEC filings and proper interpolation
+    // between anchors. D1 can have stale/round-number estimates between filings.
     for (let i = 0; i < results.length; i++) {
       const r = results[i];
       const staticHistory = getHoldingsHistory(r.ticker);
       if (!staticHistory?.history?.length) continue;
 
       const staticSnapshots = staticHistory.history;
-      const latestStatic = staticSnapshots[staticSnapshots.length - 1];
-      if (!latestStatic.sharesOutstanding || latestStatic.sharesOutstanding <= 0) continue;
+      const staticHpsSnapshots: HpsSnapshot[] = staticSnapshots
+        .filter(s => s.holdings > 0 && s.sharesOutstanding && s.sharesOutstanding > 0)
+        .map(s => ({
+          date: s.date,
+          holdings: s.holdings,
+          sharesOutstanding: s.sharesOutstanding!,
+          holdingsPerShare: s.holdings / s.sharesOutstanding!,
+        }));
 
-      const staticHps = latestStatic.holdings / latestStatic.sharesOutstanding;
-      if (staticHps <= 0) continue;
+      // Need at least 2 snapshots for growth calculation
+      if (staticHpsSnapshots.length < 2) continue;
 
-      const divergence = Math.abs(r.currentHps - staticHps) / staticHps;
-      if (divergence > 0.50) {
-        warnings.push(
-          `${r.ticker}: D1 HPS ${r.currentHps.toFixed(8)} diverges ${(divergence * 100).toFixed(0)}% from static ${staticHps.toFixed(8)} ` +
-          `(D1: ${r.currentHoldings}/${r.currentShares}, static: ${latestStatic.holdings}/${latestStatic.sharesOutstanding})`
-        );
+      const latestSnap = staticHpsSnapshots[staticHpsSnapshots.length - 1];
+      const snap30d = findSnapshotOnOrBefore(staticHpsSnapshots.slice(0, -1), new Date(`${d30}T00:00:00Z`), {
+        getDate: (s) => s.date,
+      });
+      const snap90d = findSnapshotOnOrBefore(staticHpsSnapshots.slice(0, -1), new Date(`${d90}T00:00:00Z`), {
+        getDate: (s) => s.date,
+      });
+      const snap1y = findSnapshotOnOrBefore(staticHpsSnapshots.slice(0, -1), new Date(`${d1y}T00:00:00Z`), {
+        getDate: (s) => s.date,
+      });
 
-        // Replace D1 result with static holdings-history.ts data
-        const staticHpsSnapshots: HpsSnapshot[] = staticSnapshots
-          .filter(s => s.holdings > 0 && s.sharesOutstanding && s.sharesOutstanding > 0)
-          .map(s => ({
-            date: s.date,
-            holdings: s.holdings,
-            sharesOutstanding: s.sharesOutstanding!,
-            holdingsPerShare: s.holdings / s.sharesOutstanding!,
-          }));
-
-        if (staticHpsSnapshots.length === 0) continue;
-
-        const latestSnap = staticHpsSnapshots[staticHpsSnapshots.length - 1];
-        const snap30d = findSnapshotOnOrBefore(staticHpsSnapshots.slice(0, -1), new Date(`${d30}T00:00:00Z`), {
-          getDate: (s) => s.date,
-        });
-        const snap90d = findSnapshotOnOrBefore(staticHpsSnapshots.slice(0, -1), new Date(`${d90}T00:00:00Z`), {
-          getDate: (s) => s.date,
-        });
-        const snap1y = findSnapshotOnOrBefore(staticHpsSnapshots.slice(0, -1), new Date(`${d1y}T00:00:00Z`), {
-          getDate: (s) => s.date,
-        });
-
-        results[i] = {
-          ticker: r.ticker,
-          currentHps: latestSnap.holdingsPerShare,
-          hps30dAgo: snap30d ? snap30d.holdingsPerShare : null,
-          hps90dAgo: snap90d ? snap90d.holdingsPerShare : null,
-          hps1yAgo: snap1y ? snap1y.holdingsPerShare : null,
-          growth30d: growth(latestSnap.holdingsPerShare, snap30d?.holdingsPerShare ?? null),
-          growth90d: growth(latestSnap.holdingsPerShare, snap90d?.holdingsPerShare ?? null),
-          growth1y: growth(latestSnap.holdingsPerShare, snap1y?.holdingsPerShare ?? null),
-          currentHoldings: latestSnap.holdings,
-          currentShares: latestSnap.sharesOutstanding,
-          latestDate: latestSnap.date,
-          currentSnapshot: latestSnap,
-          snapshot30d: snap30d,
-          snapshot90d: snap90d,
-          snapshot1y: snap1y,
-          history: staticHpsSnapshots,
-        };
-      }
-    }
-
-    if (warnings.length > 0) {
-      console.warn('[hps-growth] Cross-validation warnings (replaced with static data):', warnings);
+      results[i] = {
+        ticker: r.ticker,
+        currentHps: latestSnap.holdingsPerShare,
+        hps30dAgo: snap30d ? snap30d.holdingsPerShare : null,
+        hps90dAgo: snap90d ? snap90d.holdingsPerShare : null,
+        hps1yAgo: snap1y ? snap1y.holdingsPerShare : null,
+        growth30d: growth(latestSnap.holdingsPerShare, snap30d?.holdingsPerShare ?? null),
+        growth90d: growth(latestSnap.holdingsPerShare, snap90d?.holdingsPerShare ?? null),
+        growth1y: growth(latestSnap.holdingsPerShare, snap1y?.holdingsPerShare ?? null),
+        currentHoldings: latestSnap.holdings,
+        currentShares: latestSnap.sharesOutstanding,
+        latestDate: latestSnap.date,
+        currentSnapshot: latestSnap,
+        snapshot30d: snap30d,
+        snapshot90d: snap90d,
+        snapshot1y: snap1y,
+        history: staticHpsSnapshots,
+      };
     }
 
     // Sort by 90d growth descending (nulls last)
@@ -281,7 +262,6 @@ export async function GET() {
       success: true,
       count: results.length,
       results,
-      ...(warnings.length > 0 ? { warnings } : {}),
     });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Unknown error';
