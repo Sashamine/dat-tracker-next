@@ -11,6 +11,7 @@ import { D1Client } from '@/lib/d1';
 import { sendDiscordChannelMessage } from '@/lib/notifications/discord-channel';
 import { generateXbrlCitation } from '@/lib/utils/citation';
 import { ensureFilingInR2 } from '@/lib/sec/filing-downloader';
+import { snapshotLatestValues, detectMaterialChanges, alertMaterialChanges } from '@/lib/change-detection';
 import crypto from 'node:crypto';
 
 function verifyCronSecret(request: NextRequest): boolean {
@@ -158,6 +159,16 @@ export async function GET(request: NextRequest) {
     const k = a.entity_id.toUpperCase();
     if (!actionsByTicker.has(k)) actionsByTicker.set(k, []);
     actionsByTicker.get(k)!.push({ effective_date: a.effective_date, ratio: a.ratio });
+  }
+
+  // Snapshot current values BEFORE writing — used for material change detection
+  let beforeSnapshot: Awaited<ReturnType<typeof snapshotLatestValues>> = new Map();
+  if (!dryRun) {
+    try {
+      beforeSnapshot = await snapshotLatestValues(d1, tickers);
+    } catch (err) {
+      console.warn('[XBRL→D1] Failed to snapshot before values (non-blocking):', err);
+    }
   }
 
   for (const ticker of tickers) {
@@ -477,6 +488,19 @@ export async function GET(request: NextRequest) {
     await d1.query(`UPDATE runs SET ended_at = ? WHERE run_id = ?;`, [nowIso(), runId]);
   }
 
+  // Detect and alert on material changes
+  let materialChanges: Awaited<ReturnType<typeof detectMaterialChanges>> = [];
+  if (!dryRun && (datapointsInserted > 0 || datapointsUpdated > 0)) {
+    try {
+      materialChanges = await detectMaterialChanges(d1, tickers, beforeSnapshot);
+      if (materialChanges.length > 0) {
+        await alertMaterialChanges(materialChanges, 'XBRL Cron');
+      }
+    } catch (err) {
+      console.warn('[XBRL→D1] Change detection failed (non-blocking):', err);
+    }
+  }
+
   const updatesChannelId = process.env.DISCORD_UPDATES_CHANNEL_ID;
 
   // Notify #updates channel on any failures
@@ -518,6 +542,7 @@ export async function GET(request: NextRequest) {
     datapointsSeededProposalKey: dryRun ? 0 : datapointsSeededProposalKey,
     datapointsNoop: dryRun ? 0 : datapointsNoop,
     failures,
+    materialChanges: materialChanges.length,
     summary,
     ...(isManual
       ? {
