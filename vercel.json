@@ -44,6 +44,10 @@
     {
       "path": "/api/cron/source-monitor",
       "schedule": "0 */6 * * *"
+    },
+    {
+      "path": "/api/cron/mnav-snapshot",
+      "schedule": "0 * * * *"
     }
   ]
 }
