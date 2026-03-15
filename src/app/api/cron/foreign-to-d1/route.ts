@@ -33,6 +33,7 @@ import {
   generateForeignCitation,
 } from '@/lib/fetchers/foreign-extraction';
 import { sendDiscordChannelMessage } from '@/lib/notifications/discord-channel';
+import { snapshotLatestValues, detectMaterialChanges, alertMaterialChanges } from '@/lib/change-detection';
 
 function verifyCronSecret(request: NextRequest): boolean {
   const authHeader = request.headers.get('authorization');
@@ -1083,6 +1084,11 @@ export async function GET(request: NextRequest) {
     );
   }
 
+  // Snapshot current values before writing (for change detection)
+  const allForeignTickers = Object.values(SYSTEM_FETCHERS).length > 0
+    ? [...new Set(Object.keys(SYSTEM_FETCHERS).flatMap(() => []))] // populated below after fetch
+    : [];
+
   // Run all selected fetchers
   const allResults: ForeignFetcherResult[] = [];
   for (const system of systems) {
@@ -1095,6 +1101,17 @@ export async function GET(request: NextRequest) {
   const allDataPoints = allResults.flatMap(r => r.dataPoints);
   const allErrors = allResults.filter(r => r.error);
 
+  // Snapshot before writing for change detection
+  const affectedTickers = [...new Set(allDataPoints.map(dp => dp.entityId))];
+  let beforeSnapshot: Awaited<ReturnType<typeof snapshotLatestValues>> = new Map();
+  if (!dryRun && affectedTickers.length > 0) {
+    try {
+      beforeSnapshot = await snapshotLatestValues(d1, affectedTickers);
+    } catch (err) {
+      console.warn('[Foreign→D1] Failed to snapshot before values:', err);
+    }
+  }
+
   // Ingest into D1
   let ingestionResult = { inserted: 0, updated: 0, noop: 0, errors: [] as Array<{ entityId: string; metric: string; error: string }> };
   if (!dryRun && allDataPoints.length > 0) {
@@ -1104,6 +1121,18 @@ export async function GET(request: NextRequest) {
   // Update run record
   if (!dryRun) {
     await d1.query(`UPDATE runs SET ended_at = ? WHERE run_id = ?;`, [new Date().toISOString(), runId]);
+  }
+
+  // Detect and alert material changes
+  if (!dryRun && (ingestionResult.inserted > 0 || ingestionResult.updated > 0)) {
+    try {
+      const changes = await detectMaterialChanges(d1, affectedTickers, beforeSnapshot);
+      if (changes.length > 0) {
+        await alertMaterialChanges(changes, 'Foreign Filing Cron');
+      }
+    } catch (err) {
+      console.warn('[Foreign→D1] Change detection failed (non-blocking):', err);
+    }
   }
 
   // Discord notification on errors
