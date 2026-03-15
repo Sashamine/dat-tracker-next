@@ -278,48 +278,14 @@ export function DataTable({ companies, prices, yesterdayMnav, onVisibleSummaryCh
     const mNAV = mnavResult.mnav;
     const mnavWarnings = mnavResult.warnings;
 
-    // Calculate mNAV 24h change using price-ratio scaling.
-    //
-    // WHY NOT recalculate with yesterday's prices:
-    // getCompanyMNAV(company, ydayPrices) re-runs getEffectiveShares() with
-    // yesterday's stock price, which can flip dilutive instruments ITM/OTM
-    // at their strike prices. This creates large discrete jumps in diluted
-    // shares and ITM debt that look like real mNAV moves but are artifacts
-    // of our methodology. Example: HSDT has 73.9M warrants at $10.134 —
-    // crossing that strike nearly doubles effective shares overnight.
-    //
-    // Instead, scale today's EV and CryptoNAV by price ratios. This holds
-    // the company state (dilution, debt adjustments) constant and isolates
-    // the 24hr change to actual market price movements.
+    // 24hr mNAV change: compare today's mNAV against yesterday's D1 snapshot.
+    // The snapshot was calculated by the same getCompanyMNAVDetailed() function,
+    // so there are no methodology differences, currency mismatches, or
+    // dilution recalculation artifacts.
     let mNAVChange: number | null = null;
-    const ydayStockPrice = yesterdayData?.stockPrice && yesterdayData.stockPrice > 0
-      ? yesterdayData.stockPrice
-      : stockPrice; // fall back to current price (frozen close)
-    const ydayCryptoPrice = yesterdayData?.cryptoPrice && yesterdayData.cryptoPrice > 0
-      ? yesterdayData.cryptoPrice
-      : 0;
-    if (mNAV && mNAV !== 0 && mnavResult.evUsd > 0 && mnavResult.cryptoNavUsd > 0 &&
-        stockPrice > 0 && ydayStockPrice > 0 && cryptoPrice > 0 && ydayCryptoPrice > 0) {
-      // Scale market cap component by stock price ratio (holds dilution constant)
-      const stockRatio = ydayStockPrice / stockPrice;
-      // EV = marketCap + debt + pref - cash. Only marketCap moves with stock price.
-      const todayMarketCap = marketCap;
-      const ydayMarketCap = todayMarketCap * stockRatio;
-      // Non-market-cap EV components are the same for both days
-      const evNonMcap = mnavResult.evUsd - todayMarketCap;
-      const ydayEV = ydayMarketCap + evNonMcap;
-      // Scale crypto NAV by primary crypto price ratio.
-      // Warrant proceeds are cash (not crypto) — don't scale them by cryptoRatio.
-      const cryptoRatio = ydayCryptoPrice / cryptoPrice;
-      const warrantProceeds = mnavResult.inTheMoneyWarrantProceeds || 0;
-      const pureCryptoNav = mnavResult.cryptoNavUsd - warrantProceeds;
-      const ydayCryptoNav = pureCryptoNav * cryptoRatio + warrantProceeds;
-      if (ydayCryptoNav > 0) {
-        const ydayMNAV = ydayEV / ydayCryptoNav;
-        if (ydayMNAV > 0) {
-          mNAVChange = ((mNAV / ydayMNAV) - 1) * 100;
-        }
-      }
+    const ydayMnav = yesterdayData?.mnav;
+    if (mNAV && mNAV > 0 && ydayMnav && ydayMnav > 0) {
+      mNAVChange = ((mNAV / ydayMnav) - 1) * 100;
     }
 
     // Determine company type

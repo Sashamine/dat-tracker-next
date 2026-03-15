@@ -1,36 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
-import { allCompanies } from "@/lib/data/companies";
-import { Company } from "@/lib/types";
-import { getCompanyMNAV } from "@/lib/math/mnav-engine";
-import { MSTR_PROVENANCE } from "@/lib/data/provenance/mstr";
-import { BMNR_PROVENANCE, estimateBMNRShares } from "@/lib/data/provenance/bmnr";
-import { getEffectiveShares } from "@/lib/data/dilutive-instruments";
-import { convertToUSDSync } from "@/lib/utils/currency";
-import { TICKER_CURRENCY } from "@/lib/prices/shared";
-
-// Use the shared TICKER_CURRENCY mapping (single source of truth for
-// which stock history prices need currency conversion). Merge in any
-// Yahoo-only currencies that aren't in the shared map.
-const TICKER_CURRENCIES: Record<string, string> = {
-  ...TICKER_CURRENCY,
-  // Yahoo-fetched tickers with non-USD prices (from /api/prices YAHOO_CURRENCIES)
-  "BTCT.V": "CAD",
-  "SATS.L": "GBP",
-  "CASH3.SA": "BRL",
-  "377030.KQ": "KRW",
-  "PHX.AD": "AED",
-  "AKER": "NOK",
-};
+import { D1Client } from "@/lib/d1";
 
 /**
  * GET /api/mnav/yesterday
- * 
- * Returns yesterday's mNAV for all companies by:
- * 1. Fetching yesterday's stock and crypto prices
- * 2. For MSTR/BMNR: Using provenance data (same as company pages)
- * 3. For others: Using getCompanyMNAV function
- * 
- * This ensures 24h mNAV change uses the same calculation as company pages.
+ *
+ * Returns the most recent mNAV snapshot that is at least 20 hours old
+ * for each company. Reads from D1 `mnav_snapshots` table, which is
+ * populated by the /api/cron/mnav-snapshot cron job.
+ *
+ * This replaces the old approach of reconstructing yesterday's mNAV
+ * from stock/crypto price history, which was fragile (currency mismatches,
+ * missing history for illiquid stocks, dilution recalculation bugs).
  */
 
 interface YesterdayMnavResult {
@@ -42,224 +22,56 @@ interface YesterdayMnavResult {
   };
 }
 
-// Cache for 5 minutes
+// Cache for 5 minutes (snapshots don't change frequently)
 let cache: { data: YesterdayMnavResult; timestamp: number } | null = null;
 const CACHE_TTL = 5 * 60 * 1000;
 
-/**
- * Calculate mNAV using provenance data (same formula as company pages)
- */
-function calculateProvenanceMnav(
-  ticker: string,
-  stockPrice: number,
-  cryptoPrice: number
-): number | null {
-  if (ticker === "MSTR") {
-    if (!MSTR_PROVENANCE.holdings || !MSTR_PROVENANCE.totalDebt || !MSTR_PROVENANCE.cashReserves) {
-      return null;
-    }
-    
-    const holdings = MSTR_PROVENANCE.holdings.value;
-    const totalDebt = MSTR_PROVENANCE.totalDebt.value;
-    const cashReserves = MSTR_PROVENANCE.cashReserves.value;
-    const preferredEquity = MSTR_PROVENANCE.preferredEquity?.value || 0;
-    const sharesOutstanding = MSTR_PROVENANCE.sharesOutstanding?.value || 0;
-    
-    // ITM convertible adjustment (same as MSTRCompanyView)
-    const effectiveShares = getEffectiveShares("MSTR", sharesOutstanding, stockPrice);
-    const inTheMoneyDebtValue = effectiveShares?.inTheMoneyDebtValue || 0;
-    const adjustedDebt = Math.max(0, totalDebt - inTheMoneyDebtValue);
-    
-    const cryptoNav = holdings * cryptoPrice;
-    const marketCap = sharesOutstanding * stockPrice;
-    const ev = marketCap + adjustedDebt + preferredEquity - cashReserves;
-    
-    return cryptoNav > 0 ? ev / cryptoNav : null;
-  }
-  
-  if (ticker === "BMNR") {
-    if (!BMNR_PROVENANCE.holdings || !BMNR_PROVENANCE.cashReserves) {
-      return null;
-    }
-    
-    const holdings = BMNR_PROVENANCE.holdings.value;
-    const totalDebt = BMNR_PROVENANCE.totalDebt?.value || 0;
-    const cashReserves = BMNR_PROVENANCE.cashReserves.value;
-    const preferredEquity = BMNR_PROVENANCE.preferredEquity?.value || 0;
-    // Use estimated shares (10-Q baseline + ATM estimate)
-    const sharesOutstanding = estimateBMNRShares().totalEstimated;
-    
-    const cryptoNav = holdings * cryptoPrice;
-    const marketCap = sharesOutstanding * stockPrice;
-    const ev = marketCap + totalDebt + preferredEquity - cashReserves;
-    
-    return cryptoNav > 0 ? ev / cryptoNav : null;
-  }
-  
-  return null;
-}
-
-export async function GET(request: NextRequest) {
-  // Get base URL from request (works on Vercel)
-  const { origin } = new URL(request.url);
-  
+export async function GET() {
   // Check cache
   if (cache && Date.now() - cache.timestamp < CACHE_TTL) {
     return NextResponse.json(cache.data);
   }
 
   try {
-    // Get unique assets needed (primary + secondary + investment underlying)
-    const assetSet = new Set(allCompanies.map((c: Company) => c.asset));
-    for (const c of allCompanies) {
-      if (c.secondaryCryptoHoldings) {
-        for (const h of c.secondaryCryptoHoldings) assetSet.add(h.asset);
-      }
-      if (c.cryptoInvestments) {
-        for (const inv of c.cryptoInvestments) assetSet.add(inv.underlyingAsset);
-      }
-    }
-    const assets: string[] = [...assetSet];
-    const tickers: string[] = allCompanies.map((c: Company) => c.ticker);
+    const d1 = D1Client.fromEnv();
 
-    // Fetch yesterday's crypto prices (use 7d history, find price from at least 24h ago)
-    const cryptoPrices: Record<string, number> = {};
-    for (const asset of assets) {
-      try {
-        const res = await fetch(
-          `${origin}/api/crypto/${asset}/history?range=7d`,
-          { cache: 'no-store' }
-        );
-        if (res.ok) {
-          const data = await res.json();
-          const now = Date.now();
-          const oneDayAgo = now - 24 * 60 * 60 * 1000;
-          
-          // Find the most recent price point that is AT LEAST 24h old
-          // This handles weekends/closures correctly (close price stands until next open)
-          let bestMatch = null;
-          for (const point of data) {
-            const ts = parseInt(point.time) * 1000;
-            if (ts <= oneDayAgo) {
-              // This point is at least 24h old - keep the most recent one
-              if (!bestMatch || ts > parseInt(bestMatch.time) * 1000) {
-                bestMatch = point;
-              }
-            }
-          }
-          if (bestMatch) {
-            cryptoPrices[asset] = bestMatch.price;
-          }
-        }
-      } catch (e) {
-        console.warn(`Failed to fetch ${asset} history:`, e);
-      }
-    }
+    // Find snapshots that are at least 20 hours old (handles timezone edge cases).
+    // For each ticker, get the MOST RECENT snapshot that qualifies.
+    // This means: if cron runs hourly, we get a snapshot from ~20-24h ago.
+    const cutoff = new Date(Date.now() - 20 * 60 * 60 * 1000).toISOString();
 
-    // Fetch current forex rates (needed before stock price conversion)
-    let forexRates: Record<string, number> = {};
-    try {
-      const res = await fetch(
-        `${origin}/api/prices`,
-        { cache: 'no-store' }
-      );
-      if (res.ok) {
-        const data = await res.json();
-        forexRates = data.forex || {};
-      }
-    } catch (e) {
-      console.warn('Failed to fetch forex:', e);
-    }
+    const rows = await d1.query<{
+      ticker: string;
+      mnav: number | null;
+      stock_price_usd: number;
+      crypto_price_usd: number;
+      capture_date: string;
+    }>(
+      `SELECT s.ticker, s.mnav, s.stock_price_usd, s.crypto_price_usd, s.capture_date
+       FROM mnav_snapshots s
+       INNER JOIN (
+         SELECT ticker, MAX(captured_at) as max_captured
+         FROM mnav_snapshots
+         WHERE captured_at <= ?
+         GROUP BY ticker
+       ) latest ON s.ticker = latest.ticker AND s.captured_at = latest.max_captured`,
+      [cutoff]
+    );
 
-    // Fetch yesterday's stock prices
-    const stockPrices: Record<string, number> = {};
-    for (const ticker of tickers) {
-      try {
-        const res = await fetch(
-          `${origin}/api/stocks/${ticker}/history?range=7d&interval=1h`,
-          { cache: 'no-store' }
-        );
-        if (res.ok) {
-          const data = await res.json();
-          const now = Date.now();
-          const oneDayAgo = now - 24 * 60 * 60 * 1000;
-          
-          // Find the most recent price point that is AT LEAST 24h old
-          // This handles weekends/closures correctly (close price stands until next open)
-          let bestMatch = null;
-          for (const point of data) {
-            const ts = parseInt(point.time) * 1000;
-            if (ts <= oneDayAgo) {
-              // This point is at least 24h old - keep the most recent one
-              if (!bestMatch || ts > parseInt(bestMatch.time) * 1000) {
-                bestMatch = point;
-              }
-            }
-          }
-          if (bestMatch) {
-            const currency = TICKER_CURRENCIES[ticker];
-            stockPrices[ticker] = currency
-              ? convertToUSDSync(bestMatch.close, currency, forexRates)
-              : bestMatch.close;
-          }
-        }
-      } catch (e) {
-        console.warn(`Failed to fetch ${ticker} history:`, e);
-      }
-    }
-
-    // Calculate yesterday's mNAV for each company
     const result: YesterdayMnavResult = {};
-    const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-
-    for (const company of allCompanies) {
-      const cryptoPrice = cryptoPrices[company.asset];
-      const stockPrice = stockPrices[company.ticker];
-
-      if (!cryptoPrice || !stockPrice) {
-        result[company.ticker] = {
-          mnav: null,
-          stockPrice: stockPrice || 0,
-          cryptoPrice: cryptoPrice || 0,
-          date: yesterday,
-        };
-        continue;
-      }
-
-      // Try provenance-based calculation first (for MSTR, BMNR)
-      let mnav = calculateProvenanceMnav(company.ticker, stockPrice, cryptoPrice);
-      
-      // Fall back to getCompanyMNAV for other companies
-      if (mnav === null) {
-        // Build full crypto price map so secondary holdings + investments get priced
-        const cryptoPriceMap: Record<string, { price: number }> = {};
-        for (const [asset, price] of Object.entries(cryptoPrices)) {
-          cryptoPriceMap[asset] = { price };
-        }
-        const yesterdayPrices = {
-          crypto: cryptoPriceMap,
-          stocks: {
-            [company.ticker]: { price: stockPrice, change24h: 0, volume: 0, marketCap: 0 },
-          },
-          forex: forexRates,
-        };
-        mnav = getCompanyMNAV(company, yesterdayPrices);
-      }
-
-      result[company.ticker] = {
-        mnav,
-        stockPrice,
-        cryptoPrice,
-        date: yesterday,
+    for (const row of rows.results) {
+      result[row.ticker] = {
+        mnav: row.mnav,
+        stockPrice: row.stock_price_usd,
+        cryptoPrice: row.crypto_price_usd,
+        date: row.capture_date,
       };
     }
 
-    // Update cache
     cache = { data: result, timestamp: Date.now() };
-
     return NextResponse.json(result);
   } catch (error) {
-    console.error('Error calculating yesterday mNAV:', error);
+    console.error("Error fetching yesterday mNAV snapshots:", error);
     return NextResponse.json({}, { status: 500 });
   }
 }

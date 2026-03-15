@@ -168,32 +168,14 @@ export function CompanyViewBase({ company, className = "", config }: { company: 
     return config.buildMetrics({ company, prices, marketCap, effectiveShares });
   }, [company, prices, marketCap, effectiveShares, config]);
 
-  // mNAV 24hr change: price-ratio scaling (holds dilution constant).
-  // Avoids discontinuities when stock crosses dilutive instrument strike prices.
+  // 24hr mNAV change: compare today's mNAV against yesterday's D1 snapshot.
+  // The snapshot was calculated by the same formula, so no methodology drift.
   const mnavChange = useMemo(() => {
-    if (!metrics?.mNav || !metrics?.cryptoNav || !prices) return null;
+    if (!metrics?.mNav || metrics.mNav <= 0) return null;
     const yday = yesterdayMnavData?.[config.ticker];
-    if (!yday?.stockPrice || !yday?.cryptoPrice) return null;
-    if (!stockPrice || !cryptoPrice || stockPrice <= 0 || cryptoPrice <= 0) return null;
-
-    // Scale market cap by stock price ratio (holds dilution constant)
-    const stockRatio = yday.stockPrice / stockPrice;
-    const ydayMarketCap = marketCap * stockRatio;
-    // EV = marketCap + debt + pref - cash. Non-mcap components are the same.
-    const todayEV = metrics.mNav * metrics.cryptoNav;
-    const evNonMcap = todayEV - marketCap;
-    const ydayEV = ydayMarketCap + evNonMcap;
-    // Scale crypto NAV by primary crypto price ratio.
-    // Warrant proceeds are cash (not crypto) — don't scale them by cryptoRatio.
-    const cryptoRatio = yday.cryptoPrice / cryptoPrice;
-    const warrantProceeds = metrics.inTheMoneyWarrantProceeds || 0;
-    const pureCryptoNav = metrics.cryptoNav - warrantProceeds;
-    const ydayCryptoNav = pureCryptoNav * cryptoRatio + warrantProceeds;
-    if (ydayCryptoNav <= 0 || ydayEV <= 0) return null;
-    const ydayMnav = ydayEV / ydayCryptoNav;
-    if (ydayMnav <= 0) return null;
-    return ((metrics.mNav / ydayMnav) - 1) * 100;
-  }, [metrics?.mNav, metrics?.cryptoNav, marketCap, stockPrice, cryptoPrice, yesterdayMnavData, config.ticker]);
+    if (!yday?.mnav || yday.mnav <= 0) return null;
+    return ((metrics.mNav / yday.mnav) - 1) * 100;
+  }, [metrics?.mNav, yesterdayMnavData, config.ticker]);
 
   const handleTimeRangeChange = (newRange: TimeRange) => {
     setTimeRange(newRange);
