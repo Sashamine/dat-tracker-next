@@ -676,7 +676,6 @@ function AnalyticsContent() {
           ? {
               ...company,
               holdings: row.currentSnapshot.holdings,
-              sharesForMnav: row.currentSnapshot.sharesOutstanding,
               holdingsLastUpdated: row.currentSnapshot.date,
             }
           : company,

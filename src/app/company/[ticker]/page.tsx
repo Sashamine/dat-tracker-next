@@ -413,7 +413,6 @@ export default function CompanyPage() {
       ? {
           ...displayCompany,
           holdings: ahpsRow.currentSnapshot.holdings,
-          sharesForMnav: ahpsRow.currentSnapshot.sharesOutstanding,
           holdingsLastUpdated: ahpsRow.currentSnapshot.date,
         }
       : displayCompany,
