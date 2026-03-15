@@ -48,6 +48,10 @@
     {
       "path": "/api/cron/mnav-snapshot",
       "schedule": "0 * * * *"
+    },
+    {
+      "path": "/api/cron/dashboard-to-d1",
+      "schedule": "30 */2 * * *"
     }
   ]
 }
