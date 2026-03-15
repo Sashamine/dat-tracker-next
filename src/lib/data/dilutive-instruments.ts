@@ -3356,21 +3356,28 @@ export function getEffectiveSharesAt(
   const instruments = dilutiveInstruments[ticker] || [];
 
   // Filter to instruments that existed at asOfDate (excluding base-included PFWs)
-  const activeInstruments = instruments.filter((inst) => {
+  const activeInstruments: typeof instruments = [];
+  // Shares from matured ITM converts that haven't yet appeared in D1's basic count.
+  // When a convert matures ITM, its shares move to basic — but D1 may not update
+  // until the next quarterly filing. Without this, shares vanish from the calculation.
+  let maturedConvertShares = 0;
+
+  for (const inst of instruments) {
     // Already counted in sharesForMnav (e.g., pre-funded warrants)
-    if (inst.includedInBase) {
-      return false;
-    }
+    if (inst.includedInBase) continue;
     // Must have been issued by asOfDate (if issuedDate is tracked)
-    if (inst.issuedDate && inst.issuedDate > asOfDate) {
-      return false;
-    }
-    // Must not have expired/matured yet
+    if (inst.issuedDate && inst.issuedDate > asOfDate) continue;
+
+    // Expired/matured: if it was an ITM convert, its shares are now in basic count
     if (inst.expiration && inst.expiration <= asOfDate) {
-      return false;
+      if (inst.type === "convertible" && stockPrice > inst.strikePrice) {
+        maturedConvertShares += inst.potentialShares;
+      }
+      continue;
     }
-    return true;
-  });
+
+    activeInstruments.push(inst);
+  }
 
   const breakdown: InstrumentBreakdown[] = activeInstruments.map((inst) => ({
     type: inst.type,
@@ -3384,7 +3391,8 @@ export function getEffectiveSharesAt(
 
   const inTheMoneyShares = breakdown
     .filter((b) => b.inTheMoney)
-    .reduce((sum, b) => sum + b.potentialShares, 0);
+    .reduce((sum, b) => sum + b.potentialShares, 0)
+    + maturedConvertShares;
 
   // Settlement-aware debt subtraction (same logic as getEffectiveShares)
   const inTheMoneyDebtValue = activeInstruments
